@@ -1,0 +1,55 @@
+{
+    "app": {
+        "name": "Digital Agri Market",
+        "tagline": "Connecting Farmers & Buyers"
+    },
+    "nav": {
+        "home": "Home",
+        "listings": "Listings",
+        "market": "Market",
+        "profile": "Profile"
+    },
+    "auth": {
+        "farmer": {
+            "title": "Farmer Registration",
+            "subtitle": "Join thousands of farmers selling directly",
+            "mobileLabel": "Mobile Number",
+            "mobilePlaceholder": "Enter your 10-digit mobile",
+            "sendOtp": "Send OTP",
+            "otpTitle": "Verify OTP",
+            "otpSubtitle": "Enter the 6-digit code sent to",
+            "verifyOtp": "Verify",
+            "resendOtp": "Resend OTP",
+            "resendIn": "Resend in",
+            "seconds": "seconds",
+            "success": "Account Created!",
+            "successMessage": "Welcome to Digital Agri Market",
+            "continue": "Continue to Dashboard"
+        },
+        "buyer": {
+            "title": "Buyer Registration",
+            "businessName": "Business Name",
+            "taxId": "Tax ID / GST Number",
+            "category": "Business Category",
+            "categories": {
+                "retailer": "Retailer",
+                "cooperative": "Cooperative",
+                "institution": "Institution"
+            }
+        },
+        "errors": {
+            "invalidMobile": "Please enter a valid 10-digit mobile number",
+            "invalidOtp": "Please enter a valid 6-digit OTP",
+            "otpExpired": "OTP expired. Please request a new one."
+        }
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "Something went wrong",
+        "retry": "Try Again",
+        "next": "Next",
+        "back": "Back",
+        "submit": "Submit",
+        "cancel": "Cancel"
+    }
+}
