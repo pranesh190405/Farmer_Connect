@@ -50,6 +50,16 @@
         "next": "अगला",
         "back": "वापस",
         "submit": "जमा करें",
-        "cancel": "रद्द करें"
+        "cancel": "रद्द करें",
+        "changeLanguage": "भाषा बदलें"
+    },
+    "voice": {
+        "startListening": "वॉइस सर्च शुरू करें",
+        "stopListening": "सुनना बंद करें",
+        "listening": "सुन रहे हैं..."
+    },
+    "offline": {
+        "noConnection": "आप ऑफलाइन हैं। कुछ सुविधाएं सीमित हो सकती हैं।",
+        "backOnline": "आप फिर से ऑनलाइन हैं!"
     }
 }

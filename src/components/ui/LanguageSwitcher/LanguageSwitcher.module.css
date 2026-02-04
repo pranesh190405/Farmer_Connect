@@ -1,0 +1,67 @@
+.switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary, #1f2937);
+}
+
+.switcher:hover {
+    background: var(--bg-hover, #f3f4f6);
+    border-color: var(--border-hover, #d1d5db);
+}
+
+.switcher:focus {
+    outline: 2px solid var(--primary-color, #10b981);
+    outline-offset: 2px;
+}
+
+.switcher:active {
+    transform: scale(0.98);
+}
+
+.langIcon {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.langCode {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* Compact variant for bottom nav */
+.compact {
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+}
+
+.compact .langIcon {
+    font-size: 1rem;
+}
+
+/* Header variant */
+.header {
+    border: none;
+    padding: 0.5rem;
+}
+
+.header:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: transparent;
+}
+
+@media (max-width: 640px) {
+    .switcher {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.8125rem;
+    }
+}

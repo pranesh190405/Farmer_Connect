@@ -1,0 +1,208 @@
+# Digital Agricultural Marketplace - Development Context
+# Last Updated: 2026-02-01 23:42 IST
+# GitHub: https://github.com/pranesh190405/Farmer_Connect.git
+# Branch: feature/farmer-onboarding
+
+================================================================================
+PROJECT OVERVIEW
+================================================================================
+
+A responsive, accessible web application connecting rural farmers with buyers.
+Built with Next.js (App Router), Tailwind CSS, Redux Toolkit, and i18next.
+
+Target Users:
+- Rural farmers (low digital literacy, low-bandwidth, non-English)
+- Professional buyers (retailers, cooperatives, institutions)
+
+================================================================================
+COMPLETED WORK (Epic 1 - 100% Complete)
+================================================================================
+
+✅ 1.1 Farmer Onboarding
+   - Mobile number input with +91 prefix
+   - 6-digit OTP verification with auto-focus
+   - 3-step registration flow (Mobile → OTP → Success)
+   - Files: src/app/(auth)/farmer/register/
+
+✅ 1.2 Buyer Onboarding  
+   - Business name, GST validation (15-char), category selection
+   - 4-step flow (Business → Contact → OTP → Success)
+   - Files: src/app/(auth)/buyer/register/
+
+✅ 1.3 KYC Document Upload
+   - Drag-drop file upload with progress indicator
+   - Document type selection (Aadhaar, PAN, Voter ID, etc.)
+   - Verification status badges (Pending/Verified/Rejected)
+   - Files: src/app/profile/kyc/
+
+✅ 1.4 Profile Management
+   - Settings dashboard with location selection
+   - Crop interests chip selector
+   - SMS/Price alerts toggles
+   - Privacy settings (public profile, show location/contact)
+   - Files: src/app/profile/
+
+✅ 1.5 Protected Routes & Session
+   - Next.js middleware for route protection
+   - Session timeout warning modal (5 min before expiry)
+   - useAuth hook for auth state management
+   - Files: src/middleware.js, src/hooks/useAuth.js
+
+================================================================================
+PENDING WORK (Epics 2-5)
+================================================================================
+
+📋 Epic 2: Multilingual & Inclusive UX
+   - [ ] Language Switcher (i18n already configured for EN/HI)
+   - [ ] Icon-based Bottom Navigation (44px touch targets)
+   - [ ] Voice-based Interaction (Web Speech API)
+   - [ ] Offline Mode Indicator banner
+
+📋 Epic 3: Crop Listing & Quality
+   - [ ] Multi-step listing form (Crop Type, Qty, Price)
+   - [ ] Quality grade dropdowns (A/B/C) with score display
+   - [ ] Camera image capture with timestamp overlay
+   - [ ] Map integration (Leaflet/Mapbox) with distance filter
+   - [ ] Listing lifecycle badges (Active/Negotiating/Sold/Expired)
+
+📋 Epic 4: Pricing Intelligence
+   - [ ] Price comparison cards (Offer vs Mandi reference)
+   - [ ] Historical price charts (Recharts - already installed)
+   - [ ] Demand indicators and "Popular in your area"
+   - [ ] AI price prediction widget with confidence meter
+
+📋 Epic 5: Negotiation & Transactions
+   - [ ] Chat-like negotiation UI (Offer/Counter-Offer/Accept/Reject)
+   - [ ] Live bidding dashboard with timer
+   - [ ] Confirm Deal modal with "Slide to Confirm"
+   - [ ] Trade History page with PDF/CSV export
+   - [ ] Dispute form with evidence upload
+
+================================================================================
+UI COMPONENTS CREATED
+================================================================================
+
+src/components/ui/
+├── Button/       - Primary/Secondary/Outline, loading state, sizes
+├── Input/        - With prefix/suffix, error states, accessible
+├── OTPInput/     - 6-digit auto-focus, paste support, keyboard nav
+├── Select/       - Dropdown with placeholder, error handling
+├── FileUpload/   - Drag-drop, progress ring, preview
+├── Badge/        - Status badges (pending/verified/rejected/active/sold)
+├── Modal/        - Backdrop click, escape key, sizes
+
+src/components/auth/
+├── SessionTimeout/ - Session expiry warning modal
+
+================================================================================
+STATE MANAGEMENT
+================================================================================
+
+Redux Store (src/store/store.js):
+- authSlice: user, isAuthenticated, isLoading, otpSent, otpVerified, 
+             mobileNumber, error, userType
+
+Actions:
+- sendOtpStart/Success/Failure
+- verifyOtpStart/Success/Failure
+- resetAuthFlow
+- logout
+- clearError
+
+================================================================================
+i18n TRANSLATIONS
+================================================================================
+
+Languages configured: English (en), Hindi (hi)
+Files: public/locales/en/common.json, public/locales/hi/common.json
+
+Translation keys available:
+- app.name, app.tagline
+- nav.home, nav.listings, nav.market, nav.profile
+- auth.farmer.* (title, mobileLabel, sendOtp, otpTitle, etc.)
+- auth.buyer.* (businessName, taxId, category, etc.)
+- auth.errors.* (invalidMobile, invalidOtp, etc.)
+- common.* (loading, error, retry, next, back, submit, cancel)
+
+================================================================================
+BACKEND REQUIREMENTS (NOT YET BUILT)
+================================================================================
+
+Required API Endpoints:
+
+POST /api/auth/send-otp      - Send OTP to mobile
+POST /api/auth/verify-otp    - Verify OTP, return JWT
+POST /api/auth/logout        - Invalidate session
+GET  /api/auth/me            - Get current user
+
+POST /api/users/farmer       - Register farmer
+POST /api/users/buyer        - Register buyer
+PUT  /api/users/profile      - Update profile
+PUT  /api/users/location     - Update location
+PUT  /api/users/preferences  - Update preferences
+
+POST /api/kyc/upload         - Upload document
+GET  /api/kyc/status         - Get verification status
+
+POST /api/listings           - Create listing
+GET  /api/listings           - Get listings (with filters)
+PUT  /api/listings/:id       - Update listing
+DELETE /api/listings/:id     - Delete listing
+
+POST /api/negotiations       - Start negotiation
+PUT  /api/negotiations/:id   - Send offer/counter
+POST /api/disputes           - File dispute
+
+Tech Stack Suggested:
+- Node.js + Express
+- MongoDB or PostgreSQL
+- JWT (httpOnly cookies)
+- Twilio/MSG91 for SMS
+- Cloudinary/S3 for file storage
+
+================================================================================
+DEPENDENCIES INSTALLED
+================================================================================
+
+{
+  "@reduxjs/toolkit": "^2.11.2",
+  "i18next": "^25.8.0",
+  "i18next-browser-languagedetector": "^8.2.0",
+  "next": "16.1.6",
+  "next-pwa": "^5.6.0",
+  "react": "19.2.3",
+  "react-dom": "19.2.3",
+  "react-i18next": "^16.5.4",
+  "react-redux": "^9.2.0",
+  "recharts": "^3.7.0"
+}
+
+================================================================================
+GIT COMMITS MADE
+================================================================================
+
+1. feat(auth): implement farmer onboarding with OTP verification
+2. feat(auth): add buyer onboarding, KYC upload, and profile settings
+3. feat(auth): add protected routes, session management, and modal component
+
+================================================================================
+HOW TO CONTINUE
+================================================================================
+
+1. Start dev server:
+   cd n:\software_project
+   npm run dev
+
+2. View app at http://localhost:3000
+
+3. To continue building, provide this prompt:
+
+   "Continue building the Digital Agricultural Marketplace. 
+   Read context.txt in the project root for full details.
+   Currently completed: Epic 1 (User Identity & Access Control).
+   Next: Epic 2 (Multilingual & Inclusive UX) - Language Switcher, 
+   Bottom Navigation, Voice Search, Offline Indicator.
+   GitHub: https://github.com/pranesh190405/Farmer_Connect.git
+   Branch: feature/farmer-onboarding"
+
+================================================================================

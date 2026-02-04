@@ -50,6 +50,16 @@
         "next": "Next",
         "back": "Back",
         "submit": "Submit",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "changeLanguage": "Change Language"
+    },
+    "voice": {
+        "startListening": "Start voice search",
+        "stopListening": "Stop listening",
+        "listening": "Listening..."
+    },
+    "offline": {
+        "noConnection": "You are offline. Some features may be limited.",
+        "backOnline": "You are back online!"
     }
 }

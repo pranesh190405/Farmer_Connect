@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
+import OfflineBanner from "@/components/ui/OfflineBanner/OfflineBanner";
+import BottomNav from "@/components/ui/BottomNav/BottomNav";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,7 +30,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${inter.variable} antialiased`}>
         <Providers>
+          <OfflineBanner />
           {children}
+          <BottomNav />
         </Providers>
       </body>
     </html>
