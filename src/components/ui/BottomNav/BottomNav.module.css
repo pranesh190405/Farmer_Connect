@@ -94,10 +94,7 @@
     }
 }
 
-/* Ensure content doesn't hide behind bottom nav */
-body {
-    padding-bottom: 64px;
-}
+/* Body padding handled in globals.css now */
 
 @media (max-width: 640px) {
     .label {

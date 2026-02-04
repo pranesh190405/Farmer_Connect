@@ -7,34 +7,40 @@
 
 :root {
   /* Primary Colors - Agricultural Theme */
-  --color-primary: #16a34a;           /* Green - Main brand */
+  --color-primary: #16a34a;
+  /* Green - Main brand */
   --color-primary-dark: #15803d;
   --color-primary-light: #22c55e;
-  
+
   /* Status Colors */
-  --color-success: #16a34a;           /* Green - Sold/High Demand */
-  --color-warning: #eab308;           /* Yellow - Pending */
-  --color-danger: #dc2626;            /* Red - Action Required */
-  --color-info: #0ea5e9;              /* Blue - Info */
-  
+  --color-success: #16a34a;
+  /* Green - Sold/High Demand */
+  --color-warning: #eab308;
+  /* Yellow - Pending */
+  --color-danger: #dc2626;
+  /* Red - Action Required */
+  --color-info: #0ea5e9;
+  /* Blue - Info */
+
   /* Neutral Colors */
   --background: #ffffff;
   --foreground: #171717;
   --muted: #737373;
   --border: #e5e5e5;
   --surface: #f5f5f5;
-  
+
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  
+
   /* Spacing - Touch friendly */
-  --touch-target: 44px;               /* Minimum touch target */
+  --touch-target: 44px;
+  /* Minimum touch target */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
-  
+
   /* Border Radius */
   --radius-sm: 6px;
   --radius-md: 12px;
@@ -78,6 +84,8 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 64px;
+  /* Space for fixed BottomNav */
 }
 
 /* Focus States - Accessibility */
@@ -93,11 +101,30 @@ body {
 }
 
 /* Status Badge Colors */
-.status-active { background: var(--color-success); color: white; }
-.status-pending { background: var(--color-warning); color: black; }
-.status-sold { background: var(--color-primary-dark); color: white; }
-.status-expired { background: var(--muted); color: white; }
-.status-rejected { background: var(--color-danger); color: white; }
+.status-active {
+  background: var(--color-success);
+  color: white;
+}
+
+.status-pending {
+  background: var(--color-warning);
+  color: black;
+}
+
+.status-sold {
+  background: var(--color-primary-dark);
+  color: white;
+}
+
+.status-expired {
+  background: var(--muted);
+  color: white;
+}
+
+.status-rejected {
+  background: var(--color-danger);
+  color: white;
+}
 
 /* High Contrast for Outdoor Visibility */
 @media (prefers-contrast: high) {
@@ -110,6 +137,7 @@ body {
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
