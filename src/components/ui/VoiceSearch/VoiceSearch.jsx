@@ -23,7 +23,19 @@ export default function VoiceSearch({ onResult, placeholder = 'Search...' }) {
             const recognitionInstance = new SpeechRecognition();
             recognitionInstance.continuous = false;
             recognitionInstance.interimResults = true;
-            recognitionInstance.lang = i18n.language === 'hi' ? 'hi-IN' : 'en-IN';
+
+            // Map i18n language codes to speech recognition locale codes
+            const langMap = {
+                'en': 'en-IN',
+                'hi': 'hi-IN',
+                'ta': 'ta-IN',
+                'te': 'te-IN',
+                'kn': 'kn-IN',
+                'bn': 'bn-IN',
+                'mr': 'mr-IN',
+                'gu': 'gu-IN'
+            };
+            recognitionInstance.lang = langMap[i18n.language] || 'en-IN';
 
             recognitionInstance.onstart = () => {
                 setIsListening(true);

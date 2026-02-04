@@ -5,10 +5,22 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 // Import translations
 import enCommon from '../../public/locales/en/common.json';
 import hiCommon from '../../public/locales/hi/common.json';
+import taCommon from '../../public/locales/ta/common.json';
+import teCommon from '../../public/locales/te/common.json';
+import knCommon from '../../public/locales/kn/common.json';
+import bnCommon from '../../public/locales/bn/common.json';
+import mrCommon from '../../public/locales/mr/common.json';
+import guCommon from '../../public/locales/gu/common.json';
 
 const resources = {
     en: { common: enCommon },
     hi: { common: hiCommon },
+    ta: { common: taCommon },
+    te: { common: teCommon },
+    kn: { common: knCommon },
+    bn: { common: bnCommon },
+    mr: { common: mrCommon },
+    gu: { common: guCommon },
 };
 
 i18n

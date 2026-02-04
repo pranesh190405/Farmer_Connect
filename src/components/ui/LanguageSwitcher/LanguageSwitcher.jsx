@@ -4,29 +4,69 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import styles from './LanguageSwitcher.module.css';
 
+const LANGUAGES = [
+    { code: 'en', name: 'English', nativeName: 'English' },
+    { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
+    { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்' },
+    { code: 'te', name: 'Telugu', nativeName: 'తెలుగు' },
+    { code: 'kn', name: 'Kannada', nativeName: 'ಕನ್ನಡ' },
+    { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
+    { code: 'mr', name: 'Marathi', nativeName: 'मराठी' },
+    { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી' },
+];
+
 export default function LanguageSwitcher({ variant = 'default' }) {
     const { i18n, t } = useTranslation('common');
     const [currentLang, setCurrentLang] = useState('en');
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         setCurrentLang(i18n.language);
     }, [i18n.language]);
 
-    const toggleLanguage = () => {
-        const newLang = currentLang === 'en' ? 'hi' : 'en';
-        i18n.changeLanguage(newLang);
-        setCurrentLang(newLang);
+    const changeLanguage = (langCode) => {
+        i18n.changeLanguage(langCode);
+        setCurrentLang(langCode);
+        setIsOpen(false);
     };
 
+    const currentLanguage = LANGUAGES.find(lang => lang.code === currentLang) || LANGUAGES[0];
+
     return (
-        <button
-            onClick={toggleLanguage}
-            className={`${styles.switcher} ${styles[variant]}`}
-            aria-label={t('common.changeLanguage')}
-            title={t('common.changeLanguage')}
-        >
-            <span className={styles.langIcon}>🌐</span>
-            <span className={styles.langCode}>{currentLang.toUpperCase()}</span>
-        </button>
+        <div className={`${styles.switcher} ${styles[variant]}`}>
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className={styles.mainButton}
+                aria-label={t('common.changeLanguage')}
+                aria-expanded={isOpen}
+            >
+                <span className={styles.langIcon}>🌐</span>
+                <span className={styles.langCode}>{currentLanguage.nativeName}</span>
+                <span className={styles.arrow}>{isOpen ? '▲' : '▼'}</span>
+            </button>
+
+            {isOpen && (
+                <div className={styles.dropdown}>
+                    {LANGUAGES.map((lang) => (
+                        <button
+                            key={lang.code}
+                            onClick={() => changeLanguage(lang.code)}
+                            className={`${styles.langOption} ${lang.code === currentLang ? styles.active : ''}`}
+                        >
+                            <span className={styles.langName}>{lang.nativeName}</span>
+                            <span className={styles.langEnglish}>{lang.name}</span>
+                        </button>
+                    ))}
+                </div>
+            )}
+
+            {isOpen && (
+                <div
+                    className={styles.backdrop}
+                    onClick={() => setIsOpen(false)}
+                    aria-hidden="true"
+                />
+            )}
+        </div>
     );
 }

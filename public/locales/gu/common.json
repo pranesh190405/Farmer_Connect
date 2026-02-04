@@ -1,0 +1,65 @@
+{
+    "app": {
+        "name": "ડિજિટલ કૃષિ બજાર",
+        "tagline": "ખેડૂતો અને ખરીદદારોને જોડવું"
+    },
+    "nav": {
+        "home": "હોમ",
+        "listings": "યાદીઓ",
+        "market": "બજાર",
+        "profile": "પ્રોફાઇલ"
+    },
+    "auth": {
+        "farmer": {
+            "title": "ખેડૂત નોંધણી",
+            "subtitle": "સીધા વેચાણ કરતા હજારો ખેડૂતો સાથે જોડાઓ",
+            "mobileLabel": "મોબાઇલ નંબર",
+            "mobilePlaceholder": "તમારો 10-અંકનો મોબાઇલ નંબર દાખલ કરો",
+            "sendOtp": "OTP મોકલો",
+            "otpTitle": "OTP ચકાસો",
+            "otpSubtitle": "મોકલેલો 6-અંકનો કોડ દાખલ કરો",
+            "verifyOtp": "ચકાસો",
+            "resendOtp": "OTP ફરીથી મોકલો",
+            "resendIn": "ફરીથી મોકલો",
+            "seconds": "સેકંડમાં",
+            "success": "ખાતું બનાવવામાં આવ્યું!",
+            "successMessage": "ડિજિટલ કૃષિ બજારમાં આપનું સ્વાગત છે",
+            "continue": "ડેશબોર્ડ પર જાઓ"
+        },
+        "buyer": {
+            "title": "ખરીદદાર નોંધણી",
+            "businessName": "વ્યવસાયનું નામ",
+            "taxId": "કર ID / GST નંબર",
+            "category": "વ્યવસાય શ્રેણી",
+            "categories": {
+                "retailer": "છૂટક વિક્રેતા",
+                "cooperative": "સહકારી મંડળી",
+                "institution": "સંસ્થા"
+            }
+        },
+        "errors": {
+            "invalidMobile": "કૃપા કરીને માન્ય 10-અંકનો મોબાઇલ નંબર દાખલ કરો",
+            "invalidOtp": "કૃપા કરીને માન્ય 6-અંકનો OTP દાખલ કરો",
+            "otpExpired": "OTP સમાપ્ત થયો. કૃપા કરીને નવો વિનંતી કરો."
+        }
+    },
+    "common": {
+        "loading": "લોડ થઈ રહ્યું છે...",
+        "error": "કંઈક ખોટું થયું",
+        "retry": "ફરી પ્રયાસ કરો",
+        "next": "આગળ",
+        "back": "પાછળ",
+        "submit": "સબમિટ કરો",
+        "cancel": "રદ કરો",
+        "changeLanguage": "ભાષા બદલો"
+    },
+    "voice": {
+        "startListening": "વૉઇસ શોધ શરૂ કરો",
+        "stopListening": "સાંભળવાનું બંધ કરો",
+        "listening": "સાંભળી રહ્યું છે..."
+    },
+    "offline": {
+        "noConnection": "તમે ઑફલાઇન છો. કેટલીક સુવિધાઓ મર્યાદિત હોઈ શકે છે.",
+        "backOnline": "તમે ફરીથી ઑનલાઇન છો!"
+    }
+}

@@ -1,9 +1,14 @@
 .switcher {
+    position: relative;
+    display: inline-block;
+}
+
+.mainButton {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: transparent;
+    background: white;
     border: 1px solid var(--border-color, #e0e0e0);
     border-radius: 8px;
     cursor: pointer;
@@ -13,17 +18,17 @@
     color: var(--text-primary, #1f2937);
 }
 
-.switcher:hover {
+.mainButton:hover {
     background: var(--bg-hover, #f3f4f6);
     border-color: var(--border-hover, #d1d5db);
 }
 
-.switcher:focus {
+.mainButton:focus {
     outline: 2px solid var(--primary-color, #10b981);
     outline-offset: 2px;
 }
 
-.switcher:active {
+.mainButton:active {
     transform: scale(0.98);
 }
 
@@ -34,11 +39,92 @@
 
 .langCode {
     font-weight: 600;
-    letter-spacing: 0.05em;
+    min-width: 60px;
+    text-align: left;
+}
+
+.arrow {
+    font-size: 0.625rem;
+    color: #6b7280;
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 1000;
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.langOption {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #f3f4f6;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    text-align: left;
+}
+
+.langOption:last-child {
+    border-bottom: none;
+}
+
+.langOption:hover {
+    background: #f9fafb;
+}
+
+.langOption.active {
+    background: #ecfdf5;
+    border-left: 3px solid #10b981;
+}
+
+.langName {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #1f2937;
+}
+
+.langEnglish {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
 }
 
 /* Compact variant for bottom nav */
-.compact {
+.compact .mainButton {
     padding: 0.375rem 0.75rem;
     border-radius: 6px;
     font-size: 0.75rem;
@@ -49,19 +135,25 @@
 }
 
 /* Header variant */
-.header {
+.header .mainButton {
     border: none;
     padding: 0.5rem;
 }
 
-.header:hover {
+.header .mainButton:hover {
     background: rgba(16, 185, 129, 0.1);
     border-color: transparent;
 }
 
 @media (max-width: 640px) {
-    .switcher {
+    .mainButton {
         padding: 0.375rem 0.75rem;
         font-size: 0.8125rem;
+    }
+
+    .dropdown {
+        right: auto;
+        left: 0;
+        min-width: 180px;
     }
 }
