@@ -15,48 +15,47 @@ Target Users:
 - Professional buyers (retailers, cooperatives, institutions)
 
 ================================================================================
-COMPLETED WORK (Epic 1 - 100% Complete)
+COMPLETED WORK
 ================================================================================
 
-✅ 1.1 Farmer Onboarding
-   - Mobile number input with +91 prefix
-   - 6-digit OTP verification with auto-focus
-   - 3-step registration flow (Mobile → OTP → Success)
-   - Files: src/app/(auth)/farmer/register/
+✅ Epic 1: User Identity & Access Control (100% Complete)
+   - Farmer Onboarding with mobile OTP verification
+   - Buyer Onboarding with GST validation
+   - KYC Document Upload with verification status
+   - Profile Management with location and preferences
+   - Protected Routes & Session Management
 
-✅ 1.2 Buyer Onboarding  
-   - Business name, GST validation (15-char), category selection
-   - 4-step flow (Business → Contact → OTP → Success)
-   - Files: src/app/(auth)/buyer/register/
-
-✅ 1.3 KYC Document Upload
-   - Drag-drop file upload with progress indicator
-   - Document type selection (Aadhaar, PAN, Voter ID, etc.)
-   - Verification status badges (Pending/Verified/Rejected)
-   - Files: src/app/profile/kyc/
-
-✅ 1.4 Profile Management
-   - Settings dashboard with location selection
-   - Crop interests chip selector
-   - SMS/Price alerts toggles
-   - Privacy settings (public profile, show location/contact)
-   - Files: src/app/profile/
-
-✅ 1.5 Protected Routes & Session
-   - Next.js middleware for route protection
-   - Session timeout warning modal (5 min before expiry)
-   - useAuth hook for auth state management
-   - Files: src/middleware.js, src/hooks/useAuth.js
+✅ Epic 2: Multilingual & Inclusive UX (100% Complete)
+   - ✅ Language Switcher: Dropdown selector with 8 Indian languages
+     * English, Hindi (हिन्दी), Tamil (தமிழ்), Telugu (తెలుగు)
+     * Kannada (ಕನ್ನಡ), Bengali (বাংলা), Marathi (मराठी), Gujarati (ગુજરાતી)
+     * Native script display, localStorage persistence
+     * Files: src/components/ui/LanguageSwitcher/
+   
+   - ✅ Bottom Navigation: Icon-based with 44px touch targets
+     * Home, Listings, Market, Profile
+     * Active state indicators, ARIA labels
+     * Files: src/components/ui/BottomNav/
+   
+   - ✅ Voice Search: Web Speech API integration
+     * Support for all 8 Indian languages (en-IN, hi-IN, ta-IN, etc.)
+     * Visual feedback (pulsing animation), transcript display
+     * Fallback for unsupported browsers
+     * Files: src/components/ui/VoiceSearch/
+   
+   - ✅ Offline Banner: Connection status indicator
+     * Online/offline detection, auto-hide on reconnect
+     * PWA service worker configured (next-pwa)
+     * Files: src/components/ui/OfflineBanner/
+   
+   - ✅ Header Component: Reusable app header
+     * Language switcher integration, optional voice search
+     * Sticky positioning, responsive design
+     * Files: src/components/ui/Header/
 
 ================================================================================
-PENDING WORK (Epics 2-5)
+PENDING WORK (Epics 3-5)
 ================================================================================
-
-📋 Epic 2: Multilingual & Inclusive UX
-   - [ ] Language Switcher (i18n already configured for EN/HI)
-   - [ ] Icon-based Bottom Navigation (44px touch targets)
-   - [ ] Voice-based Interaction (Web Speech API)
-   - [ ] Offline Mode Indicator banner
 
 📋 Epic 3: Crop Listing & Quality
    - [ ] Multi-step listing form (Crop Type, Qty, Price)
@@ -83,16 +82,21 @@ UI COMPONENTS CREATED
 ================================================================================
 
 src/components/ui/
-├── Button/       - Primary/Secondary/Outline, loading state, sizes
-├── Input/        - With prefix/suffix, error states, accessible
-├── OTPInput/     - 6-digit auto-focus, paste support, keyboard nav
-├── Select/       - Dropdown with placeholder, error handling
-├── FileUpload/   - Drag-drop, progress ring, preview
-├── Badge/        - Status badges (pending/verified/rejected/active/sold)
-├── Modal/        - Backdrop click, escape key, sizes
+├── Button/           - Primary/Secondary/Outline, loading state, sizes
+├── Input/            - With prefix/suffix, error states, accessible
+├── OTPInput/         - 6-digit auto-focus, paste support, keyboard nav
+├── Select/           - Dropdown with placeholder, error handling
+├── FileUpload/       - Drag-drop, progress ring, preview
+├── Badge/            - Status badges (pending/verified/rejected/active/sold)
+├── Modal/            - Backdrop click, escape key, sizes
+├── LanguageSwitcher/ - 8 Indian languages, dropdown, native scripts (Epic 2)
+├── BottomNav/        - Icon-based navigation, 44px touch targets (Epic 2)
+├── VoiceSearch/      - Web Speech API, multilingual support (Epic 2)
+├── OfflineBanner/    - Connection status, auto-hide (Epic 2)
+└── Header/           - App header with language & voice search (Epic 2)
 
 src/components/auth/
-├── SessionTimeout/ - Session expiry warning modal
+├── SessionTimeout/   - Session expiry warning modal
 
 ================================================================================
 STATE MANAGEMENT
@@ -113,8 +117,17 @@ Actions:
 i18n TRANSLATIONS
 ================================================================================
 
-Languages configured: English (en), Hindi (hi)
-Files: public/locales/en/common.json, public/locales/hi/common.json
+Languages configured: 8 Indian languages with native scripts
+- English (en)
+- Hindi (hi) - हिन्दी
+- Tamil (ta) - தமிழ்
+- Telugu (te) - తెలుగు
+- Kannada (kn) - ಕನ್ನಡ
+- Bengali (bn) - বাংলা
+- Marathi (mr) - मराठी
+- Gujarati (gu) - ગુજરાતી
+
+Files: public/locales/{lang}/common.json
 
 Translation keys available:
 - app.name, app.tagline
@@ -122,7 +135,9 @@ Translation keys available:
 - auth.farmer.* (title, mobileLabel, sendOtp, otpTitle, etc.)
 - auth.buyer.* (businessName, taxId, category, etc.)
 - auth.errors.* (invalidMobile, invalidOtp, etc.)
-- common.* (loading, error, retry, next, back, submit, cancel)
+- common.* (loading, error, retry, next, back, submit, cancel, changeLanguage)
+- voice.* (startListening, stopListening, listening)
+- offline.* (noConnection, backOnline)
 
 ================================================================================
 BACKEND REQUIREMENTS (NOT YET BUILT)
@@ -184,6 +199,12 @@ GIT COMMITS MADE
 1. feat(auth): implement farmer onboarding with OTP verification
 2. feat(auth): add buyer onboarding, KYC upload, and profile settings
 3. feat(auth): add protected routes, session management, and modal component
+4. feat(epic2): add multilingual and inclusive UX features
+   - Language Switcher (EN/HI), Bottom Navigation, Voice Search, Offline Banner
+5. feat(i18n): expand language support to 8 Indian languages
+   - Added Tamil, Telugu, Kannada, Bengali, Marathi, Gujarati translations
+   - Updated Language Switcher to dropdown with all languages
+   - Enhanced Voice Search for multilingual speech recognition
 
 ================================================================================
 HOW TO CONTINUE
@@ -199,9 +220,11 @@ HOW TO CONTINUE
 
    "Continue building the Digital Agricultural Marketplace. 
    Read context.txt in the project root for full details.
-   Currently completed: Epic 1 (User Identity & Access Control).
-   Next: Epic 2 (Multilingual & Inclusive UX) - Language Switcher, 
-   Bottom Navigation, Voice Search, Offline Indicator.
+   Currently completed: Epic 1 (User Identity & Access Control) ✅
+                       Epic 2 (Multilingual & Inclusive UX) ✅  
+   Next: Epic 3 (Crop Listing & Quality) - Multi-step listing form,
+   Quality grade dropdowns, Camera capture, Map integration,
+   Listing lifecycle badges.
    GitHub: https://github.com/pranesh190405/Farmer_Connect.git
    Branch: feature/farmer-onboarding"
 
