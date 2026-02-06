@@ -4,6 +4,8 @@ import Providers from "@/components/Providers";
 import OfflineBanner from "@/components/ui/OfflineBanner/OfflineBanner";
 import BottomNav from "@/components/ui/BottomNav/BottomNav";
 
+import Header from "@/components/ui/Header/Header";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -31,6 +33,7 @@ export default function RootLayout({ children }) {
       <body className={`${inter.variable} antialiased`}>
         <Providers>
           <OfflineBanner />
+          <Header />
           {children}
           <BottomNav />
         </Providers>

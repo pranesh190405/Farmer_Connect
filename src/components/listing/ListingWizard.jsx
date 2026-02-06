@@ -10,8 +10,8 @@ import StepCategory from './StepCategory';
 import StepDetails from './StepDetails';
 // import StepType from './StepType';
 import StepQuality from './StepQuality';
-// import StepLocation from './StepLocation';
-// import StepReview from './StepReview';
+import StepLocation from './StepLocation';
+import StepReview from './StepReview';
 
 export default function ListingWizard() {
     const dispatch = useDispatch();
@@ -35,8 +35,10 @@ export default function ListingWizard() {
                 return <StepDetails />;
             case 3:
                 return <StepQuality />;
-            // case 4: return <StepLocation />;
-            // case 5: return <StepReview />;
+            case 4:
+                return <StepLocation />;
+            case 5:
+                return <StepReview />;
             default:
                 return <StepCategory />;
         }
