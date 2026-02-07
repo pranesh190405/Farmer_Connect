@@ -61,5 +61,102 @@
     "offline": {
         "noConnection": "आप ऑफलाइन हैं। कुछ सुविधाएं सीमित हो सकती हैं।",
         "backOnline": "आप फिर से ऑनलाइन हैं!"
+    },
+    "landing": {
+        "hero": {
+            "badge": "उचित मूल्य • ताज़ा उपज • सीधा संपर्क",
+            "titlePrefix": "भविष्य",
+            "titleHighlight": "कृषि विपणन का"
+        },
+        "buttons": {
+            "startSelling": "बेचना शुरू करें",
+            "startBuying": "खरीदना शुरू करें"
+        },
+        "features": {
+            "fresh": {
+                "title": "खेतों से ताज़ा",
+                "desc": "बिना किसी बिचौलिए के ताज़ा उपज तक सीधी पहुंच।"
+            },
+            "quality": {
+                "title": "गुणवत्ता सुनिश्चित",
+                "desc": "सत्यापित किसान और मानक गुणवत्ता जांच सुनिश्चित करते हैं कि आपको सबसे अच्छा मिले।"
+            },
+            "fair": {
+                "title": "उचित मूल्य निर्धारण",
+                "desc": "पारदर्शी बाज़ार दरें किसानों को अधिक कमाने और खरीदारों को अधिक बचाने में मदद करती हैं।"
+            }
+        }
+    },
+    "categories": {
+        "vegetables": "सब्जियां",
+        "fruits": "फल",
+        "grains": "अनाज",
+        "spices": "मसाले"
+    },
+    "cart": {
+        "title": "शॉपिंग कार्ट",
+        "empty": "आपकी कार्ट खाली है",
+        "emptyDesc": "शुरू करने के लिए बाजार से आइटम जोड़ें",
+        "addToCart": "कार्ट में जोड़ें",
+        "removeFromCart": "हटाएं",
+        "total": "कुल",
+        "subtotal": "उप-योग",
+        "checkout": "चेकआउट करें",
+        "continueShopping": "खरीदारी जारी रखें",
+        "itemCount": "{{count}} आइटम",
+        "itemCount_plural": "{{count}} आइटम",
+        "added": "कार्ट में जोड़ा गया",
+        "removed": "कार्ट से हटाया गया",
+        "updated": "कार्ट अपडेट किया गया",
+        "quantity": "मात्रा",
+        "price": "कीमत",
+        "viewCart": "कार्ट देखें"
+    },
+    "checkout": {
+        "title": "चेकआउट",
+        "deliveryInfo": "डिलीवरी जानकारी",
+        "paymentMethod": "भुगतान विधि",
+        "orderSummary": "ऑर्डर सारांश",
+        "fullName": "पूरा नाम",
+        "phoneNumber": "फोन नंबर",
+        "address": "डिलीवरी पता",
+        "city": "शहर",
+        "state": "राज्य",
+        "pincode": "पिनकोड",
+        "cod": "कैश ऑन डिलीवरी",
+        "online": "ऑनलाइन भुगतान",
+        "placeOrder": "ऑर्डर करें",
+        "orderPlaced": "ऑर्डर सफलतापूर्वक दिया गया!",
+        "orderNumber": "ऑर्डर नंबर",
+        "thankYou": "आपके ऑर्डर के लिए धन्यवाद",
+        "backToDashboard": "डैशबोर्ड पर वापस जाएं",
+        "deliveryCharge": "डिलीवरी शुल्क",
+        "grandTotal": "कुल योग"
+    },
+    "listing": {
+        "new": {
+            "title": "नई लिस्टिंग",
+            "uploadImage": "फसल की तस्वीर अपलोड करें",
+            "imageSupport": "JPG, PNG समर्थित",
+            "cropType": "फसल का प्रकार",
+            "selectCrop": "फसल चुनें",
+            "variety": "किस्म (वैकल्पिक)",
+            "varietyPlaceholder": "जैसे लाल, हाइब्रिड",
+            "totalQuantity": "कुल मात्रा (किलो)",
+            "quantityPlaceholder": "जैसे 500",
+            "minQuantity": "न्यूनतम ऑर्डर मात्रा (किलो)",
+            "minQuantityPlaceholder": "जैसे 50",
+            "pricePerKg": "प्रति किलो कीमत (₹)",
+            "pricePlaceholder": "जैसे 25",
+            "creating": "बना रहे हैं...",
+            "createButton": "लिस्टिंग बनाएं"
+        },
+        "crops": {
+            "potato": "आलू",
+            "onion": "प्याज",
+            "tomato": "टमाटर",
+            "wheat": "गेहूं",
+            "rice": "चावल"
+        }
     }
 }

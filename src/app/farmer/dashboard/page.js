@@ -1,115 +1,203 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Plus, Package, MapPin, Clock, MoreVertical, Edit, Trash } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Plus, Package, Clock, MoreVertical, Edit, Trash, TrendingUp, DollarSign } from 'lucide-react';
+import { MockService } from '@/services/mockData';
+import { toast } from '@/components/ui/Toast/Toast';
 
 export default function FarmerDashboard() {
+    const { t } = useTranslation('common');
+    const [mounted, setMounted] = useState(false);
+    const [listings, setListings] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('active');
 
-    // Mock Data
-    const listings = [
-        {
-            id: 1,
-            crop: 'Potato (Kufri Jyoti)',
-            quantity: '500 kg',
-            price: '₹12/kg',
-            date: '2 Feb 2026',
-            status: 'active',
-            image: 'https://images.unsplash.com/photo-1518977676601-b53f82a6b696?w=200&h=200&fit=crop'
-        },
-        {
-            id: 2,
-            crop: 'Onion (Red)',
-            quantity: '100 kg',
-            price: '₹25/kg',
-            date: '28 Jan 2026',
-            status: 'sold',
-            image: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=200&h=200&fit=crop'
+    useEffect(() => {
+        setMounted(true);
+        fetchListings();
+    }, []);
+
+    const fetchListings = async () => {
+        try {
+            const data = await MockService.getFarmerListings();
+            setListings(data);
+        } catch (error) {
+            console.error('Failed to fetch listings:', error);
+            toast.error(t('common.error') || 'Failed to load listings');
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const handleDelete = async (id) => {
+        if (confirm(t('common.confirmDelete') || 'Are you sure you want to delete this listing?')) {
+            const success = await MockService.deleteListing(id);
+            if (success) {
+                toast.success(t('common.deleteSuccess') || 'Listing deleted successfully');
+                fetchListings(); // Refresh
+            } else {
+                toast.error(t('common.error') || 'Failed to delete');
+            }
+        }
+    };
+
+    if (!mounted) return null;
+
+    const stats = [
+        { label: t('dashboard.totalSales'), value: '₹45,000', icon: TrendingUp, color: 'bg-blue-100 text-blue-600' },
+        { label: t('dashboard.activeListings'), value: listings.filter(l => l.status === 'active').length, icon: Package, color: 'bg-green-100 text-green-600' },
+        { label: t('dashboard.todaysPrice'), value: '₹12/kg', icon: DollarSign, color: 'bg-yellow-100 text-yellow-600' },
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 pb-24">
+        <div className="min-h-screen bg-gray-50 pb-24 font-sans">
             {/* Header */}
-            <header className="bg-white border-b sticky top-0 z-10 p-4">
-                <div className="flex justify-between items-center">
-                    <h1 className="text-xl font-bold text-gray-900">My Listings</h1>
-                    <Link
-                        href="/farmer/listing/new"
-                        className="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 text-sm hover:bg-green-700 active:scale-95 transition-all"
-                    >
-                        <Plus className="w-4 h-4" />
-                        New Listing
-                    </Link>
+            <header className="bg-white border-b sticky top-0 z-10 px-6 py-4 shadow-sm">
+                <div className="flex justify-between items-center max-w-7xl mx-auto">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900">{t('dashboard.welcomeFarmer')}</h1>
+                        <p className="text-gray-500 text-sm mt-1">{t('dashboard.manageCrops')}</p>
+                    </div>
+                    <div className="flex gap-3">
+                        <Link
+                            href="/farmer/listing/batch"
+                            className="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full font-medium flex items-center gap-2 text-sm hover:bg-gray-50 hover:border-gray-300 transition-all"
+                        >
+                            <Package className="w-4 h-4" />
+                            Batch Mode
+                        </Link>
+                        <Link
+                            href="/farmer/listing/new"
+                            className="bg-green-600 text-white px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 text-sm hover:bg-green-700 active:scale-95 transition-all shadow-md hover:shadow-lg"
+                        >
+                            <Plus className="w-5 h-5" />
+                            {t('dashboard.newListing')}
+                        </Link>
+                    </div>
                 </div>
             </header>
 
-            {/* Tabs */}
-            <div className="bg-white px-4 border-b flex gap-6 overflow-x-auto hide-scrollbar">
-                {['active', 'sold', 'expired'].map((tab) => (
-                    <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={`
-                            py-3 px-1 border-b-2 font-medium capitalize whitespace-nowrap transition-colors
-                            ${activeTab === tab
-                                ? 'border-green-600 text-green-700'
-                                : 'border-transparent text-gray-500 hover:text-gray-700'
-                            }
-                        `}
-                    >
-                        {tab} ({listings.filter(l => l.status === tab).length})
-                    </button>
-                ))}
-            </div>
+            <main className="max-w-7xl mx-auto p-6 space-y-8">
 
-            {/* Content */}
-            <main className="p-4 space-y-4">
-                {listings.filter(l => l.status === activeTab).length === 0 ? (
-                    <div className="text-center py-10">
-                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
-                            <Package className="w-8 h-8" />
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {stats.map((stat, index) => (
+                        <div key={index} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+                            <div className={`p-3 rounded-xl ${stat.color}`}>
+                                <stat.icon className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <p className="text-gray-500 text-sm font-medium">{stat.label}</p>
+                                <h3 className="text-2xl font-bold text-gray-900">{stat.value}</h3>
+                            </div>
                         </div>
-                        <h3 className="text-gray-900 font-medium mb-1">No listings found</h3>
-                        <p className="text-gray-500 text-sm">
-                            You haven't posted any {activeTab} listings yet.
+                    ))}
+                </div>
+
+                {/* Tabs */}
+                <div>
+                    <div className="flex gap-8 border-b border-gray-200">
+                        {['active', 'sold', 'expired'].map((tab) => (
+                            <button
+                                key={tab}
+                                onClick={() => setActiveTab(tab)}
+                                className={`
+                                    pb-3 text-base font-medium capitalize transition-all relative
+                                    ${activeTab === tab
+                                        ? 'text-green-600'
+                                        : 'text-gray-400 hover:text-gray-600'
+                                    }
+                                `}
+                            >
+                                {t(`dashboard.status.${tab}`) || tab}
+                                <span className={`ml-2 text-xs py-0.5 px-2 rounded-full ${activeTab === tab ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                                    {listings.filter(l => l.status === tab).length}
+                                </span>
+                                {activeTab === tab && (
+                                    <div className="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 rounded-t-full" />
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Listings Grid */}
+                {loading ? (
+                    <div className="text-center py-20">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+                        <p className="mt-4 text-gray-500">{t('common.loading')}</p>
+                    </div>
+                ) : listings.filter(l => l.status === activeTab).length === 0 ? (
+                    <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
+                        <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500">
+                            <Package className="w-10 h-10 opacity-50" />
+                        </div>
+                        <h3 className="text-gray-900 font-bold text-lg mb-2">{t('dashboard.noListings')}</h3>
+                        <p className="text-gray-500 text-sm max-w-xs mx-auto mb-6">
+                            {t('dashboard.startSellingDescription')}
                         </p>
+                        <Link
+                            href="/farmer/listing/new"
+                            className="text-green-600 font-semibold hover:text-green-700 hover:underline"
+                        >
+                            + {t('dashboard.createFirstListing')}
+                        </Link>
                     </div>
                 ) : (
-                    listings.filter(l => l.status === activeTab).map((item) => (
-                        <div key={item.id} className="bg-white rounded-xl shadow-sm border p-3 flex gap-4">
-                            {/* Image */}
-                            <img
-                                src={item.image}
-                                alt={item.crop}
-                                className="w-24 h-24 rounded-lg object-cover flex-shrink-0 bg-gray-100"
-                            />
-
-                            {/* Details */}
-                            <div className="flex-1 min-w-0">
-                                <div className="flex justify-between items-start">
-                                    <h3 className="font-bold text-gray-900 truncate">{item.crop}</h3>
-                                    <button className="p-1 -mr-2 text-gray-400 hover:text-gray-600">
-                                        <MoreVertical className="w-4 h-4" />
-                                    </button>
-                                </div>
-
-                                <p className="text-green-700 font-semibold mb-2">{item.price}</p>
-
-                                <div className="flex flex-wrap gap-2 text-xs text-gray-500">
-                                    <div className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded">
-                                        <Package className="w-3 h-3" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {listings.filter(l => l.status === activeTab).map((item) => (
+                            <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all group">
+                                <div className="relative h-48 overflow-hidden">
+                                    <img
+                                        src={item.image}
+                                        alt={item.crop}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow-sm">
                                         {item.quantity}
                                     </div>
-                                    <div className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded">
-                                        <Clock className="w-3 h-3" />
-                                        {item.date}
+                                </div>
+
+                                <div className="p-5">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <h3 className="font-bold text-gray-900 text-lg truncate pr-2">{item.crop}</h3>
+                                        <button className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-50">
+                                            <MoreVertical className="w-5 h-5" />
+                                        </button>
+                                    </div>
+
+                                    <div className="flex items-baseline gap-1 mb-4">
+                                        <span className="text-2xl font-bold text-green-700">{item.price}</span>
+                                    </div>
+
+                                    <div className="flex items-center gap-4 text-sm text-gray-500 pt-4 border-t border-gray-50">
+                                        <div className="flex items-center gap-1.5">
+                                            <Clock className="w-4 h-4" />
+                                            {item.date}
+                                        </div>
+                                        <div className="ml-auto flex gap-2">
+                                            <Link
+                                                href={`/farmer/listing/edit/${item.id}`}
+                                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                title={t('common.edit')}
+                                            >
+                                                <Edit className="w-4 h-4" />
+                                            </Link>
+                                            <button
+                                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                title={t('common.delete')}
+                                                onClick={() => handleDelete(item.id)}
+                                            >
+                                                <Trash className="w-4 h-4" />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
+                        ))}
+                    </div>
                 )}
             </main>
         </div>

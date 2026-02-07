@@ -5,9 +5,37 @@
     },
     "nav": {
         "home": "Home",
-        "listings": "Listings",
+        "listings": "My Listings",
         "market": "Market",
         "profile": "Profile"
+    },
+    "dashboard": {
+        "welcomeFarmer": "Welcome back, Farmer!",
+        "manageCrops": "Manage your crops and orders",
+        "newListing": "New Listing",
+        "totalSales": "Total Sales",
+        "activeListings": "Active Listings",
+        "todaysPrice": "Today's Market Price",
+        "status": {
+            "active": "Active",
+            "sold": "Sold",
+            "expired": "Expired"
+        },
+        "noListings": "No listings found",
+        "startSellingDescription": "You haven't posted any listings yet. Start selling your produce today!",
+        "createFirstListing": "Create your first listing",
+        "welcomeBuyer": "Welcome back, Buyer!",
+        "findFreshProduce": "Find fresh produce directly from farmers",
+        "adminConsole": "Admin Console",
+        "systemOverview": "System Overview",
+        "totalFarmers": "Total Farmers",
+        "totalBuyers": "Total Buyers",
+        "totalRevenue": "Total Revenue",
+        "recentRegistrations": "Recent Registrations",
+        "user": "User",
+        "type": "Type",
+        "date": "Date",
+        "actions": "Actions"
     },
     "auth": {
         "farmer": {
@@ -51,7 +79,16 @@
         "back": "Back",
         "submit": "Submit",
         "cancel": "Cancel",
-        "changeLanguage": "Change Language"
+        "changeLanguage": "Change Language",
+        "searchPlaceholder": "Search for crops, farmers...",
+        "buyNow": "Buy Now",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirmDelete": "Are you sure you want to delete this listing?",
+        "deleteSuccess": "Listing deleted successfully",
+        "buySuccess": "Order placed for",
+        "fillFields": "Please fill all required fields",
+        "listingCreated": "Listing created successfully!"
     },
     "voice": {
         "startListening": "Start voice search",
@@ -61,5 +98,134 @@
     "offline": {
         "noConnection": "You are offline. Some features may be limited.",
         "backOnline": "You are back online!"
+    },
+    "profile": {
+        "title": "Profile Settings",
+        "accountInfo": "Account Information",
+        "name": "Name",
+        "mobile": "Mobile",
+        "type": "Account Type",
+        "location": "Location",
+        "state": "State",
+        "selectState": "Select state",
+        "district": "District",
+        "enterDistrict": "Enter district",
+        "autoDetect": "Auto-detect Location",
+        "cropInterests": "Crop Interests",
+        "cropInterestsHint": "Select crops you're interested in buying or selling",
+        "notifications": "Notifications",
+        "smsAlerts": "SMS Alerts",
+        "smsAlertsDesc": "Receive important updates via SMS",
+        "priceAlerts": "Price Alerts",
+        "priceAlertsDesc": "Get notified when prices change",
+        "privacy": "Privacy",
+        "publicProfile": "Public Profile",
+        "publicProfileDesc": "Allow others to view your profile",
+        "showLocation": "Show Location",
+        "showLocationDesc": "Display your location on listings",
+        "showContact": "Show Contact",
+        "showContactDesc": "Make phone number visible to buyers",
+        "saveChanges": "Save Changes",
+        "saved": "Settings saved!",
+        "logout": "Logout",
+        "locationError": "Geolocation is not supported by your browser",
+        "locationRetrieveError": "Unable to retrieve your location"
+    },
+    "categories": {
+        "vegetables": "Vegetables",
+        "fruits": "Fruits",
+        "grains": "Grains",
+        "spices": "Spices"
+    },
+    "landing": {
+        "hero": {
+            "badge": "Fair Price • Fresh Produce • Direct Connection",
+            "titlePrefix": "The Future of",
+            "titleHighlight": "Agricultural Marketing"
+        },
+        "buttons": {
+            "startSelling": "Start Selling",
+            "startBuying": "Start Buying"
+        },
+        "features": {
+            "fresh": {
+                "title": "Fresh from Farm",
+                "desc": "Direct access to fresh produce without any middlemen."
+            },
+            "quality": {
+                "title": "Quality Assured",
+                "desc": "Verified farmers and standard quality checks ensure you get the best."
+            },
+            "fair": {
+                "title": "Fair Pricing",
+                "desc": "Transparent market rates help farmers earn more and buyers save more."
+            }
+        }
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "Your cart is empty",
+        "emptyDesc": "Add items from the market to get started",
+        "addToCart": "Add to Cart",
+        "removeFromCart": "Remove",
+        "total": "Total",
+        "subtotal": "Subtotal",
+        "checkout": "Proceed to Checkout",
+        "continueShopping": "Continue Shopping",
+        "itemCount": "{{count}} item",
+        "itemCount_plural": "{{count}} items",
+        "added": "Added to cart",
+        "removed": "Removed from cart",
+        "updated": "Cart updated",
+        "quantity": "Quantity",
+        "price": "Price",
+        "viewCart": "View Cart"
+    },
+    "checkout": {
+        "title": "Checkout",
+        "deliveryInfo": "Delivery Information",
+        "paymentMethod": "Payment Method",
+        "orderSummary": "Order Summary",
+        "fullName": "Full Name",
+        "phoneNumber": "Phone Number",
+        "address": "Delivery Address",
+        "city": "City",
+        "state": "State",
+        "pincode": "Pincode",
+        "cod": "Cash on Delivery",
+        "online": "Online Payment",
+        "placeOrder": "Place Order",
+        "orderPlaced": "Order Placed Successfully!",
+        "orderNumber": "Order Number",
+        "thankYou": "Thank you for your order",
+        "backToDashboard": "Back to Dashboard",
+        "deliveryCharge": "Delivery Charge",
+        "grandTotal": "Grand Total"
+    },
+    "listing": {
+        "new": {
+            "title": "New Listing",
+            "uploadImage": "Upload Crop Image",
+            "imageSupport": "Supports JPG, PNG",
+            "cropType": "Crop Type",
+            "selectCrop": "Select Crop",
+            "variety": "Variety (Optional)",
+            "varietyPlaceholder": "e.g. Red, Hybrid",
+            "totalQuantity": "Total Quantity (kg)",
+            "quantityPlaceholder": "e.g. 500",
+            "minQuantity": "Min. Order Quantity (kg)",
+            "minQuantityPlaceholder": "e.g. 50",
+            "pricePerKg": "Price per kg (₹)",
+            "pricePlaceholder": "e.g. 25",
+            "creating": "Creating...",
+            "createButton": "Create Listing"
+        },
+        "crops": {
+            "potato": "Potato",
+            "onion": "Onion",
+            "tomato": "Tomato",
+            "wheat": "Wheat",
+            "rice": "Rice"
+        }
     }
 }

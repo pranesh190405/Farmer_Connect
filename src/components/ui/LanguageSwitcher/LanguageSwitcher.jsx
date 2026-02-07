@@ -13,16 +13,24 @@ const LANGUAGES = [
     { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
     { code: 'mr', name: 'Marathi', nativeName: 'मराठी' },
     { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી' },
+    { code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ' },
+    { code: 'hr', name: 'Haryanvi', nativeName: 'हरियाणवी' },
 ];
 
 export default function LanguageSwitcher({ variant = 'default' }) {
     const { i18n, t } = useTranslation('common');
+    const [mounted, setMounted] = useState(false);
     const [currentLang, setCurrentLang] = useState('en');
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         setCurrentLang(i18n.language);
     }, [i18n.language]);
+
+    if (!mounted) {
+        return null; // or a loading skeleton/default state
+    }
 
     const changeLanguage = (langCode) => {
         i18n.changeLanguage(langCode);

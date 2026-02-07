@@ -3,8 +3,10 @@ import "./globals.css";
 import Providers from "@/components/Providers";
 import OfflineBanner from "@/components/ui/OfflineBanner/OfflineBanner";
 import BottomNav from "@/components/ui/BottomNav/BottomNav";
-
 import Header from "@/components/ui/Header/Header";
+import { ToastContainer } from "@/components/ui/Toast/Toast";
+import Cart from "@/components/ui/Cart/Cart";
+import VoiceAgent from "@/components/ui/VoiceAgent/VoiceAgent";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,12 +17,13 @@ export const metadata = {
   title: "Digital Agri Market",
   description: "Digital Agricultural Marketplace connecting farmers and buyers",
   manifest: "/manifest.json",
+};
+
+export const viewport = {
   themeColor: "#16a34a",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }) {
@@ -36,6 +39,9 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <BottomNav />
+          <Cart />
+          <VoiceAgent />
+          <ToastContainer />
         </Providers>
       </body>
     </html>

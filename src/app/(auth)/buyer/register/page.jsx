@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 import {
     sendOtpStart,
     sendOtpSuccess,
+    sendOtpFailure,
     verifyOtpStart,
     verifyOtpSuccess,
     resetAuthFlow,
@@ -19,25 +21,41 @@ import styles from './page.module.css';
 
 // Registration steps
 const STEPS = {
-    BUSINESS_INFO: 'business',
-    CONTACT: 'contact',
+    MOBILE: 'mobile',
+    BUSINESS_INFO: 'business', // Only for new users
+    CATEGORY_SELECTION: 'category',
     OTP: 'otp',
-    SUCCESS: 'success',
+    PENDING: 'pending',
 };
 
 // Business categories
 const BUSINESS_CATEGORIES = [
     { value: 'retailer', label: 'Retailer' },
+    { value: 'wholesaler', label: 'Wholesaler' },
     { value: 'cooperative', label: 'Cooperative' },
     { value: 'institution', label: 'Institution' },
+    { value: 'processor', label: 'Food Processor' },
+];
+
+// Interest categories
+const INTEREST_CATEGORIES = [
+    { id: 'vegetables', label: 'Vegetables', icon: '🥦' },
+    { id: 'fruits', label: 'Fruits', icon: '🍎' },
+    { id: 'grains', label: 'Grains & Pulses', icon: '🌾' },
+    { id: 'spices', label: 'Spices', icon: '🌶️' },
+    { id: 'flowers', label: 'Flowers', icon: '🌸' },
+    { id: 'dairy', label: 'Dairy', icon: '🥛' },
 ];
 
 export default function BuyerRegisterPage() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { isLoading, mobileNumber } = useSelector((state) => state.auth);
+    const router = useRouter();
+    const { isLoading, mobileNumber, isAuthenticated, user, users } = useSelector((state) => state.auth);
 
-    const [step, setStep] = useState(STEPS.BUSINESS_INFO);
+    const [step, setStep] = useState(STEPS.MOBILE);
+    const [mobile, setMobile] = useState('');
+    const [mobileError, setMobileError] = useState('');
 
     // Form data
     const [formData, setFormData] = useState({
@@ -45,7 +63,7 @@ export default function BuyerRegisterPage() {
         taxId: '',
         category: '',
         contactName: '',
-        mobile: '',
+        interestedCategories: [], // New field
         email: '',
     });
 
@@ -54,11 +72,61 @@ export default function BuyerRegisterPage() {
     const [otp, setOtp] = useState('');
     const [resendTimer, setResendTimer] = useState(0);
 
+    // Redirect if authenticated
+    useEffect(() => {
+        if (isAuthenticated && user?.status === 'APPROVED') {
+            router.push('/buyer/dashboard');
+        } else if (user?.status === 'PENDING') {
+            setStep(STEPS.PENDING);
+        }
+    }, [isAuthenticated, user, router]);
+
     // Update form field
     const updateField = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }));
         if (errors[field]) {
             setErrors(prev => ({ ...prev, [field]: '' }));
+        }
+    };
+
+    // Toggle category selection
+    const toggleCategory = (catId) => {
+        setFormData(prev => {
+            const current = prev.interestedCategories || [];
+            if (current.includes(catId)) {
+                return { ...prev, interestedCategories: current.filter(id => id !== catId) };
+            } else {
+                return { ...prev, interestedCategories: [...current, catId] };
+            }
+        });
+        if (errors.interestedCategories) {
+            setErrors(prev => ({ ...prev, interestedCategories: '' }));
+        }
+    };
+
+    // Handle Mobile Submit
+    const handleMobileSubmit = () => {
+        if (mobile.length !== 10) {
+            setMobileError('Enter valid 10-digit mobile number');
+            return;
+        }
+
+        // Check if user exists in mock DB
+        // In real app, this would be an API call to check existence
+        const existingUser = users.find(u => u.mobile === mobile && u.type === 'buyer');
+
+        if (existingUser) {
+            // Existing user -> Go to OTP
+            dispatch(sendOtpStart(mobile));
+            // Simulate API
+            setTimeout(() => {
+                dispatch(sendOtpSuccess());
+                setStep(STEPS.OTP);
+                startResendTimer();
+            }, 1000);
+        } else {
+            // New user -> Go to Business Info
+            setStep(STEPS.BUSINESS_INFO);
         }
     };
 
@@ -72,56 +140,40 @@ export default function BuyerRegisterPage() {
 
         if (!formData.taxId.trim()) {
             newErrors.taxId = 'Tax ID / GST Number is required';
-        } else if (!/^[A-Z0-9]{15}$/.test(formData.taxId.toUpperCase())) {
-            newErrors.taxId = 'Enter a valid 15-character GST Number';
         }
 
         if (!formData.category) {
             newErrors.category = 'Please select a business category';
         }
 
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
-    // Validate contact step
-    const validateContact = () => {
-        const newErrors = {};
-
         if (!formData.contactName.trim()) {
             newErrors.contactName = 'Contact person name is required';
         }
 
-        if (!formData.mobile.trim()) {
-            newErrors.mobile = 'Mobile number is required';
-        } else if (!/^\d{10}$/.test(formData.mobile)) {
-            newErrors.mobile = 'Enter a valid 10-digit mobile number';
-        }
-
-        if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            newErrors.email = 'Enter a valid email address';
-        }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    // Handle next step
-    const handleNext = async () => {
-        if (step === STEPS.BUSINESS_INFO) {
-            if (validateBusinessInfo()) {
-                setStep(STEPS.CONTACT);
-            }
-        } else if (step === STEPS.CONTACT) {
-            if (validateContact()) {
-                // Send OTP
-                dispatch(sendOtpStart(formData.mobile));
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                dispatch(sendOtpSuccess());
-                setStep(STEPS.OTP);
-                startResendTimer();
-            }
+    // Handle Business Info Submit
+    const handleBusinessInfoSubmit = () => {
+        if (validateBusinessInfo()) {
+            setStep(STEPS.CATEGORY_SELECTION);
         }
+    };
+
+    // Handle Category Submit
+    const handleCategorySubmit = async () => {
+        if (formData.interestedCategories.length === 0) {
+            setErrors({ ...errors, interestedCategories: 'Please select at least one category' });
+            return;
+        }
+
+        // Send OTP
+        dispatch(sendOtpStart(mobile));
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        dispatch(sendOtpSuccess());
+        setStep(STEPS.OTP);
+        startResendTimer();
     };
 
     // Start resend timer
@@ -144,33 +196,74 @@ export default function BuyerRegisterPage() {
 
         dispatch(verifyOtpStart());
         await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Pass all details if new user, or just mobile if existing
         dispatch(verifyOtpSuccess({
-            user: {
-                id: '1',
-                mobile: formData.mobile,
-                businessName: formData.businessName,
-                category: formData.category,
-            },
+            mobile: mobile,
             userType: 'buyer',
+            ...formData // Will be ignored by reducer if user exists
         }));
-        setStep(STEPS.SUCCESS);
+
+        // useEffect handles redirect
     };
 
     // Handle back
     const handleBack = () => {
-        if (step === STEPS.CONTACT) setStep(STEPS.BUSINESS_INFO);
-        else if (step === STEPS.OTP) setStep(STEPS.CONTACT);
+        if (step === STEPS.BUSINESS_INFO) setStep(STEPS.MOBILE);
+        else if (step === STEPS.CATEGORY_SELECTION) setStep(STEPS.BUSINESS_INFO);
+        else if (step === STEPS.OTP) {
+            // If we came from category (new user), go back there. 
+            if (!users.find(u => u.mobile === mobile && u.type === 'buyer')) {
+                setStep(STEPS.CATEGORY_SELECTION);
+            } else {
+                setStep(STEPS.MOBILE);
+                dispatch(resetAuthFlow());
+            }
+        }
     };
+
+    // Render Mobile Step
+    const renderMobileStep = () => (
+        <div className={styles.stepContent}>
+            <div className={styles.header}>
+                <div className={styles.iconWrapper}>
+                    <span className={styles.icon} role="img" aria-label="buyer">🛒</span>
+                </div>
+                <h1 className={styles.title}>{t('auth.buyer.title')}</h1>
+                <p className={styles.subtitle}>Login or Register</p>
+            </div>
+
+            <div className={styles.form}>
+                <Input
+                    label="Mobile Number"
+                    type="tel"
+                    inputMode="numeric"
+                    placeholder="Enter 10-digit mobile"
+                    value={mobile}
+                    onChange={(e) => {
+                        setMobile(e.target.value.replace(/\D/g, '').slice(0, 10));
+                        setMobileError('');
+                    }}
+                    prefix="+91"
+                    error={mobileError}
+                    required
+                />
+                <Button onClick={handleMobileSubmit} fullWidth>
+                    Continue
+                </Button>
+            </div>
+        </div>
+    );
 
     // Render Business Info Step
     const renderBusinessInfoStep = () => (
         <div className={styles.stepContent}>
+            <button className={styles.backButton} onClick={handleBack}>
+                ← Back
+            </button>
             <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="business">🏢</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.buyer.title')}</h1>
-                <p className={styles.subtitle}>Tell us about your business</p>
+                <h1 className={styles.title}>Business Details</h1>
+                <p className={styles.subtitle}>Complete your profile to continue</p>
             </div>
 
             <div className={styles.form}>
@@ -189,7 +282,7 @@ export default function BuyerRegisterPage() {
                     value={formData.taxId}
                     onChange={(e) => updateField('taxId', e.target.value.toUpperCase())}
                     error={errors.taxId}
-                    hint="15-character GST Number"
+                    hint="GST Number"
                     required
                 />
 
@@ -203,29 +296,6 @@ export default function BuyerRegisterPage() {
                     required
                 />
 
-                <Button onClick={handleNext} fullWidth>
-                    {t('common.next')}
-                </Button>
-            </div>
-        </div>
-    );
-
-    // Render Contact Step
-    const renderContactStep = () => (
-        <div className={styles.stepContent}>
-            <button className={styles.backButton} onClick={handleBack}>
-                ← {t('common.back')}
-            </button>
-
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="contact">📞</span>
-                </div>
-                <h1 className={styles.title}>Contact Details</h1>
-                <p className={styles.subtitle}>How can we reach you?</p>
-            </div>
-
-            <div className={styles.form}>
                 <Input
                     label="Contact Person"
                     placeholder="Enter contact person name"
@@ -235,29 +305,47 @@ export default function BuyerRegisterPage() {
                     required
                 />
 
-                <Input
-                    label="Mobile Number"
-                    type="tel"
-                    inputMode="numeric"
-                    placeholder="Enter 10-digit mobile"
-                    value={formData.mobile}
-                    onChange={(e) => updateField('mobile', e.target.value.replace(/\D/g, '').slice(0, 10))}
-                    prefix="+91"
-                    error={errors.mobile}
-                    required
-                />
+                <Button onClick={handleBusinessInfoSubmit} fullWidth>
+                    Continue to Interests
+                </Button>
+            </div>
+        </div>
+    );
 
-                <Input
-                    label="Email (Optional)"
-                    type="email"
-                    placeholder="Enter email address"
-                    value={formData.email}
-                    onChange={(e) => updateField('email', e.target.value)}
-                    error={errors.email}
-                />
+    // Render Category Selection Step
+    const renderCategorySelectionStep = () => (
+        <div className={styles.stepContent}>
+            <button className={styles.backButton} onClick={handleBack}>
+                ← Back
+            </button>
+            <div className={styles.header}>
+                <h1 className={styles.title}>What do you buy?</h1>
+                <p className={styles.subtitle}>Select categories you are interested in</p>
+            </div>
 
-                <Button onClick={handleNext} isLoading={isLoading} fullWidth>
-                    Send OTP
+            <div className={styles.form}>
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                    {INTEREST_CATEGORIES.map((cat) => (
+                        <button
+                            key={cat.id}
+                            className={`p-4 rounded-xl border flex flex-col items-center gap-2 transition-all ${formData.interestedCategories.includes(cat.id)
+                                ? 'border-green-600 bg-green-50 text-green-700 font-medium ring-1 ring-green-600'
+                                : 'border-gray-200 hover:border-green-400 hover:bg-gray-50 text-gray-600'
+                                }`}
+                            onClick={() => toggleCategory(cat.id)}
+                        >
+                            <span className="text-2xl">{cat.icon}</span>
+                            <span className="text-sm">{cat.label}</span>
+                        </button>
+                    ))}
+                </div>
+
+                {errors.interestedCategories && (
+                    <p className="text-red-500 text-sm text-center mb-4">{errors.interestedCategories}</p>
+                )}
+
+                <Button onClick={handleCategorySubmit} isLoading={isLoading} fullWidth>
+                    Send OTP to Verify
                 </Button>
             </div>
         </div>
@@ -266,8 +354,12 @@ export default function BuyerRegisterPage() {
     // Render OTP Step
     const renderOtpStep = () => (
         <div className={styles.stepContent}>
+            {/* DEBUG OTP - Remove before production */}
+            <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-2 rounded-md mb-4 text-sm font-mono text-center">
+                🔔 DEBUG OTP: 123456
+            </div>
             <button className={styles.backButton} onClick={handleBack}>
-                ← {t('common.back')}
+                ← Back
             </button>
 
             <div className={styles.header}>
@@ -276,7 +368,7 @@ export default function BuyerRegisterPage() {
                 </div>
                 <h1 className={styles.title}>{t('auth.farmer.otpTitle')}</h1>
                 <p className={styles.subtitle}>
-                    Enter the 6-digit code sent to <strong>+91 {formData.mobile}</strong>
+                    Enter the 6-digit code sent to <strong>+91 {mobile}</strong>
                 </p>
             </div>
 
@@ -310,81 +402,50 @@ export default function BuyerRegisterPage() {
         </div>
     );
 
-    // Render Success Step
-    const renderSuccessStep = () => (
+    // Render Pending Step
+    const renderPendingStep = () => (
         <div className={styles.stepContent}>
             <div className={styles.header}>
-                <div className={`${styles.iconWrapper} ${styles.successIcon}`}>
-                    <span className={styles.icon} role="img" aria-label="success">✅</span>
+                <div className={`${styles.iconWrapper} ${styles.pendingIcon}`}>
+                    <span className={styles.icon} role="img" aria-label="pending">⏳</span>
                 </div>
-                <h1 className={styles.title}>Registration Complete!</h1>
+                <h1 className={styles.title} style={{ color: '#d97706' }}>Verification Pending</h1>
                 <p className={styles.subtitle}>
-                    Welcome to Digital Agri Market, <strong>{formData.businessName}</strong>
+                    Your account is currently under review by the administrator.
                 </p>
             </div>
 
-            <div className={styles.summaryCard}>
-                <h3>Account Summary</h3>
-                <div className={styles.summaryRow}>
-                    <span>Business:</span>
-                    <strong>{formData.businessName}</strong>
-                </div>
-                <div className={styles.summaryRow}>
-                    <span>Category:</span>
-                    <strong>{formData.category}</strong>
-                </div>
-                <div className={styles.summaryRow}>
-                    <span>GST:</span>
-                    <strong>{formData.taxId}</strong>
-                </div>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-6">
+                <p className="text-sm text-yellow-800 text-center">
+                    Please wait for admin approval. You can try logging in later to check your status.
+                </p>
             </div>
 
             <Button
-                onClick={() => window.location.href = '/buyer/dashboard'}
+                onClick={() => {
+                    dispatch(resetAuthFlow());
+                    setStep(STEPS.MOBILE);
+                    setMobile('');
+                    setOtp('');
+                }}
+                variant="outline"
                 fullWidth
             >
-                Go to Dashboard
+                Back to Login
             </Button>
         </div>
     );
 
-    // Get current step number
-    const getStepNumber = () => {
-        switch (step) {
-            case STEPS.BUSINESS_INFO: return 1;
-            case STEPS.CONTACT: return 2;
-            case STEPS.OTP: return 3;
-            case STEPS.SUCCESS: return 4;
-            default: return 1;
-        }
-    };
-
     return (
         <main className={styles.container}>
             <div className={styles.card}>
-                {/* Progress indicator */}
-                <div className={styles.progress}>
-                    {['Business', 'Contact', 'Verify', 'Done'].map((label, index) => (
-                        <div key={label} className={styles.progressItem}>
-                            <div
-                                className={`${styles.progressStep} ${getStepNumber() > index + 1 ? styles.completed : ''} ${getStepNumber() === index + 1 ? styles.active : ''}`}
-                            >
-                                <span className={styles.progressDot}>
-                                    {getStepNumber() > index + 1 ? '✓' : index + 1}
-                                </span>
-                                <span className={styles.progressLabel}>{label}</span>
-                            </div>
-                            {index < 3 && <div className={styles.progressLine} />}
-                        </div>
-                    ))}
-                </div>
-
-                {/* Step content */}
+                {step === STEPS.MOBILE && renderMobileStep()}
                 {step === STEPS.BUSINESS_INFO && renderBusinessInfoStep()}
-                {step === STEPS.CONTACT && renderContactStep()}
+                {step === STEPS.CATEGORY_SELECTION && renderCategorySelectionStep()}
                 {step === STEPS.OTP && renderOtpStep()}
-                {step === STEPS.SUCCESS && renderSuccessStep()}
+                {step === STEPS.PENDING && renderPendingStep()}
             </div>
         </main>
     );
 }
+

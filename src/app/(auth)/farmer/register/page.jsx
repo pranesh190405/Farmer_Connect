@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 import {
     sendOtpStart,
     sendOtpSuccess,
@@ -22,13 +23,14 @@ import styles from './page.module.css';
 const STEPS = {
     MOBILE: 'mobile',
     OTP: 'otp',
-    SUCCESS: 'success',
+    PENDING: 'pending',
 };
 
 export default function FarmerRegisterPage() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { isLoading, mobileNumber, error } = useSelector((state) => state.auth);
+    const router = useRouter();
+    const { isLoading, mobileNumber, error, isAuthenticated, user } = useSelector((state) => state.auth);
 
     const [step, setStep] = useState(STEPS.MOBILE);
     const [mobile, setMobile] = useState('');
@@ -36,6 +38,15 @@ export default function FarmerRegisterPage() {
     const [otp, setOtp] = useState('');
     const [otpError, setOtpError] = useState('');
     const [resendTimer, setResendTimer] = useState(0);
+
+    // Redirect if authenticated
+    useEffect(() => {
+        if (isAuthenticated && user?.status === 'APPROVED') {
+            router.push('/farmer/dashboard');
+        } else if (user?.status === 'PENDING') {
+            setStep(STEPS.PENDING);
+        }
+    }, [isAuthenticated, user, router]);
 
     // Validate mobile number (10 digits)
     const validateMobile = (value) => {
@@ -101,12 +112,13 @@ export default function FarmerRegisterPage() {
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
 
-            // Simulate OTP verification (accept any 6-digit OTP for demo)
+            // Verify OTP Logic (Action will handle user creation/status check)
             dispatch(verifyOtpSuccess({
-                user: { id: '1', mobile: mobile },
+                mobile: mobile,
                 userType: 'farmer',
             }));
-            setStep(STEPS.SUCCESS);
+
+            // Note: The reducer updates state.user.status which triggers useEffect redirect or step change
         } catch (err) {
             dispatch(verifyOtpFailure('Invalid OTP. Please try again.'));
             setOtpError('Invalid OTP. Please try again.');
@@ -167,6 +179,10 @@ export default function FarmerRegisterPage() {
     // Render OTP Verification Step
     const renderOtpStep = () => (
         <div className={styles.stepContent}>
+            {/* DEBUG OTP - Remove before production */}
+            <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-2 rounded-md mb-4 text-sm font-mono text-center">
+                🔔 DEBUG OTP: 123456
+            </div>
             <button
                 className={styles.backButton}
                 onClick={handleBack}
@@ -190,7 +206,7 @@ export default function FarmerRegisterPage() {
                     length={6}
                     onChange={setOtp}
                     onComplete={handleVerifyOtp}
-                    error={otpError}
+                    error={otpError || error}
                     disabled={isLoading}
                 />
 
@@ -222,22 +238,36 @@ export default function FarmerRegisterPage() {
         </div>
     );
 
-    // Render Success Step
-    const renderSuccessStep = () => (
+    // Render Pending Approval Step
+    const renderPendingStep = () => (
         <div className={styles.stepContent}>
             <div className={styles.header}>
-                <div className={`${styles.iconWrapper} ${styles.successIcon}`}>
-                    <span className={styles.icon} role="img" aria-label="success">✅</span>
+                <div className={`${styles.iconWrapper} ${styles.pendingIcon}`}>
+                    <span className={styles.icon} role="img" aria-label="pending">⏳</span>
                 </div>
-                <h1 className={styles.title}>{t('auth.farmer.success')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.successMessage')}</p>
+                <h1 className={styles.title} style={{ color: '#d97706' }}>Verification Pending</h1>
+                <p className={styles.subtitle}>
+                    Your account is currently under review by the administrator.
+                </p>
+            </div>
+
+            <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-6">
+                <p className="text-sm text-yellow-800 text-center">
+                    Please wait for admin approval. You can try logging in later to check your status.
+                </p>
             </div>
 
             <Button
-                onClick={() => window.location.href = '/farmer/dashboard'}
+                onClick={() => {
+                    dispatch(resetAuthFlow());
+                    setStep(STEPS.MOBILE);
+                    setMobile('');
+                    setOtp('');
+                }}
+                variant="outline"
                 fullWidth
             >
-                {t('auth.farmer.continue')}
+                Back to Login
             </Button>
         </div>
     );
@@ -245,35 +275,11 @@ export default function FarmerRegisterPage() {
     return (
         <main className={styles.container}>
             <div className={styles.card}>
-                {/* Progress indicator */}
-                <div className={styles.progress}>
-                    <div
-                        className={`${styles.progressStep} ${step === STEPS.MOBILE ? styles.active : step !== STEPS.MOBILE ? styles.completed : ''}`}
-                    >
-                        <span className={styles.progressDot}>1</span>
-                        <span className={styles.progressLabel}>Mobile</span>
-                    </div>
-                    <div className={styles.progressLine} />
-                    <div
-                        className={`${styles.progressStep} ${step === STEPS.OTP ? styles.active : step === STEPS.SUCCESS ? styles.completed : ''}`}
-                    >
-                        <span className={styles.progressDot}>2</span>
-                        <span className={styles.progressLabel}>Verify</span>
-                    </div>
-                    <div className={styles.progressLine} />
-                    <div
-                        className={`${styles.progressStep} ${step === STEPS.SUCCESS ? styles.active : ''}`}
-                    >
-                        <span className={styles.progressDot}>3</span>
-                        <span className={styles.progressLabel}>Done</span>
-                    </div>
-                </div>
-
-                {/* Step content */}
                 {step === STEPS.MOBILE && renderMobileStep()}
                 {step === STEPS.OTP && renderOtpStep()}
-                {step === STEPS.SUCCESS && renderSuccessStep()}
+                {step === STEPS.PENDING && renderPendingStep()}
             </div>
         </main>
     );
 }
+

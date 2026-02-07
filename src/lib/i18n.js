@@ -11,6 +11,8 @@ import knCommon from '../../public/locales/kn/common.json';
 import bnCommon from '../../public/locales/bn/common.json';
 import mrCommon from '../../public/locales/mr/common.json';
 import guCommon from '../../public/locales/gu/common.json';
+import paCommon from '../../public/locales/pa/common.json';
+import hrCommon from '../../public/locales/hr/common.json';
 
 const resources = {
     en: { common: enCommon },
@@ -21,6 +23,8 @@ const resources = {
     bn: { common: bnCommon },
     mr: { common: mrCommon },
     gu: { common: guCommon },
+    pa: { common: paCommon },
+    hr: { common: hrCommon },
 };
 
 i18n

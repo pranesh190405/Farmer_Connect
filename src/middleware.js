@@ -38,18 +38,18 @@ export function middleware(request) {
     );
 
     // Redirect to login if accessing protected route without auth
-    if (isProtectedRoute && !token) {
-        const loginUrl = new URL('/farmer/register', request.url);
-        loginUrl.searchParams.set('redirect', pathname);
-        return NextResponse.redirect(loginUrl);
-    }
+    // if (isProtectedRoute && !token) {
+    //     const loginUrl = new URL('/farmer/register', request.url);
+    //     loginUrl.searchParams.set('redirect', pathname);
+    //     return NextResponse.redirect(loginUrl);
+    // }
 
     // Redirect to dashboard if accessing auth route while logged in
-    if (isAuthRoute && token) {
-        // Parse token to get user type (simplified - in production decode JWT)
-        const dashboardUrl = new URL('/farmer/dashboard', request.url);
-        return NextResponse.redirect(dashboardUrl);
-    }
+    // if (isAuthRoute && token) {
+    //     // Parse token to get user type (simplified - in production decode JWT)
+    //     const dashboardUrl = new URL('/farmer/dashboard', request.url);
+    //     return NextResponse.redirect(dashboardUrl);
+    // }
 
     return NextResponse.next();
 }
