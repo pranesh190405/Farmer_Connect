@@ -15,7 +15,6 @@ export default function AuthGuard({ children }) {
         if (isLoading) return;
 
         if (!isAuthenticated) {
-            console.log(`Access denied to ${pathname}. Redirecting to login.`);
             router.push('/login');
             setAuthorized(false);
         } else {
