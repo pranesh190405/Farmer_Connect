@@ -23,6 +23,8 @@ import styles from './page.module.css';
 const STEPS = {
     MOBILE: 'mobile',
     OTP: 'otp',
+    AADHAR: 'aadhar',
+    CONFIRM: 'confirm',
     PENDING: 'pending',
 };
 
@@ -38,6 +40,10 @@ export default function FarmerRegisterPage() {
     const [otp, setOtp] = useState('');
     const [otpError, setOtpError] = useState('');
     const [resendTimer, setResendTimer] = useState(0);
+    const [aadharNumber, setAadharNumber] = useState('');
+    const [aadharError, setAadharError] = useState('');
+    const [extractedData, setExtractedData] = useState({ name: '', dateOfBirth: '', address: '' });
+    const [isExtracting, setIsExtracting] = useState(false);
 
     // Redirect if authenticated
     useEffect(() => {
@@ -112,13 +118,10 @@ export default function FarmerRegisterPage() {
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
 
-            // Verify OTP Logic (Action will handle user creation/status check)
-            dispatch(verifyOtpSuccess({
-                mobile: mobile,
-                userType: 'farmer',
-            }));
+            // OTP verified - proceed to Aadhar step
+            setStep(STEPS.AADHAR);
+            dispatch(sendOtpSuccess()); // Reset loading state
 
-            // Note: The reducer updates state.user.status which triggers useEffect redirect or step change
         } catch (err) {
             dispatch(verifyOtpFailure('Invalid OTP. Please try again.'));
             setOtpError('Invalid OTP. Please try again.');
@@ -131,12 +134,107 @@ export default function FarmerRegisterPage() {
         handleSendOtp();
     };
 
+    // Validate Aadhar number (12 digits)
+    const validateAadhar = (value) => {
+        const cleaned = value.replace(/\D/g, '');
+        if (cleaned.length !== 12) {
+            return t('auth.errors.invalidAadhar');
+        }
+        return '';
+    };
+
+    // Handle Aadhar input
+    const handleAadharChange = (e) => {
+        const value = e.target.value.replace(/\D/g, '').slice(0, 12);
+        setAadharNumber(value);
+        if (aadharError) setAadharError('');
+
+        // Auto-extract data when 12 digits entered
+        if (value.length === 12) {
+            extractAadharDetails(value);
+        } else {
+            setExtractedData({ name: '', dateOfBirth: '', address: '' });
+        }
+    };
+
+    // Mock Aadhar data extraction
+    const extractAadharDetails = async (aadhar) => {
+        setIsExtracting(true);
+
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Mock extraction logic (same as in authSlice)
+        const lastFourDigits = aadhar.slice(-4);
+        const mockNames = ['Ramesh Kumar', 'Suresh Patil', 'Amit Singh', 'Priya Sharma', 'Vijay Kumar'];
+        const mockStates = ['Maharashtra', 'Punjab', 'Karnataka', 'Tamil Nadu', 'Gujarat'];
+
+        const nameIndex = parseInt(lastFourDigits.charAt(0)) % mockNames.length;
+        const stateIndex = parseInt(lastFourDigits.charAt(1)) % mockStates.length;
+        const year = 1960 + (parseInt(lastFourDigits.charAt(2)) * 5);
+        const month = (parseInt(lastFourDigits.charAt(3)) % 12) + 1;
+
+        setExtractedData({
+            name: mockNames[nameIndex],
+            dateOfBirth: `${year}-${month.toString().padStart(2, '0')}-15`,
+            address: `Village/City, District, ${mockStates[stateIndex]}`
+        });
+
+        setIsExtracting(false);
+    };
+
+    // Handle Aadhar submission
+    const handleAadharSubmit = () => {
+        const validationError = validateAadhar(aadharNumber);
+        if (validationError) {
+            setAadharError(validationError);
+            return;
+        }
+
+        if (!extractedData.name) {
+            setAadharError(t('auth.errors.aadharRequired'));
+            return;
+        }
+
+        setStep(STEPS.CONFIRM);
+    };
+
+    // Handle final registration
+    const handleConfirmRegistration = async () => {
+        dispatch(verifyOtpStart());
+
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            // Create user with Aadhar data
+            dispatch(verifyOtpSuccess({
+                mobile: mobile,
+                userType: 'farmer',
+                aadharNumber: aadharNumber,
+                name: extractedData.name,
+                dateOfBirth: extractedData.dateOfBirth,
+                address: extractedData.address
+            }));
+
+        } catch (err) {
+            dispatch(verifyOtpFailure('Registration failed. Please try again.'));
+        }
+    };
+
     // Handle back button
     const handleBack = () => {
-        dispatch(resetAuthFlow());
-        setStep(STEPS.MOBILE);
-        setOtp('');
-        setOtpError('');
+        if (step === STEPS.CONFIRM) {
+            setStep(STEPS.AADHAR);
+        } else if (step === STEPS.AADHAR) {
+            setStep(STEPS.OTP);
+            setAadharNumber('');
+            setExtractedData({ name: '', dateOfBirth: '', address: '' });
+        } else {
+            dispatch(resetAuthFlow());
+            setStep(STEPS.MOBILE);
+            setOtp('');
+            setOtpError('');
+        }
     };
 
     // Render Mobile Input Step
@@ -238,6 +336,138 @@ export default function FarmerRegisterPage() {
         </div>
     );
 
+    // Render Aadhar Input Step
+    const renderAadharStep = () => (
+        <div className={styles.stepContent}>
+            <button
+                className={styles.backButton}
+                onClick={handleBack}
+                aria-label={t('common.back')}
+            >
+                ← {t('common.back')}
+            </button>
+
+            <div className={styles.header}>
+                <div className={styles.iconWrapper}>
+                    <span className={styles.icon} role="img" aria-label="aadhar">🪪</span>
+                </div>
+                <h1 className={styles.title}>{t('auth.farmer.title')}</h1>
+                <p className={styles.subtitle}>Enter your Aadhar for verification</p>
+            </div>
+
+            <div className={styles.form}>
+                <Input
+                    label={t('auth.farmer.aadharLabel')}
+                    type="tel"
+                    inputMode="numeric"
+                    placeholder={t('auth.farmer.aadharPlaceholder')}
+                    value={aadharNumber}
+                    onChange={handleAadharChange}
+                    error={aadharError}
+                    required
+                    maxLength={12}
+                />
+
+                {isExtracting && (
+                    <div className="text-center py-4">
+                        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                        <p className="text-sm text-gray-600 mt-2">{t('auth.farmer.extractingData')}</p>
+                    </div>
+                )}
+
+                {extractedData.name && !isExtracting && (
+                    <div className="bg-green-50 border border-green-200 rounded-md p-4 space-y-2">
+                        <p className="text-sm font-semibold text-green-800 mb-3">
+                            {t('auth.farmer.detailsExtracted')}
+                        </p>
+                        <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">{t('auth.farmer.nameLabel')}:</span>
+                                <span className="font-medium text-gray-900">{extractedData.name}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">{t('auth.farmer.dobLabel')}:</span>
+                                <span className="font-medium text-gray-900">{extractedData.dateOfBirth}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-600">{t('auth.farmer.addressLabel')}:</span>
+                                <span className="font-medium text-gray-900 text-right max-w-xs">{extractedData.address}</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <Button
+                    onClick={handleAadharSubmit}
+                    disabled={aadharNumber.length !== 12 || !extractedData.name || isExtracting}
+                    fullWidth
+                >
+                    {t('common.next')}
+                </Button>
+            </div>
+        </div>
+    );
+
+    // Render Confirmation Step
+    const renderConfirmStep = () => (
+        <div className={styles.stepContent}>
+            <button
+                className={styles.backButton}
+                onClick={handleBack}
+                aria-label={t('common.back')}
+            >
+                ← {t('common.back')}
+            </button>
+
+            <div className={styles.header}>
+                <div className={styles.iconWrapper}>
+                    <span className={styles.icon} role="img" aria-label="check">✓</span>
+                </div>
+                <h1 className={styles.title}>{t('auth.farmer.confirmDetails')}</h1>
+                <p className={styles.subtitle}>Please review your information</p>
+            </div>
+
+            <div className={styles.form}>
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 space-y-4">
+                    <div>
+                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Mobile Number</label>
+                        <p className="text-base font-semibold text-gray-900 mt-1">+91 {mobile}</p>
+                    </div>
+                    <div>
+                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.aadharLabel')}</label>
+                        <p className="text-base font-semibold text-gray-900 mt-1">{aadharNumber.replace(/(\d{4})(\d{4})(\d{4})/, '$1 $2 $3')}</p>
+                    </div>
+                    <div>
+                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.nameLabel')}</label>
+                        <p className="text-base font-semibold text-gray-900 mt-1">{extractedData.name}</p>
+                    </div>
+                    <div>
+                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.dobLabel')}</label>
+                        <p className="text-base font-semibold text-gray-900 mt-1">{extractedData.dateOfBirth}</p>
+                    </div>
+                    <div>
+                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.addressLabel')}</label>
+                        <p className="text-base font-semibold text-gray-900 mt-1">{extractedData.address}</p>
+                    </div>
+                </div>
+
+                <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
+                    <p className="text-xs text-yellow-800">
+                        {t('auth.farmer.canBrowse')}
+                    </p>
+                </div>
+
+                <Button
+                    onClick={handleConfirmRegistration}
+                    isLoading={isLoading}
+                    fullWidth
+                >
+                    {t('common.submit')}
+                </Button>
+            </div>
+        </div>
+    );
+
     // Render Pending Approval Step
     const renderPendingStep = () => (
         <div className={styles.stepContent}>
@@ -277,6 +507,8 @@ export default function FarmerRegisterPage() {
             <div className={styles.card}>
                 {step === STEPS.MOBILE && renderMobileStep()}
                 {step === STEPS.OTP && renderOtpStep()}
+                {step === STEPS.AADHAR && renderAadharStep()}
+                {step === STEPS.CONFIRM && renderConfirmStep()}
                 {step === STEPS.PENDING && renderPendingStep()}
             </div>
         </main>

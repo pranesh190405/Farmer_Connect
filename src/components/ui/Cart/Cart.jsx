@@ -11,6 +11,9 @@ export default function Cart() {
     const { t } = useTranslation('common');
     const dispatch = useDispatch();
     const { items, isOpen } = useSelector((state) => state.cart);
+    const { user, isAuthenticated } = useSelector((state) => state.auth);
+
+    const isAadharVerified = user?.aadharVerified || false;
 
     const total = items.reduce((sum, item) => {
         const price = parseFloat(item.price.replace('₹', '').replace('/kg', ''));
@@ -112,17 +115,46 @@ export default function Cart() {
                 {/* Footer */}
                 {items.length > 0 && (
                     <div className="border-t p-6 space-y-4 bg-gray-50">
+                        {/* Aadhar Verification Warning */}
+                        {isAuthenticated && !isAadharVerified && (
+                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                                <div className="flex items-start gap-3">
+                                    <span className="text-2xl">⚠️</span>
+                                    <div className="flex-1">
+                                        <p className="font-semibold text-yellow-900 text-sm mb-1">
+                                            {t('cart.verificationRequired')}
+                                        </p>
+                                        <p className="text-xs text-yellow-800">
+                                            {t('cart.pendingVerification')}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                         <div className="flex justify-between items-center">
                             <span className="text-gray-600 font-medium">{t('cart.subtotal')}</span>
                             <span className="text-2xl font-bold text-gray-900">₹{total.toFixed(2)}</span>
                         </div>
-                        <Link
-                            href="/checkout"
-                            className="block w-full bg-green-600 text-white text-center py-3.5 rounded-xl font-bold hover:bg-green-700 transition-colors shadow-lg"
-                            onClick={() => dispatch(closeCart())}
-                        >
-                            {t('cart.checkout')}
-                        </Link>
+
+                        {isAadharVerified ? (
+                            <Link
+                                href="/checkout"
+                                className="block w-full bg-green-600 text-white text-center py-3.5 rounded-xl font-bold hover:bg-green-700 transition-colors shadow-lg"
+                                onClick={() => dispatch(closeCart())}
+                            >
+                                {t('cart.checkout')}
+                            </Link>
+                        ) : (
+                            <button
+                                disabled
+                                className="w-full bg-gray-300 text-gray-500 text-center py-3.5 rounded-xl font-bold cursor-not-allowed shadow-lg"
+                                title={t('cart.verifyToCheckout')}
+                            >
+                                {t('cart.checkout')} 🔒
+                            </button>
+                        )}
+
                         <button
                             onClick={() => dispatch(closeCart())}
                             className="w-full text-gray-600 text-center py-2 font-medium hover:text-gray-900 transition-colors"

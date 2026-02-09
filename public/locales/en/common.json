@@ -35,7 +35,53 @@
         "user": "User",
         "type": "Type",
         "date": "Date",
-        "actions": "Actions"
+        "actions": "Actions",
+        "buyer": {
+            "welcome": "Welcome, Buyer",
+            "welcomeDesc": "Manage your orders and track deliveries",
+            "browseMarket": "Browse Market",
+            "stats": {
+                "totalOrders": "Total Orders",
+                "activeOrders": "Active Orders",
+                "completed": "Completed"
+            },
+            "tabs": {
+                "active": "Active Orders",
+                "completed": "Completed Orders",
+                "cancelled": "Cancelled Orders"
+            },
+            "empty": {
+                "title": "No {{status}} orders",
+                "desc": "You don't have any {{status}} orders at the moment.",
+                "startShopping": "Start Shopping"
+            },
+            "orderId": "Order #",
+            "inProgress": "In Progress",
+            "trackOrder": "Track Order"
+        }
+    },
+    "market": {
+        "title": "Market",
+        "subtitle": "Direct from farmers",
+        "filters": {
+            "title": "Filters",
+            "categories": "Categories",
+            "allCategories": "All Categories",
+            "region": "Region",
+            "allIndia": "All India",
+            "priceRange": "Price Range",
+            "reset": "Reset Filters",
+            "active": "Active filters:"
+        },
+        "searchPlaceholder": "Search crops, farmers...",
+        "noCrops": {
+            "title": "No crops found",
+            "desc": "Try adjusting your filters or search query"
+        },
+        "card": {
+            "min": "Min.",
+            "add": "Add"
+        }
     },
     "auth": {
         "farmer": {
@@ -50,9 +96,19 @@
             "resendOtp": "Resend OTP",
             "resendIn": "Resend in",
             "seconds": "seconds",
+            "aadharLabel": "Aadhar Number",
+            "aadharPlaceholder": "Enter your 12-digit Aadhar",
+            "nameLabel": "Full Name",
+            "dobLabel": "Date of Birth",
+            "addressLabel": "Address",
+            "extractingData": "Extracting details from Aadhar...",
+            "confirmDetails": "Confirm Your Details",
+            "detailsExtracted": "Details extracted from Aadhar",
             "success": "Account Created!",
             "successMessage": "Welcome to Digital Agri Market",
-            "continue": "Continue to Dashboard"
+            "continue": "Continue to Dashboard",
+            "verificationPending": "Aadhar verification pending",
+            "canBrowse": "You can browse the marketplace, but order placement requires Aadhar verification"
         },
         "buyer": {
             "title": "Buyer Registration",
@@ -68,7 +124,9 @@
         "errors": {
             "invalidMobile": "Please enter a valid 10-digit mobile number",
             "invalidOtp": "Please enter a valid 6-digit OTP",
-            "otpExpired": "OTP expired. Please request a new one."
+            "invalidAadhar": "Please enter a valid 12-digit Aadhar number",
+            "otpExpired": "OTP expired. Please request a new one.",
+            "aadharRequired": "Aadhar number is required for registration"
         }
     },
     "common": {
@@ -129,7 +187,9 @@
         "saved": "Settings saved!",
         "logout": "Logout",
         "locationError": "Geolocation is not supported by your browser",
-        "locationRetrieveError": "Unable to retrieve your location"
+        "locationRetrieveError": "Unable to retrieve your location",
+        "language": "Language",
+        "selectLanguage": "Select Language"
     },
     "categories": {
         "vegetables": "Vegetables",
@@ -179,7 +239,10 @@
         "updated": "Cart updated",
         "quantity": "Quantity",
         "price": "Price",
-        "viewCart": "View Cart"
+        "viewCart": "View Cart",
+        "verificationRequired": "Aadhar Verification Required",
+        "verifyToCheckout": "Please verify your Aadhar to place orders",
+        "pendingVerification": "Your Aadhar is pending admin verification"
     },
     "checkout": {
         "title": "Checkout",

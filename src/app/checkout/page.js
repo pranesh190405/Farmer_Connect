@@ -1,234 +1,240 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Package, CreditCard } from 'lucide-react';
-import { clearCart } from '@/store/slices/cartSlice';
-import { showToast } from '@/components/ui/Toast/Toast';
 import Link from 'next/link';
-import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
+import { ShieldCheck, MapPin, CreditCard, ChevronRight, CheckCircle, AlertTriangle } from 'lucide-react';
+import { clearCart } from '@/store/slices/cartSlice';
+import { toast } from '@/components/ui/Toast/Toast';
+import Button from '@/components/ui/Button';
 
 export default function CheckoutPage() {
     const { t } = useTranslation('common');
-    const router = useRouter();
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.cart.items);
+    const router = useRouter();
+    const { items, total } = useSelector((state) => state.cart);
+    const { user, isAuthenticated } = useSelector((state) => state.auth);
 
-    const [formData, setFormData] = useState({
-        fullName: '',
-        phoneNumber: '',
-        address: '',
-        city: '',
-        state: '',
-        pincode: '',
-        paymentMethod: 'cod'
-    });
+    const [step, setStep] = useState(1); // 1: Address, 2: Payment, 3: Success
+    const [loading, setLoading] = useState(false);
+    const [address, setAddress] = useState(user?.address || '');
+    const [paymentMethod, setPaymentMethod] = useState('cod');
 
-    const subtotal = items.reduce((sum, item) => {
-        const price = parseFloat(item.price.replace('₹', '').replace('/kg', ''));
-        return sum + (price * item.quantity);
-    }, 0);
+    const isVerified = user?.aadharVerified;
 
-    const deliveryCharge = subtotal > 500 ? 0 : 50;
-    const total = subtotal + deliveryCharge;
+    // Guard: Redirect if not authenticated or empty cart
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push('/login');
+        } else if (items.length === 0 && step !== 3) {
+            router.push('/market');
+        }
+    }, [isAuthenticated, items, router, step]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    // Guard: Redirect if not verified
+    useEffect(() => {
+        if (isAuthenticated && !isVerified) {
+            toast.error(t('cart.verificationRequired') || 'Aadhar verification required');
+            router.push('/market'); // Or cart, but market is safer
+        }
+    }, [isAuthenticated, isVerified, router, t]);
 
-        // Validate form
-        if (!formData.fullName || !formData.phoneNumber || !formData.address || !formData.city || !formData.state || !formData.pincode) {
-            showToast('Please fill all required fields', 'error');
+    const handlePlaceOrder = async () => {
+        if (!address.trim()) {
+            toast.error("Please enter a delivery address");
             return;
         }
 
-        // Simulate order placement
-        const orderNumber = 'ORD' + Date.now();
-        dispatch(clearCart());
-        showToast(t('checkout.orderPlaced') || 'Order placed successfully!', 'success');
+        setLoading(true);
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Redirect to dashboard after 2 seconds
-        setTimeout(() => {
-            router.push('/buyer/dashboard');
-        }, 2000);
+        dispatch(clearCart());
+        setStep(3); // Success
+        setLoading(false);
+        toast.success("Order placed successfully!");
     };
 
-    if (items.length === 0) {
+    if (!isAuthenticated || (items.length === 0 && step !== 3)) {
+        return null; // or loading spinner
+    }
+
+    if (!isVerified) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-                <div className="text-center">
-                    <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('cart.empty')}</h2>
-                    <p className="text-gray-500 mb-6">{t('cart.emptyDesc')}</p>
-                    <Link
-                        href="/buyer/dashboard"
-                        className="inline-block bg-green-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700 transition-colors"
-                    >
-                        {t('cart.continueShopping')}
+            <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+                <div className="bg-white p-8 rounded-2xl shadow-sm text-center max-w-md w-full">
+                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4 text-yellow-600">
+                        <AlertTriangle className="w-8 h-8" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('cart.verificationRequired') || 'Verification Required'}</h2>
+                    <p className="text-gray-500 mb-6">
+                        {t('cart.pendingVerification') || 'Your account needs admin approval before you can place orders.'}
+                    </p>
+                    <Link href="/profile">
+                        <Button fullWidth>Check Status</Button>
                     </Link>
                 </div>
             </div>
         );
     }
 
+    if (step === 3) {
+        return (
+            <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-6 font-sans">
+                <div className="bg-white p-8 md:p-12 rounded-3xl shadow-lg text-center max-w-lg w-full">
+                    <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 animate-bounce">
+                        <CheckCircle className="w-12 h-12" />
+                    </div>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4">Order Placed!</h1>
+                    <p className="text-gray-500 mb-8 text-lg">
+                        Thank you for supporting local farmers. Your order has been received and will be processed shortly.
+                    </p>
+                    <div className="flex flex-col gap-3">
+                        <Link href="/buyer/dashboard">
+                            <Button fullWidth>Track Order</Button>
+                        </Link>
+                        <Link href="/market" className="text-green-600 font-medium hover:underline py-2">
+                            Continue Shopping
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="min-h-screen bg-gray-50 pb-20">
-            {/* Header */}
-            <header className="bg-white border-b sticky top-0 z-10">
-                <div className="max-w-6xl mx-auto px-6 py-4 flex items-center gap-4">
-                    <Link href="/buyer/dashboard" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                        <ArrowLeft className="w-5 h-5 text-gray-600" />
+        <div className="min-h-screen bg-gray-50 pb-24 font-sans">
+            <header className="bg-white border-b px-6 py-4 shadow-sm">
+                <div className="max-w-4xl mx-auto flex items-center gap-2">
+                    <Link href="/market" className="text-gray-500 hover:text-gray-900">
+                        Market
                     </Link>
-                    <h1 className="text-xl font-bold text-gray-900">{t('checkout.title')}</h1>
+                    <ChevronRight className="w-4 h-4 text-gray-400" />
+                    <span className="font-semibold text-gray-900">Checkout</span>
                 </div>
             </header>
 
-            <main className="max-w-6xl mx-auto p-6">
-                <div className="grid lg:grid-cols-3 gap-6">
-                    {/* Checkout Form */}
-                    <div className="lg:col-span-2 space-y-6">
-                        {/* Delivery Information */}
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                            <h2 className="text-lg font-bold text-gray-900 mb-4">{t('checkout.deliveryInfo')}</h2>
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                <div className="grid md:grid-cols-2 gap-4">
-                                    <input
-                                        type="text"
-                                        placeholder={t('checkout.fullName') || 'Full Name'}
-                                        value={formData.fullName}
-                                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-                                        required
-                                    />
-                                    <input
-                                        type="tel"
-                                        placeholder={t('checkout.phoneNumber') || 'Phone Number'}
-                                        value={formData.phoneNumber}
-                                        onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-                                        required
-                                    />
-                                </div>
+            <main className="max-w-4xl mx-auto p-4 md:p-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {/* Left Column - Steps */}
+                    <div className="md:col-span-2 space-y-6">
+                        {/* Address Section */}
+                        <div className={`bg-white rounded-2xl p-6 shadow-sm border ${step === 1 ? 'border-green-500 ring-1 ring-green-500' : 'border-gray-100'}`}>
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step >= 1 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-500'}`}>1</div>
+                                <h2 className="text-xl font-bold text-gray-900">Delivery Address</h2>
+                            </div>
+
+                            <div className="pl-11">
                                 <textarea
-                                    placeholder={t('checkout.address') || 'Address'}
-                                    value={formData.address}
-                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
-                                    rows="3"
-                                    required
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    placeholder="Enter full delivery address..."
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none min-h-[100px]"
+                                    disabled={step !== 1}
                                 />
-                                <div className="grid md:grid-cols-3 gap-4">
-                                    <input
-                                        type="text"
-                                        placeholder={t('checkout.city') || 'City'}
-                                        value={formData.city}
-                                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-                                        required
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder={t('checkout.state') || 'State'}
-                                        value={formData.state}
-                                        onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-                                        required
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder={t('checkout.pincode') || 'Pincode'}
-                                        value={formData.pincode}
-                                        onChange={(e) => setFormData({ ...formData, pincode: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-                                        required
-                                    />
-                                </div>
-                            </form>
+                                {step === 1 && (
+                                    <div className="mt-4">
+                                        <Button onClick={() => {
+                                            if (address.trim()) setStep(2);
+                                            else toast.error("Address is required");
+                                        }}>
+                                            Continue to Payment
+                                        </Button>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
-                        {/* Payment Method */}
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                            <h2 className="text-lg font-bold text-gray-900 mb-4">{t('checkout.paymentMethod')}</h2>
-                            <div className="space-y-3">
-                                <label className={`flex items-center gap-3 p-4 border-2 rounded-xl cursor-pointer transition-colors ${formData.paymentMethod === 'cod' ? 'border-green-600 bg-green-50' : 'border-gray-200 hover:border-gray-300'}`}>
-                                    <input
-                                        type="radio"
-                                        name="payment"
-                                        value="cod"
-                                        checked={formData.paymentMethod === 'cod'}
-                                        onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
-                                        className="w-5 h-5 text-green-600 focus:ring-green-500"
-                                    />
-                                    <CreditCard className="w-5 h-5 text-green-600" />
-                                    <span className="font-medium text-gray-900">{t('checkout.cod') || 'Cash on Delivery'}</span>
-                                </label>
-                                <label className={`flex items-center gap-3 p-4 border-2 rounded-xl cursor-pointer transition-colors ${formData.paymentMethod === 'online' ? 'border-green-600 bg-green-50' : 'border-gray-200 hover:border-gray-300'}`}>
-                                    <input
-                                        type="radio"
-                                        name="payment"
-                                        value="online"
-                                        checked={formData.paymentMethod === 'online'}
-                                        onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
-                                        className="w-5 h-5 text-green-600 focus:ring-green-500"
-                                    />
-                                    <CreditCard className="w-5 h-5 text-gray-600" />
-                                    <span className="font-medium text-gray-900">{t('checkout.online') || 'Online Payment'}</span>
-                                </label>
+                        {/* Payment Section */}
+                        <div className={`bg-white rounded-2xl p-6 shadow-sm border ${step === 2 ? 'border-green-500 ring-1 ring-green-500' : 'border-gray-100'}`}>
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step >= 2 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-500'}`}>2</div>
+                                <h2 className="text-xl font-bold text-gray-900">Payment Method</h2>
                             </div>
+
+                            {step === 2 && (
+                                <div className="pl-11 space-y-3">
+                                    <label className="flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:border-green-500 transition-all bg-gray-50">
+                                        <input
+                                            type="radio"
+                                            name="payment"
+                                            value="cod"
+                                            checked={paymentMethod === 'cod'}
+                                            onChange={(e) => setPaymentMethod(e.target.value)}
+                                            className="w-5 h-5 text-green-600 focus:ring-green-500"
+                                        />
+                                        <div className="flex items-center gap-3">
+                                            <div className="p-2 bg-white rounded-lg shadow-sm">
+                                                <CreditCard className="w-5 h-5 text-green-600" />
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-gray-900">Cash on Delivery</p>
+                                                <p className="text-sm text-gray-500">Pay when you receive your order</p>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <div className="mt-4 flex gap-3">
+                                        <button
+                                            onClick={() => setStep(1)}
+                                            className="px-6 py-2 border border-gray-300 rounded-lg font-medium text-gray-600 hover:bg-gray-50"
+                                        >
+                                            Back
+                                        </button>
+                                        <Button onClick={handlePlaceOrder} isLoading={loading}>
+                                            Place Order ({total})
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 
-                    {/* Order Summary */}
-                    <div className="lg:col-span-1">
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24">
-                            <h2 className="text-lg font-bold text-gray-900 mb-4">{t('checkout.orderSummary')}</h2>
+                    {/* Right Column - Order Summary */}
+                    <div className="md:col-span-1">
+                        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+                            <h3 className="text-lg font-bold text-gray-900 mb-4">Order Summary</h3>
 
-                            {/* Items */}
-                            <div className="space-y-3 mb-4 max-h-64 overflow-y-auto custom-scrollbar">
+                            <div className="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
                                 {items.map((item) => (
                                     <div key={item.id} className="flex gap-3">
-                                        <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
-                                            <Image
-                                                src={item.image}
-                                                alt={item.name}
-                                                width={64}
-                                                height={64}
-                                                className="w-full h-full object-cover"
-                                            />
+                                        <div className="w-12 h-12 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <h3 className="font-semibold text-sm text-gray-900 truncate">{item.name}</h3>
-                                            <p className="text-xs text-gray-500">{item.quantity} kg</p>
-                                            <p className="text-sm font-bold text-green-600">{item.price}</p>
+                                            <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
+                                            <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                                         </div>
+                                        <p className="text-sm font-bold text-gray-900">{item.price}</p>
                                     </div>
                                 ))}
                             </div>
 
-                            {/* Pricing */}
-                            <div className="border-t pt-4 space-y-2">
-                                <div className="flex justify-between text-gray-600">
-                                    <span>{t('cart.subtotal')}</span>
-                                    <span>₹{subtotal.toFixed(2)}</span>
+                            <div className="space-y-2 py-4 border-t border-gray-100">
+                                <div className="flex justify-between text-sm text-gray-500">
+                                    <span>Subtotal</span>
+                                    <span>{total}</span>
                                 </div>
-                                <div className="flex justify-between text-gray-600">
-                                    <span>{t('checkout.deliveryCharge')}</span>
-                                    <span>{deliveryCharge === 0 ? 'FREE' : `₹${deliveryCharge}`}</span>
-                                </div>
-                                <div className="flex justify-between text-xl font-bold text-gray-900 pt-2 border-t">
-                                    <span>{t('checkout.grandTotal')}</span>
-                                    <span>₹{total.toFixed(2)}</span>
+                                <div className="flex justify-between text-sm text-gray-500">
+                                    <span>Delivery</span>
+                                    <span className="text-green-600">Free</span>
                                 </div>
                             </div>
 
-                            {/* Place Order Button */}
-                            <button
-                                onClick={handleSubmit}
-                                className="w-full bg-green-600 text-white py-3.5 rounded-xl font-bold hover:bg-green-700 transition-colors shadow-lg mt-6"
-                            >
-                                {t('checkout.placeOrder')}
-                            </button>
+                            <div className="flex justify-between text-lg font-bold text-gray-900 pt-4 border-t border-gray-100">
+                                <span>Total</span>
+                                <span>{total}</span>
+                            </div>
+
+                            <div className="mt-6 bg-green-50 rounded-lg p-3 flex gap-2">
+                                <ShieldCheck className="w-5 h-5 text-green-600 flex-shrink-0" />
+                                <p className="text-xs text-green-800">
+                                    Safe & Secure Payment. 100% Authentic Produce.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

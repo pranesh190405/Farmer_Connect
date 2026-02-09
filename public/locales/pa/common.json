@@ -35,7 +35,30 @@
         "user": "ਯੂਜ਼ਰ",
         "type": "ਕਿਸਮ",
         "date": "ਮਿਤੀ",
-        "actions": "ਕਾਰਵਾਈਆਂ"
+        "actions": "ਕਾਰਵਾਈਆਂ",
+        "buyer": {
+            "welcome": "ਜੀ ਆਇਆਂ ਨੂੰ, ਖਰੀਦਦਾਰ!",
+            "welcomeDesc": "ਆਪਣੇ ਆਰਡਰ ਪ੍ਰਬੰਧਿਤ ਕਰੋ ਅਤੇ ਡਿਲੀਵਰੀ ਟ੍ਰੈਕ ਕਰੋ",
+            "browseMarket": "ਮੰਡੀ ਦੇਖੋ",
+            "stats": {
+                "totalOrders": "ਕੁੱਲ ਆਰਡਰ",
+                "activeOrders": "ਸਰਗਰਮ ਆਰਡਰ",
+                "completed": "ਪੂਰੇ ਹੋਏ"
+            },
+            "tabs": {
+                "active": "ਸਰਗਰਮ ਆਰਡਰ",
+                "completed": "ਪੂਰੇ ਹੋਏ ਆਰਡਰ",
+                "cancelled": "ਰੱਦ ਕੀਤੇ ਆਰਡਰ"
+            },
+            "empty": {
+                "title": "ਕੋਈ {{status}} ਆਰਡਰ ਨਹੀਂ",
+                "desc": "ਸਾਡੇ ਕੋਲ ਇਸ ਸਮੇਂ ਕੋਈ {{status}} ਆਰਡਰ ਨਹੀਂ ਹਨ।",
+                "startShopping": "ਖਰੀਦਦਾਰੀ ਸ਼ੁਰੂ ਕਰੋ"
+            },
+            "orderId": "ਆਰਡਰ #",
+            "inProgress": "ਪ੍ਰਗਤੀ ਵਿੱਚ ਹੈ",
+            "trackOrder": "ਆਰਡਰ ਟ੍ਰੈਕ ਕਰੋ"
+        }
     },
     "auth": {
         "farmer": {
@@ -80,6 +103,8 @@
         "submit": "ਜਮ੍ਹਾਂ ਕਰੋ",
         "cancel": "ਰੱਦ ਕਰੋ",
         "changeLanguage": "ਭਾਸ਼ਾ ਬਦਲੋ",
+        "language": "ਭਾਸ਼ਾ",
+        "selectLanguage": "ਭਾਸ਼ਾ ਚੁਣੋ",
         "searchPlaceholder": "ਫਸਲਾਂ, ਕਿਸਾਨਾਂ ਦੀ ਖੋਜ ਕਰੋ...",
         "buyNow": "ਹੁਣੇ ਖਰੀਦੋ",
         "edit": "ਸੋਧੋ",
@@ -189,6 +214,29 @@
             "tomato": "ਟਮਾਟਰ",
             "wheat": "ਕਣਕ",
             "rice": "ਚੌਲ"
+        }
+    },
+    "market": {
+        "title": "ਮੰਡੀ",
+        "subtitle": "ਕਿਸਾਨਾਂ ਤੋਂ ਸਿੱਧਾ",
+        "filters": {
+            "title": "ਫਿਲਟਰ",
+            "categories": "ਸ਼੍ਰੇਣੀਆਂ",
+            "allCategories": "ਸਾਰੀਆਂ ਸ਼੍ਰੇਣੀਆਂ",
+            "region": "ਖੇਤਰ",
+            "allIndia": "ਸਾਰਾ ਭਾਰਤ",
+            "priceRange": "ਕੀਮਤ ਰੇਂਜ",
+            "reset": "ਫਿਲਟਰ ਰੀਸੈਟ ਕਰੋ",
+            "active": "ਸਰਗਰਮ ਫਿਲਟਰ:"
+        },
+        "searchPlaceholder": "ਫਸਲਾਂ, ਕਿਸਾਨਾਂ ਦੀ ਖੋਜ ਕਰੋ...",
+        "noCrops": {
+            "title": "ਕੋਈ ਫਸਲ ਨਹੀਂ ਮਿਲੀ",
+            "desc": "ਆਪਣੇ ਫਿਲਟਰ ਜਾਂ ਖੋਜ ਬਦਲੋ"
+        },
+        "card": {
+            "min": "ਘੱਟੋ ਘੱਟ",
+            "add": "ਸ਼ਾਮਲ ਕਰੋ"
         }
     }
 }

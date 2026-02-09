@@ -16,7 +16,8 @@ export default function QualitySliders({ initialQuality = {}, onChange }) {
         if (onChange) {
             onChange(qualities);
         }
-    }, [qualities, onChange]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [qualities]);
 
     const handleSliderChange = (key, value) => {
         setQualities(prev => ({

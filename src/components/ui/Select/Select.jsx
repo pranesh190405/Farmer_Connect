@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { forwardRef, useId } from 'react';
 import styles from './Select.module.css';
 
 /**
@@ -19,7 +19,8 @@ const Select = forwardRef(function Select({
     className = '',
     ...props
 }, ref) {
-    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+    const generatedId = useId();
+    const selectId = id || `select-${generatedId}`;
     const errorId = error ? `${selectId}-error` : undefined;
     const hintId = hint ? `${selectId}-hint` : undefined;
 
