@@ -301,7 +301,7 @@ export default function ProfileSettingsPage() {
                     </section>
 
                     {/* Save Button */}
-                    <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 -mx-4 md:static md:bg-transparent md:border-0 md:p-0 md:mx-0">
+                    <div className="mt-6 pt-6 border-t border-gray-100">
                         <div className="flex flex-col gap-3">
                             <Button onClick={handleSave} isLoading={isSaving} fullWidth className="shadow-lg">
                                 {saved ? '✓ Changes Saved' : t('profile.saveChanges') || 'Save Changes'}

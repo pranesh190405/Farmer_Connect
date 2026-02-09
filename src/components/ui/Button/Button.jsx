@@ -24,6 +24,7 @@ export default function Button({
     type = 'button',
     onClick,
     ariaLabel,
+    className = '',
     ...props
 }) {
     const classNames = [
@@ -32,6 +33,7 @@ export default function Button({
         styles[size],
         fullWidth ? styles.fullWidth : '',
         isLoading ? styles.loading : '',
+        className,
     ].filter(Boolean).join(' ');
 
     return (
