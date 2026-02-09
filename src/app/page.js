@@ -3,9 +3,22 @@
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, ShoppingBag, Sprout, ShieldCheck, TrendingUp } from 'lucide-react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const { t } = useTranslation('common');
+  const router = useRouter();
+  const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && user) {
+      if (user.type === 'farmer') router.push('/farmer/dashboard');
+      else if (user.type === 'buyer') router.push('/buyer/dashboard');
+      else if (user.type === 'admin') router.push('/admin/dashboard');
+    }
+  }, [isAuthenticated, user, isLoading, router]);
 
   return (
     <div className="min-h-screen flex flex-col font-sans">

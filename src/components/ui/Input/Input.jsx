@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { forwardRef, useId } from 'react';
 import styles from './Input.module.css';
 
 /**
@@ -27,7 +27,8 @@ const Input = forwardRef(function Input({
     className = '',
     ...props
 }, ref) {
-    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+    const uniqueId = useId();
+    const inputId = id || `input-${uniqueId}`;
     const errorId = error ? `${inputId}-error` : undefined;
     const hintId = hint ? `${inputId}-hint` : undefined;
 
