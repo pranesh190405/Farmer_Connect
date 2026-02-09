@@ -10,10 +10,9 @@ import styles from './BottomNav.module.css';
 export default function BottomNav() {
     const pathname = usePathname();
     const { t } = useTranslation('common');
-    const { userType } = useSelector((state) => state.auth);
+    const { userType, isAuthenticated } = useSelector((state) => state.auth);
 
-    // Don't show on auth pages or landing page if not logged in (optional, but good for UX)
-    // For now, we show it everywhere as per request, but adapt links.
+    if (!isAuthenticated) return null;
 
     // Default links (public)
     let navItems = [

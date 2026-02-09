@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import AuthGuard from '@/components/AuthGuard';
 import { Search, Filter, ShoppingCart, Heart, MapPin, Store, SlidersHorizontal, X, Star } from 'lucide-react';
 import { addToCart, openCart } from '@/store/slices/cartSlice';
 import { toast } from '@/components/ui/Toast/Toast';
