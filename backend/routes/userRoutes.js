@@ -1,93 +1,29 @@
 const express = require('express');
-const User = require('../models/User');
-const { protect } = require('../middleware/authMiddleware');
-
 const router = express.Router();
+const userController = require('../controllers/userController');
+const { requireAuth } = require('../middleware/auth');
+const validate = require('../middleware/validate');
+const { check } = require('express-validator');
 
-// @route   PUT /api/users/profile
-// @desc    Update user profile
-// @access  Private
-router.put('/profile', protect, async (req, res) => {
-    try {
-        const user = await User.findByPk(req.user.id);
+// Validation rules
+const updateProfileValidation = [
+    check('name').optional().notEmpty().withMessage('Name cannot be empty'),
+    check('email').optional().isEmail().withMessage('Invalid email format'),
+];
 
-        if (user) {
-            user.name = req.body.name || user.name;
-            user.location = req.body.location || user.location;
-            user.cropInterests = req.body.cropInterests || user.cropInterests;
-            user.buyingPreferences = req.body.buyingPreferences || user.buyingPreferences;
+// GET user profile
+router.get('/profile', requireAuth, userController.getProfile);
 
-            if (req.body.role) {
-                user.role = req.body.role;
-            }
+// PUT update user profile
+router.put('/profile', requireAuth, validate(updateProfileValidation), userController.updateProfile);
 
-            await user.save();
+// PUT update user location
+router.put('/location', requireAuth, userController.updateLocation);
 
-            res.json({
-                success: true,
-                user: {
-                    id: user.id,
-                    phone: user.phone,
-                    name: user.name,
-                    role: user.role,
-                    location: user.location,
-                    cropInterests: user.cropInterests,
-                    buyingPreferences: user.buyingPreferences,
-                    documents: user.documents,
-                    isVerified: user.isVerified
-                }
-            });
-        } else {
-            res.status(404).json({ success: false, message: 'User not found' });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Server error' });
-    }
-});
+// PUT update user preferences
+router.put('/preferences', requireAuth, userController.updatePreferences);
 
-// @route   POST /api/users/upload-documents
-// @desc    Upload documents for verification
-// @access  Private
-router.post('/upload-documents', protect, async (req, res) => {
-    try {
-        const { documents } = req.body;
-
-        if (!documents || !Array.isArray(documents)) {
-            return res.status(400).json({ message: 'Documents array is required' });
-        }
-
-        const user = await User.findByPk(req.user.id);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        // Append new documents to existing ones
-        const existingDocs = user.documents || [];
-        user.documents = [...existingDocs, ...documents];
-
-        // Keep isVerified = false - admin will verify later
-        // user.isVerified remains unchanged (false for new users)
-
-        await user.save();
-
-        res.json({
-            success: true,
-            message: 'Documents uploaded successfully',
-            user: {
-                id: user.id,
-                phone: user.phone,
-                name: user.name,
-                role: user.role,
-                documents: user.documents,
-                isVerified: user.isVerified
-            }
-        });
-    } catch (error) {
-        console.error('Upload Documents Error:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
+// GET user stats (dashboard) - TODO: Implement in controller
+// router.get('/stats', requireAuth, userController.getStats);
 
 module.exports = router;
