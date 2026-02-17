@@ -1,0 +1,162 @@
+{
+    "app": {
+        "name": "ডিজিটাল কৃষি বাজার",
+        "tagline": "কৃষক এবং ক্রেতাদের সংযুক্ত করা"
+    },
+    "nav": {
+        "home": "হোম",
+        "listings": "তালিকা",
+        "market": "বাজার",
+        "profile": "প্রোফাইল"
+    },
+    "auth": {
+        "farmer": {
+            "title": "কৃষক নিবন্ধন",
+            "subtitle": "সরাসরি বিক্রয়কারী হাজার হাজার কৃষকের সাথে যোগ দিন",
+            "mobileLabel": "মোবাইল নম্বর",
+            "mobilePlaceholder": "আপনার 10-সংখ্যার মোবাইল নম্বর লিখুন",
+            "sendOtp": "OTP পাঠান",
+            "otpTitle": "OTP যাচাই করুন",
+            "otpSubtitle": "পাঠানো 6-সংখ্যার কোড লিখুন",
+            "verifyOtp": "যাচাই করুন",
+            "resendOtp": "OTP পুনরায় পাঠান",
+            "resendIn": "পুনরায় পাঠান",
+            "seconds": "সেকেন্ডে",
+            "success": "অ্যাকাউন্ট তৈরি হয়েছে!",
+            "successMessage": "ডিজিটাল কৃষি বাজারে স্বাগতম",
+            "continue": "ড্যাশবোর্ডে যান"
+        },
+        "buyer": {
+            "title": "ক্রেতা নিবন্ধন",
+            "businessName": "ব্যবসার নাম",
+            "taxId": "কর ID / GST নম্বর",
+            "category": "ব্যবসার বিভাগ",
+            "categories": {
+                "retailer": "খুচরা বিক্রেতা",
+                "cooperative": "সমবায়",
+                "institution": "প্রতিষ্ঠান"
+            }
+        },
+        "errors": {
+            "invalidMobile": "অনুগ্রহ করে একটি বৈধ 10-সংখ্যার মোবাইল নম্বর লিখুন",
+            "invalidOtp": "অনুগ্রহ করে একটি বৈধ 6-সংখ্যার OTP লিখুন",
+            "otpExpired": "OTP মেয়াদ শেষ হয়েছে। অনুগ্রহ করে নতুন অনুরোধ করুন।"
+        }
+    },
+    "common": {
+        "loading": "লোড হচ্ছে...",
+        "error": "কিছু ভুল হয়েছে",
+        "retry": "আবার চেষ্টা করুন",
+        "next": "পরবর্তী",
+        "back": "ফিরে যান",
+        "submit": "জমা দিন",
+        "cancel": "বাতিল করুন",
+        "changeLanguage": "ভাষা পরিবর্তন করুন"
+    },
+    "voice": {
+        "startListening": "ভয়েস অনুসন্ধান শুরু করুন",
+        "stopListening": "শোনা বন্ধ করুন",
+        "listening": "শুনছে..."
+    },
+    "offline": {
+        "noConnection": "আপনি অফলাইনে আছেন। কিছু বৈশিষ্ট্য সীমিত হতে পারে।",
+        "backOnline": "আপনি আবার অনলাইনে আছেন!"
+    },
+    "landing": {
+        "hero": {
+            "badge": "ন্যায্য মূল্য • তাজা পণ্য • সরাসরি সংযোগ",
+            "titlePrefix": "ভবিষ্যৎ",
+            "titleHighlight": "কৃষি বিপণনের"
+        },
+        "buttons": {
+            "startSelling": "বিক্রয় শুরু করুন",
+            "startBuying": "কেনাকাটা শুরু করুন"
+        },
+        "features": {
+            "fresh": {
+                "title": "খামার থেকে তাজা",
+                "desc": "কোনো মধ্যস্থতাকারী ছাড়াই তাজা পণ্য সরাসরি পান।"
+            },
+            "quality": {
+                "title": "গুণমান নিশ্চিত",
+                "desc": "যাচাইকৃত কৃষক এবং মানক গুণমান পরীক্ষা নিশ্চিত করে যে আপনি সেরাটি পাবেন।"
+            },
+            "fair": {
+                "title": "ন্যায্য মূল্য নির্ধারণ",
+                "desc": "স্বচ্ছ বাজার দর কৃষকদের বেশি আয় করতে এবং ক্রেতাদের বাঁচাতে সাহায্য করে।"
+            }
+        }
+    },
+    "categories": {
+        "vegetables": "শাকসবজি",
+        "fruits": "ফল",
+        "grains": "শস্য",
+        "spices": "মশলা"
+    },
+    "cart": {
+        "title": "শপিং কার্ট",
+        "empty": "আপনার কার্ট খালি",
+        "emptyDesc": "শুরু করতে বাজার থেকে আইটেম যোগ করুন",
+        "addToCart": "কার্টে যোগ করুন",
+        "removeFromCart": "সরান",
+        "total": "মোট",
+        "subtotal": "উপমোট",
+        "checkout": "চেকআউট করুন",
+        "continueShopping": "কেনাকাটা চালিয়ে যান",
+        "itemCount": "{{count}} আইটেম",
+        "itemCount_plural": "{{count}} আইটেম",
+        "added": "কার্টে যোগ করা হয়েছে",
+        "removed": "কার্ট থেকে সরানো হয়েছে",
+        "updated": "কার্ট আপডেট করা হয়েছে",
+        "quantity": "পরিমাণ",
+        "price": "মূল্য",
+        "viewCart": "কার্ট দেখুন"
+    },
+    "checkout": {
+        "title": "চেকআউট",
+        "deliveryInfo": "ডেলিভারি তথ্য",
+        "paymentMethod": "পেমেন্ট পদ্ধতি",
+        "orderSummary": "অর্ডার সারসংক্ষেপ",
+        "fullName": "পূর্ণ নাম",
+        "phoneNumber": "ফোন নম্বর",
+        "address": "ডেলিভারি ঠিকানা",
+        "city": "শহর",
+        "state": "রাজ্য",
+        "pincode": "পিনকোড",
+        "cod": "ক্যাশ অন ডেলিভারি",
+        "online": "অনলাইন পেমেন্ট",
+        "placeOrder": "অর্ডার করুন",
+        "orderPlaced": "অর্ডার সফলভাবে দেওয়া হয়েছে!",
+        "orderNumber": "অর্ডার নম্বর",
+        "thankYou": "আপনার অর্ডারের জন্য ধন্যবাদ",
+        "backToDashboard": "ড্যাশবোর্ডে ফিরে যান",
+        "deliveryCharge": "ডেলিভারি চার্জ",
+        "grandTotal": "সর্বমোট"
+    },
+    "listing": {
+        "new": {
+            "title": "নতুন তালিকা",
+            "uploadImage": "ফসলের ছবি আপলোড করুন",
+            "imageSupport": "JPG, PNG সমর্থিত",
+            "cropType": "ফসলের ধরন",
+            "selectCrop": "ফসল নির্বাচন করুন",
+            "variety": "জাত (ঐচ্ছিক)",
+            "varietyPlaceholder": "যেমন লাল, হাইব্রিড",
+            "totalQuantity": "মোট পরিমাণ (কেজি)",
+            "quantityPlaceholder": "যেমন 500",
+            "minQuantity": "ন্যূনতম অর্ডার পরিমাণ (কেজি)",
+            "minQuantityPlaceholder": "যেমন 50",
+            "pricePerKg": "প্রতি কেজি মূল্য (₹)",
+            "pricePlaceholder": "যেমন 25",
+            "creating": "তৈরি করা হচ্ছে...",
+            "createButton": "তালিকা তৈরি করুন"
+        },
+        "crops": {
+            "potato": "আলু",
+            "onion": "পেঁয়াজ",
+            "tomato": "টমেটো",
+            "wheat": "গম",
+            "rice": "চাল"
+        }
+    }
+}
