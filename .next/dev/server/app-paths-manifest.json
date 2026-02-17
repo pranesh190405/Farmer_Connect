@@ -1,9 +1,0 @@
-{
-  "/(auth)/farmer/register/page": "app/(auth)/farmer/register/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/farmer/dashboard/page": "app/farmer/dashboard/page.js",
-  "/farmer/listings/page": "app/farmer/listings/page.js",
-  "/market/page": "app/market/page.js",
-  "/page": "app/page.js",
-  "/profile/page": "app/profile/page.js"
-}
