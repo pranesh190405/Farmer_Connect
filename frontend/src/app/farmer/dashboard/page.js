@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { Plus, Package, Clock, MoreVertical, Edit, Trash, TrendingUp, DollarSign } from 'lucide-react';
+import { Plus, Package, Clock, MoreVertical, Edit, Trash } from 'lucide-react';
 import { ApiService } from '@/services/apiService';
 import { toast } from '@/components/ui/Toast/Toast';
 
@@ -45,11 +45,7 @@ export default function FarmerDashboard() {
 
     if (!mounted) return null;
 
-    const stats = [
-        { label: t('dashboard.totalSales'), value: '₹45,000', icon: TrendingUp, color: 'bg-blue-100 text-blue-600' },
-        { label: t('dashboard.activeListings'), value: listings.filter(l => l.status === 'active').length, icon: Package, color: 'bg-green-100 text-green-600' },
-        { label: t('dashboard.todaysPrice'), value: '₹12/kg', icon: DollarSign, color: 'bg-yellow-100 text-yellow-600' },
-    ];
+    const activeCount = listings.filter(l => l.status === 'active').length;
 
     return (
         <div className="min-h-screen bg-gray-50 pb-24 font-sans">
@@ -81,19 +77,15 @@ export default function FarmerDashboard() {
 
             <main className="max-w-7xl mx-auto p-6 space-y-8">
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {stats.map((stat, index) => (
-                        <div key={index} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
-                            <div className={`p-3 rounded-xl ${stat.color}`}>
-                                <stat.icon className="w-6 h-6" />
-                            </div>
-                            <div>
-                                <p className="text-gray-500 text-sm font-medium">{stat.label}</p>
-                                <h3 className="text-2xl font-bold text-gray-900">{stat.value}</h3>
-                            </div>
-                        </div>
-                    ))}
+                {/* Stats */}
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
+                    <div className="p-3 rounded-xl bg-green-100 text-green-600">
+                        <Package className="w-6 h-6" />
+                    </div>
+                    <div>
+                        <p className="text-gray-500 text-sm font-medium">{t('dashboard.activeListings')}</p>
+                        <h3 className="text-2xl font-bold text-gray-900">{activeCount}</h3>
+                    </div>
                 </div>
 
                 {/* Tabs */}
