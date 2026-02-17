@@ -69,7 +69,7 @@ export default function Cart() {
                             <div key={item.id} className="bg-gray-50 rounded-xl p-4 flex gap-4">
                                 <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-white">
                                     <Image
-                                        src={item.image}
+                                        src={(item.image && typeof item.image === 'string' && item.image.trim() !== '') ? item.image : 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&q=80&w=400&h=400'}
                                         alt={item.name}
                                         width={80}
                                         height={80}

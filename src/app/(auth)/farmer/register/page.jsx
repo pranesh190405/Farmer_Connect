@@ -12,6 +12,8 @@ import {
     verifyOtpSuccess,
     verifyOtpFailure,
     resetAuthFlow,
+    sendOtpAsync,
+    registerAsync,
 } from '@/store/slices/authSlice';
 
 import Button from '@/components/ui/Button';
@@ -80,14 +82,13 @@ export default function FarmerRegisterPage() {
 
         dispatch(sendOtpStart(mobile));
 
-        // Simulate API call - In production, replace with actual API
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
+            await dispatch(sendOtpAsync(mobile)).unwrap();
             dispatch(sendOtpSuccess());
             setStep(STEPS.OTP);
             startResendTimer();
         } catch (err) {
-            dispatch(sendOtpFailure('Failed to send OTP. Please try again.'));
+            dispatch(sendOtpFailure(err || 'Failed to send OTP. Please try again.'));
         }
     };
 
@@ -114,11 +115,22 @@ export default function FarmerRegisterPage() {
 
         dispatch(verifyOtpStart());
 
-        // Simulate API call - In production, replace with actual API
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
+            const res = await fetch('/api/auth/verify-otp', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mobile, otp: otpValue }),
+            });
+            const data = await res.json();
 
-            // OTP verified - proceed to Aadhar step
+            if (!res.ok) {
+                dispatch(verifyOtpFailure(data.error || 'Invalid OTP'));
+                setOtpError(data.error || 'Invalid OTP');
+                return;
+            }
+
+            // OTP verified - proceed to Aadhar step for registration
             setStep(STEPS.AADHAR);
             dispatch(sendOtpSuccess()); // Reset loading state
 
@@ -201,25 +213,53 @@ export default function FarmerRegisterPage() {
 
     // Handle final registration
     const handleConfirmRegistration = async () => {
+        console.log('🔘 Submit button clicked');
         dispatch(verifyOtpStart());
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            // Create user with Aadhar data
-            dispatch(verifyOtpSuccess({
+            console.log('📤 Dispatching registerAsync with:', {
                 mobile: mobile,
-                userType: 'farmer',
-                aadharNumber: aadharNumber,
+                type: 'farmer',
                 name: extractedData.name,
+                aadharNumber: aadharNumber,
                 dateOfBirth: extractedData.dateOfBirth,
                 address: extractedData.address
-            }));
+            });
+
+            const result = await dispatch(registerAsync({
+                mobile: mobile,
+                type: 'farmer',
+                name: extractedData.name,
+                aadharNumber: aadharNumber,
+                dateOfBirth: extractedData.dateOfBirth,
+                address: extractedData.address
+            })).unwrap();
+
+            console.log('✅ Registration successful:', result);
+            // Registration successful — user is logged in
+            // The extraReducers handler will set isAuthenticated
 
         } catch (err) {
-            dispatch(verifyOtpFailure('Registration failed. Please try again.'));
+            console.error('❌ Registration failed:', err);
+            console.log('Error Type:', typeof err);
+            console.log('Error Value:', JSON.stringify(err));
+
+            // Handle "User already exists" gracefully
+            if (
+                String(err).includes('User already exists') ||
+                String(err).includes('already exists')
+            ) {
+                alert('User account already exists. Redirecting to login...');
+                dispatch(resetAuthFlow());
+                window.location.href = '/login';
+                return;
+            }
+
+            dispatch(verifyOtpFailure(err || 'Registration failed. Please try again.'));
         }
     };
+
+
 
     // Handle back button
     const handleBack = () => {

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { resetListing } from '@/lib/store/features/listingSlice';
 import { CheckCircle, MapPin, Package, Tag, Star } from 'lucide-react';
 import { useState } from 'react';
+import { ApiService } from '@/services/apiService';
 
 export default function StepReview() {
     const dispatch = useDispatch();
@@ -15,16 +16,30 @@ export default function StepReview() {
     const handleSubmit = async () => {
         setIsSubmitting(true);
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        try {
+            await ApiService.addListing({
+                cropName: formData.cropName,
+                category: formData.category,
+                variety: formData.variety,
+                quantity: formData.quantity,
+                unit: formData.unit,
+                expectedPrice: formData.expectedPrice,
+                qualityGrade: formData.qualityGrade,
+                description: formData.description || '',
+                imageUrl: formData.images?.[0] || '',
+                locationAddress: formData.location?.address || '',
+                locationLat: formData.location?.lat || null,
+                locationLng: formData.location?.lng || null,
+            });
 
-        // Success
-        setIsSubmitting(false);
-        alert('Listing Created Successfully!'); // Replace with better UI
-
-        // Cleanup and Redirect
-        dispatch(resetListing());
-        router.push('/farmer/dashboard'); // Or listings page
+            alert('Listing Created Successfully!');
+            dispatch(resetListing());
+            router.push('/farmer/dashboard');
+        } catch (err) {
+            alert('Failed to create listing. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (

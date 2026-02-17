@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Upload, Loader2, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
-import { MockService } from '@/services/mockData';
+import { ApiService } from '@/services/apiService';
 import { toast } from '@/components/ui/Toast/Toast';
 import Button from '@/components/ui/Button';
 import QualitySliders from '@/components/ui/QualitySliders';
@@ -49,16 +49,16 @@ export default function NewListingPage() {
 
         try {
             const newListing = {
-                crop: `${formData.crop} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
-                name: `${formData.crop} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
-                quantity: `${formData.quantity} kg`,
-                price: `₹${formData.price}/kg`,
-                minQty: `${formData.minQty || 50} kg`,
-                image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&h=300&fit=crop',
-                quality: formData.quality
+                cropName: `${formData.crop} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
+                category: 'vegetables',
+                variety: formData.variety || '',
+                quantity: parseFloat(formData.quantity),
+                unit: 'kg',
+                expectedPrice: parseFloat(formData.price),
+                minQty: parseFloat(formData.minQty) || 50,
             };
 
-            await MockService.addListing(newListing);
+            await ApiService.addListing(newListing);
             toast.success(t('common.listingCreated') || 'Listing created successfully!');
             router.push('/farmer/dashboard');
         } catch (error) {

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { sendOtpStart, sendOtpSuccess, verifyOtpSuccess, verifyOtpFailure } from '@/store/slices/authSlice';
+import { sendOtpAsync, verifyOtpAsync } from '@/store/slices/authSlice';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import OTPInput from '@/components/ui/OTPInput';
@@ -43,31 +43,31 @@ export default function LoginPage() {
             return;
         }
 
-        dispatch(sendOtpStart(mobile));
-
-        // Simulate API call
-        setTimeout(() => {
-            dispatch(sendOtpSuccess());
+        try {
+            const result = await dispatch(sendOtpAsync(mobile)).unwrap();
             setStep('otp');
-            showToast('OTP sent: 1234', 'success');
-        }, 1000);
+            showToast('OTP sent: 123456', 'success');
+        } catch (err) {
+            showToast(err || 'Failed to send OTP', 'error');
+        }
     };
 
     const handleVerifyOtp = async (e) => {
         e.preventDefault();
-        if (otp.length !== 4) {
-            showToast('Enter valid 4-digit OTP', 'error');
+        if (otp.length < 4) {
+            showToast('Enter valid OTP', 'error');
             return;
         }
 
-        if (otp !== '1234') {
-            showToast('Invalid OTP', 'error');
-            dispatch(verifyOtpFailure('Invalid OTP'));
-            return;
+        try {
+            const result = await dispatch(verifyOtpAsync({ mobile, otp, userType })).unwrap();
+            if (result.isNewUser) {
+                showToast('No account found. Please register first.', 'error');
+                router.push(`/${userType}/register`);
+            }
+        } catch (err) {
+            showToast(err || 'Invalid OTP', 'error');
         }
-
-        // Simulate verification
-        dispatch(verifyOtpSuccess({ mobile, userType }));
     };
 
     return (
@@ -99,10 +99,7 @@ export default function LoginPage() {
                     <button
                         className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${userType === 'admin' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
-                        onClick={() => setUserType('admin')} // Admin needs separate login? Or maybe mobile too?
-                    // Admin uses username/pass in existing logic. 
-                    // But let's create a link or just allow admin here if we want simplified.
-                    // For now, keep it simple: Link to Admin Login
+                        onClick={() => setUserType('admin')}
                     >
                         Admin
                     </button>
@@ -128,7 +125,7 @@ export default function LoginPage() {
                         ) : (
                             <div className="space-y-2">
                                 <label className="block text-sm font-medium text-gray-700">Enter OTP</label>
-                                <OTPInput length={4} value={otp} onChange={setOtp} />
+                                <OTPInput length={6} value={otp} onChange={setOtp} />
                                 <div className="text-right">
                                     <button
                                         type="button"

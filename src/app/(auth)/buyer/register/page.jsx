@@ -5,12 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import {
-    sendOtpStart,
     sendOtpSuccess,
     sendOtpFailure,
     verifyOtpStart,
-    verifyOtpSuccess,
+    verifyOtpFailure,
     resetAuthFlow,
+    sendOtpAsync,
+    verifyOtpAsync,
+    registerAsync,
+    sendOtpStart,
 } from '@/store/slices/authSlice';
 
 import Button from '@/components/ui/Button';
@@ -22,9 +25,9 @@ import styles from './page.module.css';
 // Registration steps
 const STEPS = {
     MOBILE: 'mobile',
-    BUSINESS_INFO: 'business', // Only for new users
-    CATEGORY_SELECTION: 'category',
     OTP: 'otp',
+    BUSINESS_INFO: 'business',
+    CATEGORY_SELECTION: 'category',
     PENDING: 'pending',
 };
 
@@ -51,7 +54,7 @@ export default function BuyerRegisterPage() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const router = useRouter();
-    const { isLoading, mobileNumber, isAuthenticated, user, users } = useSelector((state) => state.auth);
+    const { isLoading, mobileNumber, isAuthenticated, user, error } = useSelector((state) => state.auth);
 
     const [step, setStep] = useState(STEPS.MOBILE);
     const [mobile, setMobile] = useState('');
@@ -70,6 +73,7 @@ export default function BuyerRegisterPage() {
     // Form errors
     const [errors, setErrors] = useState({});
     const [otp, setOtp] = useState('');
+    const [otpError, setOtpError] = useState('');
     const [resendTimer, setResendTimer] = useState(0);
 
     // Redirect if authenticated
@@ -105,28 +109,21 @@ export default function BuyerRegisterPage() {
     };
 
     // Handle Mobile Submit
-    const handleMobileSubmit = () => {
+    const handleMobileSubmit = async () => {
         if (mobile.length !== 10) {
             setMobileError('Enter valid 10-digit mobile number');
             return;
         }
 
-        // Check if user exists in mock DB
-        // In real app, this would be an API call to check existence
-        const existingUser = users.find(u => u.mobile === mobile && u.type === 'buyer');
-
-        if (existingUser) {
-            // Existing user -> Go to OTP
-            dispatch(sendOtpStart(mobile));
-            // Simulate API
-            setTimeout(() => {
-                dispatch(sendOtpSuccess());
-                setStep(STEPS.OTP);
-                startResendTimer();
-            }, 1000);
-        } else {
-            // New user -> Go to Business Info
-            setStep(STEPS.BUSINESS_INFO);
+        dispatch(sendOtpStart(mobile));
+        try {
+            await dispatch(sendOtpAsync(mobile)).unwrap();
+            dispatch(sendOtpSuccess());
+            setStep(STEPS.OTP);
+            startResendTimer();
+        } catch (err) {
+            dispatch(sendOtpFailure(err || 'Failed to send OTP'));
+            setMobileError(err || 'Failed to send OTP');
         }
     };
 
@@ -161,19 +158,43 @@ export default function BuyerRegisterPage() {
         }
     };
 
-    // Handle Category Submit
+    // Handle Category Submit (Final Registration)
     const handleCategorySubmit = async () => {
         if (formData.interestedCategories.length === 0) {
             setErrors({ ...errors, interestedCategories: 'Please select at least one category' });
             return;
         }
 
-        // Send OTP
-        dispatch(sendOtpStart(mobile));
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        dispatch(sendOtpSuccess());
-        setStep(STEPS.OTP);
-        startResendTimer();
+        dispatch(verifyOtpStart()); // Use as generic loading start
+        try {
+            await dispatch(registerAsync({
+                mobile,
+                type: 'buyer',
+                businessName: formData.businessName,
+                taxId: formData.taxId,
+                businessCategory: formData.category,
+                contactName: formData.contactName,
+                // interestedCategories can be handled if added to schema or stored in preferences, 
+                // for now we'll just focus on registration success
+            })).unwrap();
+
+            // Success logic handled by authSlice (it sets isAuthenticated)
+        } catch (err) {
+            console.error('❌ Registration failed:', err);
+
+            // Handle "User already exists" gracefully
+            if (
+                String(err).includes('User already exists') ||
+                String(err).includes('already exists')
+            ) {
+                alert('User account already exists. Redirecting to login...');
+                dispatch(resetAuthFlow());
+                window.location.href = '/login';
+                return;
+            }
+
+            dispatch(verifyOtpFailure(err || 'Registration failed'));
+        }
     };
 
     // Start resend timer
@@ -195,30 +216,39 @@ export default function BuyerRegisterPage() {
         if (otpValue.length !== 6) return;
 
         dispatch(verifyOtpStart());
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            const result = await dispatch(verifyOtpAsync({
+                mobile,
+                otp: otpValue,
+                userType: 'buyer'
+            })).unwrap();
 
-        // Pass all details if new user, or just mobile if existing
-        dispatch(verifyOtpSuccess({
-            mobile: mobile,
-            userType: 'buyer',
-            ...formData // Will be ignored by reducer if user exists
-        }));
-
-        // useEffect handles redirect
+            if (result.isNewUser) {
+                // New user - proceed to registration
+                dispatch(sendOtpSuccess()); // Reset loading
+                setStep(STEPS.BUSINESS_INFO);
+            } else {
+                // Existing user - already logged in via authSlice
+                // useEffect will redirect
+            }
+        } catch (err) {
+            setOtpError(err || 'Invalid OTP');
+            dispatch(verifyOtpFailure(err));
+        }
     };
 
     // Handle back
     const handleBack = () => {
-        if (step === STEPS.BUSINESS_INFO) setStep(STEPS.MOBILE);
-        else if (step === STEPS.CATEGORY_SELECTION) setStep(STEPS.BUSINESS_INFO);
-        else if (step === STEPS.OTP) {
-            // If we came from category (new user), go back there. 
-            if (!users.find(u => u.mobile === mobile && u.type === 'buyer')) {
-                setStep(STEPS.CATEGORY_SELECTION);
-            } else {
-                setStep(STEPS.MOBILE);
-                dispatch(resetAuthFlow());
-            }
+        if (step === STEPS.OTP) {
+            setStep(STEPS.MOBILE);
+            dispatch(resetAuthFlow());
+        } else if (step === STEPS.BUSINESS_INFO) {
+            setStep(STEPS.OTP);
+        } else if (step === STEPS.CATEGORY_SELECTION) {
+            setStep(STEPS.BUSINESS_INFO);
+        } else if (step === STEPS.PENDING) {
+            setStep(STEPS.MOBILE);
+            dispatch(resetAuthFlow());
         }
     };
 
@@ -245,12 +275,67 @@ export default function BuyerRegisterPage() {
                         setMobileError('');
                     }}
                     prefix="+91"
-                    error={mobileError}
+                    error={mobileError || error}
                     required
                 />
-                <Button onClick={handleMobileSubmit} fullWidth>
+                <Button onClick={handleMobileSubmit} isLoading={isLoading} fullWidth>
                     Continue
                 </Button>
+            </div>
+        </div>
+    );
+
+    // Render OTP Step
+    const renderOtpStep = () => (
+        <div className={styles.stepContent}>
+            {/* DEBUG OTP - Remove before production */}
+            <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-2 rounded-md mb-4 text-sm font-mono text-center">
+                🔔 DEBUG OTP: 123456
+            </div>
+            <button className={styles.backButton} onClick={handleBack}>
+                ← Back
+            </button>
+
+            <div className={styles.header}>
+                <div className={styles.iconWrapper}>
+                    <span className={styles.icon} role="img" aria-label="verify">🔐</span>
+                </div>
+                <h1 className={styles.title}>{t('auth.farmer.otpTitle')}</h1>
+                <p className={styles.subtitle}>
+                    Enter the 6-digit code sent to <strong>+91 {mobile}</strong>
+                </p>
+            </div>
+
+            <div className={styles.form}>
+                <OTPInput
+                    length={6}
+                    onChange={setOtp}
+                    onComplete={handleVerifyOtp}
+                    disabled={isLoading}
+                    error={otpError || error}
+                />
+
+                <Button
+                    onClick={() => handleVerifyOtp(otp)}
+                    isLoading={isLoading}
+                    disabled={otp.length !== 6}
+                    fullWidth
+                >
+                    {t('auth.farmer.verifyOtp')}
+                </Button>
+
+                <div className={styles.resendWrapper}>
+                    {resendTimer > 0 ? (
+                        <p className={styles.resendTimer}>Resend in {resendTimer}s</p>
+                    ) : (
+                        <button className={styles.resendButton} onClick={() => {
+                            dispatch(sendOtpAsync(mobile));
+                            startResendTimer();
+                        }}>
+                            Resend OTP
+                        </button>
+                    )}
+                </div>
             </div>
         </div>
     );
@@ -345,59 +430,8 @@ export default function BuyerRegisterPage() {
                 )}
 
                 <Button onClick={handleCategorySubmit} isLoading={isLoading} fullWidth>
-                    Send OTP to Verify
+                    Complete Registration
                 </Button>
-            </div>
-        </div>
-    );
-
-    // Render OTP Step
-    const renderOtpStep = () => (
-        <div className={styles.stepContent}>
-            {/* DEBUG OTP - Remove before production */}
-            <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-2 rounded-md mb-4 text-sm font-mono text-center">
-                🔔 DEBUG OTP: 123456
-            </div>
-            <button className={styles.backButton} onClick={handleBack}>
-                ← Back
-            </button>
-
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="verify">🔐</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.farmer.otpTitle')}</h1>
-                <p className={styles.subtitle}>
-                    Enter the 6-digit code sent to <strong>+91 {mobile}</strong>
-                </p>
-            </div>
-
-            <div className={styles.form}>
-                <OTPInput
-                    length={6}
-                    onChange={setOtp}
-                    onComplete={handleVerifyOtp}
-                    disabled={isLoading}
-                />
-
-                <Button
-                    onClick={() => handleVerifyOtp(otp)}
-                    isLoading={isLoading}
-                    disabled={otp.length !== 6}
-                    fullWidth
-                >
-                    {t('auth.farmer.verifyOtp')}
-                </Button>
-
-                <div className={styles.resendWrapper}>
-                    {resendTimer > 0 ? (
-                        <p className={styles.resendTimer}>Resend in {resendTimer}s</p>
-                    ) : (
-                        <button className={styles.resendButton} onClick={startResendTimer}>
-                            Resend OTP
-                        </button>
-                    )}
-                </div>
             </div>
         </div>
     );
@@ -440,9 +474,9 @@ export default function BuyerRegisterPage() {
         <main className={styles.container}>
             <div className={styles.card}>
                 {step === STEPS.MOBILE && renderMobileStep()}
+                {step === STEPS.OTP && renderOtpStep()}
                 {step === STEPS.BUSINESS_INFO && renderBusinessInfoStep()}
                 {step === STEPS.CATEGORY_SELECTION && renderCategorySelectionStep()}
-                {step === STEPS.OTP && renderOtpStep()}
                 {step === STEPS.PENDING && renderPendingStep()}
             </div>
         </main>

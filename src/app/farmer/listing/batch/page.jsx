@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Plus, Trash2, Save, ArrowLeft, Upload } from 'lucide-react';
-import { MockService } from '@/services/mockData';
+import { ApiService } from '@/services/apiService';
 import { showToast } from '@/components/ui/Toast/Toast';
 import styles from './page.module.css';
 
@@ -86,13 +86,15 @@ export default function BatchListingPage() {
         setIsSubmitting(true);
         try {
             // Submit all rows sequentially (or batch API if available)
-            await Promise.all(rows.map(row => MockService.addListing({
-                name: `${row.crop} ${row.variety ? `(${row.variety})` : ''}`.trim(),
-                crop: row.crop,
-                quantity: `${row.quantity} kg`,
-                price: `₹${row.price}/kg`,
-                minQty: `${row.minQty || 1} kg`,
-                image: row.image || 'https://images.unsplash.com/photo-1518977676601-b53f82a6b696?w=400&h=300&fit=crop'
+            await Promise.all(rows.map(row => ApiService.addListing({
+                cropName: `${row.crop} ${row.variety ? `(${row.variety})` : ''}`.trim(),
+                category: 'vegetables',
+                variety: row.variety || '',
+                quantity: parseFloat(row.quantity),
+                unit: 'kg',
+                expectedPrice: parseFloat(row.price),
+                minQty: parseFloat(row.minQty) || 1,
+                imageUrl: row.image || '',
             })));
 
             showToast('All listings created successfully!', 'success');

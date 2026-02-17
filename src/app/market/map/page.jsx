@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, List } from 'lucide-react';
 import Link from 'next/link';
-import { MockService } from '@/services/mockData';
+import { ApiService } from '@/services/apiService';
 
 // Dynamically import Map to avoid SSR issues
 const Map = dynamic(() => import('@/components/ui/Map/Map'), {
@@ -24,7 +24,7 @@ export default function MarketMapPage() {
 
     const loadListings = async () => {
         try {
-            const data = await MockService.getMarketCrops();
+            const data = await ApiService.getMarketCrops();
             setListings(data);
         } catch (error) {
             console.error(error);

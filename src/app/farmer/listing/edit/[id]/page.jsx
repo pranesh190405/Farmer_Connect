@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Upload, Loader2, Save, Trash } from 'lucide-react';
 import Link from 'next/link';
-import { MockService } from '@/services/mockData';
+import { ApiService } from '@/services/apiService';
 import { showToast } from '@/components/ui/Toast/Toast';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
@@ -49,7 +49,7 @@ export default function EditListingPage({ params }) {
     const fetchListingDetails = async () => {
         setIsFetching(true);
         try {
-            const listing = await MockService.getListingById(id);
+            const listing = await ApiService.getListingById(id);
             if (listing) {
                 // Parse crop name if it has variety in Parens
                 // Format: "Potato (Kufri Jyoti)"
@@ -99,16 +99,16 @@ export default function EditListingPage({ params }) {
 
         try {
             const updates = {
-                crop: `${formData.crop} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
-                name: `${formData.crop} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
-                quantity: `${formData.quantity} kg`,
-                price: `₹${formData.price}/kg`,
-                minQty: `${formData.minQty || 50} kg`,
-                priceValue: parseFloat(formData.price),
-                quality: formData.quality
+                cropName: `${formData.crop} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
+                category: 'vegetables',
+                variety: formData.variety || '',
+                quantity: parseFloat(formData.quantity),
+                unit: 'kg',
+                expectedPrice: parseFloat(formData.price),
+                minQty: parseFloat(formData.minQty) || 50,
             };
 
-            await MockService.updateListing(id, updates);
+            await ApiService.updateListing(id, updates);
             showToast(t('common.updateSuccess') || 'Listing updated successfully!', 'success');
             router.push('/farmer/dashboard');
         } catch (error) {

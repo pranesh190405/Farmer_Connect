@@ -1,0 +1,64 @@
+/* [project]/src/components/ui/Header/Header.module.css [app-client] (css) */
+.Header-module__GS2qTq__header {
+  z-index: 40;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 1px 3px #0000000d;
+}
+
+.Header-module__GS2qTq__container {
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+}
+
+.Header-module__GS2qTq__logo {
+  flex-direction: column;
+  gap: .25rem;
+  text-decoration: none;
+  display: flex;
+}
+
+.Header-module__GS2qTq__logoText {
+  color: #10b981;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.Header-module__GS2qTq__tagline {
+  color: #6b7280;
+  font-size: .75rem;
+  font-weight: 400;
+}
+
+.Header-module__GS2qTq__actions {
+  align-items: center;
+  gap: 1rem;
+  display: flex;
+}
+
+@media (max-width: 640px) {
+  .Header-module__GS2qTq__container {
+    padding: .75rem 1rem;
+  }
+
+  .Header-module__GS2qTq__logoText {
+    font-size: 1rem;
+  }
+
+  .Header-module__GS2qTq__tagline {
+    font-size: .6875rem;
+  }
+
+  .Header-module__GS2qTq__actions {
+    gap: .5rem;
+  }
+}
+
+/*# sourceMappingURL=src_components_ui_Header_Header_module_css_bad6b30c._.single.css.map*/

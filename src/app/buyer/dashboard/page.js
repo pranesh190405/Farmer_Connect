@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { ShoppingBag, Clock, CheckCircle, Search, Calendar, ChevronRight } from 'lucide-react';
+import { ApiService } from '@/services/apiService';
 import { toast } from '@/components/ui/Toast/Toast';
 
 export default function BuyerDashboard() {
@@ -20,19 +21,21 @@ export default function BuyerDashboard() {
 
     const fetchOrders = async () => {
         try {
-            // Mock data for UI demonstration
-            setTimeout(() => {
-                setOrders([
-                    { id: 'ORD-7829', items: 'Fresh Tomatoes (50kg)', total: '₹2,500', status: 'active', date: '2025-02-09', farmer: 'Ramesh Kumar', image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=100' },
-                    { id: 'ORD-7830', items: 'Potatoes (100kg)', total: '₹4,000', status: 'active', date: '2025-02-08', farmer: 'Suresh Patil', image: 'https://images.unsplash.com/photo-1518977676651-71f646571817?auto=format&fit=crop&q=80&w=100' },
-                    { id: 'ORD-7815', items: 'Red Onions (20kg)', total: '₹800', status: 'completed', date: '2025-02-01', farmer: 'Amit Singh', image: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&q=80&w=100' },
-                    { id: 'ORD-7750', items: 'Basmati Rice (25kg)', total: '₹3,200', status: 'completed', date: '2025-01-25', farmer: 'Vikram Singh', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=100' },
-                ]);
-                setLoading(false);
-            }, 800);
+            const data = await ApiService.getMyOrders();
+            const formattedOrders = data.map(order => ({
+                id: order.id,
+                items: order.items.map(i => `${i.cropName} (${i.quantity}kg)`).join(', '),
+                total: `₹${order.totalAmount}`,
+                status: order.status === 'placed' ? 'active' : order.status,
+                date: new Date(order.createdAt).toISOString().split('T')[0],
+                farmer: order.farmerName || 'Farmer',
+                image: order.items[0]?.image || 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=100'
+            }));
+            setOrders(formattedOrders);
         } catch (error) {
             console.error('Failed to fetch orders:', error);
             toast.error(t('common.error') || 'Failed to load orders');
+        } finally {
             setLoading(false);
         }
     };

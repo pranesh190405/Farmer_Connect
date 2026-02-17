@@ -9,7 +9,7 @@ import AuthGuard from '@/components/AuthGuard';
 import { Search, Filter, ShoppingCart, Heart, MapPin, Store, SlidersHorizontal, X, Star } from 'lucide-react';
 import { addToCart, openCart } from '@/store/slices/cartSlice';
 import { toast } from '@/components/ui/Toast/Toast';
-import { MockService } from '@/services/mockData';
+import { ApiService } from '@/services/apiService';
 
 // Regions
 const REGIONS = [
@@ -47,11 +47,12 @@ export default function MarketPage() {
 
     const loadCrops = async () => {
         try {
-            const data = await MockService.getMarketCrops();
+            const data = await ApiService.getMarketCrops();
             // Assign random categories for demo if not present
             const enhancedData = data.map(item => ({
                 ...item,
-                category: item.category || CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)]
+                category: item.category || CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)],
+                image: item.image || 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&q=80&w=400&h=400' // Fallback image
             }));
             setCrops(enhancedData);
             setFilteredCrops(enhancedData);

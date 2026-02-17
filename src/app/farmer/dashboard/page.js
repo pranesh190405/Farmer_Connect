@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { Plus, Package, Clock, MoreVertical, Edit, Trash, TrendingUp, DollarSign } from 'lucide-react';
-import { MockService } from '@/services/mockData';
+import { ApiService } from '@/services/apiService';
 import { toast } from '@/components/ui/Toast/Toast';
 
 export default function FarmerDashboard() {
@@ -21,7 +21,7 @@ export default function FarmerDashboard() {
 
     const fetchListings = async () => {
         try {
-            const data = await MockService.getFarmerListings();
+            const data = await ApiService.getFarmerListings();
             setListings(data);
         } catch (error) {
             console.error('Failed to fetch listings:', error);
@@ -33,7 +33,7 @@ export default function FarmerDashboard() {
 
     const handleDelete = async (id) => {
         if (confirm(t('common.confirmDelete') || 'Are you sure you want to delete this listing?')) {
-            const success = await MockService.deleteListing(id);
+            const success = await ApiService.deleteListing(id);
             if (success) {
                 toast.success(t('common.deleteSuccess') || 'Listing deleted successfully');
                 fetchListings(); // Refresh
@@ -149,12 +149,18 @@ export default function FarmerDashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {listings.filter(l => l.status === activeTab).map((item) => (
                             <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all group">
-                                <div className="relative h-48 overflow-hidden">
-                                    <img
-                                        src={item.image}
-                                        alt={item.crop}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    />
+                                <div className="relative h-48 overflow-hidden bg-gradient-to-br from-green-50 to-green-100">
+                                    {item.image ? (
+                                        <img
+                                            src={item.image}
+                                            alt={item.crop}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center">
+                                            <Package className="w-12 h-12 text-green-300" />
+                                        </div>
+                                    )}
                                     <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow-sm">
                                         {item.quantity}
                                     </div>
