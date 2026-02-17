@@ -9,6 +9,7 @@ import AuthGuard from '@/components/AuthGuard';
 import { Search, Filter, ShoppingCart, Heart, MapPin, Store, SlidersHorizontal, X, Star } from 'lucide-react';
 import { addToCart, openCart } from '@/store/slices/cartSlice';
 import { toast } from '@/components/ui/Toast/Toast';
+import { useAuth } from '@/hooks/useAuth'; // Import useAuth
 import { ApiService } from '@/services/apiService';
 
 // Regions
@@ -89,7 +90,30 @@ export default function MarketPage() {
         setFilteredCrops(result);
     }, [selectedRegion, selectedCategory, searchQuery, crops]);
 
+    const { isApproved } = useAuth(); // Get approval status
+
+    const handleBuyNow = (item) => {
+        if (!isApproved) {
+            toast.error(t('market.verificationPending') || 'Your account is pending verification. You cannot purchase items yet.');
+            return;
+        }
+        dispatch(addToCart({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            image: item.image,
+            farmer: item.farmer,
+            minQty: item.minQty,
+            quantity: 1 // Default to 1 unit
+        }));
+        router.push('/buyer/cart');
+    };
+
     const handleAddToCart = (item) => {
+        if (!isApproved) {
+            toast.error(t('market.verificationPending') || 'Your account is pending verification. You cannot purchase items yet.');
+            return;
+        }
         dispatch(addToCart({
             id: item.id,
             name: item.name,

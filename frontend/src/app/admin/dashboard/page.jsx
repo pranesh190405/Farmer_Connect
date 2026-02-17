@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Users, AlertCircle, CheckCircle, XCircle, LogOut, Check, X } from 'lucide-react';
-import { approveUser, rejectUser, logout } from '@/store/slices/authSlice';
+import { approveUserAsync, rejectUserAsync, logout } from '@/store/slices/authSlice';
 import { showToast } from '@/components/ui/Toast/Toast';
 import Button from '@/components/ui/Button';
 
@@ -20,14 +20,22 @@ export default function AdminDashboard() {
     const approvedUsers = users.filter(u => u.status === 'APPROVED');
     const rejectedUsers = users.filter(u => u.status === 'REJECTED');
 
-    const handleApprove = (id) => {
-        dispatch(approveUser(id));
-        showToast('User approved successfully', 'success');
+    const handleApprove = async (id) => {
+        const result = await dispatch(approveUserAsync(id));
+        if (approveUserAsync.fulfilled.match(result)) {
+            showToast('User approved successfully', 'success');
+        } else {
+            showToast(result.payload || 'Failed to approve', 'error');
+        }
     };
 
-    const handleReject = (id) => {
-        dispatch(rejectUser(id));
-        showToast('User rejected', 'info');
+    const handleReject = async (id) => {
+        const result = await dispatch(rejectUserAsync(id));
+        if (rejectUserAsync.fulfilled.match(result)) {
+            showToast('User rejected', 'info');
+        } else {
+            showToast(result.payload || 'Failed to reject', 'error');
+        }
     };
 
     const handleLogout = () => {

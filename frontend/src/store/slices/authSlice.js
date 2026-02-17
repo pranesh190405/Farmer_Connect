@@ -302,6 +302,26 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload;
             });
+
+        // approveUserAsync
+        builder.addCase(approveUserAsync.fulfilled, (state, action) => {
+            if (state.users) {
+                const index = state.users.findIndex(u => u.id === action.payload.id);
+                if (index !== -1) {
+                    state.users[index] = action.payload;
+                }
+            }
+        });
+
+        // rejectUserAsync
+        builder.addCase(rejectUserAsync.fulfilled, (state, action) => {
+            if (state.users) {
+                const index = state.users.findIndex(u => u.id === action.payload.id);
+                if (index !== -1) {
+                    state.users[index] = action.payload;
+                }
+            }
+        });
     },
 });
 
@@ -316,9 +336,9 @@ export const {
     logout,
     clearError,
     adminLogin,
-    approveUser,
-    rejectUser,
-    sessionExpired
+    sessionExpired,
+    approveUserAsync,
+    rejectUserAsync
 } = authSlice.actions;
 
 export default authSlice.reducer;

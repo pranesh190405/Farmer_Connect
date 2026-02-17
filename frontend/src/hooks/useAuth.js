@@ -81,6 +81,9 @@ export function useAuth() {
 
     return {
         user,
+        status: user?.status, // Expose status
+        isApproved: user?.status === 'active', // Helper boolean
+        isAuthenticated,
         isAuthenticated,
         userType,
         showTimeoutWarning,
