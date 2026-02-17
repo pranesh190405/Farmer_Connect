@@ -1,0 +1,61 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+}
+
+.iconWrapper {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.icon {
+    font-size: 32px;
+}
+
+.message {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0;
+}
+
+.timer {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--color-warning);
+    font-variant-numeric: tabular-nums;
+}
+
+.hint {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+}
