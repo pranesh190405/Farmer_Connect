@@ -1,3 +1,0 @@
-module.exports=[51107,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(11215);a.n(d("[project]/SEM6/SE/Farmer_Connect/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},85415,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(11215);a.n(d("[project]/SEM6/SE/Farmer_Connect/node_modules/next/dist/client/components/builtin/global-error.js"))},77266,a=>{"use strict";a.i(51107);var b=a.i(85415);a.n(b)}];
-
-//# sourceMappingURL=14729_next_dist_client_components_builtin_global-error_9bfa16e1.js.map
