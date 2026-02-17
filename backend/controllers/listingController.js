@@ -1,12 +1,16 @@
+// Import listing business logic module
 const listingModule = require('../modules/listingModule');
 
 /**
  * POST /api/listings
+ * Create a new listing (authenticated user)
  */
 async function createListing(req, res) {
     try {
+        // req.user.id comes from authentication middleware (JWT)
         const listing = await listingModule.createListing(req.user.id, req.body);
-        res.status(201).json({ listing });
+
+        res.status(201).json({ listing }); // Created
     } catch (err) {
         console.error('createListing error:', err);
         res.status(500).json({ error: 'Failed to create listing' });
@@ -19,7 +23,9 @@ async function createListing(req, res) {
  */
 async function getListings(req, res) {
     try {
+        // Pass query filters directly to module
         const listings = await listingModule.getListings(req.query);
+
         res.json({ listings });
     } catch (err) {
         console.error('getListings error:', err);
@@ -29,10 +35,12 @@ async function getListings(req, res) {
 
 /**
  * GET /api/listings/my
+ * Get listings created by logged-in user
  */
 async function getMyListings(req, res) {
     try {
         const listings = await listingModule.getMyListings(req.user.id);
+
         res.json({ listings });
     } catch (err) {
         console.error('getMyListings error:', err);
@@ -42,11 +50,13 @@ async function getMyListings(req, res) {
 
 /**
  * GET /api/listings/:id
+ * Get single listing by ID
  */
 async function getListingById(req, res) {
     try {
         const listing = await listingModule.getListingById(req.params.id);
 
+        // If listing doesn't exist
         if (!listing) {
             return res.status(404).json({ error: 'Listing not found' });
         }
@@ -60,10 +70,16 @@ async function getListingById(req, res) {
 
 /**
  * PUT /api/listings/:id
+ * Update listing (only owner allowed)
  */
 async function updateListing(req, res) {
     try {
-        const listing = await listingModule.updateListing(req.params.id, req.user.id, req.body);
+        // Module should verify ownership using userId
+        const listing = await listingModule.updateListing(
+            req.params.id,
+            req.user.id,
+            req.body
+        );
 
         if (!listing) {
             return res.status(404).json({ error: 'Listing not found or not authorized' });
@@ -78,16 +94,22 @@ async function updateListing(req, res) {
 
 /**
  * PUT /api/listings/:id/status
+ * Update listing status (e.g., active, sold, closed)
  */
 async function updateStatus(req, res) {
     try {
         const { status } = req.body;
 
+        // Status must be provided
         if (!status) {
             return res.status(400).json({ error: 'Status is required' });
         }
 
-        const listing = await listingModule.updateStatus(req.params.id, req.user.id, status);
+        const listing = await listingModule.updateStatus(
+            req.params.id,
+            req.user.id,
+            status
+        );
 
         if (!listing) {
             return res.status(404).json({ error: 'Listing not found or not authorized' });
@@ -102,10 +124,14 @@ async function updateStatus(req, res) {
 
 /**
  * DELETE /api/listings/:id
+ * Delete listing (only owner allowed)
  */
 async function deleteListing(req, res) {
     try {
-        const deleted = await listingModule.deleteListing(req.params.id, req.user.id);
+        const deleted = await listingModule.deleteListing(
+            req.params.id,
+            req.user.id
+        );
 
         if (!deleted) {
             return res.status(404).json({ error: 'Listing not found or not authorized' });
@@ -118,6 +144,7 @@ async function deleteListing(req, res) {
     }
 }
 
+// Export controller functions
 module.exports = {
     createListing,
     getListings,
