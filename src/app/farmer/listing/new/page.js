@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Upload, Loader2, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Upload, MapPin, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { ApiService } from '@/services/apiService';
 import { toast } from '@/components/ui/Toast/Toast';
@@ -12,12 +12,18 @@ import QualitySliders from '@/components/ui/QualitySliders';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 
-// ... (existing imports)
-
 export default function NewListingPage() {
     const { t } = useTranslation('common');
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+
+    // Location state
+    const [location, setLocation] = useState({
+        address: '',
+        lat: null,
+        lng: null,
+        status: 'detecting', // 'detecting' | 'detected' | 'denied' | 'error'
+    });
 
     const CROP_TYPES = [
         { value: 'Potato', label: t('listing.crops.potato') || 'Potato' },
@@ -34,8 +40,66 @@ export default function NewListingPage() {
         quantity: '',
         price: '',
         minQty: '',
-        quality: { size: 50, freshness: 80, ripeness: 60 } // Default
+        quality: { size: 50, freshness: 80, ripeness: 60 }
     });
+
+    // Auto-detect location on mount
+    useEffect(() => {
+        if (typeof window === 'undefined' || !navigator.geolocation) {
+            setLocation(prev => ({ ...prev, status: 'error' }));
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
+                setLocation(prev => ({ ...prev, lat: latitude, lng: longitude }));
+
+                // Reverse geocode using OpenStreetMap Nominatim (free, no API key)
+                try {
+                    const res = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`,
+                        { headers: { 'Accept-Language': 'en' } }
+                    );
+                    const data = await res.json();
+                    const addr = data.address || {};
+                    // Build a short readable address: village/city, district, state
+                    const parts = [
+                        addr.village || addr.town || addr.city || addr.suburb || '',
+                        addr.county || addr.state_district || '',
+                        addr.state || '',
+                    ].filter(Boolean);
+                    const addressStr = parts.join(', ') || data.display_name || '';
+
+                    setLocation({
+                        address: addressStr,
+                        lat: latitude,
+                        lng: longitude,
+                        status: 'detected',
+                    });
+                } catch {
+                    // Geocoding failed but we still have coordinates
+                    setLocation({
+                        address: `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,
+                        lat: latitude,
+                        lng: longitude,
+                        status: 'detected',
+                    });
+                }
+            },
+            (err) => {
+                console.warn('Geolocation error:', err.message);
+                if (err.code === 1) {
+                    setLocation(prev => ({ ...prev, status: 'denied' }));
+                    toast.warning?.('Location access denied. Listing will be created without location.') ||
+                        toast.error?.('Location access denied');
+                } else {
+                    setLocation(prev => ({ ...prev, status: 'error' }));
+                }
+            },
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+        );
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,6 +120,10 @@ export default function NewListingPage() {
                 unit: 'kg',
                 expectedPrice: parseFloat(formData.price),
                 minQty: parseFloat(formData.minQty) || 50,
+                // Location data (auto-detected)
+                locationAddress: location.address || '',
+                locationLat: location.lat || null,
+                locationLng: location.lng || null,
             };
 
             await ApiService.addListing(newListing);
@@ -71,7 +139,6 @@ export default function NewListingPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 pb-20 font-sans">
-            {/* Header omitted for brevity in replace tool */}
             <header className="bg-white border-b sticky top-0 z-10 px-6 py-4 shadow-sm flex items-center gap-4">
                 <Link href="/farmer/dashboard" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                     <ArrowLeft className="w-5 h-5 text-gray-600" />
@@ -136,6 +203,36 @@ export default function NewListingPage() {
                         initialQuality={formData.quality}
                         onChange={(q) => setFormData(prev => ({ ...prev, quality: q }))}
                     />
+
+                    {/* Auto-Detected Location Display */}
+                    <div className="rounded-xl border border-gray-200 p-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <MapPin className="w-4 h-4 inline-block mr-1 -mt-0.5" />
+                            Location
+                        </label>
+                        {location.status === 'detecting' && (
+                            <div className="flex items-center gap-2 text-sm text-gray-500">
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                                Detecting your location...
+                            </div>
+                        )}
+                        {location.status === 'detected' && (
+                            <div className="flex items-center gap-2">
+                                <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
+                                <span className="text-sm text-gray-700">{location.address}</span>
+                            </div>
+                        )}
+                        {location.status === 'denied' && (
+                            <p className="text-sm text-amber-600">
+                                📍 Location access was denied. Your listing will be created without location.
+                            </p>
+                        )}
+                        {location.status === 'error' && (
+                            <p className="text-sm text-gray-500">
+                                📍 Could not detect location. Your listing will be created without location.
+                            </p>
+                        )}
+                    </div>
 
                     <div className="pt-4">
                         <Button type="submit" fullWidth isLoading={isLoading} disabled={isLoading}>

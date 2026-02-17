@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/farmer/layout,_N_T_/farmer/listing/layout,_N_T_/farmer/listing/new/layout,_N_T_/farmer/listing/new/page,_N_T_/farmer/listing/new"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/farmer/listing/new/__PAGE__",
+    "/farmer/listing/new",
+    "/farmer/listing",
+    "/farmer",
+    "/_index",
+    "/_head"
+  ]
+}

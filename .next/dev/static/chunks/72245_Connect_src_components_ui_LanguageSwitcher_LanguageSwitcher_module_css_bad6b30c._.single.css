@@ -1,0 +1,157 @@
+/* [project]/SEM6/SE/Farmer_Connect/src/components/ui/LanguageSwitcher/LanguageSwitcher.module.css [app-client] (css) */
+.LanguageSwitcher-module__lIRfNG__switcher {
+  display: inline-block;
+  position: relative;
+}
+
+.LanguageSwitcher-module__lIRfNG__mainButton {
+  border: 1px solid var(--border-color, #e0e0e0);
+  cursor: pointer;
+  color: var(--text-primary, #1f2937);
+  background: #fff;
+  border-radius: 8px;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 1rem;
+  font-size: .875rem;
+  font-weight: 500;
+  transition: all .2s;
+  display: flex;
+}
+
+.LanguageSwitcher-module__lIRfNG__mainButton:hover {
+  background: var(--bg-hover, #f3f4f6);
+  border-color: var(--border-hover, #d1d5db);
+}
+
+.LanguageSwitcher-module__lIRfNG__mainButton:focus {
+  outline: 2px solid var(--primary-color, #10b981);
+  outline-offset: 2px;
+}
+
+.LanguageSwitcher-module__lIRfNG__mainButton:active {
+  transform: scale(.98);
+}
+
+.LanguageSwitcher-module__lIRfNG__langIcon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.LanguageSwitcher-module__lIRfNG__langCode {
+  text-align: left;
+  min-width: 60px;
+  font-weight: 600;
+}
+
+.LanguageSwitcher-module__lIRfNG__arrow {
+  color: #6b7280;
+  font-size: .625rem;
+}
+
+.LanguageSwitcher-module__lIRfNG__dropdown {
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  min-width: 200px;
+  max-height: 320px;
+  animation: .2s LanguageSwitcher-module__lIRfNG__slideDown;
+  position: absolute;
+  top: calc(100% + .5rem);
+  right: 0;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px #0000001a;
+}
+
+@keyframes LanguageSwitcher-module__lIRfNG__slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.LanguageSwitcher-module__lIRfNG__langOption {
+  cursor: pointer;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #f3f4f6;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .25rem;
+  width: 100%;
+  padding: .75rem 1rem;
+  transition: background .15s;
+  display: flex;
+}
+
+.LanguageSwitcher-module__lIRfNG__langOption:last-child {
+  border-bottom: none;
+}
+
+.LanguageSwitcher-module__lIRfNG__langOption:hover {
+  background: #f9fafb;
+}
+
+.LanguageSwitcher-module__lIRfNG__langOption.LanguageSwitcher-module__lIRfNG__active {
+  background: #ecfdf5;
+  border-left: 3px solid #10b981;
+}
+
+.LanguageSwitcher-module__lIRfNG__langName {
+  color: #1f2937;
+  font-size: .9375rem;
+  font-weight: 600;
+}
+
+.LanguageSwitcher-module__lIRfNG__langEnglish {
+  color: #6b7280;
+  font-size: .75rem;
+}
+
+.LanguageSwitcher-module__lIRfNG__backdrop {
+  z-index: 999;
+  position: fixed;
+  inset: 0;
+}
+
+.LanguageSwitcher-module__lIRfNG__compact .LanguageSwitcher-module__lIRfNG__mainButton {
+  border-radius: 6px;
+  padding: .375rem .75rem;
+  font-size: .75rem;
+}
+
+.LanguageSwitcher-module__lIRfNG__compact .LanguageSwitcher-module__lIRfNG__langIcon {
+  font-size: 1rem;
+}
+
+.LanguageSwitcher-module__lIRfNG__header .LanguageSwitcher-module__lIRfNG__mainButton {
+  border: none;
+  padding: .5rem;
+}
+
+.LanguageSwitcher-module__lIRfNG__header .LanguageSwitcher-module__lIRfNG__mainButton:hover {
+  background: #10b9811a;
+  border-color: #0000;
+}
+
+@media (max-width: 640px) {
+  .LanguageSwitcher-module__lIRfNG__mainButton {
+    padding: .375rem .75rem;
+    font-size: .8125rem;
+  }
+
+  .LanguageSwitcher-module__lIRfNG__dropdown {
+    min-width: 180px;
+    left: 0;
+    right: auto;
+  }
+}
+
+/*# sourceMappingURL=72245_Connect_src_components_ui_LanguageSwitcher_LanguageSwitcher_module_css_bad6b30c._.single.css.map*/

@@ -13,7 +13,7 @@ export default function AdminDashboard() {
     const { t } = useTranslation('common');
     const dispatch = useDispatch();
     const router = useRouter();
-    const { users, user } = useSelector((state) => state.auth);
+    const { users = [], user } = useSelector((state) => state.auth) || {};
     const [activeTab, setActiveTab] = useState('pending');
 
     const pendingUsers = users.filter(u => u.status === 'PENDING');
@@ -75,8 +75,8 @@ export default function AdminDashboard() {
                                 <td className="p-4 text-gray-600 font-mono text-sm">{u.mobile}</td>
                                 <td className="p-4">
                                     <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${u.status === 'APPROVED' ? 'bg-green-50 text-green-600' :
-                                            u.status === 'REJECTED' ? 'bg-red-50 text-red-600' :
-                                                'bg-yellow-50 text-yellow-600'
+                                        u.status === 'REJECTED' ? 'bg-red-50 text-red-600' :
+                                            'bg-yellow-50 text-yellow-600'
                                         }`}>
                                         {u.status}
                                     </span>
@@ -179,8 +179,8 @@ export default function AdminDashboard() {
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`px-4 py-2 rounded-t-lg text-sm font-medium transition-all relative top-0.5 ${activeTab === tab
-                                        ? 'bg-white text-green-600 border-b-2 border-green-600'
-                                        : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                                    ? 'bg-white text-green-600 border-b-2 border-green-600'
+                                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                                     }`}
                             >
                                 {tab.charAt(0).toUpperCase() + tab.slice(1)}

@@ -1,0 +1,23 @@
+{
+  "/(auth)/buyer/register/page": "/buyer/register",
+  "/(auth)/farmer/register/page": "/farmer/register",
+  "/(auth)/login/page": "/login",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/dashboard/page": "/admin/dashboard",
+  "/admin/login/page": "/admin/login",
+  "/buyer/dashboard/page": "/buyer/dashboard",
+  "/checkout/page": "/checkout",
+  "/farmer/dashboard/page": "/farmer/dashboard",
+  "/farmer/listing/batch/page": "/farmer/listing/batch",
+  "/farmer/listing/edit/[id]/page": "/farmer/listing/edit/[id]",
+  "/farmer/listing/new/page": "/farmer/listing/new",
+  "/farmer/listings/page": "/farmer/listings",
+  "/favicon.ico/route": "/favicon.ico",
+  "/market/map/page": "/market/map",
+  "/market/page": "/market",
+  "/page": "/",
+  "/profile/kyc/page": "/profile/kyc",
+  "/profile/page": "/profile",
+  "/session-expired/page": "/session-expired"
+}

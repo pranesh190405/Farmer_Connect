@@ -1,0 +1,88 @@
+/* [project]/SEM6/SE/Farmer_Connect/src/components/ui/OTPInput/OTPInput.module.css [app-client] (css) */
+.OTPInput-module__mqNHnG__wrapper {
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  display: flex;
+}
+
+.OTPInput-module__mqNHnG__inputGroup {
+  justify-content: center;
+  gap: 8px;
+  display: flex;
+}
+
+@media (min-width: 480px) {
+  .OTPInput-module__mqNHnG__inputGroup {
+    gap: 12px;
+  }
+}
+
+.OTPInput-module__mqNHnG__input {
+  text-align: center;
+  border: 2px solid var(--border);
+  background: var(--background);
+  width: 48px;
+  height: 56px;
+  color: var(--foreground);
+  caret-color: var(--color-primary);
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  transition: all .2s;
+}
+
+@media (min-width: 480px) {
+  .OTPInput-module__mqNHnG__input {
+    width: 56px;
+    height: 64px;
+    font-size: 28px;
+  }
+}
+
+.OTPInput-module__mqNHnG__input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px #16a34a33;
+}
+
+.OTPInput-module__mqNHnG__input:disabled {
+  opacity: .6;
+  background: var(--surface);
+}
+
+.OTPInput-module__mqNHnG__filled {
+  border-color: var(--color-primary);
+  background: #16a34a0d;
+}
+
+.OTPInput-module__mqNHnG__hasError .OTPInput-module__mqNHnG__input {
+  border-color: var(--color-danger);
+}
+
+.OTPInput-module__mqNHnG__hasError .OTPInput-module__mqNHnG__input:focus {
+  box-shadow: 0 0 0 3px #dc262633;
+}
+
+.OTPInput-module__mqNHnG__error {
+  color: var(--color-danger);
+  text-align: center;
+  font-size: 14px;
+}
+
+.OTPInput-module__mqNHnG__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.OTPInput-module__mqNHnG__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.OTPInput-module__mqNHnG__input {
+  -moz-appearance: textfield;
+}
+
+/*# sourceMappingURL=SEM6_SE_Farmer_Connect_src_components_ui_OTPInput_OTPInput_module_css_bad6b30c._.single.css.map*/

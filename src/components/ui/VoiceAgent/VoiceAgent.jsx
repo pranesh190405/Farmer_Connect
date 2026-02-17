@@ -39,10 +39,26 @@ export default function VoiceAgent() {
             };
 
             recognitionRef.current.onerror = (event) => {
-                console.error('Speech recognition error', event.error);
                 setIsListening(false);
-                if (event.error === 'not-allowed') {
-                    showToast('Microphone access denied', 'error');
+                switch (event.error) {
+                    case 'not-allowed':
+                        showToast('Microphone access denied', 'error');
+                        break;
+                    case 'network':
+                        // Web Speech API requires internet (sends audio to Google).
+                        // Silently ignore on localhost or show a subtle warning.
+                        console.warn('Speech recognition requires an internet connection.');
+                        showToast('Voice requires internet connection', 'warning');
+                        break;
+                    case 'no-speech':
+                        // User didn't say anything — not a real error.
+                        break;
+                    case 'aborted':
+                        // User or code stopped recognition — not a real error.
+                        break;
+                    default:
+                        console.error('Speech recognition error:', event.error);
+                        showToast('Voice recognition error', 'error');
                 }
             };
         }
