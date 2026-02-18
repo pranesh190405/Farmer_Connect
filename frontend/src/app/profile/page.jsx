@@ -306,7 +306,7 @@ export default function ProfileSettingsPage() {
                             <Button onClick={handleSave} isLoading={isSaving} fullWidth className="shadow-lg">
                                 {saved ? '✓ Changes Saved' : t('profile.saveChanges') || 'Save Changes'}
                             </Button>
-                            <Button onClick={handleLogout} variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300" fullWidth>
+                            <Button onClick={handleLogout} fullWidth className="shadow-lg">
                                 <LogOut className="w-4 h-4 mr-2" />
                                 {t('profile.logout') || 'Logout'}
                             </Button>
