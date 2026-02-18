@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { ShieldCheck, MapPin, CreditCard, ChevronRight, CheckCircle, AlertTriangle } from 'lucide-react';
 import { clearCart } from '@/store/slices/cartSlice';
+import { ApiService } from '@/services/apiService';
 import { toast } from '@/components/ui/Toast/Toast';
 import Button from '@/components/ui/Button';
 
@@ -14,8 +15,14 @@ export default function CheckoutPage() {
     const { t } = useTranslation('common');
     const dispatch = useDispatch();
     const router = useRouter();
-    const { items, total } = useSelector((state) => state.cart);
+    const { items } = useSelector((state) => state.cart);
     const { user, isAuthenticated } = useSelector((state) => state.auth);
+
+    // Compute total from cart items — price is stored as "₹45/kg"
+    const total = items.reduce((sum, item) => {
+        const price = parseFloat(String(item.price).replace(/[₹,]/g, '').replace(/\/.*$/, ''));
+        return sum + (price * item.quantity);
+    }, 0);
 
     const [step, setStep] = useState(1); // 1: Address, 2: Payment, 3: Success
     const [loading, setLoading] = useState(false);
@@ -48,13 +55,40 @@ export default function CheckoutPage() {
         }
 
         setLoading(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        try {
+            // Parse cart items into the format the backend expects
+            const orderItems = items.map(item => {
+                // price is stored as "₹45/kg" — extract the number
+                const priceNum = parseFloat(
+                    String(item.price).replace(/[₹,]/g, '').replace(/\/.*$/, '')
+                ) || 0;
+                return {
+                    id: item.id,
+                    quantity: item.quantity,
+                    price: priceNum,
+                };
+            });
 
-        dispatch(clearCart());
-        setStep(3); // Success
-        setLoading(false);
-        toast.success("Order placed successfully!");
+            const totalAmount = orderItems.reduce(
+                (sum, i) => sum + i.price * i.quantity, 0
+            );
+
+            await ApiService.placeOrder({
+                items: orderItems,
+                deliveryAddress: address.trim(),
+                paymentMethod,
+                totalAmount,
+            });
+
+            dispatch(clearCart());
+            setStep(3); // Success
+            toast.success("Order placed successfully!");
+        } catch (err) {
+            console.error('Place order failed:', err);
+            toast.error(err.message || 'Failed to place order. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     if (!isAuthenticated || (items.length === 0 && step !== 3)) {
@@ -185,7 +219,7 @@ export default function CheckoutPage() {
                                             Back
                                         </button>
                                         <Button onClick={handlePlaceOrder} isLoading={loading}>
-                                            Place Order ({total})
+                                            Place Order (₹{total.toFixed(2)})
                                         </Button>
                                     </div>
                                 </div>
@@ -216,7 +250,7 @@ export default function CheckoutPage() {
                             <div className="space-y-2 py-4 border-t border-gray-100">
                                 <div className="flex justify-between text-sm text-gray-500">
                                     <span>Subtotal</span>
-                                    <span>{total}</span>
+                                    <span>₹{total.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm text-gray-500">
                                     <span>Delivery</span>
@@ -226,7 +260,7 @@ export default function CheckoutPage() {
 
                             <div className="flex justify-between text-lg font-bold text-gray-900 pt-4 border-t border-gray-100">
                                 <span>Total</span>
-                                <span>{total}</span>
+                                <span>₹{total.toFixed(2)}</span>
                             </div>
 
                             <div className="mt-6 bg-green-50 rounded-lg p-3 flex gap-2">
