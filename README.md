@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌾 Farmer Connect
 
-## Getting Started
+A Smart Agricultural Marketplace that connects farmers and buyers with AI-powered pricing, secure negotiation, and transparent transaction workflows.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📌 Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Farmer Connect is a digital marketplace designed to:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Enable farmers to list crops
+- Allow buyers to search and negotiate
+- Provide AI-based price prediction
+- Support structured bidding
+- Maintain secure transaction records
+- Handle disputes transparently
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The system is built using a microservice-ready architecture with role-based access control and scalable backend design.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🔐 User Identity & Access Control
+- Mobile OTP-based authentication
+- Role-Based Access Control (Farmer, Buyer, Admin)
+- KYC document verification
+- Secure session management (JWT)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🌾 Crop Listing & Quality Representation
+- Create and manage listings
+- Upload crop images
+- Capture standardized quality attributes
+- Location-aware filtering
 
-## Deploy on Vercel
+### 📊 Pricing Intelligence
+- Market price comparison
+- Historical price trends
+- Demand forecasting
+- AI-based price prediction with confidence range
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🤝 Negotiation & Bidding
+- Counter-offer mechanism
+- Time-bound auction system
+- Offer locking and confirmation
+- Complete negotiation history
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🧾 Transaction & Dispute Handling
+- Digital transaction records
+- Admin-based dispute resolution
+- Audit-ready logs
+
+---
+
+## 🏗 System Architecture
+
+![Architecture Diagram](./docs/architecture.png)
+
+---
+
+## 📐 UML Diagrams
+
+### 📌 Use Case Diagram
+![Use Case Diagram](./docs/usecase.png)
+
+### 📌 Class Diagram
+![Class Diagram](./docs/class.png)
+
+### 📌 Activity Diagram
+![Activity Diagram](./docs/activity.png)
+
+### 📌 Sequence Diagram
+![Sequence Diagram](./docs/sequence.png)
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | Next.js |
+| Backend | Node.js (Express) |
+| AI Microservice | Python FastAPI |
+| Database | PostgreSQL |
+| Authentication | JWT + OTP |
+| Deployment | Docker / Cloud |
+
+---
+
+## 📂 Project Structure
+
