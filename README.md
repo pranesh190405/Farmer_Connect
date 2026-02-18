@@ -1,91 +1,210 @@
-# 🌾 Farmer Connect
+#  Farmer Connect
 
-A Smart Agricultural Marketplace that connects farmers and buyers with AI-powered pricing, secure negotiation, and transparent transaction workflows.
+A Smart Agricultural Marketplace that connects farmers and buyers with AI-powered pricing, structured bidding, secure negotiation, and transparent transaction workflows.
 
 ---
 
-## 📌 Overview
+##  Overview
 
-Farmer Connect is a digital marketplace designed to:
+Farmer Connect is a digital marketplace platform designed to:
 
 - Enable farmers to list crops
 - Allow buyers to search and negotiate
 - Provide AI-based price prediction
-- Support structured bidding
+- Support structured bidding & counter-offers
 - Maintain secure transaction records
 - Handle disputes transparently
+- Enforce Role-Based Access Control (RBAC)
 
-The system is built using a microservice-ready architecture with role-based access control and scalable backend design.
+The system follows a scalable full-stack architecture with secure authentication and modular backend services.
 
 ---
 
-## 🚀 Features
+##  Features
 
-### 🔐 User Identity & Access Control
+###  User Identity & Access Control
 - Mobile OTP-based authentication
 - Role-Based Access Control (Farmer, Buyer, Admin)
-- KYC document verification
+- KYC verification workflow
 - Secure session management (JWT)
 
-### 🌾 Crop Listing & Quality Representation
+###  Crop Listing & Quality Representation
 - Create and manage listings
 - Upload crop images
 - Capture standardized quality attributes
-- Location-aware filtering
+- AI-based price prediction
 
-### 📊 Pricing Intelligence
-- Market price comparison
-- Historical price trends
-- Demand forecasting
-- AI-based price prediction with confidence range
+###  Bidding & Negotiation
+- Place bids on listings
+- Send offers
+- Counter-offer negotiation system
+- Structured order confirmation
 
-### 🤝 Negotiation & Bidding
-- Counter-offer mechanism
-- Time-bound auction system
-- Offer locking and confirmation
-- Complete negotiation history
+###  Order Management
+- Order lifecycle: Pending → Confirmed → Completed
+- Order tracking
+- Transaction history
 
-### 🧾 Transaction & Dispute Handling
-- Digital transaction records
-- Admin-based dispute resolution
-- Audit-ready logs
+###  Dispute Handling
+- Raise disputes
+- Admin review & resolution
+- Transparent dispute status tracking
 
----
-
-## 🏗 System Architecture
-
-![Architecture Diagram](./docs/architecture.png)
+### Notification System
+- Real-time notifications
+- Order updates
+- Dispute updates
 
 ---
 
-## 📐 UML Diagrams
+##  System Architecture
 
-### 📌 Use Case Diagram
-![Use Case Diagram](./docs/usecase.png)
-
-### 📌 Class Diagram
-![Class Diagram](./docs/class.png)
-
-### 📌 Activity Diagram
-![Activity Diagram](./docs/activity.png)
-
-### 📌 Sequence Diagram
-![Sequence Diagram](./docs/sequence.png)
+![Architecture Diagram](docs/Architecture%20diagram.png)
 
 ---
 
-## 🛠 Tech Stack
+## 📊 Database Schema
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | Next.js |
-| Backend | Node.js (Express) |
-| AI Microservice | Python FastAPI |
-| Database | PostgreSQL |
-| Authentication | JWT + OTP |
-| Deployment | Docker / Cloud |
+![Database Schema](docs/Schema.png)
 
 ---
 
-## 📂 Project Structure
+##  Use Case Diagram
+
+![Use Case Diagram](docs/use%20case.png)
+
+---
+
+##  Activity Diagram
+
+![Activity Diagram](docs/activity.png)
+
+---
+
+##  Sequence Diagram
+
+![Sequence Diagram](docs/sequence.png)
+
+---
+
+## Class Diagram
+
+![Class Diagram](docs/class.png)
+
+---
+
+##  Tech Stack
+
+### 🔹 Frontend
+- React / Vite
+- Tailwind CSS
+- Axios
+
+### 🔹 Backend
+- Node.js
+- Express.js
+- JWT Authentication
+- REST APIs
+
+### 🔹 Database
+- SQL (PostgreSQL / MySQL)
+
+### 🔹 AI Microservice
+- Python (FastAPI)
+- Machine Learning model for price prediction
+
+### 🔹 External Services
+- SMS/OTP Service
+- Notification Service
+
+---
+
+##  Project Structure
+Farmer_Connect/
+│
+├── backend/
+│ ├── controllers/
+│ ├── services/
+│ ├── routes/
+│ ├── models/
+│ └── config/
+│
+├── frontend/
+│ ├── components/
+│ ├── pages/
+│ ├── services/
+│ └── assets/
+│
+├── docs/
+│ ├── Architecture diagram.png
+│ ├── Schema.png
+│ ├── activity.png
+│ ├── class.png
+│ ├── sequence.png
+│ └── use case.png
+│
+└── README.md
+
+---
+
+##  Role-Based Access Control (RBAC)
+
+| Role   | Permissions |
+|--------|------------|
+| Farmer | Create listings, manage orders |
+| Buyer  | Search listings, place bids, negotiate |
+| Admin  | Approve KYC, manage disputes, update orders |
+
+Access restrictions are enforced at both UI and API levels.
+
+---
+
+##  Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/your-username/Farmer_Connect.git
+cd Farmer_Connect
+
+2️⃣ Backend Setup
+cd backend
+npm install
+npm start
+
+3️⃣ Frontend Setup
+cd frontend
+npm install
+npm run dev
+
+
+ Security Features
+
+OTP-based authentication
+
+JWT-based session management
+
+Input validation & sanitization
+
+Role-based authorization
+
+Secure password handling
+
+Protected API routes
+
+ Future Enhancements
+
+Real-time bidding using WebSockets
+
+Blockchain-based transaction logs
+
+Escrow payment integration
+
+Advanced AI pricing model
+
+Mobile app support
+
+📜 License
+
+This project is licensed under the MIT License.
 
