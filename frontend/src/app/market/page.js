@@ -108,9 +108,9 @@ export default function MarketPage() {
     return (
         <AuthGuard>
             <div className="min-h-screen bg-gray-50 pb-24 font-sans">
-                {/* Header */}
-                <header className="bg-white border-b sticky top-0 z-20 px-4 md:px-6 py-4 shadow-sm">
-                    <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-4">
+                <main className="max-w-7xl mx-auto p-4 md:p-6">
+                    {/* Page Title + Search */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                         <div className="flex items-center justify-between w-full md:w-auto">
                             <div>
                                 <h1 className="text-2xl font-bold text-gray-900">{t('nav.market')}</h1>
@@ -137,9 +137,6 @@ export default function MarketPage() {
                             />
                         </div>
                     </div>
-                </header>
-
-                <main className="max-w-7xl mx-auto p-4 md:p-6">
                     <div className="flex flex-col lg:flex-row gap-8">
                         {/* Sidebar Filters */}
                         <aside className={`fixed inset-0 z-30 bg-white lg:static lg:bg-transparent lg:w-64 lg:block ${showFilters ? 'block' : 'hidden'} h-full overflow-y-auto lg:h-auto lg:overflow-visible p-4 lg:p-0 shadow-xl lg:shadow-none transition-all duration-300`}>
@@ -244,7 +241,7 @@ export default function MarketPage() {
 
                                                 <div className="mt-auto flex items-end justify-between gap-4">
                                                     <div>
-                                                        <p className="text-2xl font-bold text-green-700">₹{item.price}<span className="text-sm text-gray-500 font-normal">/{item.unit}</span></p>
+                                                        <p className="text-2xl font-bold text-green-700">{item.price}</p>
                                                         <p className="text-xs text-gray-400 font-medium">{t('market.card.min')} {item.minQty} {item.unit}</p>
                                                     </div>
                                                     <button

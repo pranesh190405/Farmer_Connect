@@ -49,9 +49,9 @@ export default function FarmerDashboard() {
 
     return (
         <div className="min-h-screen bg-gray-50 pb-24 font-sans">
-            {/* Header */}
-            <header className="bg-white border-b sticky top-0 z-10 px-6 py-4 shadow-sm">
-                <div className="flex justify-between items-center max-w-7xl mx-auto">
+            <main className="max-w-7xl mx-auto p-6 space-y-8">
+                {/* Welcome + Actions */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h1 className="text-2xl font-bold text-gray-900">{t('dashboard.welcomeFarmer')}</h1>
                         <p className="text-gray-500 text-sm mt-1">{t('dashboard.manageCrops')}</p>
@@ -73,9 +73,6 @@ export default function FarmerDashboard() {
                         </Link>
                     </div>
                 </div>
-            </header>
-
-            <main className="max-w-7xl mx-auto p-6 space-y-8">
 
                 {/* Stats */}
                 <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">

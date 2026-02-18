@@ -190,15 +190,57 @@ async function deleteListing(id, farmerId) {
 }
 
 /**
+ * Crop-specific image fallbacks (Unsplash)
+ */
+const CROP_IMAGES = {
+    wheat: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&q=80&w=400&h=400',
+    rice: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=400&h=400',
+    tomato: 'https://images.unsplash.com/photo-1546470427-0d4db154ceb8?auto=format&fit=crop&q=80&w=400&h=400',
+    onion: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&q=80&w=400&h=400',
+    potato: 'https://images.unsplash.com/photo-1518977676601-b53f82ber633?auto=format&fit=crop&q=80&w=400&h=400',
+    maize: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&q=80&w=400&h=400',
+    corn: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&q=80&w=400&h=400',
+    sugarcane: 'https://images.unsplash.com/photo-1599592182395-74a0e8f11100?auto=format&fit=crop&q=80&w=400&h=400',
+    cotton: 'https://images.unsplash.com/photo-1616431101997-8375d38e3e4a?auto=format&fit=crop&q=80&w=400&h=400',
+    soybean: 'https://images.unsplash.com/photo-1599709877852-a0c6e09b9942?auto=format&fit=crop&q=80&w=400&h=400',
+    mango: 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&q=80&w=400&h=400',
+    apple: 'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&q=80&w=400&h=400',
+    banana: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&q=80&w=400&h=400',
+    grapes: 'https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&q=80&w=400&h=400',
+    chili: 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&q=80&w=400&h=400',
+    pepper: 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&q=80&w=400&h=400',
+    garlic: 'https://images.unsplash.com/photo-1540148426945-6cf22a6b2c4e?auto=format&fit=crop&q=80&w=400&h=400',
+    ginger: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=400&h=400',
+    turmeric: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=400&h=400',
+    tea: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=400&h=400',
+    flower: 'https://images.unsplash.com/photo-1490750967868-88aa4f44baee?auto=format&fit=crop&q=80&w=400&h=400',
+    cauliflower: 'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&q=80&w=400&h=400',
+    cabbage: 'https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&q=80&w=400&h=400',
+    carrot: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=400&h=400',
+    spinach: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=400&h=400',
+    default: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&q=80&w=400&h=400',
+};
+
+function getCropImage(cropName) {
+    if (!cropName) return CROP_IMAGES.default;
+    const name = cropName.toLowerCase();
+    for (const [key, url] of Object.entries(CROP_IMAGES)) {
+        if (key !== 'default' && name.includes(key)) return url;
+    }
+    return CROP_IMAGES.default;
+}
+
+/**
  * Format listing for API response
  */
 function formatListing(row) {
+    const imageUrl = row.image_url || getCropImage(row.crop_name);
     return {
         id: row.id,
         farmerId: row.farmer_id,
         cropName: row.crop_name,
-        name: row.crop_name, // alias for frontend compatibility
-        crop: row.crop_name, // alias for frontend compatibility
+        name: row.crop_name,
+        crop: row.crop_name,
         category: row.category,
         variety: row.variety,
         quantity: `${row.quantity} ${row.unit}`,
@@ -209,8 +251,8 @@ function formatListing(row) {
         expectedPrice: parseFloat(row.expected_price),
         qualityGrade: row.quality_grade,
         description: row.description,
-        image: row.image_url,
-        imageUrl: row.image_url,
+        image: imageUrl,
+        imageUrl: imageUrl,
         location: row.location_address,
         locationAddress: row.location_address,
         locationLat: row.location_lat,

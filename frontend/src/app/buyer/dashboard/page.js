@@ -59,9 +59,9 @@ export default function BuyerDashboard() {
 
     return (
         <div className="min-h-screen bg-gray-50 pb-24 font-sans">
-            {/* Header */}
-            <header className="bg-white border-b sticky top-0 z-10 px-6 py-4 shadow-sm">
-                <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-4">
+            <main className="max-w-7xl mx-auto p-4 md:p-6 space-y-8">
+                {/* Welcome + Actions */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h1 className="text-2xl font-bold text-gray-900">{t('dashboard.buyer.welcome')}</h1>
                         <p className="text-gray-500 text-sm mt-1">{t('dashboard.buyer.welcomeDesc')}</p>
@@ -76,9 +76,6 @@ export default function BuyerDashboard() {
                         </Link>
                     </div>
                 </div>
-            </header>
-
-            <main className="max-w-7xl mx-auto p-4 md:p-6 space-y-8">
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {stats.map((stat, index) => (
