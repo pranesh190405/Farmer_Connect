@@ -148,35 +148,3 @@ npm start
 cd frontend
 npm install
 npm run dev
-
-
- Security Features
-
-OTP-based authentication
-
-JWT-based session management
-
-Input validation & sanitization
-
-Role-based authorization
-
-Secure password handling
-
-Protected API routes
-
- Future Enhancements
-
-Real-time bidding using WebSockets
-
-Blockchain-based transaction logs
-
-Escrow payment integration
-
-Advanced AI pricing model
-
-Mobile app support
-
-📜 License
-
-This project is licensed under the MIT License.
-
