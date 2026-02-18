@@ -104,6 +104,40 @@ export const adminLoginAsync = createAsyncThunk(
     }
 );
 
+export const approveUserAsync = createAsyncThunk(
+    'auth/approveUser',
+    async (userId, { rejectWithValue }) => {
+        try {
+            const res = await fetch(`/api/admin/users/${userId}/approve`, {
+                method: 'PUT',
+                credentials: 'include',
+            });
+            const data = await res.json();
+            if (!res.ok) return rejectWithValue(data.error);
+            return data;
+        } catch (err) {
+            return rejectWithValue('Failed to approve user');
+        }
+    }
+);
+
+export const rejectUserAsync = createAsyncThunk(
+    'auth/rejectUser',
+    async (userId, { rejectWithValue }) => {
+        try {
+            const res = await fetch(`/api/admin/users/${userId}/reject`, {
+                method: 'PUT',
+                credentials: 'include',
+            });
+            const data = await res.json();
+            if (!res.ok) return rejectWithValue(data.error);
+            return data;
+        } catch (err) {
+            return rejectWithValue('Failed to reject user');
+        }
+    }
+);
+
 // ---- Slice ----
 
 const initialState = {
@@ -337,8 +371,6 @@ export const {
     clearError,
     adminLogin,
     sessionExpired,
-    approveUserAsync,
-    rejectUserAsync
 } = authSlice.actions;
 
 export default authSlice.reducer;
