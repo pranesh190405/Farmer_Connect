@@ -63,7 +63,7 @@ The system follows a scalable full-stack architecture with secure authentication
 
 ---
 
-## 📊 Database Schema
+##  Database Schema
 
 ![Database Schema](docs/Schema.png)
 
@@ -116,34 +116,6 @@ The system follows a scalable full-stack architecture with secure authentication
 ### 🔹 External Services
 - SMS/OTP Service
 - Notification Service
-
----
-
-##  Project Structure
-Farmer_Connect/
-│
-├── backend/
-│ ├── controllers/
-│ ├── services/
-│ ├── routes/
-│ ├── models/
-│ └── config/
-│
-├── frontend/
-│ ├── components/
-│ ├── pages/
-│ ├── services/
-│ └── assets/
-│
-├── docs/
-│ ├── Architecture diagram.png
-│ ├── Schema.png
-│ ├── activity.png
-│ ├── class.png
-│ ├── sequence.png
-│ └── use case.png
-│
-└── README.md
 
 ---
 
