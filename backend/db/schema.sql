@@ -35,6 +35,14 @@ CREATE TABLE users (
     business_category VARCHAR(50) DEFAULT '',
     contact_name  VARCHAR(100) DEFAULT '',
 
+    -- Trust & verification fields
+    trust_score       INTEGER DEFAULT 0,
+    profile_photo_url TEXT DEFAULT '',
+    document_url      TEXT DEFAULT '',
+    document_type     VARCHAR(20) DEFAULT '',
+    admin_notes       TEXT DEFAULT '',
+    verified_at       TIMESTAMP,
+
     created_at    TIMESTAMP DEFAULT NOW(),
     updated_at    TIMESTAMP DEFAULT NOW(),
 
