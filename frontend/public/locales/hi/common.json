@@ -26,7 +26,64 @@
         "createFirstListing": "अपनी पहली लिस्टिंग बनाएं",
         "welcomeBuyer": "स्वागत है, खरीदार!",
         "findFreshProduce": "किसानों से सीधे ताज़ा उपज खरीदें",
+        "adminConsole": "व्यवस्थापक कंसोल",
+        "systemOverview": "सिस्टम अवलोकन",
+        "totalFarmers": "कुल किसान",
+        "totalBuyers": "कुल खरीदार",
+        "totalRevenue": "कुल राजस्व",
+        "recentRegistrations": "हाल के पंजीकरण",
+        "user": "उपयोगकर्ता",
+        "type": "प्रकार",
+        "date": "तिथि",
+        "actions": "कार्रवाई",
+        "buyer": {
+            "welcome": "स्वागत है, खरीदार",
+            "welcomeDesc": "अपने ऑर्डर प्रबंधित करें और डिलीवरी ट्रैक करें",
+            "browseMarket": "बाज़ार देखें",
+            "stats": {
+                "totalOrders": "कुल ऑर्डर",
+                "activeOrders": "सक्रिय ऑर्डर",
+                "completed": "पूर्ण"
+            },
+            "tabs": {
+                "active": "सक्रिय ऑर्डर",
+                "completed": "पूर्ण ऑर्डर",
+                "cancelled": "रद्द ऑर्डर"
+            },
+            "empty": {
+                "title": "कोई {{status}} ऑर्डर नहीं",
+                "desc": "आपके पास इस समय कोई {{status}} ऑर्डर नहीं है।",
+                "startShopping": "खरीदारी शुरू करें"
+            },
+            "orderId": "ऑर्डर #",
+            "inProgress": "प्रगति में",
+            "trackOrder": "ऑर्डर ट्रैक करें"
+        },
         "batchMode": "बैच मोड"
+    },
+    "market": {
+        "title": "बाज़ार",
+        "subtitle": "किसानों से सीधे",
+        "filters": {
+            "title": "फ़िल्टर",
+            "categories": "श्रेणियां",
+            "allCategories": "सभी श्रेणियां",
+            "region": "क्षेत्र",
+            "regions": "क्षेत्र",
+            "allIndia": "पूरा भारत",
+            "priceRange": "मूल्य सीमा",
+            "reset": "फ़िल्टर रीसेट करें",
+            "active": "सक्रिय फ़िल्टर:"
+        },
+        "searchPlaceholder": "फसलें, किसान खोजें...",
+        "noCrops": {
+            "title": "कोई फसल नहीं मिली",
+            "desc": "अपने फ़िल्टर या खोज बदलकर देखें"
+        },
+        "card": {
+            "min": "न्यूनतम",
+            "add": "जोड़ें"
+        }
     },
     "auth": {
         "farmer": {
@@ -41,9 +98,25 @@
             "resendOtp": "OTP पुनः भेजें",
             "resendIn": "पुनः भेजें",
             "seconds": "सेकंड में",
+            "aadharLabel": "आधार नंबर",
+            "aadharPlaceholder": "अपना 12 अंकों का आधार नंबर दर्ज करें",
+            "nameLabel": "पूरा नाम",
+            "dobLabel": "जन्म तिथि",
+            "addressLabel": "पता",
+            "extractingData": "आधार से विवरण निकाला जा रहा है...",
+            "confirmDetails": "अपने विवरण की पुष्टि करें",
+            "detailsExtracted": "आधार से विवरण निकाला गया",
             "success": "खाता बन गया!",
             "successMessage": "डिजिटल कृषि बाज़ार में आपका स्वागत है",
-            "continue": "डैशबोर्ड पर जाएं"
+            "continue": "डैशबोर्ड पर जाएं",
+            "verificationPending": "आधार सत्यापन लंबित",
+            "canBrowse": "आप बाज़ार ब्राउज़ कर सकते हैं, लेकिन ऑर्डर देने के लिए आधार सत्यापन आवश्यक है",
+            "aadharSubtitle": "सत्यापन के लिए अपना आधार दर्ज करें",
+            "reviewInfo": "कृपया अपनी जानकारी की समीक्षा करें",
+            "verificationPendingTitle": "सत्यापन लंबित",
+            "verificationPendingDesc": "आपका खाता वर्तमान में व्यवस्थापक द्वारा समीक्षाधीन है।",
+            "verificationPendingHint": "कृपया व्यवस्थापक की मंजूरी की प्रतीक्षा करें। आप बाद में अपनी स्थिति जांचने के लिए लॉगिन कर सकते हैं।",
+            "backToLogin": "लॉगिन पर वापस जाएं"
         },
         "buyer": {
             "title": "खरीदार पंजीकरण",
@@ -52,15 +125,84 @@
             "category": "व्यापार श्रेणी",
             "categories": {
                 "retailer": "खुदरा विक्रेता",
+                "wholesaler": "थोक विक्रेता",
                 "cooperative": "सहकारी समिति",
-                "institution": "संस्थान"
-            }
+                "institution": "संस्थान",
+                "processor": "खाद्य प्रसंस्करण"
+            },
+            "loginOrRegister": "लॉगिन या पंजीकरण करें",
+            "continue": "आगे बढ़ें",
+            "businessDetails": "व्यापार विवरण",
+            "completeProfile": "जारी रखने के लिए अपनी प्रोफ़ाइल पूरी करें",
+            "businessNamePlaceholder": "अपने व्यापार का नाम दर्ज करें",
+            "taxIdPlaceholder": "उदा., 22AAAAA0000A1Z5",
+            "gstHint": "GST नंबर",
+            "selectBusinessType": "व्यापार प्रकार चुनें",
+            "contactPerson": "संपर्क व्यक्ति",
+            "contactPlaceholder": "संपर्क व्यक्ति का नाम दर्ज करें",
+            "continueToInterests": "रुचियों पर जाएं",
+            "whatYouBuy": "आप क्या खरीदते हैं?",
+            "selectCategories": "आपकी रुचि की श्रेणियां चुनें",
+            "completeRegistration": "पंजीकरण पूरा करें",
+            "selectOneCategory": "कृपया कम से कम एक श्रेणी चुनें",
+            "userExists": "उपयोगकर्ता खाता पहले से मौजूद है। लॉगिन पर जा रहे हैं..."
+        },
+        "login": {
+            "welcome": "फिर से स्वागत है",
+            "loginToContinue": "जारी रखने के लिए लॉगिन करें",
+            "farmer": "किसान",
+            "buyer": "खरीदार",
+            "admin": "व्यवस्थापक",
+            "goToAdminLogin": "व्यवस्थापक लॉगिन पर जाएं",
+            "enterOtp": "OTP दर्ज करें",
+            "changeMobile": "मोबाइल नंबर बदलें",
+            "verifyLogin": "सत्यापित करें और लॉगिन करें",
+            "noAccount": "खाता नहीं है?",
+            "registerHere": "यहां पंजीकरण करें",
+            "noAccountFound": "कोई खाता नहीं मिला। कृपया पहले पंजीकरण करें।",
+            "otpSent": "OTP भेजा गया: 123456",
+            "enterValidMobile": "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें",
+            "enterValidOtp": "कृपया मान्य OTP दर्ज करें",
+            "failedSendOtp": "OTP भेजने में विफल",
+            "invalidOtp": "अमान्य OTP"
         },
         "errors": {
             "invalidMobile": "कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें",
             "invalidOtp": "कृपया मान्य 6 अंकों का OTP दर्ज करें",
-            "otpExpired": "OTP समाप्त हो गया। कृपया नया अनुरोध करें।"
+            "invalidAadhar": "कृपया मान्य 12 अंकों का आधार नंबर दर्ज करें",
+            "otpExpired": "OTP समाप्त हो गया। कृपया नया अनुरोध करें।",
+            "aadharRequired": "पंजीकरण के लिए आधार नंबर आवश्यक है",
+            "failedSendOtp": "OTP भेजने में विफल। कृपया पुनः प्रयास करें।",
+            "invalidOtpRetry": "अमान्य OTP। कृपया पुनः प्रयास करें।",
+            "registrationFailed": "पंजीकरण विफल। कृपया पुनः प्रयास करें।"
         }
+    },
+    "admin": {
+        "portal": "व्यवस्थापक पोर्टल",
+        "secureAccess": "सुरक्षित पहुंच",
+        "mobileLabel": "व्यवस्थापक मोबाइल नंबर",
+        "defaultAdmin": "डिफ़ॉल्ट व्यवस्थापक: 9999999999",
+        "backToMobile": "मोबाइल प्रविष्टि पर वापस जाएं",
+        "title": "व्यवस्थापक कंसोल",
+        "subtitle": "उपयोगकर्ता और प्लेटफ़ॉर्म प्रबंधित करें",
+        "pendingApprovals": "लंबित अनुमोदन",
+        "totalUsers": "कुल उपयोगकर्ता",
+        "userDetails": "उपयोगकर्ता विवरण",
+        "role": "भूमिका",
+        "mobile": "मोबाइल",
+        "status": "स्थिति",
+        "actions": "कार्रवाई",
+        "approve": "स्वीकृत करें",
+        "reject": "अस्वीकार करें",
+        "revoke": "रद्द करें",
+        "reApprove": "पुनः स्वीकृत करें",
+        "noUsersFound": "इस श्रेणी में कोई उपयोगकर्ता नहीं मिला।",
+        "userApproved": "उपयोगकर्ता सफलतापूर्वक स्वीकृत",
+        "userRejected": "उपयोगकर्ता अस्वीकृत",
+        "logout": "लॉगआउट",
+        "pending": "लंबित",
+        "approved": "स्वीकृत",
+        "rejected": "अस्वीकृत"
     },
     "common": {
         "loading": "लोड हो रहा है...",
@@ -70,16 +212,76 @@
         "back": "वापस",
         "submit": "जमा करें",
         "cancel": "रद्द करें",
-        "changeLanguage": "भाषा बदलें"
+        "changeLanguage": "भाषा बदलें",
+        "searchPlaceholder": "फसलें, किसान खोजें...",
+        "buyNow": "अभी खरीदें",
+        "edit": "संपादित करें",
+        "delete": "हटाएं",
+        "confirmDelete": "क्या आप वाकई इस लिस्टिंग को हटाना चाहते हैं?",
+        "deleteSuccess": "लिस्टिंग सफलतापूर्वक हटाई गई",
+        "buySuccess": "ऑर्डर दिया गया",
+        "fillFields": "कृपया सभी आवश्यक फ़ील्ड भरें",
+        "listingCreated": "लिस्टिंग सफलतापूर्वक बनाई गई!"
     },
     "voice": {
         "startListening": "वॉइस सर्च शुरू करें",
         "stopListening": "सुनना बंद करें",
-        "listening": "सुन रहे हैं..."
+        "listening": "सुन रहे हैं...",
+        "micDenied": "माइक्रोफ़ोन की अनुमति नहीं दी गई",
+        "requiresInternet": "वॉइस के लिए इंटरनेट कनेक्शन आवश्यक है",
+        "voiceError": "वॉइस पहचान त्रुटि",
+        "heard": "सुना: \"{{command}}\"",
+        "searchingFor": "\"{{query}}\" खोजा जा रहा है...",
+        "useMenuLogout": "लॉगआउट के लिए कृपया मेनू का उपयोग करें",
+        "commandNotRecognized": "कमांड पहचाना नहीं गया",
+        "notSupported": "आपके ब्राउज़र में वॉइस पहचान समर्थित नहीं है",
+        "voiceAssistant": "वॉइस सहायक"
     },
     "offline": {
         "noConnection": "आप ऑफलाइन हैं। कुछ सुविधाएं सीमित हो सकती हैं।",
         "backOnline": "आप फिर से ऑनलाइन हैं!"
+    },
+    "profile": {
+        "title": "प्रोफ़ाइल सेटिंग्स",
+        "accountInfo": "खाता जानकारी",
+        "name": "नाम",
+        "mobile": "मोबाइल",
+        "type": "खाता प्रकार",
+        "location": "स्थान",
+        "state": "राज्य",
+        "selectState": "राज्य चुनें",
+        "district": "जिला",
+        "enterDistrict": "जिला दर्ज करें",
+        "autoDetect": "स्वतः स्थान पता लगाएं",
+        "cropInterests": "फसल रुचियां",
+        "cropInterestsHint": "वे फसलें चुनें जिन्हें आप खरीदना या बेचना चाहते हैं",
+        "notifications": "सूचनाएं",
+        "smsAlerts": "SMS सूचनाएं",
+        "smsAlertsDesc": "SMS के ज़रिए महत्वपूर्ण अपडेट प्राप्त करें",
+        "priceAlerts": "मूल्य सूचनाएं",
+        "priceAlertsDesc": "मूल्य परिवर्तन होने पर सूचित हों",
+        "privacy": "गोपनीयता",
+        "publicProfile": "सार्वजनिक प्रोफ़ाइल",
+        "publicProfileDesc": "दूसरों को आपकी प्रोफ़ाइल देखने दें",
+        "showLocation": "स्थान दिखाएं",
+        "showLocationDesc": "लिस्टिंग पर अपना स्थान प्रदर्शित करें",
+        "showContact": "संपर्क दिखाएं",
+        "showContactDesc": "खरीदारों को फ़ोन नंबर दिखाएं",
+        "saveChanges": "परिवर्तन सहेजें",
+        "saved": "सेटिंग्स सहेजी गईं!",
+        "logout": "लॉगआउट",
+        "locationError": "आपके ब्राउज़र में जियोलोकेशन समर्थित नहीं है",
+        "locationRetrieveError": "आपका स्थान प्राप्त करने में असमर्थ",
+        "language": "भाषा",
+        "selectLanguage": "भाषा चुनें",
+        "manageAccount": "अपना खाता और प्राथमिकताएं प्रबंधित करें",
+        "verifiedFarmer": "सत्यापित किसान",
+        "verificationPending": "सत्यापन लंबित",
+        "aadharNumber": "आधार नंबर",
+        "verified": "सत्यापित",
+        "pendingAdminApproval": "व्यवस्थापक अनुमोदन लंबित",
+        "notProvided": "प्रदान नहीं किया गया",
+        "changesSaved": "परिवर्तन सहेजे गए"
     },
     "landing": {
         "hero": {
@@ -110,7 +312,9 @@
         "vegetables": "सब्जियां",
         "fruits": "फल",
         "grains": "अनाज",
-        "spices": "मसाले"
+        "spices": "मसाले",
+        "flowers": "फूल",
+        "dairy": "डेयरी"
     },
     "cart": {
         "title": "शॉपिंग कार्ट",
@@ -129,7 +333,10 @@
         "updated": "कार्ट अपडेट किया गया",
         "quantity": "मात्रा",
         "price": "कीमत",
-        "viewCart": "कार्ट देखें"
+        "viewCart": "कार्ट देखें",
+        "verificationRequired": "आधार सत्यापन आवश्यक",
+        "verifyToCheckout": "ऑर्डर देने के लिए कृपया अपना आधार सत्यापित करें",
+        "pendingVerification": "आपका आधार व्यवस्थापक सत्यापन के लंबित है"
     },
     "checkout": {
         "title": "चेकआउट",
@@ -139,18 +346,33 @@
         "fullName": "पूरा नाम",
         "phoneNumber": "फोन नंबर",
         "address": "डिलीवरी पता",
+        "enterAddress": "पूरा डिलीवरी पता दर्ज करें...",
         "city": "शहर",
         "state": "राज्य",
         "pincode": "पिनकोड",
         "cod": "कैश ऑन डिलीवरी",
+        "codDesc": "जब आपका ऑर्डर मिले तब भुगतान करें",
         "online": "ऑनलाइन भुगतान",
         "placeOrder": "ऑर्डर करें",
+        "placeOrderTotal": "ऑर्डर करें (₹{{total}})",
         "orderPlaced": "ऑर्डर सफलतापूर्वक दिया गया!",
+        "orderPlacedTitle": "ऑर्डर दिया गया!",
+        "orderPlacedDesc": "स्थानीय किसानों का समर्थन करने के लिए धन्यवाद। आपका ऑर्डर प्रोसेस हो रहा है।",
         "orderNumber": "ऑर्डर नंबर",
         "thankYou": "आपके ऑर्डर के लिए धन्यवाद",
         "backToDashboard": "डैशबोर्ड पर वापस जाएं",
         "deliveryCharge": "डिलीवरी शुल्क",
-        "grandTotal": "कुल योग"
+        "grandTotal": "कुल योग",
+        "addressRequired": "कृपया डिलीवरी पता दर्ज करें",
+        "continueToPayment": "भुगतान पर जाएं",
+        "trackOrder": "ऑर्डर ट्रैक करें",
+        "subtotal": "उप-योग",
+        "delivery": "डिलीवरी",
+        "free": "मुफ्त",
+        "total": "कुल",
+        "safePayment": "सुरक्षित भुगतान",
+        "qty": "मात्रा",
+        "checkStatus": "स्थिति जांचें"
     },
     "listing": {
         "new": {
@@ -168,7 +390,36 @@
             "pricePerKg": "प्रति किलो कीमत (₹)",
             "pricePlaceholder": "जैसे 25",
             "creating": "बना रहे हैं...",
-            "createButton": "लिस्टिंग बनाएं"
+            "createButton": "लिस्टिंग बनाएं",
+            "location": "स्थान",
+            "detectingLocation": "आपका स्थान पता लगाया जा रहा है...",
+            "locationDenied": "स्थान की अनुमति नहीं दी गई।",
+            "locationError": "स्थान पता नहीं लगा सका।",
+            "enterManually": "अपना स्थान मैन्युअल रूप से दर्ज करें:",
+            "locationPlaceholder": "जैसे नासिक, महाराष्ट्र",
+            "retryAutoDetect": "स्वतः पता लगाने का पुनः प्रयास करें",
+            "editLocation": "संपादित करें"
+        },
+        "edit": {
+            "title": "लिस्टिंग संपादित करें",
+            "saving": "सहेजा जा रहा है...",
+            "saveButton": "परिवर्तन सहेजें"
+        },
+        "batch": {
+            "title": "बैच लिस्टिंग",
+            "cropDetails": "फसल विवरण",
+            "quantity": "मात्रा (किलो)",
+            "pricePerKg": "कीमत (₹/किलो)",
+            "minOrder": "न्यूनतम ऑर्डर",
+            "photo": "फोटो",
+            "actions": "कार्रवाई",
+            "addPhoto": "फोटो जोड़ें",
+            "addAnother": "एक और फसल जोड़ें",
+            "saving": "सहेजा जा रहा है...",
+            "submitAll": "सभी जमा करें",
+            "totalQty": "कुल मात्रा",
+            "price": "कीमत",
+            "minQty": "न्यूनतम मात्रा"
         },
         "crops": {
             "potato": "आलू",
