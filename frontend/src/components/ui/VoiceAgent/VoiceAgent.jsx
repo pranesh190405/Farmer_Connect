@@ -6,8 +6,21 @@ import { Mic, MicOff, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { showToast } from '@/components/ui/Toast/Toast';
 
+const LANG_MAP = {
+    'en': 'en-IN',
+    'hi': 'hi-IN',
+    'ta': 'ta-IN',
+    'te': 'te-IN',
+    'kn': 'kn-IN',
+    'bn': 'bn-IN',
+    'mr': 'mr-IN',
+    'gu': 'gu-IN',
+    'pa': 'pa-IN',
+    'hr': 'hi-IN', // Haryanvi falls back to Hindi
+};
+
 export default function VoiceAgent() {
-    const { t } = useTranslation('common');
+    const { t, i18n } = useTranslation('common');
     const router = useRouter();
     const pathname = usePathname();
 
@@ -21,7 +34,7 @@ export default function VoiceAgent() {
             recognitionRef.current = new SpeechRecognition();
             recognitionRef.current.continuous = false;
             recognitionRef.current.interimResults = false;
-            recognitionRef.current.lang = 'en-US'; // Could be dynamic based on i18n
+            recognitionRef.current.lang = LANG_MAP[i18n.language] || 'en-IN';
 
             recognitionRef.current.onstart = () => {
                 setIsListening(true);

@@ -141,17 +141,17 @@ export default function ProfileSettingsPage() {
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
                             <h1 className="text-2xl font-bold text-gray-900">{t('profile.title') || 'Profile Settings'}</h1>
-                            <p className="text-gray-500 text-sm">Manage your account and preferences</p>
+                            <p className="text-gray-500 text-sm">{t('profile.manageAccount') || 'Manage your account and preferences'}</p>
                         </div>
                         {user.aadharVerified ? (
                             <div className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium text-sm">
                                 <ShieldCheck className="w-4 h-4" />
-                                Verified Farmer
+                                {t('profile.verifiedFarmer') || 'Verified Farmer'}
                             </div>
                         ) : (
                             <div className="flex items-center gap-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full font-medium text-sm">
                                 <AlertTriangle className="w-4 h-4" />
-                                Verification Pending
+                                {t('profile.verificationPending') || 'Verification Pending'}
                             </div>
                         )}
                     </div>
@@ -184,19 +184,19 @@ export default function ProfileSettingsPage() {
                             {/* Aadhar Section */}
                             <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
                                 <div className="flex justify-between items-start mb-2">
-                                    <label className="text-sm font-medium text-gray-700">Aadhar Number</label>
+                                    <label className="text-sm font-medium text-gray-700">{t('profile.aadharNumber') || 'Aadhar Number'}</label>
                                     {user.aadharVerified ? (
                                         <span className="text-xs font-bold text-green-600 flex items-center gap-1">
-                                            <ShieldCheck className="w-3 h-3" /> Verified
+                                            <ShieldCheck className="w-3 h-3" /> {t('profile.verified') || 'Verified'}
                                         </span>
                                     ) : (
                                         <span className="text-xs font-bold text-yellow-600 flex items-center gap-1">
-                                            <AlertTriangle className="w-3 h-3" /> Pending Admin Approval
+                                            <AlertTriangle className="w-3 h-3" /> {t('profile.pendingAdminApproval') || 'Pending Admin Approval'}
                                         </span>
                                     )}
                                 </div>
                                 <div className="font-mono text-lg font-medium text-gray-900 tracking-wider">
-                                    {user.aadharNumber ? user.aadharNumber.replace(/(\d{4})(\d{4})(\d{4})/, '$1 **** $3') : 'Not Provided'}
+                                    {user.aadharNumber ? user.aadharNumber.replace(/(\d{4})(\d{4})(\d{4})/, '$1 **** $3') : (t('profile.notProvided') || 'Not Provided')}
                                 </div>
                             </div>
 
@@ -288,10 +288,15 @@ export default function ProfileSettingsPage() {
                                     label={t('profile.selectLanguage') || 'Select Language'}
                                     options={[
                                         { value: 'en', label: 'English' },
-                                        { value: 'hi', label: 'Hindi' },
-                                        { value: 'mr', label: 'Marathi' },
-                                        { value: 'pa', label: 'Punjabi' },
-                                        { value: 'ta', label: 'Tamil' },
+                                        { value: 'hi', label: 'Hindi (हिन्दी)' },
+                                        { value: 'ta', label: 'Tamil (தமிழ்)' },
+                                        { value: 'te', label: 'Telugu (తెలుగు)' },
+                                        { value: 'kn', label: 'Kannada (ಕನ್ನಡ)' },
+                                        { value: 'bn', label: 'Bengali (বাংলা)' },
+                                        { value: 'mr', label: 'Marathi (मराठी)' },
+                                        { value: 'gu', label: 'Gujarati (ગુજરાતી)' },
+                                        { value: 'pa', label: 'Punjabi (ਪੰਜਾਬੀ)' },
+                                        { value: 'hr', label: 'Haryanvi (हरियाणवी)' },
                                     ]}
                                     value={i18n.language || 'en'}
                                     onChange={(e) => i18n.changeLanguage(e.target.value)}
@@ -304,7 +309,7 @@ export default function ProfileSettingsPage() {
                     <div className="mt-6 pt-6 border-t border-gray-100">
                         <div className="flex flex-col gap-3">
                             <Button onClick={handleSave} isLoading={isSaving} fullWidth className="shadow-lg">
-                                {saved ? '✓ Changes Saved' : t('profile.saveChanges') || 'Save Changes'}
+                                {saved ? `✓ ${t('profile.changesSaved') || 'Changes Saved'}` : t('profile.saveChanges') || 'Save Changes'}
                             </Button>
                             <Button onClick={handleLogout} variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300" fullWidth>
                                 <LogOut className="w-4 h-4 mr-2" />

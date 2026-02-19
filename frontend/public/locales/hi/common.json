@@ -9,6 +9,25 @@
         "market": "बाज़ार",
         "profile": "प्रोफ़ाइल"
     },
+    "dashboard": {
+        "welcomeFarmer": "स्वागत है, किसान!",
+        "manageCrops": "अपनी फसलें और ऑर्डर प्रबंधित करें",
+        "newListing": "नई लिस्टिंग",
+        "totalSales": "कुल बिक्री",
+        "activeListings": "सक्रिय लिस्टिंग",
+        "todaysPrice": "आज का बाज़ार भाव",
+        "status": {
+            "active": "सक्रिय",
+            "sold": "बिक गया",
+            "expired": "समाप्त"
+        },
+        "noListings": "कोई लिस्टिंग नहीं मिली",
+        "startSellingDescription": "आपने अभी तक कोई लिस्टिंग पोस्ट नहीं की। आज ही अपनी उपज बेचना शुरू करें!",
+        "createFirstListing": "अपनी पहली लिस्टिंग बनाएं",
+        "welcomeBuyer": "स्वागत है, खरीदार!",
+        "findFreshProduce": "किसानों से सीधे ताज़ा उपज खरीदें",
+        "batchMode": "बैच मोड"
+    },
     "auth": {
         "farmer": {
             "title": "किसान पंजीकरण",
@@ -156,7 +175,8 @@
             "onion": "प्याज",
             "tomato": "टमाटर",
             "wheat": "गेहूं",
-            "rice": "चावल"
+            "rice": "चावल",
+            "cotton": "कपास"
         }
     }
 }

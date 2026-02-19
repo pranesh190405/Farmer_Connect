@@ -199,7 +199,7 @@ export default function EditListingPage({ params }) {
 
                     <div className="pt-4 flex gap-4">
                         <Button type="button" variant="outline" fullWidth onClick={() => router.back()}>
-                            Cancel
+                            {t('common.cancel') || 'Cancel'}
                         </Button>
                         <Button type="submit" fullWidth isLoading={isLoading} disabled={isLoading}>
                             {isLoading ? t('listing.edit.saving') || 'Saving...' : t('listing.edit.saveButton') || 'Save Changes'}

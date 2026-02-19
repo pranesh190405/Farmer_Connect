@@ -58,7 +58,8 @@
             "orderId": "Order #",
             "inProgress": "In Progress",
             "trackOrder": "Track Order"
-        }
+        },
+        "batchMode": "Batch Mode"
     },
     "market": {
         "title": "Market",
@@ -189,7 +190,15 @@
         "locationError": "Geolocation is not supported by your browser",
         "locationRetrieveError": "Unable to retrieve your location",
         "language": "Language",
-        "selectLanguage": "Select Language"
+        "selectLanguage": "Select Language",
+        "manageAccount": "Manage your account and preferences",
+        "verifiedFarmer": "Verified Farmer",
+        "verificationPending": "Verification Pending",
+        "aadharNumber": "Aadhar Number",
+        "verified": "Verified",
+        "pendingAdminApproval": "Pending Admin Approval",
+        "notProvided": "Not Provided",
+        "changesSaved": "Changes Saved"
     },
     "categories": {
         "vegetables": "Vegetables",
@@ -281,14 +290,44 @@
             "pricePerKg": "Price per kg (₹)",
             "pricePlaceholder": "e.g. 25",
             "creating": "Creating...",
-            "createButton": "Create Listing"
+            "createButton": "Create Listing",
+            "location": "Location",
+            "detectingLocation": "Detecting your location...",
+            "locationDenied": "Location access was denied.",
+            "locationError": "Could not detect location.",
+            "enterManually": "Enter your location manually:",
+            "locationPlaceholder": "e.g. Nashik, Maharashtra",
+            "retryAutoDetect": "Retry auto-detect",
+            "editLocation": "Edit"
+        },
+        "edit": {
+            "title": "Edit Listing",
+            "saving": "Saving...",
+            "saveButton": "Save Changes"
+        },
+        "batch": {
+            "title": "Batch Listing",
+            "cropDetails": "Crop Details",
+            "quantity": "Quantity (kg)",
+            "pricePerKg": "Price (₹/kg)",
+            "minOrder": "Min. Order",
+            "photo": "Photo",
+            "actions": "Actions",
+            "addPhoto": "Add Photo",
+            "addAnother": "Add Another Crop",
+            "saving": "Saving...",
+            "submitAll": "Submit All",
+            "totalQty": "Total Qty",
+            "price": "Price",
+            "minQty": "Min Qty"
         },
         "crops": {
             "potato": "Potato",
             "onion": "Onion",
             "tomato": "Tomato",
             "wheat": "Wheat",
-            "rice": "Rice"
+            "rice": "Rice",
+            "cotton": "Cotton"
         }
     }
 }

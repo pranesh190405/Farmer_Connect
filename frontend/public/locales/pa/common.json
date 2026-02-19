@@ -58,7 +58,8 @@
             "orderId": "ਆਰਡਰ #",
             "inProgress": "ਪ੍ਰਗਤੀ ਵਿੱਚ ਹੈ",
             "trackOrder": "ਆਰਡਰ ਟ੍ਰੈਕ ਕਰੋ"
-        }
+        },
+        "batchMode": "ਬੈਚ ਮੋਡ"
     },
     "auth": {
         "farmer": {
@@ -213,7 +214,8 @@
             "onion": "ਪਿਆਜ਼",
             "tomato": "ਟਮਾਟਰ",
             "wheat": "ਕਣਕ",
-            "rice": "ਚੌਲ"
+            "rice": "ਚੌਲ",
+            "cotton": "ਕਪਾਹ"
         }
     },
     "market": {

@@ -9,6 +9,25 @@
         "market": "બજાર",
         "profile": "પ્રોફાઇલ"
     },
+    "dashboard": {
+        "welcomeFarmer": "સ્વાગત છે, ખેડૂત!",
+        "manageCrops": "તમારા પાક અને ઓર્ડર મેનેજ કરો",
+        "newListing": "નવી યાદી",
+        "totalSales": "કુલ વેચાણ",
+        "activeListings": "સક્રિય યાદીઓ",
+        "todaysPrice": "આજનો બજાર ભાવ",
+        "status": {
+            "active": "સક્રિય",
+            "sold": "વેચાઈ ગયું",
+            "expired": "સમાપ્ત"
+        },
+        "noListings": "કોઈ યાદી મળી નથી",
+        "startSellingDescription": "તમે હજુ સુધી કોઈ યાદી પોસ્ટ કરી નથી. આજે જ તમારી ઉપજ વેચવાનું શરૂ કરો!",
+        "createFirstListing": "તમારી પ્રથમ યાદી બનાવો",
+        "welcomeBuyer": "સ્વાગત છે, ખરીદદાર!",
+        "findFreshProduce": "ખેડૂતો પાસેથી સીધી તાજી ઉપજ શોધો",
+        "batchMode": "બેચ મોડ"
+    },
     "auth": {
         "farmer": {
             "title": "ખેડૂત નોંધણી",
@@ -156,7 +175,8 @@
             "onion": "ડુંગળી",
             "tomato": "ટામેટા",
             "wheat": "ઘઉં",
-            "rice": "ચોખા"
+            "rice": "ચોખા",
+            "cotton": "કપાસ"
         }
     }
 }

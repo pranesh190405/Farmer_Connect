@@ -8,20 +8,17 @@ import { ApiService } from '@/services/apiService';
 import { showToast } from '@/components/ui/Toast/Toast';
 import styles from './page.module.css';
 
-const CROPS = [
-    { value: '', label: 'Select Crop' },
-    { value: 'Potato', label: 'Potato' },
-    { value: 'Onion', label: 'Onion' },
-    { value: 'Tomato', label: 'Tomato' },
-    { value: 'Wheat', label: 'Wheat' },
-    { value: 'Rice', label: 'Rice' },
-    { value: 'Cotton', label: 'Cotton' },
-];
+const CROP_VALUES = ['', 'Potato', 'Onion', 'Tomato', 'Wheat', 'Rice', 'Cotton'];
 
 export default function BatchListingPage() {
     const { t } = useTranslation('common');
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const CROPS = CROP_VALUES.map(val => ({
+        value: val,
+        label: val ? (t(`listing.crops.${val.toLowerCase()}`) || val) : (t('listing.new.selectCrop') || 'Select Crop'),
+    }));
 
     const [rows, setRows] = useState([
         { id: 1, crop: '', variety: '', quantity: '', price: '', minQty: '', image: '' }
@@ -117,7 +114,7 @@ export default function BatchListingPage() {
                         <button onClick={() => router.back()} className="p-2 hover:bg-gray-100 rounded-full">
                             <ArrowLeft className="w-5 h-5 text-gray-600" />
                         </button>
-                        <h1 className="text-xl font-bold text-gray-900">Batch Listing</h1>
+                        <h1 className="text-xl font-bold text-gray-900">{t('listing.batch.title') || 'Batch Listing'}</h1>
                     </div>
                 </div>
             </header>
@@ -127,12 +124,12 @@ export default function BatchListingPage() {
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th style={{ width: '20%' }}>Crop Details</th>
-                                <th style={{ width: '15%' }}>Quantity (kg)</th>
-                                <th style={{ width: '15%' }}>Price (₹/kg)</th>
-                                <th style={{ width: '15%' }}>Min. Order</th>
-                                <th style={{ width: '20%' }}>Photo</th>
-                                <th style={{ width: '10%' }}>Actions</th>
+                                <th style={{ width: '20%' }}>{t('listing.batch.cropDetails') || 'Crop Details'}</th>
+                                <th style={{ width: '15%' }}>{t('listing.batch.quantity') || 'Quantity (kg)'}</th>
+                                <th style={{ width: '15%' }}>{t('listing.batch.pricePerKg') || 'Price (₹/kg)'}</th>
+                                <th style={{ width: '15%' }}>{t('listing.batch.minOrder') || 'Min. Order'}</th>
+                                <th style={{ width: '20%' }}>{t('listing.batch.photo') || 'Photo'}</th>
+                                <th style={{ width: '10%' }}>{t('listing.batch.actions') || 'Actions'}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -152,7 +149,7 @@ export default function BatchListingPage() {
                                             <input
                                                 type="text"
                                                 className={styles.input}
-                                                placeholder="Variety (Optional)"
+                                                placeholder={t('listing.new.varietyPlaceholder') || 'Variety (Optional)'}
                                                 value={row.variety}
                                                 onChange={(e) => handleChange(row.id, 'variety', e.target.value)}
                                             />
@@ -162,7 +159,7 @@ export default function BatchListingPage() {
                                         <input
                                             type="number"
                                             className={styles.input}
-                                            placeholder="Total Qty"
+                                            placeholder={t('listing.batch.totalQty') || 'Total Qty'}
                                             value={row.quantity}
                                             onChange={(e) => handleChange(row.id, 'quantity', e.target.value)}
                                         />
@@ -171,7 +168,7 @@ export default function BatchListingPage() {
                                         <input
                                             type="number"
                                             className={styles.input}
-                                            placeholder="Price"
+                                            placeholder={t('listing.batch.price') || 'Price'}
                                             value={row.price}
                                             onChange={(e) => handleChange(row.id, 'price', e.target.value)}
                                         />
@@ -180,7 +177,7 @@ export default function BatchListingPage() {
                                         <input
                                             type="number"
                                             className={styles.input}
-                                            placeholder="Min Qty"
+                                            placeholder={t('listing.batch.minQty') || 'Min Qty'}
                                             value={row.minQty}
                                             onChange={(e) => handleChange(row.id, 'minQty', e.target.value)}
                                         />
@@ -202,7 +199,7 @@ export default function BatchListingPage() {
                                                 onClick={() => handleImageUpload(row.id)}
                                             >
                                                 <Upload className="w-4 h-4" />
-                                                Add Photo
+                                                {t('listing.batch.addPhoto') || 'Add Photo'}
                                             </button>
                                         )}
                                     </td>
@@ -225,7 +222,7 @@ export default function BatchListingPage() {
 
                 <button className={styles.addBtn} onClick={handleAddRow}>
                     <Plus className="w-5 h-5 inline-block mr-2" />
-                    Add Another Crop
+                    {t('listing.batch.addAnother') || 'Add Another Crop'}
                 </button>
             </main>
 
@@ -234,7 +231,7 @@ export default function BatchListingPage() {
                     className="px-6 py-2.5 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition-colors"
                     onClick={() => router.back()}
                 >
-                    Cancel
+                    {t('common.cancel') || 'Cancel'}
                 </button>
                 <button
                     className="px-6 py-2.5 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
@@ -242,11 +239,11 @@ export default function BatchListingPage() {
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? (
-                        <span>Saving...</span>
+                        <span>{t('listing.batch.saving') || 'Saving...'}</span>
                     ) : (
                         <>
                             <Save className="w-4 h-4" />
-                            Submit All
+                            {t('listing.batch.submitAll') || 'Submit All'}
                         </>
                     )}
                 </button>

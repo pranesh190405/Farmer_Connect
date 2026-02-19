@@ -5,9 +5,22 @@ import { Mic, MicOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function VoiceSearch({ onResult, placeholder }) {
-    const { t } = useTranslation('common');
+    const { t, i18n } = useTranslation('common');
     const [isListening, setIsListening] = useState(false);
     const [supported, setSupported] = useState(false);
+
+    const LANG_MAP = {
+        'en': 'en-IN',
+        'hi': 'hi-IN',
+        'ta': 'ta-IN',
+        'te': 'te-IN',
+        'kn': 'kn-IN',
+        'bn': 'bn-IN',
+        'mr': 'mr-IN',
+        'gu': 'gu-IN',
+        'pa': 'pa-IN',
+        'hr': 'hi-IN',
+    };
 
     useEffect(() => {
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -28,7 +41,7 @@ export default function VoiceSearch({ onResult, placeholder }) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recognition = new SpeechRecognition();
 
-        recognition.lang = 'en-US'; // Could be dynamic based on i18n language
+        recognition.lang = LANG_MAP[i18n.language] || 'en-IN';
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
 

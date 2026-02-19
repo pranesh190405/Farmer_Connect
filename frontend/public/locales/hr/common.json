@@ -35,7 +35,8 @@
         "user": "यूजर",
         "type": "किसम",
         "date": "तारीख",
-        "actions": "काम"
+        "actions": "काम",
+        "batchMode": "बैच मोड"
     },
     "auth": {
         "farmer": {
@@ -188,7 +189,8 @@
             "onion": "प्याज",
             "tomato": "टमाटर",
             "wheat": "गेहूं",
-            "rice": "चावल"
+            "rice": "चावल",
+            "cotton": "कपास"
         }
     }
 }

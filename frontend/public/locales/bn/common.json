@@ -9,6 +9,25 @@
         "market": "বাজার",
         "profile": "প্রোফাইল"
     },
+    "dashboard": {
+        "welcomeFarmer": "স্বাগতম, কৃষক!",
+        "manageCrops": "আপনার ফসল এবং অর্ডার পরিচালনা করুন",
+        "newListing": "নতুন তালিকা",
+        "totalSales": "মোট বিক্রয়",
+        "activeListings": "সক্রিয় তালিকা",
+        "todaysPrice": "আজকের বাজার দর",
+        "status": {
+            "active": "সক্রিয়",
+            "sold": "বিক্রিত",
+            "expired": "মেয়াদোত্তীর্ণ"
+        },
+        "noListings": "কোনো তালিকা পাওয়া যায়নি",
+        "startSellingDescription": "আপনি এখনও কোনো তালিকা পোস্ট করেননি। আজই আপনার পণ্য বিক্রি শুরু করুন!",
+        "createFirstListing": "আপনার প্রথম তালিকা তৈরি করুন",
+        "welcomeBuyer": "স্বাগতম, ক্রেতা!",
+        "findFreshProduce": "কৃষকদের কাছ থেকে সরাসরি তাজা পণ্য খুঁজুন",
+        "batchMode": "ব্যাচ মোড"
+    },
     "auth": {
         "farmer": {
             "title": "কৃষক নিবন্ধন",
@@ -156,7 +175,8 @@
             "onion": "পেঁয়াজ",
             "tomato": "টমেটো",
             "wheat": "গম",
-            "rice": "চাল"
+            "rice": "চাল",
+            "cotton": "তুলা"
         }
     }
 }

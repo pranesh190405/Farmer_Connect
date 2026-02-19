@@ -62,7 +62,7 @@ export default function FarmerDashboard() {
                             className="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full font-medium flex items-center gap-2 text-sm hover:bg-gray-50 hover:border-gray-300 transition-all"
                         >
                             <Package className="w-4 h-4" />
-                            Batch Mode
+                            {t('dashboard.batchMode') || 'Batch Mode'}
                         </Link>
                         <Link
                             href="/farmer/listing/new"

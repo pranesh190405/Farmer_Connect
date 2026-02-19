@@ -9,6 +9,25 @@
         "market": "बाजार",
         "profile": "प्रोफाइल"
     },
+    "dashboard": {
+        "welcomeFarmer": "स्वागत, शेतकरी!",
+        "manageCrops": "आपली पिके आणि ऑर्डर व्यवस्थापित करा",
+        "newListing": "नवीन लिस्टिंग",
+        "totalSales": "एकूण विक्री",
+        "activeListings": "सक्रिय लिस्टिंग",
+        "todaysPrice": "आजचा बाजारभाव",
+        "status": {
+            "active": "सक्रिय",
+            "sold": "विकले",
+            "expired": "कालबाह्य"
+        },
+        "noListings": "कोणतीही लिस्टिंग सापडली नाही",
+        "startSellingDescription": "तुम्ही अजून कोणतीही लिस्टिंग पोस्ट केलेली नाही. आजच तुमचे उत्पादन विकायला सुरुवात करा!",
+        "createFirstListing": "तुमची पहिली लिस्टिंग तयार करा",
+        "welcomeBuyer": "स्वागत, खरेदीदार!",
+        "findFreshProduce": "शेतकऱ्यांकडून थेट ताजे उत्पादन शोधा",
+        "batchMode": "बॅच मोड"
+    },
     "auth": {
         "farmer": {
             "title": "शेतकरी नोंदणी",
@@ -156,7 +175,8 @@
             "onion": "कांदा",
             "tomato": "टोमॅटो",
             "wheat": "गहू",
-            "rice": "तांदूळ"
+            "rice": "तांदूळ",
+            "cotton": "कापूस"
         }
     }
 }
