@@ -50,7 +50,7 @@ export default function CheckoutPage() {
 
     const handlePlaceOrder = async () => {
         if (!address.trim()) {
-            toast.error("Please enter a delivery address");
+            toast.error(t('checkout.addressRequired'));
             return;
         }
 
@@ -82,7 +82,7 @@ export default function CheckoutPage() {
 
             dispatch(clearCart());
             setStep(3); // Success
-            toast.success("Order placed successfully!");
+            toast.success(t('checkout.orderPlaced'));
         } catch (err) {
             console.error('Place order failed:', err);
             toast.error(err.message || 'Failed to place order. Please try again.');
@@ -107,7 +107,7 @@ export default function CheckoutPage() {
                         {t('cart.pendingVerification') || 'Your account needs admin approval before you can place orders.'}
                     </p>
                     <Link href="/profile">
-                        <Button fullWidth>Check Status</Button>
+                        <Button fullWidth>{t('checkout.checkStatus')}</Button>
                     </Link>
                 </div>
             </div>
@@ -121,16 +121,16 @@ export default function CheckoutPage() {
                     <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 animate-bounce">
                         <CheckCircle className="w-12 h-12" />
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4">Order Placed!</h1>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4">{t('checkout.orderPlacedTitle')}</h1>
                     <p className="text-gray-500 mb-8 text-lg">
-                        Thank you for supporting local farmers. Your order has been received and will be processed shortly.
+                        {t('checkout.orderPlacedDesc')}
                     </p>
                     <div className="flex flex-col gap-3">
                         <Link href="/buyer/dashboard">
-                            <Button fullWidth>Track Order</Button>
+                            <Button fullWidth>{t('checkout.trackOrder')}</Button>
                         </Link>
                         <Link href="/market" className="text-green-600 font-medium hover:underline py-2">
-                            Continue Shopping
+                            {t('cart.continueShopping')}
                         </Link>
                     </div>
                 </div>
@@ -143,10 +143,10 @@ export default function CheckoutPage() {
             <header className="bg-white border-b px-6 py-4 shadow-sm">
                 <div className="max-w-4xl mx-auto flex items-center gap-2">
                     <Link href="/market" className="text-gray-500 hover:text-gray-900">
-                        Market
+                        {t('nav.market')}
                     </Link>
                     <ChevronRight className="w-4 h-4 text-gray-400" />
-                    <span className="font-semibold text-gray-900">Checkout</span>
+                    <span className="font-semibold text-gray-900">{t('checkout.title')}</span>
                 </div>
             </header>
 
@@ -158,14 +158,14 @@ export default function CheckoutPage() {
                         <div className={`bg-white rounded-2xl p-6 shadow-sm border ${step === 1 ? 'border-green-500 ring-1 ring-green-500' : 'border-gray-100'}`}>
                             <div className="flex items-center gap-3 mb-4">
                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step >= 1 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-500'}`}>1</div>
-                                <h2 className="text-xl font-bold text-gray-900">Delivery Address</h2>
+                                <h2 className="text-xl font-bold text-gray-900">{t('checkout.address')}</h2>
                             </div>
 
                             <div className="pl-11">
                                 <textarea
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
-                                    placeholder="Enter full delivery address..."
+                                    placeholder={t('checkout.enterAddress')}
                                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none min-h-[100px]"
                                     disabled={step !== 1}
                                 />
@@ -173,9 +173,9 @@ export default function CheckoutPage() {
                                     <div className="mt-4">
                                         <Button onClick={() => {
                                             if (address.trim()) setStep(2);
-                                            else toast.error("Address is required");
+                                            else toast.error(t('checkout.addressRequired'));
                                         }}>
-                                            Continue to Payment
+                                            {t('checkout.continueToPayment')}
                                         </Button>
                                     </div>
                                 )}
@@ -186,7 +186,7 @@ export default function CheckoutPage() {
                         <div className={`bg-white rounded-2xl p-6 shadow-sm border ${step === 2 ? 'border-green-500 ring-1 ring-green-500' : 'border-gray-100'}`}>
                             <div className="flex items-center gap-3 mb-4">
                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step >= 2 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-500'}`}>2</div>
-                                <h2 className="text-xl font-bold text-gray-900">Payment Method</h2>
+                                <h2 className="text-xl font-bold text-gray-900">{t('checkout.paymentMethod')}</h2>
                             </div>
 
                             {step === 2 && (
@@ -205,8 +205,8 @@ export default function CheckoutPage() {
                                                 <CreditCard className="w-5 h-5 text-green-600" />
                                             </div>
                                             <div>
-                                                <p className="font-bold text-gray-900">Cash on Delivery</p>
-                                                <p className="text-sm text-gray-500">Pay when you receive your order</p>
+                                                <p className="font-bold text-gray-900">{t('checkout.cod')}</p>
+                                                <p className="text-sm text-gray-500">{t('checkout.codDesc')}</p>
                                             </div>
                                         </div>
                                     </label>
@@ -216,10 +216,10 @@ export default function CheckoutPage() {
                                             onClick={() => setStep(1)}
                                             className="px-6 py-2 border border-gray-300 rounded-lg font-medium text-gray-600 hover:bg-gray-50"
                                         >
-                                            Back
+                                            {t('common.back')}
                                         </button>
                                         <Button onClick={handlePlaceOrder} isLoading={loading}>
-                                            Place Order (₹{total.toFixed(2)})
+                                            {t('checkout.placeOrderTotal', { total: total.toFixed(2) })}
                                         </Button>
                                     </div>
                                 </div>
@@ -230,7 +230,7 @@ export default function CheckoutPage() {
                     {/* Right Column - Order Summary */}
                     <div className="md:col-span-1">
                         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
-                            <h3 className="text-lg font-bold text-gray-900 mb-4">Order Summary</h3>
+                            <h3 className="text-lg font-bold text-gray-900 mb-4">{t('checkout.orderSummary')}</h3>
 
                             <div className="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
                                 {items.map((item) => (
@@ -240,7 +240,7 @@ export default function CheckoutPage() {
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
-                                            <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                                            <p className="text-xs text-gray-500">{t('checkout.qty')}: {item.quantity}</p>
                                         </div>
                                         <p className="text-sm font-bold text-gray-900">{item.price}</p>
                                     </div>
@@ -249,24 +249,24 @@ export default function CheckoutPage() {
 
                             <div className="space-y-2 py-4 border-t border-gray-100">
                                 <div className="flex justify-between text-sm text-gray-500">
-                                    <span>Subtotal</span>
+                                    <span>{t('checkout.subtotal')}</span>
                                     <span>₹{total.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm text-gray-500">
-                                    <span>Delivery</span>
-                                    <span className="text-green-600">Free</span>
+                                    <span>{t('checkout.delivery')}</span>
+                                    <span className="text-green-600">{t('checkout.free')}</span>
                                 </div>
                             </div>
 
                             <div className="flex justify-between text-lg font-bold text-gray-900 pt-4 border-t border-gray-100">
-                                <span>Total</span>
+                                <span>{t('checkout.total')}</span>
                                 <span>₹{total.toFixed(2)}</span>
                             </div>
 
                             <div className="mt-6 bg-green-50 rounded-lg p-3 flex gap-2">
                                 <ShieldCheck className="w-5 h-5 text-green-600 flex-shrink-0" />
                                 <p className="text-xs text-green-800">
-                                    Safe & Secure Payment. 100% Authentic Produce.
+                                    {t('checkout.safePayment')}
                                 </p>
                             </div>
                         </div>

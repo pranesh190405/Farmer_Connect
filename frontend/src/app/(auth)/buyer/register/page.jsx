@@ -42,12 +42,12 @@ const BUSINESS_CATEGORIES = [
 
 // Interest categories
 const INTEREST_CATEGORIES = [
-    { id: 'vegetables', label: 'Vegetables', icon: '🥦' },
-    { id: 'fruits', label: 'Fruits', icon: '🍎' },
-    { id: 'grains', label: 'Grains & Pulses', icon: '🌾' },
-    { id: 'spices', label: 'Spices', icon: '🌶️' },
-    { id: 'flowers', label: 'Flowers', icon: '🌸' },
-    { id: 'dairy', label: 'Dairy', icon: '🥛' },
+    { id: 'vegetables', label: 'categories.vegetables', icon: '🥦' },
+    { id: 'fruits', label: 'categories.fruits', icon: '🍎' },
+    { id: 'grains', label: 'categories.grains', icon: '🌾' },
+    { id: 'spices', label: 'categories.spices', icon: '🌶️' },
+    { id: 'flowers', label: 'categories.flowers', icon: '🌸' },
+    { id: 'dairy', label: 'categories.dairy', icon: '🥛' },
 ];
 
 export default function BuyerRegisterPage() {
@@ -111,7 +111,7 @@ export default function BuyerRegisterPage() {
     // Handle Mobile Submit
     const handleMobileSubmit = async () => {
         if (mobile.length !== 10) {
-            setMobileError('Enter valid 10-digit mobile number');
+            setMobileError(t('auth.login.enterValidMobile'));
             return;
         }
 
@@ -122,8 +122,8 @@ export default function BuyerRegisterPage() {
             setStep(STEPS.OTP);
             startResendTimer();
         } catch (err) {
-            dispatch(sendOtpFailure(err || 'Failed to send OTP'));
-            setMobileError(err || 'Failed to send OTP');
+            dispatch(sendOtpFailure(err || t('auth.login.failedSendOtp')));
+            setMobileError(err || t('auth.login.failedSendOtp'));
         }
     };
 
@@ -161,7 +161,7 @@ export default function BuyerRegisterPage() {
     // Handle Category Submit (Final Registration)
     const handleCategorySubmit = async () => {
         if (formData.interestedCategories.length === 0) {
-            setErrors({ ...errors, interestedCategories: 'Please select at least one category' });
+            setErrors({ ...errors, interestedCategories: t('auth.buyer.selectOneCategory') });
             return;
         }
 
@@ -187,13 +187,13 @@ export default function BuyerRegisterPage() {
                 String(err).includes('User already exists') ||
                 String(err).includes('already exists')
             ) {
-                alert('User account already exists. Redirecting to login...');
+                alert(t('auth.buyer.userExists'));
                 dispatch(resetAuthFlow());
                 window.location.href = '/login';
                 return;
             }
 
-            dispatch(verifyOtpFailure(err || 'Registration failed'));
+            dispatch(verifyOtpFailure(err || t('auth.errors.registrationFailed')));
         }
     };
 
@@ -232,7 +232,7 @@ export default function BuyerRegisterPage() {
                 // useEffect will redirect
             }
         } catch (err) {
-            setOtpError(err || 'Invalid OTP');
+            setOtpError(err || t('auth.login.invalidOtp'));
             dispatch(verifyOtpFailure(err));
         }
     };
@@ -260,15 +260,15 @@ export default function BuyerRegisterPage() {
                     <span className={styles.icon} role="img" aria-label="buyer">🛒</span>
                 </div>
                 <h1 className={styles.title}>{t('auth.buyer.title')}</h1>
-                <p className={styles.subtitle}>Login or Register</p>
+                <p className={styles.subtitle}>{t('auth.buyer.loginOrRegister')}</p>
             </div>
 
             <div className={styles.form}>
                 <Input
-                    label="Mobile Number"
+                    label={t('auth.farmer.mobileLabel')}
                     type="tel"
                     inputMode="numeric"
-                    placeholder="Enter 10-digit mobile"
+                    placeholder={t('auth.farmer.mobilePlaceholder')}
                     value={mobile}
                     onChange={(e) => {
                         setMobile(e.target.value.replace(/\D/g, '').slice(0, 10));
@@ -279,7 +279,7 @@ export default function BuyerRegisterPage() {
                     required
                 />
                 <Button onClick={handleMobileSubmit} isLoading={isLoading} fullWidth>
-                    Continue
+                    {t('auth.buyer.continue')}
                 </Button>
             </div>
         </div>
@@ -293,7 +293,7 @@ export default function BuyerRegisterPage() {
                 🔔 DEBUG OTP: 123456
             </div>
             <button className={styles.backButton} onClick={handleBack}>
-                ← Back
+                ← {t('common.back')}
             </button>
 
             <div className={styles.header}>
@@ -302,7 +302,7 @@ export default function BuyerRegisterPage() {
                 </div>
                 <h1 className={styles.title}>{t('auth.farmer.otpTitle')}</h1>
                 <p className={styles.subtitle}>
-                    Enter the 6-digit code sent to <strong>+91 {mobile}</strong>
+                    {t('auth.farmer.otpSubtitle')} <strong>+91 {mobile}</strong>
                 </p>
             </div>
 
@@ -326,13 +326,13 @@ export default function BuyerRegisterPage() {
 
                 <div className={styles.resendWrapper}>
                     {resendTimer > 0 ? (
-                        <p className={styles.resendTimer}>Resend in {resendTimer}s</p>
+                        <p className={styles.resendTimer}>{t('auth.farmer.resendIn')} {resendTimer}s</p>
                     ) : (
                         <button className={styles.resendButton} onClick={() => {
                             dispatch(sendOtpAsync(mobile));
                             startResendTimer();
                         }}>
-                            Resend OTP
+                            {t('auth.farmer.resendOtp')}
                         </button>
                     )}
                 </div>
@@ -344,17 +344,17 @@ export default function BuyerRegisterPage() {
     const renderBusinessInfoStep = () => (
         <div className={styles.stepContent}>
             <button className={styles.backButton} onClick={handleBack}>
-                ← Back
+                ← {t('common.back')}
             </button>
             <div className={styles.header}>
-                <h1 className={styles.title}>Business Details</h1>
-                <p className={styles.subtitle}>Complete your profile to continue</p>
+                <h1 className={styles.title}>{t('auth.buyer.businessDetails')}</h1>
+                <p className={styles.subtitle}>{t('auth.buyer.completeProfile')}</p>
             </div>
 
             <div className={styles.form}>
                 <Input
                     label={t('auth.buyer.businessName')}
-                    placeholder="Enter your business name"
+                    placeholder={t('auth.buyer.businessNamePlaceholder')}
                     value={formData.businessName}
                     onChange={(e) => updateField('businessName', e.target.value)}
                     error={errors.businessName}
@@ -363,17 +363,17 @@ export default function BuyerRegisterPage() {
 
                 <Input
                     label={t('auth.buyer.taxId')}
-                    placeholder="e.g., 22AAAAA0000A1Z5"
+                    placeholder={t('auth.buyer.taxIdPlaceholder')}
                     value={formData.taxId}
                     onChange={(e) => updateField('taxId', e.target.value.toUpperCase())}
                     error={errors.taxId}
-                    hint="GST Number"
+                    hint={t('auth.buyer.gstHint')}
                     required
                 />
 
                 <Select
                     label={t('auth.buyer.category')}
-                    placeholder="Select business type"
+                    placeholder={t('auth.buyer.selectBusinessType')}
                     options={BUSINESS_CATEGORIES}
                     value={formData.category}
                     onChange={(e) => updateField('category', e.target.value)}
@@ -382,8 +382,8 @@ export default function BuyerRegisterPage() {
                 />
 
                 <Input
-                    label="Contact Person"
-                    placeholder="Enter contact person name"
+                    label={t('auth.buyer.contactPerson')}
+                    placeholder={t('auth.buyer.contactPlaceholder')}
                     value={formData.contactName}
                     onChange={(e) => updateField('contactName', e.target.value)}
                     error={errors.contactName}
@@ -391,7 +391,7 @@ export default function BuyerRegisterPage() {
                 />
 
                 <Button onClick={handleBusinessInfoSubmit} fullWidth>
-                    Continue to Interests
+                    {t('auth.buyer.continueToInterests')}
                 </Button>
             </div>
         </div>
@@ -401,11 +401,11 @@ export default function BuyerRegisterPage() {
     const renderCategorySelectionStep = () => (
         <div className={styles.stepContent}>
             <button className={styles.backButton} onClick={handleBack}>
-                ← Back
+                ← {t('common.back')}
             </button>
             <div className={styles.header}>
-                <h1 className={styles.title}>What do you buy?</h1>
-                <p className={styles.subtitle}>Select categories you are interested in</p>
+                <h1 className={styles.title}>{t('auth.buyer.whatYouBuy')}</h1>
+                <p className={styles.subtitle}>{t('auth.buyer.selectCategories')}</p>
             </div>
 
             <div className={styles.form}>
@@ -420,7 +420,7 @@ export default function BuyerRegisterPage() {
                             onClick={() => toggleCategory(cat.id)}
                         >
                             <span className="text-2xl">{cat.icon}</span>
-                            <span className="text-sm">{cat.label}</span>
+                            <span className="text-sm">{t(cat.label)}</span>
                         </button>
                     ))}
                 </div>
@@ -430,7 +430,7 @@ export default function BuyerRegisterPage() {
                 )}
 
                 <Button onClick={handleCategorySubmit} isLoading={isLoading} fullWidth>
-                    Complete Registration
+                    {t('auth.buyer.completeRegistration')}
                 </Button>
             </div>
         </div>
@@ -443,15 +443,15 @@ export default function BuyerRegisterPage() {
                 <div className={`${styles.iconWrapper} ${styles.pendingIcon}`}>
                     <span className={styles.icon} role="img" aria-label="pending">⏳</span>
                 </div>
-                <h1 className={styles.title} style={{ color: '#d97706' }}>Verification Pending</h1>
+                <h1 className={styles.title} style={{ color: '#d97706' }}>{t('auth.farmer.verificationPendingTitle')}</h1>
                 <p className={styles.subtitle}>
-                    Your account is currently under review by the administrator.
+                    {t('auth.farmer.verificationPendingDesc')}
                 </p>
             </div>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-6">
                 <p className="text-sm text-yellow-800 text-center">
-                    Please wait for admin approval. You can try logging in later to check your status.
+                    {t('auth.farmer.verificationPendingHint')}
                 </p>
             </div>
 
@@ -465,7 +465,7 @@ export default function BuyerRegisterPage() {
                 variant="outline"
                 fullWidth
             >
-                Back to Login
+                {t('auth.farmer.backToLogin')}
             </Button>
         </div>
     );

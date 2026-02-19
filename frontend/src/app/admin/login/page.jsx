@@ -15,10 +15,12 @@ import {
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import OTPInput from '@/components/ui/OTPInput';
+import { useTranslation } from 'react-i18next';
 
 export default function AdminLoginPage() {
     const dispatch = useDispatch();
     const router = useRouter();
+    const { t } = useTranslation('common');
     const { isAuthenticated, userType, isLoading, otpSent, error } = useSelector((state) => state.auth);
 
     const [mobile, setMobile] = useState('');
@@ -64,8 +66,8 @@ export default function AdminLoginPage() {
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-gray-800">Admin Portal</h1>
-                    <p className="text-gray-500 text-sm">Secure Access</p>
+                    <h1 className="text-2xl font-bold text-gray-800">{t('admin.portal')}</h1>
+                    <p className="text-gray-500 text-sm">{t('admin.secureAccess')}</p>
                 </div>
 
                 {error && (
@@ -77,10 +79,10 @@ export default function AdminLoginPage() {
                 {!otpSent ? (
                     <div className="space-y-4">
                         <Input
-                            label="Admin Mobile Number"
+                            label={t('admin.mobileLabel')}
                             value={mobile}
                             onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                            placeholder="Enter 10-digit mobile"
+                            placeholder={t('auth.farmer.mobilePlaceholder')}
                             prefix="+91"
                             maxLength={10}
                         />
@@ -90,10 +92,10 @@ export default function AdminLoginPage() {
                             isLoading={isLoading}
                             fullWidth
                         >
-                            Send OTP
+                            {t('auth.farmer.sendOtp')}
                         </Button>
                         <div className="text-xs text-center text-gray-400 mt-4">
-                            Default Admin: 9999999999
+                            {t('admin.defaultAdmin')}
                         </div>
                     </div>
                 ) : (
@@ -104,7 +106,7 @@ export default function AdminLoginPage() {
                         </div>
 
                         <div className="text-center mb-4">
-                            <p className="text-sm text-gray-600">Enter OTP sent to +91 {mobile}</p>
+                            <p className="text-sm text-gray-600">{t('auth.farmer.otpSubtitle')} +91 {mobile}</p>
                         </div>
 
                         <OTPInput
@@ -120,14 +122,14 @@ export default function AdminLoginPage() {
                             isLoading={isLoading}
                             fullWidth
                         >
-                            Verify & Login
+                            {t('auth.login.verifyLogin')}
                         </Button>
 
                         <button
                             onClick={() => dispatch(resetAuthFlow())}
                             className="w-full text-center text-sm text-gray-500 hover:text-gray-700 underline"
                         >
-                            Back to Mobile Entry
+                            {t('admin.backToMobile')}
                         </button>
                     </div>
                 )}

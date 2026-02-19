@@ -61,6 +61,30 @@
         },
         "batchMode": "ਬੈਚ ਮੋਡ"
     },
+    "market": {
+        "title": "ਮੰਡੀ",
+        "subtitle": "ਕਿਸਾਨਾਂ ਤੋਂ ਸਿੱਧਾ",
+        "filters": {
+            "title": "ਫਿਲਟਰ",
+            "categories": "ਸ਼੍ਰੇਣੀਆਂ",
+            "allCategories": "ਸਾਰੀਆਂ ਸ਼੍ਰੇਣੀਆਂ",
+            "region": "ਖੇਤਰ",
+            "regions": "Regions",
+            "allIndia": "ਸਾਰਾ ਭਾਰਤ",
+            "priceRange": "ਕੀਮਤ ਰੇਂਜ",
+            "reset": "ਫਿਲਟਰ ਰੀਸੈਟ ਕਰੋ",
+            "active": "ਸਰਗਰਮ ਫਿਲਟਰ:"
+        },
+        "searchPlaceholder": "ਫਸਲਾਂ, ਕਿਸਾਨਾਂ ਦੀ ਖੋਜ ਕਰੋ...",
+        "noCrops": {
+            "title": "ਕੋਈ ਫਸਲ ਨਹੀਂ ਮਿਲੀ",
+            "desc": "ਆਪਣੇ ਫਿਲਟਰ ਜਾਂ ਖੋਜ ਬਦਲੋ"
+        },
+        "card": {
+            "min": "ਘੱਟੋ ਘੱਟ",
+            "add": "ਸ਼ਾਮਲ ਕਰੋ"
+        }
+    },
     "auth": {
         "farmer": {
             "title": "ਕਿਸਾਨ ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
@@ -74,9 +98,25 @@
             "resendOtp": "ਦੁਬਾਰਾ OTP ਭੇਜੋ",
             "resendIn": "ਦੁਬਾਰਾ ਭੇਜੋ",
             "seconds": "ਸਕਿੰਟਾਂ ਵਿੱਚ",
+            "aadharLabel": "ਆਧਾਰ ਨੰਬਰ",
+            "aadharPlaceholder": "Enter your 12-digit Aadhar",
+            "nameLabel": "ਪੂਰਾ ਨਾਮ",
+            "dobLabel": "ਜਨਮ ਮਿਤੀ",
+            "addressLabel": "ਪਤਾ",
+            "extractingData": "Extracting details from Aadhar...",
+            "confirmDetails": "ਆਪਣੇ ਵੇਰਵੇ ਪੁਸ਼ਟੀ ਕਰੋ",
+            "detailsExtracted": "Details extracted from Aadhar",
             "success": "ਖਾਤਾ ਬਣਾਇਆ ਗਿਆ!",
             "successMessage": "ਡਿਜੀਟਲ ਖੇਤੀ ਮੰਡੀ ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ",
-            "continue": "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਜਾਓ"
+            "continue": "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਜਾਓ",
+            "verificationPending": "Aadhar verification pending",
+            "canBrowse": "You can browse the marketplace, but order placement requires Aadhar verification",
+            "aadharSubtitle": "Enter your Aadhar for verification",
+            "reviewInfo": "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਜਾਣਕਾਰੀ ਦੀ ਸਮੀਖਿਆ ਕਰੋ",
+            "verificationPendingTitle": "ਤਸਦੀਕ ਬਕਾਇਆ",
+            "verificationPendingDesc": "ਤੁਹਾਡਾ ਖਾਤਾ ਮੌਜੂਦਾ ਸਮੇਂ ਪ੍ਰਸ਼ਾਸਕ ਦੀ ਸਮੀਖਿਆ ਵਿੱਚ ਹੈ.",
+            "verificationPendingHint": "Please wait for admin approval. You can try logging in later to check your status.",
+            "backToLogin": "ਲੌਗਇਨ 'ਤੇ ਵਾਪਸ ਜਾਓ"
         },
         "buyer": {
             "title": "ਖਰੀਦਦਾਰ ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
@@ -85,15 +125,84 @@
             "category": "ਕਾਰੋਬਾਰ ਦੀ ਕਿਸਮ",
             "categories": {
                 "retailer": "ਪਰਚੂਨ ਵਿਕਰੇਤਾ",
+                "wholesaler": "Wholesaler",
                 "cooperative": "ਸਹਿਕਾਰੀ",
-                "institution": "ਸੰਸਥਾ"
-            }
+                "institution": "ਸੰਸਥਾ",
+                "processor": "Food Processor"
+            },
+            "loginOrRegister": "ਲੌਗਇਨ ਜਾਂ ਰਜਿਸਟਰ ਕਰੋ",
+            "continue": "ਜਾਰੀ ਰੱਖੋ",
+            "businessDetails": "Business Details",
+            "completeProfile": "Complete your profile to continue",
+            "businessNamePlaceholder": "Enter your business name",
+            "taxIdPlaceholder": "e.g., 22AAAAA0000A1Z5",
+            "gstHint": "GST Number",
+            "selectBusinessType": "Select business type",
+            "contactPerson": "Contact Person",
+            "contactPlaceholder": "Enter contact person name",
+            "continueToInterests": "Continue to Interests",
+            "whatYouBuy": "What do you buy?",
+            "selectCategories": "Select categories you are interested in",
+            "completeRegistration": "ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਪੂਰੀ ਕਰੋ",
+            "selectOneCategory": "Please select at least one category",
+            "userExists": "User account already exists. Redirecting to login..."
+        },
+        "login": {
+            "welcome": "ਵਾਪਸ ਸੁਆਗਤ ਹੈ",
+            "loginToContinue": "ਜਾਰੀ ਰੱਖਣ ਲਈ ਲੌਗਇਨ ਕਰੋ",
+            "farmer": "ਕਿਸਾਨ",
+            "buyer": "ਖਰੀਦਦਾਰ",
+            "admin": "ਪ੍ਰਸ਼ਾਸਕ",
+            "goToAdminLogin": "Go to Admin Login",
+            "enterOtp": "Enter OTP",
+            "changeMobile": "Change Mobile Number",
+            "verifyLogin": "Verify & Login",
+            "noAccount": "Don't have an account?",
+            "registerHere": "Register here",
+            "noAccountFound": "No account found. Please register first.",
+            "otpSent": "OTP sent: 123456",
+            "enterValidMobile": "Enter valid 10-digit mobile number",
+            "enterValidOtp": "Enter valid OTP",
+            "failedSendOtp": "Failed to send OTP",
+            "invalidOtp": "ਅਵੈਧ OTP"
         },
         "errors": {
             "invalidMobile": "ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਜਾਇਜ਼ 10-ਅੰਕਾਂ ਦਾ ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ",
             "invalidOtp": "ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਜਾਇਜ਼ 6-ਅੰਕਾਂ ਦਾ OTP ਦਰਜ ਕਰੋ",
-            "otpExpired": "OTP ਦੀ ਮਿਆਦ ਪੁੱਗ ਗਈ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਨਵਾਂ ਮੰਗੋ।"
+            "invalidAadhar": "Please enter a valid 12-digit Aadhar number",
+            "otpExpired": "OTP ਦੀ ਮਿਆਦ ਪੁੱਗ ਗਈ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਨਵਾਂ ਮੰਗੋ।",
+            "aadharRequired": "Aadhar number is required for registration",
+            "failedSendOtp": "Failed to send OTP. Please try again.",
+            "invalidOtpRetry": "Invalid OTP. Please try again.",
+            "registrationFailed": "Registration failed. Please try again."
         }
+    },
+    "admin": {
+        "portal": "Admin Portal",
+        "secureAccess": "Secure Access",
+        "mobileLabel": "Admin Mobile Number",
+        "defaultAdmin": "Default Admin: 9999999999",
+        "backToMobile": "Back to Mobile Entry",
+        "title": "ਪ੍ਰਸ਼ਾਸਕ ਕੰਸੋਲ",
+        "subtitle": "Manage users and platform",
+        "pendingApprovals": "Pending Approvals",
+        "totalUsers": "Total Users",
+        "userDetails": "User Details",
+        "role": "Role",
+        "mobile": "Mobile",
+        "status": "Status",
+        "actions": "Actions",
+        "approve": "ਮਨਜ਼ੂਰ ਕਰੋ",
+        "reject": "ਰੱਦ ਕਰੋ",
+        "revoke": "Revoke",
+        "reApprove": "Re-approve",
+        "noUsersFound": "No users found in this category.",
+        "userApproved": "User approved successfully",
+        "userRejected": "User rejected",
+        "logout": "Logout",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
     },
     "common": {
         "loading": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
@@ -104,21 +213,83 @@
         "submit": "ਜਮ੍ਹਾਂ ਕਰੋ",
         "cancel": "ਰੱਦ ਕਰੋ",
         "changeLanguage": "ਭਾਸ਼ਾ ਬਦਲੋ",
-        "language": "ਭਾਸ਼ਾ",
-        "selectLanguage": "ਭਾਸ਼ਾ ਚੁਣੋ",
         "searchPlaceholder": "ਫਸਲਾਂ, ਕਿਸਾਨਾਂ ਦੀ ਖੋਜ ਕਰੋ...",
         "buyNow": "ਹੁਣੇ ਖਰੀਦੋ",
         "edit": "ਸੋਧੋ",
-        "delete": "ਹਟਾਓ"
+        "delete": "ਹਟਾਓ",
+        "confirmDelete": "Are you sure you want to delete this listing?",
+        "deleteSuccess": "Listing deleted successfully",
+        "buySuccess": "Order placed for",
+        "fillFields": "Please fill all required fields",
+        "listingCreated": "Listing created successfully!"
     },
     "voice": {
         "startListening": "ਵਾਇਸ ਖੋਜ ਸ਼ੁਰੂ ਕਰੋ",
         "stopListening": "ਸੁਣਨਾ ਬੰਦ ਕਰੋ",
-        "listening": "ਸੁਣ ਰਿਹਾ ਹੈ..."
+        "listening": "ਸੁਣ ਰਿਹਾ ਹੈ...",
+        "micDenied": "Microphone access denied",
+        "requiresInternet": "Voice requires internet connection",
+        "voiceError": "Voice recognition error",
+        "heard": "Heard: \"{{command}}\"",
+        "searchingFor": "Searching for {{query}}...",
+        "useMenuLogout": "Please use the menu to logout",
+        "commandNotRecognized": "Command not recognized",
+        "notSupported": "Voice recognition is not supported in your browser",
+        "voiceAssistant": "ਵੌਇਸ ਸਹਾਇਕ"
     },
     "offline": {
         "noConnection": "ਤੁਸੀਂ ਆਫਲਾਈਨ ਹੋ। ਕੁਝ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਸੀਮਤ ਹੋ ਸਕਦੀਆਂ ਹਨ।",
         "backOnline": "ਤੁਸੀਂ ਵਾਪਸ ਔਨਲਾਈਨ ਹੋ!"
+    },
+    "profile": {
+        "title": "Profile Settings",
+        "accountInfo": "Account Information",
+        "name": "Name",
+        "mobile": "Mobile",
+        "type": "Account Type",
+        "location": "Location",
+        "state": "State",
+        "selectState": "Select state",
+        "district": "District",
+        "enterDistrict": "Enter district",
+        "autoDetect": "Auto-detect Location",
+        "cropInterests": "Crop Interests",
+        "cropInterestsHint": "Select crops you're interested in buying or selling",
+        "notifications": "Notifications",
+        "smsAlerts": "SMS Alerts",
+        "smsAlertsDesc": "Receive important updates via SMS",
+        "priceAlerts": "Price Alerts",
+        "priceAlertsDesc": "Get notified when prices change",
+        "privacy": "Privacy",
+        "publicProfile": "Public Profile",
+        "publicProfileDesc": "Allow others to view your profile",
+        "showLocation": "Show Location",
+        "showLocationDesc": "Display your location on listings",
+        "showContact": "Show Contact",
+        "showContactDesc": "Make phone number visible to buyers",
+        "saveChanges": "Save Changes",
+        "saved": "Settings saved!",
+        "logout": "Logout",
+        "locationError": "Geolocation is not supported by your browser",
+        "locationRetrieveError": "Unable to retrieve your location",
+        "language": "Language",
+        "selectLanguage": "Select Language",
+        "manageAccount": "Manage your account and preferences",
+        "verifiedFarmer": "Verified Farmer",
+        "verificationPending": "Verification Pending",
+        "aadharNumber": "Aadhar Number",
+        "verified": "Verified",
+        "pendingAdminApproval": "Pending Admin Approval",
+        "notProvided": "Not Provided",
+        "changesSaved": "Changes Saved"
+    },
+    "categories": {
+        "vegetables": "ਸਬਜ਼ੀਆਂ",
+        "fruits": "ਫਲ",
+        "grains": "ਅਨਾਜ",
+        "spices": "ਮਸਾਲੇ",
+        "flowers": "ਫੁੱਲ",
+        "dairy": "ਡੇਅਰੀ"
     },
     "landing": {
         "hero": {
@@ -145,12 +316,6 @@
             }
         }
     },
-    "categories": {
-        "vegetables": "ਸਬਜ਼ੀਆਂ",
-        "fruits": "ਫਲ",
-        "grains": "ਅਨਾਜ",
-        "spices": "ਮਸਾਲੇ"
-    },
     "cart": {
         "title": "ਸ਼ਾਪਿੰਗ ਕਾਰਟ",
         "empty": "ਤੁਹਾਡੀ ਕਾਰਟ ਖਾਲੀ ਹੈ",
@@ -168,7 +333,10 @@
         "updated": "ਕਾਰਟ ਅੱਪਡੇਟ ਕੀਤੀ ਗਈ",
         "quantity": "ਮਾਤਰਾ",
         "price": "ਕੀਮਤ",
-        "viewCart": "ਕਾਰਟ ਦੇਖੋ"
+        "viewCart": "ਕਾਰਟ ਦੇਖੋ",
+        "verificationRequired": "Aadhar Verification Required",
+        "verifyToCheckout": "Please verify your Aadhar to place orders",
+        "pendingVerification": "Your Aadhar is pending admin verification"
     },
     "checkout": {
         "title": "ਚੈੱਕਆਉਟ",
@@ -178,18 +346,33 @@
         "fullName": "ਪੂਰਾ ਨਾਮ",
         "phoneNumber": "ਫ਼ੋਨ ਨੰਬਰ",
         "address": "ਡਿਲੀਵਰੀ ਪਤਾ",
+        "enterAddress": "Enter full delivery address...",
         "city": "ਸ਼ਹਿਰ",
         "state": "ਰਾਜ",
         "pincode": "ਪਿੰਨਕੋਡ",
         "cod": "ਕੈਸ਼ ਆਨ ਡਿਲੀਵਰੀ",
+        "codDesc": "Pay when you receive your order",
         "online": "ਆਨਲਾਈਨ ਭੁਗਤਾਨ",
         "placeOrder": "ਆਰਡਰ ਕਰੋ",
+        "placeOrderTotal": "Place Order (₹{{total}})",
         "orderPlaced": "ਆਰਡਰ ਸਫਲਤਾਪੂਰਵਕ ਦਿੱਤਾ ਗਿਆ!",
+        "orderPlacedTitle": "Order Placed!",
+        "orderPlacedDesc": "Thank you for supporting local farmers. Your order is being processed.",
         "orderNumber": "ਆਰਡਰ ਨੰਬਰ",
         "thankYou": "ਤੁਹਾਡੇ ਆਰਡਰ ਲਈ ਧੰਨਵਾਦ",
         "backToDashboard": "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਵਾਪਸ ਜਾਓ",
         "deliveryCharge": "ਡਿਲੀਵਰੀ ਚਾਰਜ",
-        "grandTotal": "ਕੁੱਲ ਜੋੜ"
+        "grandTotal": "ਕੁੱਲ ਜੋੜ",
+        "addressRequired": "Please enter a delivery address",
+        "continueToPayment": "Continue to Payment",
+        "trackOrder": "Track Order",
+        "subtotal": "Subtotal",
+        "delivery": "Delivery",
+        "free": "Free",
+        "total": "Total",
+        "safePayment": "Safe & Secure Payment",
+        "qty": "Qty",
+        "checkStatus": "Check Status"
     },
     "listing": {
         "new": {
@@ -207,7 +390,36 @@
             "pricePerKg": "ਪ੍ਰਤੀ ਕਿਲੋ ਕੀਮਤ (₹)",
             "pricePlaceholder": "ਜਿਵੇਂ 25",
             "creating": "ਬਣਾ ਰਹੇ ਹਾਂ...",
-            "createButton": "ਲਿਸਟਿੰਗ ਬਣਾਓ"
+            "createButton": "ਲਿਸਟਿੰਗ ਬਣਾਓ",
+            "location": "Location",
+            "detectingLocation": "Detecting your location...",
+            "locationDenied": "Location access was denied.",
+            "locationError": "Could not detect location.",
+            "enterManually": "Enter your location manually:",
+            "locationPlaceholder": "e.g. Nashik, Maharashtra",
+            "retryAutoDetect": "Retry auto-detect",
+            "editLocation": "Edit"
+        },
+        "edit": {
+            "title": "Edit Listing",
+            "saving": "Saving...",
+            "saveButton": "Save Changes"
+        },
+        "batch": {
+            "title": "Batch Listing",
+            "cropDetails": "Crop Details",
+            "quantity": "Quantity (kg)",
+            "pricePerKg": "Price (₹/kg)",
+            "minOrder": "Min. Order",
+            "photo": "Photo",
+            "actions": "Actions",
+            "addPhoto": "Add Photo",
+            "addAnother": "Add Another Crop",
+            "saving": "Saving...",
+            "submitAll": "Submit All",
+            "totalQty": "Total Qty",
+            "price": "Price",
+            "minQty": "Min Qty"
         },
         "crops": {
             "potato": "ਆਲੂ",
@@ -216,29 +428,6 @@
             "wheat": "ਕਣਕ",
             "rice": "ਚੌਲ",
             "cotton": "ਕਪਾਹ"
-        }
-    },
-    "market": {
-        "title": "ਮੰਡੀ",
-        "subtitle": "ਕਿਸਾਨਾਂ ਤੋਂ ਸਿੱਧਾ",
-        "filters": {
-            "title": "ਫਿਲਟਰ",
-            "categories": "ਸ਼੍ਰੇਣੀਆਂ",
-            "allCategories": "ਸਾਰੀਆਂ ਸ਼੍ਰੇਣੀਆਂ",
-            "region": "ਖੇਤਰ",
-            "allIndia": "ਸਾਰਾ ਭਾਰਤ",
-            "priceRange": "ਕੀਮਤ ਰੇਂਜ",
-            "reset": "ਫਿਲਟਰ ਰੀਸੈਟ ਕਰੋ",
-            "active": "ਸਰਗਰਮ ਫਿਲਟਰ:"
-        },
-        "searchPlaceholder": "ਫਸਲਾਂ, ਕਿਸਾਨਾਂ ਦੀ ਖੋਜ ਕਰੋ...",
-        "noCrops": {
-            "title": "ਕੋਈ ਫਸਲ ਨਹੀਂ ਮਿਲੀ",
-            "desc": "ਆਪਣੇ ਫਿਲਟਰ ਜਾਂ ਖੋਜ ਬਦਲੋ"
-        },
-        "card": {
-            "min": "ਘੱਟੋ ਘੱਟ",
-            "add": "ਸ਼ਾਮਲ ਕਰੋ"
         }
     }
 }

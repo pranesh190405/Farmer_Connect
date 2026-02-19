@@ -26,7 +26,64 @@
         "createFirstListing": "உங்கள் முதல் பட்டியலை உருவாக்கவும்",
         "welcomeBuyer": "வணக்கம், வாங்குபவர்!",
         "findFreshProduce": "விவசாயிகளிடமிருந்து நேரடியாக புதிய விளைபொருட்களைக் கண்டறியவும்",
+        "adminConsole": "நிர்வாகி கன்சோல்",
+        "systemOverview": "அமைப்பு மேற்பார்வை",
+        "totalFarmers": "மொத்த விவசாயிகள்",
+        "totalBuyers": "மொத்த வாங்குபவர்கள்",
+        "totalRevenue": "மொத்த வருவாய்",
+        "recentRegistrations": "சமீபத்திய பதிவுகள்",
+        "user": "பயனர்",
+        "type": "வகை",
+        "date": "தேதி",
+        "actions": "செயல்கள்",
+        "buyer": {
+            "welcome": "Welcome, Buyer",
+            "welcomeDesc": "Manage your orders and track deliveries",
+            "browseMarket": "Browse Market",
+            "stats": {
+                "totalOrders": "Total Orders",
+                "activeOrders": "Active Orders",
+                "completed": "Completed"
+            },
+            "tabs": {
+                "active": "Active Orders",
+                "completed": "Completed Orders",
+                "cancelled": "Cancelled Orders"
+            },
+            "empty": {
+                "title": "No {{status}} orders",
+                "desc": "You don't have any {{status}} orders at the moment.",
+                "startShopping": "Start Shopping"
+            },
+            "orderId": "Order #",
+            "inProgress": "In Progress",
+            "trackOrder": "Track Order"
+        },
         "batchMode": "பேட்ச் முறை"
+    },
+    "market": {
+        "title": "சந்தை",
+        "subtitle": "விவசாயிகளிடமிருந்து நேரடியாக",
+        "filters": {
+            "title": "வடிப்பான்கள்",
+            "categories": "வகைகள்",
+            "allCategories": "அனைத்து வகைகள்",
+            "region": "பிராந்தியம்",
+            "regions": "பிராந்தியங்கள்",
+            "allIndia": "அனைத்து இந்தியா",
+            "priceRange": "விலை வரம்பு",
+            "reset": "வடிப்பான்களை மீட்டமைக்கவும்",
+            "active": "செயலில் உள்ள வடிப்பான்கள்:"
+        },
+        "searchPlaceholder": "பயிர், விவசாயிகள் தேடவும்...",
+        "noCrops": {
+            "title": "பயிர்கள் எதுவும் கிடைக்கவில்லை",
+            "desc": "உங்கள் வடிப்பான்களை அல்லது தேடலை மாற்றவும்"
+        },
+        "card": {
+            "min": "குறைந்தபட்சம்",
+            "add": "சேர்"
+        }
     },
     "auth": {
         "farmer": {
@@ -41,9 +98,25 @@
             "resendOtp": "OTP ஐ மீண்டும் அனுப்பவும்",
             "resendIn": "மீண்டும் அனுப்பவும்",
             "seconds": "விநாடிகளில்",
+            "aadharLabel": "ஆதார் எண்",
+            "aadharPlaceholder": "12 இலக்க ஆதார் எண்ணை உள்ளிடவும்",
+            "nameLabel": "முழு பெயர்",
+            "dobLabel": "பிறந்த தேதி",
+            "addressLabel": "முகவரி",
+            "extractingData": "ஆதாரிலிருந்து விவரங்களை எடுக்கிறது...",
+            "confirmDetails": "உங்கள் விவரங்களை உறுதிப்படுத்தவும்",
+            "detailsExtracted": "ஆதாரிலிருந்து விவரங்கள் எடுக்கப்பட்டன",
             "success": "கணக்கு உருவாக்கப்பட்டது!",
             "successMessage": "டிஜிட்டல் வேளாண் சந்தைக்கு வரவேற்கிறோம்",
-            "continue": "டாஷ்போர்டுக்கு செல்லவும்"
+            "continue": "டாஷ்போர்டுக்கு செல்லவும்",
+            "verificationPending": "ஆதார் சரிபார்ப்பு நிலையில்",
+            "canBrowse": "நீங்கள் சந்தையை உலாவலாம், ஆனால் ஆர்டர் செய்ய ஆதார் சரிபார்ப்பு தேவை",
+            "aadharSubtitle": "சரிபார்ப்புக்கு உங்கள் ஆதாரை உள்ளிடவும்",
+            "reviewInfo": "தயவுசெய்து உங்கள் தகவல்களை மதிப்பாய்வு செய்யவும்",
+            "verificationPendingTitle": "சரிபார்ப்பு நிலையில்",
+            "verificationPendingDesc": "உங்கள் கணக்கு தற்போது நிர்வாகியின் மதிப்பாய்வில் உள்ளது.",
+            "verificationPendingHint": "நிர்வாகி ஒப்புதலுக்காக காத்திருக்கவும். உங்கள் நிலையை பின்னர் சரிபார்க்க உள்நுழையலாம்.",
+            "backToLogin": "உள்நுழைவுக்குத் திரும்பு"
         },
         "buyer": {
             "title": "வாங்குபவர் பதிவு",
@@ -52,15 +125,84 @@
             "category": "வணிக வகை",
             "categories": {
                 "retailer": "சில்லறை விற்பனையாளர்",
+                "wholesaler": "மொத்த வியாபாரி",
                 "cooperative": "கூட்டுறவு",
-                "institution": "நிறுவனம்"
-            }
+                "institution": "நிறுவனம்",
+                "processor": "உணவு பதப்படுத்துபவர்"
+            },
+            "loginOrRegister": "உள்நுழையவும் அல்லது பதிவு செய்யவும்",
+            "continue": "தொடரவும்",
+            "businessDetails": "வணிக விவரங்கள்",
+            "completeProfile": "தொடர உங்கள் சுயவிவரத்தை நிறைவு செய்யவும்",
+            "businessNamePlaceholder": "உங்கள் வணிகப் பெயரை உள்ளிடவும்",
+            "taxIdPlaceholder": "எ.கா., 22AAAAA0000A1Z5",
+            "gstHint": "GST எண்",
+            "selectBusinessType": "வணிக வகையைத் தேர்ந்தெடுக்கவும்",
+            "contactPerson": "தொடர்பு நபர்",
+            "contactPlaceholder": "தொடர்பு நபரின் பெயரை உள்ளிடவும்",
+            "continueToInterests": "ஆர்வங்களுக்குச் செல்லவும்",
+            "whatYouBuy": "நீங்கள் என்ன வாங்குகிறீர்கள்?",
+            "selectCategories": "உங்கள் ஆர்வமுள்ள வகைகளைத் தேர்ந்தெடுக்கவும்",
+            "completeRegistration": "பதிவை நிறைவு செய்யவும்",
+            "selectOneCategory": "குறைந்தபட்சம் ஒரு வகையைத் தேர்ந்தெடுக்கவும்",
+            "userExists": "பயனர் கணக்கு ஏற்கனவே உள்ளது. உள்நுழைவுக்கு திருப்பி விடப்படுகிறது..."
+        },
+        "login": {
+            "welcome": "மீண்டும் வரவேற்கிறோம்",
+            "loginToContinue": "தொடர உள்நுழையவும்",
+            "farmer": "விவசாயி",
+            "buyer": "வாங்குபவர்",
+            "admin": "நிர்வாகி",
+            "goToAdminLogin": "நிர்வாகி உள்நுழைவுக்குச் செல்லவும்",
+            "enterOtp": "OTP ஐ உள்ளிடவும்",
+            "changeMobile": "மொபைல் எண்ணை மாற்றவும்",
+            "verifyLogin": "சரிபார்த்து உள்நுழையவும்",
+            "noAccount": "கணக்கு இல்லையா?",
+            "registerHere": "இங்கே பதிவு செய்யவும்",
+            "noAccountFound": "கணக்கு கிடைக்கவில்லை. முதலில் பதிவு செய்யவும்.",
+            "otpSent": "OTP அனுப்பப்பட்டது: 123456",
+            "enterValidMobile": "சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்",
+            "enterValidOtp": "சரியான OTP ஐ உள்ளிடவும்",
+            "failedSendOtp": "OTP அனுப்புவதில் தோல்வி",
+            "invalidOtp": "தவறான OTP"
         },
         "errors": {
             "invalidMobile": "சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்",
             "invalidOtp": "சரியான 6 இலக்க OTP ஐ உள்ளிடவும்",
-            "otpExpired": "OTP காலாவதியானது. புதியதை கோரவும்."
+            "invalidAadhar": "சரியான 12 இலக்க ஆதார் எண்ணை உள்ளிடவும்",
+            "otpExpired": "OTP காலாவதியானது. புதியதை கோரவும்.",
+            "aadharRequired": "பதிவுக்கு ஆதார் எண் தேவை",
+            "failedSendOtp": "OTP அனுப்புவதில் தோல்வி. மீண்டும் முயற்சிக்கவும்.",
+            "invalidOtpRetry": "தவறான OTP. மீண்டும் முயற்சிக்கவும்.",
+            "registrationFailed": "பதிவு தோல்வி. மீண்டும் முயற்சிக்கவும்."
         }
+    },
+    "admin": {
+        "portal": "நிர்வாகி போர்டல்",
+        "secureAccess": "பாதுகாப்பான அணுகல்",
+        "mobileLabel": "நிர்வாகி மொபைல் எண்",
+        "defaultAdmin": "இயல்புநிலை நிர்வாகி: 9999999999",
+        "backToMobile": "மொபைல் உள்ளீட்டுக்குத் திரும்பவும்",
+        "title": "நிர்வாகி கன்சோல்",
+        "subtitle": "பயனர்கள் மற்றும் தளத்தை நிர்வகிக்கவும்",
+        "pendingApprovals": "நிலுவையில் உள்ள ஒப்புதல்கள்",
+        "totalUsers": "மொத்த பயனர்கள்",
+        "userDetails": "பயனர் விவரங்கள்",
+        "role": "பங்கு",
+        "mobile": "மொபைல்",
+        "status": "நிலை",
+        "actions": "செயல்கள்",
+        "approve": "ஒப்புக்கொள்",
+        "reject": "நிராகரி",
+        "revoke": "திரும்பப்பெறு",
+        "reApprove": "மீண்டும் ஒப்புக்கொள்",
+        "noUsersFound": "இந்த வகையில் பயனர்கள் இல்லை.",
+        "userApproved": "பயனர் வெற்றிகரமாக ஒப்புக்கொள்ளப்பட்டார்",
+        "userRejected": "பயனர் நிராகரிக்கப்பட்டார்",
+        "logout": "வெளியேறு",
+        "pending": "நிலுவையில்",
+        "approved": "ஒப்புக்கொள்ளப்பட்டது",
+        "rejected": "நிராகரிக்கப்பட்டது"
     },
     "common": {
         "loading": "ஏற்றுகிறது...",
@@ -71,17 +213,83 @@
         "submit": "சமர்ப்பிக்கவும்",
         "cancel": "ரத்து செய்",
         "changeLanguage": "மொழியை மாற்றவும்",
-        "language": "மொழி",
-        "selectLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்"
+        "searchPlaceholder": "பயிர், விவசாயிகள் தேடவும்...",
+        "buyNow": "இப்போது வாங்கவும்",
+        "edit": "திருத்து",
+        "delete": "நீக்கு",
+        "confirmDelete": "இந்த பட்டியலை நீக்க விரும்புகிறீர்களா?",
+        "deleteSuccess": "பட்டியல் வெற்றிகரமாக நீக்கப்பட்டது",
+        "buySuccess": "ஆர்டர் செய்யப்பட்டது",
+        "fillFields": "அனைத்து தேவையான புலங்களையும் நிரப்பவும்",
+        "listingCreated": "பட்டியல் வெற்றிகரமாக உருவாக்கப்பட்டது!"
     },
     "voice": {
         "startListening": "குரல் தேடலைத் தொடங்கவும்",
         "stopListening": "கேட்பதை நிறுத்து",
-        "listening": "கேட்கிறது..."
+        "listening": "கேட்கிறது...",
+        "micDenied": "மைக்ரோஃபோன் அணுகல் மறுக்கப்பட்டது",
+        "requiresInternet": "குரலுக்கு இணைய இணைப்பு தேவை",
+        "voiceError": "குரல் அங்கீகார பிழை",
+        "heard": "கேட்டது: \"{{command}}\"",
+        "searchingFor": "\"{{query}}\" தேடுகிறது...",
+        "useMenuLogout": "வெளியேற மெனுவைப் பயன்படுத்தவும்",
+        "commandNotRecognized": "கட்டளை அங்கீகரிக்கப்படவில்லை",
+        "notSupported": "உங்கள் உலாவியில் குரல் அங்கீகாரம் ஆதரிக்கப்படவில்லை",
+        "voiceAssistant": "குரல் உதவியாளர்"
     },
     "offline": {
         "noConnection": "நீங்கள் ஆஃப்லைனில் உள்ளீர்கள். சில அம்சங்கள் குறைவாக இருக்கலாம்.",
         "backOnline": "நீங்கள் மீண்டும் ஆன்லைனில் உள்ளீர்கள்!"
+    },
+    "profile": {
+        "title": "Profile Settings",
+        "accountInfo": "Account Information",
+        "name": "Name",
+        "mobile": "Mobile",
+        "type": "Account Type",
+        "location": "Location",
+        "state": "State",
+        "selectState": "Select state",
+        "district": "District",
+        "enterDistrict": "Enter district",
+        "autoDetect": "Auto-detect Location",
+        "cropInterests": "Crop Interests",
+        "cropInterestsHint": "Select crops you're interested in buying or selling",
+        "notifications": "Notifications",
+        "smsAlerts": "SMS Alerts",
+        "smsAlertsDesc": "Receive important updates via SMS",
+        "priceAlerts": "Price Alerts",
+        "priceAlertsDesc": "Get notified when prices change",
+        "privacy": "Privacy",
+        "publicProfile": "Public Profile",
+        "publicProfileDesc": "Allow others to view your profile",
+        "showLocation": "Show Location",
+        "showLocationDesc": "Display your location on listings",
+        "showContact": "Show Contact",
+        "showContactDesc": "Make phone number visible to buyers",
+        "saveChanges": "Save Changes",
+        "saved": "Settings saved!",
+        "logout": "Logout",
+        "locationError": "Geolocation is not supported by your browser",
+        "locationRetrieveError": "Unable to retrieve your location",
+        "language": "Language",
+        "selectLanguage": "Select Language",
+        "manageAccount": "Manage your account and preferences",
+        "verifiedFarmer": "Verified Farmer",
+        "verificationPending": "Verification Pending",
+        "aadharNumber": "Aadhar Number",
+        "verified": "Verified",
+        "pendingAdminApproval": "Pending Admin Approval",
+        "notProvided": "Not Provided",
+        "changesSaved": "Changes Saved"
+    },
+    "categories": {
+        "vegetables": "காய்கறிகள்",
+        "fruits": "பழங்கள்",
+        "grains": "தானியங்கள்",
+        "spices": "மசாலா பொருட்கள்",
+        "flowers": "மலர்கள்",
+        "dairy": "பால் பொருட்கள்"
     },
     "landing": {
         "hero": {
@@ -108,12 +316,6 @@
             }
         }
     },
-    "categories": {
-        "vegetables": "காய்கறிகள்",
-        "fruits": "பழங்கள்",
-        "grains": "தானியங்கள்",
-        "spices": "மசாலா பொருட்கள்"
-    },
     "cart": {
         "title": "ஷாப்பிங் கார்ட்",
         "empty": "உங்கள் கார்ட் காலியாக உள்ளது",
@@ -131,7 +333,10 @@
         "updated": "கார்ட் புதுப்பிக்கப்பட்டது",
         "quantity": "அளவு",
         "price": "விலை",
-        "viewCart": "கார்ட்டைப் பார்க்கவும்"
+        "viewCart": "கார்ட்டைப் பார்க்கவும்",
+        "verificationRequired": "Aadhar Verification Required",
+        "verifyToCheckout": "Please verify your Aadhar to place orders",
+        "pendingVerification": "Your Aadhar is pending admin verification"
     },
     "checkout": {
         "title": "செக்அவுட்",
@@ -141,18 +346,33 @@
         "fullName": "முழு பெயர்",
         "phoneNumber": "தொலைபேசி எண்",
         "address": "டெலிவரி முகவரி",
+        "enterAddress": "முழு டெலிவரி முகவரியை உள்ளிடவும்...",
         "city": "நகரம்",
         "state": "மாநிலம்",
         "pincode": "பின்கோடு",
         "cod": "கேஷ் ஆன் டெலிவரி",
+        "codDesc": "ஆர்டர் கிடைக்கும்போது பணம் செலுத்தவும்",
         "online": "ஆன்லைன் பேமெண்ட்",
         "placeOrder": "ஆர்டர் செய்யவும்",
+        "placeOrderTotal": "ஆர்டர் செய்யவும் (₹{{total}})",
         "orderPlaced": "ஆர்டர் வெற்றிகரமாக வழங்கப்பட்டது!",
+        "orderPlacedTitle": "ஆர்டர் செய்யப்பட்டது!",
+        "orderPlacedDesc": "உள்ளூர் விவசாயிகளை ஆதரித்ததற்கு நன்றி.",
         "orderNumber": "ஆர்டர் எண்",
         "thankYou": "உங்கள் ஆர்டருக்கு நன்றி",
         "backToDashboard": "டாஷ்போர்டுக்குத் திரும்பு",
         "deliveryCharge": "டெலிவரி கட்டணம்",
-        "grandTotal": "மொத்த தொகை"
+        "grandTotal": "மொத்த தொகை",
+        "addressRequired": "தயவுசெய்து டெலிவரி முகவரியை உள்ளிடவும்",
+        "continueToPayment": "பணம் செலுத்துவதற்குச் செல்லவும்",
+        "trackOrder": "ஆர்டரைக் கண்காணிக்கவும்",
+        "subtotal": "துணை மொத்தம்",
+        "delivery": "டெலிவரி",
+        "free": "இலவசம்",
+        "total": "மொத்தம்",
+        "safePayment": "பாதுகாப்பான பணம் செலுத்துதல்",
+        "qty": "அளவு",
+        "checkStatus": "நிலையைச் சரிபார்க்கவும்"
     },
     "listing": {
         "new": {
@@ -170,7 +390,36 @@
             "pricePerKg": "ஒரு கிலோ விலை (₹)",
             "pricePlaceholder": "எ.கா. 25",
             "creating": "உருவாக்குகிறது...",
-            "createButton": "பட்டியலை உருவாக்கு"
+            "createButton": "பட்டியலை உருவாக்கு",
+            "location": "Location",
+            "detectingLocation": "Detecting your location...",
+            "locationDenied": "Location access was denied.",
+            "locationError": "Could not detect location.",
+            "enterManually": "Enter your location manually:",
+            "locationPlaceholder": "e.g. Nashik, Maharashtra",
+            "retryAutoDetect": "Retry auto-detect",
+            "editLocation": "Edit"
+        },
+        "edit": {
+            "title": "Edit Listing",
+            "saving": "Saving...",
+            "saveButton": "Save Changes"
+        },
+        "batch": {
+            "title": "Batch Listing",
+            "cropDetails": "Crop Details",
+            "quantity": "Quantity (kg)",
+            "pricePerKg": "Price (₹/kg)",
+            "minOrder": "Min. Order",
+            "photo": "Photo",
+            "actions": "Actions",
+            "addPhoto": "Add Photo",
+            "addAnother": "Add Another Crop",
+            "saving": "Saving...",
+            "submitAll": "Submit All",
+            "totalQty": "Total Qty",
+            "price": "Price",
+            "minQty": "Min Qty"
         },
         "crops": {
             "potato": "உருளைக்கிழங்கு",
@@ -179,29 +428,6 @@
             "wheat": "கோதுமை",
             "rice": "அரிசி",
             "cotton": "பருத்தி"
-        }
-    },
-    "market": {
-        "title": "சந்தை",
-        "subtitle": "விவசாயிகளிடமிருந்து நேரடியாக",
-        "filters": {
-            "title": "வடிப்பான்கள்",
-            "categories": "வகைகள்",
-            "allCategories": "அனைத்து வகைகள்",
-            "region": "பிராந்தியம்",
-            "allIndia": "அனைத்து இந்தியா",
-            "priceRange": "விலை வரம்பு",
-            "reset": "வடிப்பான்களை மீட்டமைக்கவும்",
-            "active": "செயலில் உள்ள வடிப்பான்கள்:"
-        },
-        "searchPlaceholder": "பயிர், விவசாயிகள் தேடவும்...",
-        "noCrops": {
-            "title": "பயிர்கள் எதுவும் கிடைக்கவில்லை",
-            "desc": "உங்கள் வடிப்பான்களை அல்லது தேடலை மாற்றவும்"
-        },
-        "card": {
-            "min": "குறைந்தபட்சம்",
-            "add": "சேர்"
         }
     }
 }

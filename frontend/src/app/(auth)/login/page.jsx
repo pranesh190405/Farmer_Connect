@@ -39,34 +39,34 @@ export default function LoginPage() {
     const handleSendOtp = async (e) => {
         e.preventDefault();
         if (mobile.length !== 10) {
-            showToast('Enter valid 10-digit mobile number', 'error');
+            showToast(t('auth.login.enterValidMobile'), 'error');
             return;
         }
 
         try {
             const result = await dispatch(sendOtpAsync(mobile)).unwrap();
             setStep('otp');
-            showToast('OTP sent: 123456', 'success');
+            showToast(t('auth.login.otpSent'), 'success');
         } catch (err) {
-            showToast(err || 'Failed to send OTP', 'error');
+            showToast(err || t('auth.login.failedSendOtp'), 'error');
         }
     };
 
     const handleVerifyOtp = async (e) => {
         e.preventDefault();
         if (otp.length < 4) {
-            showToast('Enter valid OTP', 'error');
+            showToast(t('auth.login.enterValidOtp'), 'error');
             return;
         }
 
         try {
             const result = await dispatch(verifyOtpAsync({ mobile, otp, userType })).unwrap();
             if (result.isNewUser) {
-                showToast('No account found. Please register first.', 'error');
+                showToast(t('auth.login.noAccountFound'), 'error');
                 router.push(`/${userType}/register`);
             }
         } catch (err) {
-            showToast(err || 'Invalid OTP', 'error');
+            showToast(err || t('auth.login.invalidOtp'), 'error');
         }
     };
 
@@ -74,8 +74,8 @@ export default function LoginPage() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
                 <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-                    <p className="text-gray-500">Login to continue</p>
+                    <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.login.welcome')}</h1>
+                    <p className="text-gray-500">{t('auth.login.loginToContinue')}</p>
                 </div>
 
                 {/* Role Tabs */}
@@ -86,7 +86,7 @@ export default function LoginPage() {
                         onClick={() => setUserType('farmer')}
                         disabled={step === 'otp'}
                     >
-                        Farmer
+                        {t('auth.login.farmer')}
                     </button>
                     <button
                         className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${userType === 'buyer' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
@@ -94,29 +94,29 @@ export default function LoginPage() {
                         onClick={() => setUserType('buyer')}
                         disabled={step === 'otp'}
                     >
-                        Buyer
+                        {t('auth.login.buyer')}
                     </button>
                     <button
                         className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${userType === 'admin' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
                         onClick={() => setUserType('admin')}
                     >
-                        Admin
+                        {t('auth.login.admin')}
                     </button>
                 </div>
 
                 {userType === 'admin' ? (
                     <div className="text-center">
                         <Link href="/admin/login" className="text-green-600 font-medium hover:underline">
-                            Go to Admin Login
+                            {t('auth.login.goToAdminLogin')}
                         </Link>
                     </div>
                 ) : (
                     <form onSubmit={step === 'mobile' ? handleSendOtp : handleVerifyOtp} className="space-y-6">
                         {step === 'mobile' ? (
                             <Input
-                                label="Mobile Number"
-                                placeholder="Enter 10-digit mobile number"
+                                label={t('auth.farmer.mobileLabel')}
+                                placeholder={t('auth.farmer.mobilePlaceholder')}
                                 value={mobile}
                                 onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
                                 type="tel"
@@ -124,7 +124,7 @@ export default function LoginPage() {
                             />
                         ) : (
                             <div className="space-y-2">
-                                <label className="block text-sm font-medium text-gray-700">Enter OTP</label>
+                                <label className="block text-sm font-medium text-gray-700">{t('auth.login.enterOtp')}</label>
                                 <OTPInput length={6} value={otp} onChange={setOtp} />
                                 <div className="text-right">
                                     <button
@@ -132,21 +132,21 @@ export default function LoginPage() {
                                         onClick={() => setStep('mobile')}
                                         className="text-xs text-green-600 hover:underline"
                                     >
-                                        Change Mobile Number
+                                        {t('auth.login.changeMobile')}
                                     </button>
                                 </div>
                             </div>
                         )}
 
                         <Button type="submit" fullWidth isLoading={isLoading}>
-                            {step === 'mobile' ? 'Send OTP' : 'Verify & Login'}
+                            {step === 'mobile' ? t('auth.farmer.sendOtp') : t('auth.login.verifyLogin')}
                         </Button>
 
                         {step === 'mobile' && (
                             <p className="text-center text-sm text-gray-500 mt-4">
-                                Don't have an account?{' '}
+                                {t('auth.login.noAccount')}{' '}
                                 <Link href={`/${userType}/register`} className="text-green-600 font-medium hover:underline">
-                                    Register here
+                                    {t('auth.login.registerHere')}
                                 </Link>
                             </p>
                         )}

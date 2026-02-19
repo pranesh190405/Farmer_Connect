@@ -69,6 +69,7 @@
             "categories": "Categories",
             "allCategories": "All Categories",
             "region": "Region",
+            "regions": "Regions",
             "allIndia": "All India",
             "priceRange": "Price Range",
             "reset": "Reset Filters",
@@ -109,7 +110,13 @@
             "successMessage": "Welcome to Digital Agri Market",
             "continue": "Continue to Dashboard",
             "verificationPending": "Aadhar verification pending",
-            "canBrowse": "You can browse the marketplace, but order placement requires Aadhar verification"
+            "canBrowse": "You can browse the marketplace, but order placement requires Aadhar verification",
+            "aadharSubtitle": "Enter your Aadhar for verification",
+            "reviewInfo": "Please review your information",
+            "verificationPendingTitle": "Verification Pending",
+            "verificationPendingDesc": "Your account is currently under review by the administrator.",
+            "verificationPendingHint": "Please wait for admin approval. You can try logging in later to check your status.",
+            "backToLogin": "Back to Login"
         },
         "buyer": {
             "title": "Buyer Registration",
@@ -118,17 +125,84 @@
             "category": "Business Category",
             "categories": {
                 "retailer": "Retailer",
+                "wholesaler": "Wholesaler",
                 "cooperative": "Cooperative",
-                "institution": "Institution"
-            }
+                "institution": "Institution",
+                "processor": "Food Processor"
+            },
+            "loginOrRegister": "Login or Register",
+            "continue": "Continue",
+            "businessDetails": "Business Details",
+            "completeProfile": "Complete your profile to continue",
+            "businessNamePlaceholder": "Enter your business name",
+            "taxIdPlaceholder": "e.g., 22AAAAA0000A1Z5",
+            "gstHint": "GST Number",
+            "selectBusinessType": "Select business type",
+            "contactPerson": "Contact Person",
+            "contactPlaceholder": "Enter contact person name",
+            "continueToInterests": "Continue to Interests",
+            "whatYouBuy": "What do you buy?",
+            "selectCategories": "Select categories you are interested in",
+            "completeRegistration": "Complete Registration",
+            "selectOneCategory": "Please select at least one category",
+            "userExists": "User account already exists. Redirecting to login..."
+        },
+        "login": {
+            "welcome": "Welcome Back",
+            "loginToContinue": "Login to continue",
+            "farmer": "Farmer",
+            "buyer": "Buyer",
+            "admin": "Admin",
+            "goToAdminLogin": "Go to Admin Login",
+            "enterOtp": "Enter OTP",
+            "changeMobile": "Change Mobile Number",
+            "verifyLogin": "Verify & Login",
+            "noAccount": "Don't have an account?",
+            "registerHere": "Register here",
+            "noAccountFound": "No account found. Please register first.",
+            "otpSent": "OTP sent: 123456",
+            "enterValidMobile": "Enter valid 10-digit mobile number",
+            "enterValidOtp": "Enter valid OTP",
+            "failedSendOtp": "Failed to send OTP",
+            "invalidOtp": "Invalid OTP"
         },
         "errors": {
             "invalidMobile": "Please enter a valid 10-digit mobile number",
             "invalidOtp": "Please enter a valid 6-digit OTP",
             "invalidAadhar": "Please enter a valid 12-digit Aadhar number",
             "otpExpired": "OTP expired. Please request a new one.",
-            "aadharRequired": "Aadhar number is required for registration"
+            "aadharRequired": "Aadhar number is required for registration",
+            "failedSendOtp": "Failed to send OTP. Please try again.",
+            "invalidOtpRetry": "Invalid OTP. Please try again.",
+            "registrationFailed": "Registration failed. Please try again."
         }
+    },
+    "admin": {
+        "portal": "Admin Portal",
+        "secureAccess": "Secure Access",
+        "mobileLabel": "Admin Mobile Number",
+        "defaultAdmin": "Default Admin: 9999999999",
+        "backToMobile": "Back to Mobile Entry",
+        "title": "Admin Console",
+        "subtitle": "Manage users and platform",
+        "pendingApprovals": "Pending Approvals",
+        "totalUsers": "Total Users",
+        "userDetails": "User Details",
+        "role": "Role",
+        "mobile": "Mobile",
+        "status": "Status",
+        "actions": "Actions",
+        "approve": "Approve",
+        "reject": "Reject",
+        "revoke": "Revoke",
+        "reApprove": "Re-approve",
+        "noUsersFound": "No users found in this category.",
+        "userApproved": "User approved successfully",
+        "userRejected": "User rejected",
+        "logout": "Logout",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
     },
     "common": {
         "loading": "Loading...",
@@ -152,7 +226,16 @@
     "voice": {
         "startListening": "Start voice search",
         "stopListening": "Stop listening",
-        "listening": "Listening..."
+        "listening": "Listening...",
+        "micDenied": "Microphone access denied",
+        "requiresInternet": "Voice requires internet connection",
+        "voiceError": "Voice recognition error",
+        "heard": "Heard: \"{{command}}\"",
+        "searchingFor": "Searching for {{query}}...",
+        "useMenuLogout": "Please use the menu to logout",
+        "commandNotRecognized": "Command not recognized",
+        "notSupported": "Voice recognition is not supported in your browser",
+        "voiceAssistant": "Voice Assistant"
     },
     "offline": {
         "noConnection": "You are offline. Some features may be limited.",
@@ -204,7 +287,9 @@
         "vegetables": "Vegetables",
         "fruits": "Fruits",
         "grains": "Grains",
-        "spices": "Spices"
+        "spices": "Spices",
+        "flowers": "Flowers",
+        "dairy": "Dairy"
     },
     "landing": {
         "hero": {
@@ -261,18 +346,33 @@
         "fullName": "Full Name",
         "phoneNumber": "Phone Number",
         "address": "Delivery Address",
+        "enterAddress": "Enter full delivery address...",
         "city": "City",
         "state": "State",
         "pincode": "Pincode",
         "cod": "Cash on Delivery",
+        "codDesc": "Pay when you receive your order",
         "online": "Online Payment",
         "placeOrder": "Place Order",
+        "placeOrderTotal": "Place Order (₹{{total}})",
         "orderPlaced": "Order Placed Successfully!",
+        "orderPlacedTitle": "Order Placed!",
+        "orderPlacedDesc": "Thank you for supporting local farmers. Your order is being processed.",
         "orderNumber": "Order Number",
         "thankYou": "Thank you for your order",
         "backToDashboard": "Back to Dashboard",
         "deliveryCharge": "Delivery Charge",
-        "grandTotal": "Grand Total"
+        "grandTotal": "Grand Total",
+        "addressRequired": "Please enter a delivery address",
+        "continueToPayment": "Continue to Payment",
+        "trackOrder": "Track Order",
+        "subtotal": "Subtotal",
+        "delivery": "Delivery",
+        "free": "Free",
+        "total": "Total",
+        "safePayment": "Safe & Secure Payment",
+        "qty": "Qty",
+        "checkStatus": "Check Status"
     },
     "listing": {
         "new": {
