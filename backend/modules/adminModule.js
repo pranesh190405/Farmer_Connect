@@ -1,13 +1,17 @@
 const db = require('../config/db');
 
 /**
- * Get all users (for admin panel)
+ * Get all users with trust score and document info (for admin panel)
  */
 async function getAllUsers() {
     const result = await db.query(
-        `SELECT id, mobile, name, type, status, aadhar_number, aadhar_verified, created_at
+        `SELECT id, mobile, name, type, status, aadhar_number, aadhar_verified,
+                trust_score, document_url, document_type, admin_notes, verified_at,
+                business_name, tax_id, business_category, contact_name, address, created_at
          FROM users
-         ORDER BY created_at DESC`
+         ORDER BY 
+            CASE WHEN status = 'PENDING' THEN 0 ELSE 1 END,
+            created_at DESC`
     );
 
     return result.rows.map(u => ({
@@ -18,19 +22,78 @@ async function getAllUsers() {
         status: u.status,
         aadharNumber: u.aadhar_number,
         aadharVerified: u.aadhar_verified,
-        createdAt: u.created_at,
+        trustScore: u.trust_score || 0,
+        documentUrl: u.document_url || '',
+        documentType: u.document_type || '',
+        adminNotes: u.admin_notes || '',
+        verifiedAt: u.verified_at,
+        businessName: u.business_name || '',
+        taxId: u.tax_id || '',
+        businessCategory: u.business_category || '',
+        contactName: u.contact_name || '',
+        address: u.address || '',
+        joinedAt: u.created_at,
     }));
 }
 
 /**
- * Approve a user
+ * Get full verification data for a single user (admin review)
  */
-async function approveUser(userId) {
+async function getUserVerificationData(userId) {
     const result = await db.query(
-        `UPDATE users SET status = 'APPROVED', updated_at = NOW()
-         WHERE id = $1 AND type != 'admin'
-         RETURNING id, name, type, status`,
+        `SELECT u.*, ul.state, ul.district, ul.lat, ul.lng
+         FROM users u
+         LEFT JOIN user_locations ul ON ul.user_id = u.id
+         WHERE u.id = $1 AND u.type != 'admin'`,
         [userId]
+    );
+
+    if (result.rows.length === 0) return null;
+
+    const u = result.rows[0];
+    return {
+        id: u.id,
+        mobile: u.mobile,
+        name: u.name,
+        type: u.type,
+        status: u.status,
+        aadharNumber: u.aadhar_number,
+        aadharVerified: u.aadhar_verified,
+        address: u.address || '',
+        businessName: u.business_name || '',
+        taxId: u.tax_id || '',
+        businessCategory: u.business_category || '',
+        contactName: u.contact_name || '',
+        trustScore: u.trust_score || 0,
+        documentUrl: u.document_url || '',
+        documentType: u.document_type || '',
+        profilePhotoUrl: u.profile_photo_url || '',
+        adminNotes: u.admin_notes || '',
+        verifiedAt: u.verified_at,
+        location: {
+            state: u.state || '',
+            district: u.district || '',
+            lat: u.lat || null,
+            lng: u.lng || null,
+        },
+        createdAt: u.created_at,
+    };
+}
+
+/**
+ * Approve a user — adds 30 trust points and sets verified timestamp
+ */
+async function approveUser(userId, adminNotes) {
+    const result = await db.query(
+        `UPDATE users SET 
+            status = 'APPROVED', 
+            trust_score = LEAST(trust_score + 30, 100),
+            admin_notes = $2,
+            verified_at = NOW(),
+            updated_at = NOW()
+         WHERE id = $1 AND type != 'admin'
+         RETURNING id, name, type, status, trust_score`,
+        [userId, adminNotes || '']
     );
 
     if (result.rows.length === 0) return null;
@@ -38,14 +101,21 @@ async function approveUser(userId) {
 }
 
 /**
- * Reject a user
+ * Reject a user — requires a reason
  */
-async function rejectUser(userId) {
+async function rejectUser(userId, adminNotes) {
+    if (!adminNotes) {
+        return { error: 'Rejection reason is required' };
+    }
+
     const result = await db.query(
-        `UPDATE users SET status = 'REJECTED', updated_at = NOW()
+        `UPDATE users SET 
+            status = 'REJECTED', 
+            admin_notes = $2,
+            updated_at = NOW()
          WHERE id = $1 AND type != 'admin'
-         RETURNING id, name, type, status`,
-        [userId]
+         RETURNING id, name, type, status, trust_score`,
+        [userId, adminNotes]
     );
 
     if (result.rows.length === 0) return null;
@@ -97,6 +167,7 @@ async function getStats() {
 
 module.exports = {
     getAllUsers,
+    getUserVerificationData,
     approveUser,
     rejectUser,
     getStats,

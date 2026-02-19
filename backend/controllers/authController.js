@@ -85,6 +85,7 @@ async function verifyOtp(req, res) {
 /**
  * POST /api/auth/register
  * Body: { mobile, type, name, aadharNumber, dateOfBirth, address, ... }
+ * New users are created with PENDING status — no token issued until admin approves
  */
 async function register(req, res) {
     try {
@@ -103,7 +104,7 @@ async function register(req, res) {
             return res.status(400).json({ error: 'Mobile and type are required' });
         }
 
-        // Register user in database
+        // Register user in database (status = PENDING)
         const result = await authModule.registerUser({
             mobile, type, name, aadharNumber, dateOfBirth, address,
             businessName, taxId, businessCategory, contactName
@@ -113,15 +114,12 @@ async function register(req, res) {
             return res.status(400).json({ error: result.error });
         }
 
-        // Set JWT after successful registration
-        res.cookie('auth_token', result.token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 7 * 24 * 60 * 60 * 1000,
+        // No JWT issued — user must wait for admin approval
+        res.status(201).json({
+            user: result.user,
+            message: 'Registration successful. Your account is pending admin approval.',
+            status: 'PENDING'
         });
-
-        res.status(201).json({ user: result.user });
 
     } catch (err) {
         console.error('register error:', err);

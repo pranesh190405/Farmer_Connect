@@ -27,6 +27,12 @@ async function getProfile(userId) {
         aadharVerified: user.aadhar_verified,
         dateOfBirth: user.date_of_birth,
         address: user.address,
+        trustScore: user.trust_score || 0,
+        profilePhotoUrl: user.profile_photo_url || '',
+        documentUrl: user.document_url || '',
+        documentType: user.document_type || '',
+        adminNotes: user.admin_notes || '',
+        verifiedAt: user.verified_at,
         location: {
             state: location.state || '',
             district: location.district || '',
@@ -66,9 +72,51 @@ async function updateProfile(userId, data) {
 }
 
 /**
+ * Upload document (Aadhar photo for farmers, GST cert for buyers)
+ * Adds 15 trust points for document upload
+ */
+async function uploadDocument(userId, documentUrl, documentType) {
+    const result = await db.query(
+        `UPDATE users SET 
+            document_url = $2,
+            document_type = $3,
+            trust_score = LEAST(trust_score + 15, 100),
+            updated_at = NOW()
+         WHERE id = $1
+         RETURNING id, trust_score, document_url, document_type`,
+        [userId, documentUrl, documentType]
+    );
+
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+}
+
+/**
+ * Upload profile photo — adds 10 trust points
+ */
+async function uploadProfilePhoto(userId, photoUrl) {
+    const result = await db.query(
+        `UPDATE users SET 
+            profile_photo_url = $2,
+            trust_score = LEAST(trust_score + 10, 100),
+            updated_at = NOW()
+         WHERE id = $1
+         RETURNING id, trust_score, profile_photo_url`,
+        [userId, photoUrl]
+    );
+
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+}
+
+/**
  * Update user location
  */
 async function updateLocation(userId, { state, district, lat, lng }) {
+    // Add 10 trust points for location (only first time)
+    const existing = await db.query('SELECT state FROM user_locations WHERE user_id = $1', [userId]);
+    const isFirstLocation = !existing.rows[0]?.state;
+
     const result = await db.query(
         `INSERT INTO user_locations (user_id, state, district, lat, lng, updated_at)
          VALUES ($1, $2, $3, $4, $5, NOW())
@@ -81,6 +129,14 @@ async function updateLocation(userId, { state, district, lat, lng }) {
          RETURNING *`,
         [userId, state || '', district || '', lat || null, lng || null]
     );
+
+    // Add location trust points only on first location set
+    if (isFirstLocation && (state || lat)) {
+        await db.query(
+            'UPDATE users SET trust_score = LEAST(trust_score + 10, 100) WHERE id = $1',
+            [userId]
+        );
+    }
 
     return result.rows[0];
 }
@@ -110,6 +166,8 @@ async function updatePreferences(userId, { cropInterests, smsAlerts, priceAlerts
 module.exports = {
     getProfile,
     updateProfile,
+    uploadDocument,
+    uploadProfilePhoto,
     updateLocation,
     updatePreferences,
 };

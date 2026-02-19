@@ -1,5 +1,5 @@
-// Import user business logic module
 const userModule = require('../modules/userModule');
+const path = require('path');
 
 /**
  * GET /api/users/profile
@@ -7,16 +7,13 @@ const userModule = require('../modules/userModule');
  */
 async function getProfile(req, res) {
     try {
-        // req.user.id comes from JWT authentication middleware
         const profile = await userModule.getProfile(req.user.id);
 
-        // If profile does not exist
         if (!profile) {
             return res.status(404).json({ error: 'Profile not found' });
         }
 
         res.json({ profile });
-
     } catch (err) {
         console.error('getProfile error:', err);
         res.status(500).json({ error: 'Failed to get profile' });
@@ -29,22 +26,74 @@ async function getProfile(req, res) {
  */
 async function updateProfile(req, res) {
     try {
-        // Update profile using user ID and request body
-        const result = await userModule.updateProfile(
-            req.user.id,
-            req.body
-        );
+        const result = await userModule.updateProfile(req.user.id, req.body);
 
-        // If user does not exist
         if (!result) {
             return res.status(404).json({ error: 'User not found' });
         }
 
         res.json({ message: 'Profile updated successfully' });
-
     } catch (err) {
         console.error('updateProfile error:', err);
         res.status(500).json({ error: 'Failed to update profile' });
+    }
+}
+
+/**
+ * POST /api/users/upload-document
+ * Upload Aadhar photo (farmer) or GST certificate (buyer)
+ */
+async function uploadDocument(req, res) {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
+
+        const documentUrl = `/uploads/${req.file.filename}`;
+        const documentType = req.body.documentType || 'aadhar_photo';
+
+        const result = await userModule.uploadDocument(req.user.id, documentUrl, documentType);
+
+        if (!result) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({
+            message: 'Document uploaded successfully',
+            documentUrl: result.document_url,
+            trustScore: result.trust_score,
+        });
+    } catch (err) {
+        console.error('uploadDocument error:', err);
+        res.status(500).json({ error: 'Failed to upload document' });
+    }
+}
+
+/**
+ * POST /api/users/upload-photo
+ * Upload profile photo
+ */
+async function uploadProfilePhoto(req, res) {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
+
+        const photoUrl = `/uploads/${req.file.filename}`;
+        const result = await userModule.uploadProfilePhoto(req.user.id, photoUrl);
+
+        if (!result) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({
+            message: 'Photo uploaded successfully',
+            profilePhotoUrl: result.profile_photo_url,
+            trustScore: result.trust_score,
+        });
+    } catch (err) {
+        console.error('uploadProfilePhoto error:', err);
+        res.status(500).json({ error: 'Failed to upload photo' });
     }
 }
 
@@ -54,17 +103,12 @@ async function updateProfile(req, res) {
  */
 async function updateLocation(req, res) {
     try {
-        // Update location (latitude, longitude, region, etc.)
-        const result = await userModule.updateLocation(
-            req.user.id,
-            req.body
-        );
+        const result = await userModule.updateLocation(req.user.id, req.body);
 
         res.json({
             message: 'Location updated successfully',
-            location: result
+            location: result,
         });
-
     } catch (err) {
         console.error('updateLocation error:', err);
         res.status(500).json({ error: 'Failed to update location' });
@@ -73,30 +117,27 @@ async function updateLocation(req, res) {
 
 /**
  * PUT /api/users/preferences
- * Update user preferences (filters, categories, etc.)
+ * Update user preferences
  */
 async function updatePreferences(req, res) {
     try {
-        const result = await userModule.updatePreferences(
-            req.user.id,
-            req.body
-        );
+        const result = await userModule.updatePreferences(req.user.id, req.body);
 
         res.json({
             message: 'Preferences updated successfully',
-            preferences: result
+            preferences: result,
         });
-
     } catch (err) {
         console.error('updatePreferences error:', err);
         res.status(500).json({ error: 'Failed to update preferences' });
     }
 }
 
-// Export controller functions
 module.exports = {
     getProfile,
     updateProfile,
+    uploadDocument,
+    uploadProfilePhoto,
     updateLocation,
     updatePreferences,
 };

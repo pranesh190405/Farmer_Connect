@@ -126,16 +126,23 @@ async function registerUser({ mobile, type, name, aadharNumber, dateOfBirth, add
         return { error: 'User already exists with this mobile and type' };
     }
 
+    // Compute initial trust score
+    let trustScore = 15; // Mobile verified via OTP
+    if (name) trustScore += 5;
+    if (type === 'farmer' && aadharNumber) trustScore += 10;
+    if (type === 'buyer' && taxId) trustScore += 10;
+    if (address || businessName) trustScore += 5;
+
     const result = await db.query(
         `INSERT INTO users (
-            mobile, name, type, status, 
+            mobile, name, type, status, trust_score,
             aadhar_number, aadhar_verified, date_of_birth, address,
             business_name, tax_id, business_category, contact_name
         )
-         VALUES ($1, $2, $3, 'APPROVED', $4, FALSE, $5, $6, $7, $8, $9, $10)
+         VALUES ($1, $2, $3, 'PENDING', $4, $5, FALSE, $6, $7, $8, $9, $10, $11)
          RETURNING *`,
         [
-            mobile, name, type,
+            mobile, name, type, trustScore,
             aadharNumber || '', dateOfBirth || null, address || '',
             businessName || '', taxId || '', businessCategory || '', contactName || ''
         ]
@@ -153,8 +160,7 @@ async function registerUser({ mobile, type, name, aadharNumber, dateOfBirth, add
         [user.id]
     );
 
-    const token = generateToken(user);
-    return { user: formatUser(user), token };
+    return { user: formatUser(user) };
 }
 
 /**
@@ -224,6 +230,12 @@ function formatUser(user) {
         taxId: user.tax_id,
         businessCategory: user.business_category,
         contactName: user.contact_name,
+        trustScore: user.trust_score || 0,
+        profilePhotoUrl: user.profile_photo_url || '',
+        documentUrl: user.document_url || '',
+        documentType: user.document_type || '',
+        adminNotes: user.admin_notes || '',
+        verifiedAt: user.verified_at,
         createdAt: user.created_at,
     };
 }
