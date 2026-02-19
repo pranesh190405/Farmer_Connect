@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Plus, Package, Clock, MoreVertical, Edit, Trash } from 'lucide-react';
 import { ApiService } from '@/services/apiService';
 import { toast } from '@/components/ui/Toast/Toast';
+import { translateCropName } from '@/utils/translateCropName';
 
 export default function FarmerDashboard() {
     const { t } = useTranslation('common');
@@ -157,7 +158,7 @@ export default function FarmerDashboard() {
 
                                 <div className="p-5">
                                     <div className="flex justify-between items-start mb-2">
-                                        <h3 className="font-bold text-gray-900 text-lg truncate pr-2">{item.crop}</h3>
+                                        <h3 className="font-bold text-gray-900 text-lg truncate pr-2">{translateCropName(item.crop, t)}</h3>
                                         <button className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-50">
                                             <MoreVertical className="w-5 h-5" />
                                         </button>

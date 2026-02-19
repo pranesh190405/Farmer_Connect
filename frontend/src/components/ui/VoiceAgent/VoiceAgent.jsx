@@ -55,13 +55,13 @@ export default function VoiceAgent() {
                 setIsListening(false);
                 switch (event.error) {
                     case 'not-allowed':
-                        showToast('Microphone access denied', 'error');
+                        showToast(t('voice.micDenied'), 'error');
                         break;
                     case 'network':
                         // Web Speech API requires internet (sends audio to Google).
                         // Silently ignore on localhost or show a subtle warning.
                         console.warn('Speech recognition requires an internet connection.');
-                        showToast('Voice requires internet connection', 'warning');
+                        showToast(t('voice.requiresInternet'), 'warning');
                         break;
                     case 'no-speech':
                         // User didn't say anything — not a real error.
@@ -71,14 +71,14 @@ export default function VoiceAgent() {
                         break;
                     default:
                         console.error('Speech recognition error:', event.error);
-                        showToast('Voice recognition error', 'error');
+                        showToast(t('voice.voiceError'), 'error');
                 }
             };
         }
     }, [router]);
 
     const processCommand = (command) => {
-        showToast(`Heard: "${command}"`, 'info');
+        showToast(t('voice.heard', { command }), 'info');
 
         // Simple command parsing logic
         if (command.includes('market') || command.includes('buy')) {
@@ -100,20 +100,20 @@ export default function VoiceAgent() {
                 // Assume market search
                 // Use custom event or Redux?
                 // Let's just toast for now and route
-                showToast(`Searching for ${query}...`, 'success');
+                showToast(t('voice.searchingFor', { query }), 'success');
                 // Could implement URL param search later
             }
         } else if (command.includes('logout')) {
             // Trigger logout? Maybe too dangerous for voice
-            showToast('Please use the menu to logout', 'info');
+            showToast(t('voice.useMenuLogout'), 'info');
         } else {
-            showToast('Command not recognized', 'warning');
+            showToast(t('voice.commandNotRecognized'), 'warning');
         }
     };
 
     const toggleListening = () => {
         if (!recognitionRef.current) {
-            showToast('Voice recognition not supported in this browser', 'error');
+            showToast(t('voice.notSupported'), 'error');
             return;
         }
 
@@ -131,7 +131,7 @@ export default function VoiceAgent() {
         <div className="fixed bottom-24 right-6 z-40 flex flex-col items-end gap-2">
             {transcript && isListening && (
                 <div className="bg-black/80 text-white px-4 py-2 rounded-lg text-sm backdrop-blur-sm mb-2 animate-fade-in">
-                    {transcript || 'Listening...'}
+                    {transcript || t('voice.listening')}
                 </div>
             )}
 
@@ -141,7 +141,7 @@ export default function VoiceAgent() {
                     ? 'bg-red-500 text-white animate-pulse ring-4 ring-red-200'
                     : 'bg-green-600 text-white hover:bg-green-700'
                     }`}
-                title="Voice Assistant"
+                title={t('voice.voiceAssistant')}
             >
                 {isListening ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
             </button>

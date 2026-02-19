@@ -88,7 +88,7 @@ export default function FarmerRegisterPage() {
             setStep(STEPS.OTP);
             startResendTimer();
         } catch (err) {
-            dispatch(sendOtpFailure(err || 'Failed to send OTP. Please try again.'));
+            dispatch(sendOtpFailure(err || t('auth.errors.failedSendOtp')));
         }
     };
 
@@ -125,8 +125,8 @@ export default function FarmerRegisterPage() {
             const data = await res.json();
 
             if (!res.ok) {
-                dispatch(verifyOtpFailure(data.error || 'Invalid OTP'));
-                setOtpError(data.error || 'Invalid OTP');
+                dispatch(verifyOtpFailure(data.error || t('auth.login.invalidOtp')));
+                setOtpError(data.error || t('auth.login.invalidOtp'));
                 return;
             }
 
@@ -135,8 +135,8 @@ export default function FarmerRegisterPage() {
             dispatch(sendOtpSuccess()); // Reset loading state
 
         } catch (err) {
-            dispatch(verifyOtpFailure('Invalid OTP. Please try again.'));
-            setOtpError('Invalid OTP. Please try again.');
+            dispatch(verifyOtpFailure(t('auth.errors.invalidOtpRetry')));
+            setOtpError(t('auth.errors.invalidOtpRetry'));
         }
     };
 
@@ -464,13 +464,13 @@ export default function FarmerRegisterPage() {
                     <span className={styles.icon} role="img" aria-label="check">✓</span>
                 </div>
                 <h1 className={styles.title}>{t('auth.farmer.confirmDetails')}</h1>
-                <p className={styles.subtitle}>Please review your information</p>
+                <p className={styles.subtitle}>{t('auth.farmer.reviewInfo')}</p>
             </div>
 
             <div className={styles.form}>
                 <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 space-y-4">
                     <div>
-                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Mobile Number</label>
+                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.mobileLabel')}</label>
                         <p className="text-base font-semibold text-gray-900 mt-1">+91 {mobile}</p>
                     </div>
                     <div>
@@ -515,15 +515,15 @@ export default function FarmerRegisterPage() {
                 <div className={`${styles.iconWrapper} ${styles.pendingIcon}`}>
                     <span className={styles.icon} role="img" aria-label="pending">⏳</span>
                 </div>
-                <h1 className={styles.title} style={{ color: '#d97706' }}>Verification Pending</h1>
+                <h1 className={styles.title} style={{ color: '#d97706' }}>{t('auth.farmer.verificationPendingTitle')}</h1>
                 <p className={styles.subtitle}>
-                    Your account is currently under review by the administrator.
+                    {t('auth.farmer.verificationPendingDesc')}
                 </p>
             </div>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-6">
                 <p className="text-sm text-yellow-800 text-center">
-                    Please wait for admin approval. You can try logging in later to check your status.
+                    {t('auth.farmer.verificationPendingHint')}
                 </p>
             </div>
 
@@ -537,7 +537,7 @@ export default function FarmerRegisterPage() {
                 variant="outline"
                 fullWidth
             >
-                Back to Login
+                {t('auth.farmer.backToLogin')}
             </Button>
         </div>
     );

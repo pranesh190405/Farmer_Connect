@@ -22,12 +22,12 @@ export default function AdminDashboard() {
 
     const handleApprove = (id) => {
         dispatch(approveUser(id));
-        showToast('User approved successfully', 'success');
+        showToast(t('admin.userApproved'), 'success');
     };
 
-    const handleReject = (id) => {
-        dispatch(rejectUser(id));
-        showToast('User rejected', 'info');
+    const handleReject = (userId) => {
+        dispatch(rejectUser(userId));
+        showToast(t('admin.userRejected'), 'info');
     };
 
     const handleLogout = () => {
@@ -49,11 +49,11 @@ export default function AdminDashboard() {
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="border-b border-gray-100 bg-gray-50/50">
-                            <th className="p-4 text-sm font-semibold text-gray-600">User Details</th>
-                            <th className="p-4 text-sm font-semibold text-gray-600">Role</th>
-                            <th className="p-4 text-sm font-semibold text-gray-600">Mobile</th>
-                            <th className="p-4 text-sm font-semibold text-gray-600">Status</th>
-                            <th className="p-4 text-sm font-semibold text-gray-600 text-right">Actions</th>
+                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.userDetails')}</th>
+                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.role')}</th>
+                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.mobile')}</th>
+                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.status')}</th>
+                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.actions')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +63,7 @@ export default function AdminDashboard() {
                                     <div>
                                         <p className="font-medium text-gray-900">{u.name || 'Unknown'}</p>
                                         <p className="text-xs text-gray-500">ID: {u.id.substring(0, 8)}...</p>
-                                        <p className="text-xs text-gray-400">Joined: {new Date(u.joinedAt).toLocaleDateString()}</p>
+                                        <p className="text-xs text-gray-400">{t('admin.joined')}: {new Date(u.joinedAt).toLocaleDateString()}</p>
                                     </div>
                                 </td>
                                 <td className="p-4">
@@ -87,17 +87,15 @@ export default function AdminDashboard() {
                                             <>
                                                 <button
                                                     onClick={() => handleApprove(u.id)}
-                                                    className="p-2 text-green-600 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
-                                                    title="Approve"
+                                                    className="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-colors"
                                                 >
-                                                    <Check className="w-5 h-5" />
+                                                    {t('admin.approve')}
                                                 </button>
                                                 <button
                                                     onClick={() => handleReject(u.id)}
-                                                    className="p-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
-                                                    title="Reject"
+                                                    className="px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded-lg hover:bg-red-700 transition-colors"
                                                 >
-                                                    <X className="w-5 h-5" />
+                                                    {t('admin.reject')}
                                                 </button>
                                             </>
                                         )}
@@ -132,15 +130,15 @@ export default function AdminDashboard() {
             <header className="bg-white border-b sticky top-0 z-10 px-6 py-4 shadow-sm">
                 <div className="flex justify-between items-center max-w-7xl mx-auto">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Admin Console</h1>
-                        <p className="text-gray-500 text-sm mt-1">Manage users and platform</p>
+                        <h1 className="text-2xl font-bold text-gray-900">{t('admin.title')}</h1>
+                        <p className="text-gray-500 text-sm mt-1">{t('admin.subtitle')}</p>
                     </div>
                     <div className="flex items-center gap-4">
                         <span className="text-sm font-medium text-gray-600">Admin</span>
                         <button
                             onClick={handleLogout}
                             className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                            title="Logout"
+                            title={t('admin.logout')}
                         >
                             <LogOut className="w-5 h-5" />
                         </button>
@@ -183,7 +181,7 @@ export default function AdminDashboard() {
                                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                                     }`}
                             >
-                                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                                {t(`admin.${tab}`)}
                                 <span className={`ml-2 text-xs py-0.5 px-1.5 rounded-full ${activeTab === tab ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600'
                                     }`}>
                                     {users.filter(u => u.status.toLowerCase() === tab).length}

@@ -10,6 +10,7 @@ import { Search, Filter, ShoppingCart, Heart, MapPin, Store, SlidersHorizontal, 
 import { addToCart, openCart } from '@/store/slices/cartSlice';
 import { toast } from '@/components/ui/Toast/Toast';
 import { ApiService } from '@/services/apiService';
+import { translateCropName } from '@/utils/translateCropName';
 
 // Regions
 const REGIONS = [
@@ -171,7 +172,7 @@ export default function MarketPage() {
                                                     checked={selectedCategory === cat}
                                                     onChange={() => setSelectedCategory(cat)}
                                                 />
-                                                <span className="text-gray-600 group-hover:text-green-700 transition-colors capitalize">{cat}</span>
+                                                <span className="text-gray-600 group-hover:text-green-700 transition-colors capitalize">{t('categories.' + cat)}</span>
                                             </label>
                                         ))}
                                     </div>
@@ -229,7 +230,7 @@ export default function MarketPage() {
                                             {/* Content */}
                                             <div className="p-5 flex-1 flex flex-col">
                                                 <div className="flex justify-between items-start mb-2">
-                                                    <h3 className="font-bold text-gray-900 text-lg truncate pr-2">{item.name}</h3>
+                                                    <h3 className="font-bold text-gray-900 text-lg truncate pr-2">{translateCropName(item.name, t)}</h3>
                                                     <div className="flex items-center gap-1 bg-green-50 px-2 py-0.5 rounded text-xs font-bold text-green-700">
                                                         <Star className="w-3 h-3 fill-green-700" /> {item.rating}
                                                     </div>
