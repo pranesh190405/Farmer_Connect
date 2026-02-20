@@ -29,9 +29,7 @@ node_modules
 *.sw?
 backend/.env
 
-# PWA generated files
-frontend/public/sw.js
-frontend/public/sw.js.map
+# PWA generated files (if using next-pwa in future)
 frontend/public/workbox-*.js
 frontend/public/workbox-*.js.map
 frontend/public/swe-worker-*.js

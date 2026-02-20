@@ -8,6 +8,7 @@ import { ToastContainer } from "@/components/ui/Toast/Toast";
 import Cart from "@/components/ui/Cart/Cart";
 import VoiceAgent from "@/components/ui/VoiceAgent/VoiceAgent";
 import InstallPrompt from "@/components/ui/InstallPrompt/InstallPrompt";
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
           <Cart />
           <VoiceAgent />
           <ToastContainer />
+          <ServiceWorkerRegistration />
         </Providers>
       </body>
     </html>
