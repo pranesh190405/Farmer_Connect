@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +9,17 @@ import { Home, ShoppingBag, User, Store, List } from 'lucide-react';
 import styles from './BottomNav.module.css';
 
 export default function BottomNav() {
+    const [mounted, setMounted] = useState(false);
     const pathname = usePathname();
     const { t } = useTranslation('common');
     const { userType, isAuthenticated } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // Don't render on server to avoid hydration mismatch
+    if (!mounted) return null;
 
     // Hide on auth pages (login/register)
     const authPages = ['/login', '/farmer/register', '/buyer/register', '/admin/login'];
