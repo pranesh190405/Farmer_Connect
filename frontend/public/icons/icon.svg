@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#16a34a"/>
+      <stop offset="100%" style="stop-color:#15803d"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <!-- Sprout/Wheat icon -->
+  <g transform="translate(256,280)" fill="none" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main stem -->
+    <line x1="0" y1="80" x2="0" y2="-60"/>
+    <!-- Left leaves -->
+    <path d="M0,20 C-40,10 -70,-20 -60,-60 C-20,-50 10,-20 0,20" fill="white" stroke="none" opacity="0.9"/>
+    <path d="M0,-10 C-35,-25 -55,-55 -45,-85 C-10,-75 15,-45 0,-10" fill="white" stroke="none" opacity="0.85"/>
+    <!-- Right leaves -->
+    <path d="M0,40 C40,30 70,0 60,-40 C20,-30 -10,0 0,40" fill="white" stroke="none" opacity="0.9"/>
+    <path d="M0,0 C35,-15 55,-45 45,-75 C10,-65 -15,-35 0,0" fill="white" stroke="none" opacity="0.85"/>
+    <!-- Top bud -->
+    <path d="M0,-60 C-15,-80 -10,-110 0,-120 C10,-110 15,-80 0,-60" fill="white" stroke="none" opacity="0.95"/>
+    <!-- Ground line -->
+    <ellipse cx="0" cy="85" rx="50" ry="8" fill="white" opacity="0.3"/>
+  </g>
+  <!-- App name at bottom -->
+  <text x="256" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="36" fill="white" opacity="0.95">AGRI MARKET</text>
+</svg>
