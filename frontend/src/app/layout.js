@@ -7,6 +7,7 @@ import Header from "@/components/ui/Header/Header";
 import { ToastContainer } from "@/components/ui/Toast/Toast";
 import Cart from "@/components/ui/Cart/Cart";
 import VoiceAgent from "@/components/ui/VoiceAgent/VoiceAgent";
+import InstallPrompt from "@/components/ui/InstallPrompt/InstallPrompt";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,6 +33,10 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#16a34a" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="AgriMarket" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
       <body className={`${inter.variable} antialiased`}>
         <Providers>
@@ -39,6 +44,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <BottomNav />
+          <InstallPrompt />
           <Cart />
           <VoiceAgent />
           <ToastContainer />

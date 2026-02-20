@@ -241,6 +241,13 @@
         "noConnection": "You are offline. Some features may be limited.",
         "backOnline": "You are back online!"
     },
+    "install": {
+        "title": "Install App",
+        "description": "Add to your home screen for a faster, app-like experience",
+        "button": "Install",
+        "dismiss": "Not now",
+        "iosGuide": "Tap the share button, then 'Add to Home Screen'"
+    },
     "profile": {
         "title": "Profile Settings",
         "accountInfo": "Account Information",
