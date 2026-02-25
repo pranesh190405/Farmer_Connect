@@ -135,6 +135,19 @@ export class ApiService {
         }
     }
 
+    static async raiseOrderIssue(orderId, issueData) {
+        try {
+            const data = await apiFetch(`/api/orders/${orderId}/complaints`, {
+                method: 'POST',
+                body: JSON.stringify(issueData),
+            });
+            return data.complaint;
+        } catch (err) {
+            console.error('raiseOrderIssue error:', err);
+            throw err;
+        }
+    }
+
     // === User Profile ===
 
     static async getProfile() {
