@@ -33,3 +33,4 @@ backend/.env
 frontend/public/workbox-*.js
 frontend/public/workbox-*.js.map
 frontend/public/swe-worker-*.js
+backend/node_modules
