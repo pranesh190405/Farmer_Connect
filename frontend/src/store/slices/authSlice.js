@@ -93,13 +93,13 @@ export const logoutAsync = createAsyncThunk(
 // Admin login
 export const adminLoginAsync = createAsyncThunk(
     'auth/adminLogin',
-    async ({ username, password }, { rejectWithValue }) => {
+    async ({ email, password }, { rejectWithValue }) => {
         try {
             const res = await fetch('/api/auth/admin-login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ email, password }),
             });
             const data = await res.json();
             if (!res.ok) return rejectWithValue(data.error);

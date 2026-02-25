@@ -158,13 +158,14 @@ async function resetPin(mobile, aadharLast4, newPin, userType) {
 }
 
 // ─── Admin Login ─────────────────────────────────────────────
-async function adminLogin(username, password) {
-    if (username !== 'admin') {
-        return { error: 'Invalid credentials' };
+async function adminLogin(email, password) {
+    if (!email) {
+        return { error: 'Email is required' };
     }
 
     const result = await db.query(
-        "SELECT * FROM users WHERE type = 'admin' LIMIT 1"
+        "SELECT * FROM users WHERE type = 'admin' AND email = $1 LIMIT 1",
+        [email]
     );
 
     if (result.rows.length === 0) {

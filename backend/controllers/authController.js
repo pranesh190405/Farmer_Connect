@@ -112,13 +112,13 @@ async function forgotPin(req, res) {
  */
 async function adminLogin(req, res) {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
-        if (!username || !password) {
-            return res.status(400).json({ error: 'Username and password are required' });
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required' });
         }
 
-        const result = await authModule.adminLogin(username, password);
+        const result = await authModule.adminLogin(email, password);
 
         if (result.error) {
             return res.status(401).json({ error: result.error });

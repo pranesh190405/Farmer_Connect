@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
     id            SERIAL PRIMARY KEY,  -- Auto-increment user ID
     mobile        VARCHAR(15) NOT NULL,
+    email         VARCHAR(255),
     name          VARCHAR(100) NOT NULL DEFAULT '',
     type          VARCHAR(10) NOT NULL 
                    CHECK (type IN ('farmer', 'buyer', 'admin')), -- Role-based control
@@ -164,11 +165,12 @@ CREATE TABLE order_items (
 -- Default Admin
 -- Password: admin123 (bcrypt hashed)
 INSERT INTO users (
-    mobile, name, type, status, password_hash,
+    mobile, email, name, type, status, password_hash,
     aadhar_number, aadhar_verified, date_of_birth, address
 )
 VALUES (
     '9999999999',
+    'admin@farmerconnect.com',
     'System Admin',
     'admin',
     'APPROVED',
@@ -178,4 +180,4 @@ VALUES (
     '1980-01-01',
     'Admin Office, New Delhi'
 )
-ON CONFLICT (mobile, type) DO NOTHING; -- Prevent duplicate admin insertion
+ON CONFLICT (mobile, type) DO UPDATE SET email = 'admin@farmerconnect.com'; -- Assign email to existing admin

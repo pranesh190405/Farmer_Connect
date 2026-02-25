@@ -27,7 +27,7 @@ const forgotPinValidation = [
 ];
 
 const adminLoginValidation = [
-    check('username').notEmpty().withMessage('Username is required'),
+    check('email').isEmail().withMessage('Valid email is required'),
     check('password').notEmpty().withMessage('Password is required'),
 ];
 
