@@ -41,6 +41,20 @@ async function migrate() {
             ON CONFLICT (mobile, type) DO UPDATE SET email = 'admin@farmerconnect.com';
         `);
 
+        // Create order complaints table
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS order_complaints (
+                id SERIAL PRIMARY KEY,
+                order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+                raised_by INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                issue_type VARCHAR(50) NOT NULL,
+                description TEXT NOT NULL,
+                status VARCHAR(20) DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'RESOLVED', 'CLOSED')),
+                admin_response TEXT DEFAULT '',
+                created_at TIMESTAMP DEFAULT NOW()
+            );
+        `);
+
         console.log('Migration successful');
         process.exit(0);
     } catch (err) {

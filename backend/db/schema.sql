@@ -181,3 +181,17 @@ VALUES (
     'Admin Office, New Delhi'
 )
 ON CONFLICT (mobile, type) DO UPDATE SET email = 'admin@farmerconnect.com'; -- Assign email to existing admin
+
+-- =============================================================================
+-- ORDER COMPLAINTS
+-- =============================================================================
+CREATE TABLE order_complaints (
+    id SERIAL PRIMARY KEY,
+    order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+    raised_by INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    issue_type VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'RESOLVED', 'CLOSED')),
+    admin_response TEXT DEFAULT '',
+    created_at TIMESTAMP DEFAULT NOW()
+);

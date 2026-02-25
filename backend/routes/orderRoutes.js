@@ -22,5 +22,6 @@ router.post('/', requireAuth, validate(createOrderValidation), orderController.c
 router.get('/my', requireAuth, orderController.getMyOrders);
 router.get('/:id', requireAuth, orderController.getOrderById);
 router.put('/:id/status', requireAuth, validate(updateStatusValidation), orderController.updateOrderStatus);
+router.post('/:id/complaints', requireAuth, orderController.createComplaint);
 
 module.exports = router;

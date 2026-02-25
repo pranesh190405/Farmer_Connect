@@ -158,9 +158,24 @@ function formatOrder(row) {
     };
 }
 
+/**
+ * Create an order complaint
+ */
+async function createComplaint(orderId, raisedBy, issueType, description) {
+    const result = await db.query(
+        `INSERT INTO order_complaints (order_id, raised_by, issue_type, description)
+         VALUES ($1, $2, $3, $4)
+         RETURNING *`,
+        [orderId, raisedBy, issueType, description]
+    );
+
+    return result.rows[0];
+}
+
 module.exports = {
     createOrder,
     getMyOrders,
     getOrderById,
     updateOrderStatus,
+    createComplaint,
 };

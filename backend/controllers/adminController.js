@@ -97,6 +97,43 @@ async function getStats(req, res) {
     }
 }
 
+/**
+ * GET /api/admin/complaints
+ */
+async function getComplaints(req, res) {
+    try {
+        const complaints = await adminModule.getComplaints();
+        res.json({ complaints });
+    } catch (err) {
+        console.error('getComplaints error:', err);
+        res.status(500).json({ error: 'Failed to get complaints' });
+    }
+}
+
+/**
+ * PUT /api/admin/complaints/:id/resolve
+ */
+async function resolveComplaint(req, res) {
+    try {
+        const { adminResponse, status } = req.body;
+
+        if (!adminResponse) {
+            return res.status(400).json({ error: 'Admin response is required' });
+        }
+
+        const complaint = await adminModule.resolveComplaint(req.params.id, adminResponse, status || 'RESOLVED');
+
+        if (!complaint) {
+            return res.status(404).json({ error: 'Complaint not found' });
+        }
+
+        res.json({ message: 'Complaint resolved', complaint });
+    } catch (err) {
+        console.error('resolveComplaint error:', err);
+        res.status(500).json({ error: 'Failed to resolve complaint' });
+    }
+}
+
 // Export controller functions
 module.exports = {
     getAllUsers,
@@ -104,4 +141,6 @@ module.exports = {
     approveUser,
     rejectUser,
     getStats,
+    getComplaints,
+    resolveComplaint,
 };

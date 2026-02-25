@@ -165,10 +165,61 @@ async function getStats() {
     };
 }
 
+/**
+ * Get all order complaints with details
+ */
+async function getComplaints() {
+    const result = await db.query(
+        `SELECT c.*, 
+                u.name AS raiser_name, u.type AS raiser_type, u.mobile,
+                o.total_amount, o.status AS order_status
+         FROM order_complaints c
+         JOIN users u ON c.raised_by = u.id
+         JOIN orders o ON c.order_id = o.id
+         ORDER BY 
+            CASE WHEN c.status = 'OPEN' THEN 0 ELSE 1 END,
+            c.created_at DESC`
+    );
+
+    return result.rows.map(c => ({
+        id: c.id,
+        orderId: c.order_id,
+        raisedBy: c.raised_by,
+        raiserName: c.raiser_name,
+        raiserType: c.raiser_type,
+        mobile: c.mobile,
+        issueType: c.issue_type,
+        description: c.description,
+        status: c.status,
+        adminResponse: c.admin_response,
+        createdAt: c.created_at,
+        orderAmount: parseFloat(c.total_amount),
+        orderStatus: c.order_status
+    }));
+}
+
+/**
+ * Resolve a complaint
+ */
+async function resolveComplaint(complaintId, adminResponse, newStatus = 'RESOLVED') {
+    const result = await db.query(
+        `UPDATE order_complaints 
+         SET status = $1, admin_response = $2
+         WHERE id = $3
+         RETURNING *`,
+        [newStatus, adminResponse, complaintId]
+    );
+
+    if (result.rows.length === 0) return null;
+    return result.rows[0];
+}
+
 module.exports = {
     getAllUsers,
     getUserVerificationData,
     approveUser,
     rejectUser,
     getStats,
+    getComplaints,
+    resolveComplaint,
 };
