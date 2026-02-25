@@ -11,12 +11,6 @@ const registerValidation = [
     check('mobile').matches(/^[0-9]{10}$/).withMessage('Valid 10-digit mobile number required'),
     check('type').isIn(['farmer', 'buyer']).withMessage('Type must be farmer or buyer'),
     check('pin').matches(/^[0-9]{4}$/).withMessage('PIN must be exactly 4 digits'),
-    check('name')
-        .if(check('contactName').not().exists())
-        .notEmpty().withMessage('Name is required'),
-    check('contactName')
-        .if(check('name').not().exists())
-        .notEmpty().withMessage('Contact Name is required'),
 ];
 
 const loginValidation = [
