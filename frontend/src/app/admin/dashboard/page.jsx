@@ -1,202 +1,151 @@
 'use client';
 
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Users, AlertCircle, CheckCircle, XCircle, LogOut, Check, X } from 'lucide-react';
-import { approveUser, rejectUser, logout } from '@/store/slices/authSlice';
+import {
+    Users,
+    ShoppingCart,
+    Leaf,
+    AlertCircle,
+    TrendingUp,
+    IndianRupee
+} from 'lucide-react';
+import AdminLayout from '@/components/layout/AdminLayout';
+import { ApiService } from '@/services/apiService';
 import { showToast } from '@/components/ui/Toast/Toast';
-import Button from '@/components/ui/Button';
 
 export default function AdminDashboard() {
     const { t } = useTranslation('common');
-    const dispatch = useDispatch();
-    const router = useRouter();
-    const { users = [], user } = useSelector((state) => state.auth) || {};
-    const [activeTab, setActiveTab] = useState('pending');
+    const [stats, setStats] = useState({
+        totalUsers: 0,
+        pendingUsers: 0,
+        activeListings: 0,
+        totalOrders: 0,
+        revenue: 0,
+        openComplaints: 0
+    });
+    const [isLoading, setIsLoading] = useState(true);
 
-    const pendingUsers = users.filter(u => u.status === 'PENDING');
-    const approvedUsers = users.filter(u => u.status === 'APPROVED');
-    const rejectedUsers = users.filter(u => u.status === 'REJECTED');
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                // For now we will mock the stats that don't exist in backend yet
+                // Once we build the real APIs we can replace this
+                const response = await fetch('/api/admin/stats');
+                if (response.ok) {
+                    const data = await response.json();
+                    setStats(prev => ({
+                        ...prev,
+                        ...data.stats
+                    }));
+                }
+            } catch (err) {
+                console.error("Failed to fetch admin stats", err);
+                showToast("Failed to load dashboard statistics", "error");
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-    const handleApprove = (id) => {
-        dispatch(approveUser(id));
-        showToast(t('admin.userApproved'), 'success');
-    };
+        fetchStats();
+    }, []);
 
-    const handleReject = (userId) => {
-        dispatch(rejectUser(userId));
-        showToast(t('admin.userRejected'), 'info');
-    };
-
-    const handleLogout = () => {
-        dispatch(logout());
-        router.push('/admin/login');
-    };
-
-    const renderUserList = (list) => {
-        if (list.length === 0) {
-            return (
-                <div className="text-center py-12 text-gray-500 bg-white rounded-xl border border-dashed border-gray-300">
-                    <p>No users found in this category.</p>
-                </div>
-            );
+    const statCards = [
+        {
+            title: 'Total Users',
+            value: (stats.farmers || 0) + (stats.buyers || 0),
+            icon: Users,
+            color: 'text-blue-600',
+            bgColor: 'bg-blue-100',
+            borderColor: 'border-blue-100'
+        },
+        {
+            title: 'Pending Users',
+            value: stats.pendingApprovals || 0,
+            icon: AlertCircle,
+            color: 'text-yellow-600',
+            bgColor: 'bg-yellow-100',
+            borderColor: 'border-yellow-100'
+        },
+        {
+            title: 'Active Listings',
+            value: stats.activeListings || 0,
+            icon: Leaf,
+            color: 'text-green-600',
+            bgColor: 'bg-green-100',
+            borderColor: 'border-green-100'
+        },
+        {
+            title: 'Total Orders',
+            value: stats.totalOrders || 0,
+            icon: ShoppingCart,
+            color: 'text-purple-600',
+            bgColor: 'bg-purple-100',
+            borderColor: 'border-purple-100'
+        },
+        {
+            title: 'Total Revenue',
+            value: `₹${stats.totalRevenue?.toLocaleString('en-IN') || 0}`,
+            icon: IndianRupee,
+            color: 'text-emerald-600',
+            bgColor: 'bg-emerald-100',
+            borderColor: 'border-emerald-100'
         }
+    ];
 
+    if (isLoading) {
         return (
-            <div className="overflow-x-auto bg-white rounded-xl border border-gray-200 shadow-sm">
-                <table className="w-full text-left border-collapse">
-                    <thead>
-                        <tr className="border-b border-gray-100 bg-gray-50/50">
-                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.userDetails')}</th>
-                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.role')}</th>
-                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.mobile')}</th>
-                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.status')}</th>
-                            <th className="text-left py-3 px-4 font-semibold text-gray-600">{t('admin.actions')}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {list.map((u) => (
-                            <tr key={u.id} className="border-b border-gray-50 hover:bg-gray-50/80 transition-colors">
-                                <td className="p-4">
-                                    <div>
-                                        <p className="font-medium text-gray-900">{u.name || 'Unknown'}</p>
-                                        <p className="text-xs text-gray-500">ID: {u.id.substring(0, 8)}...</p>
-                                        <p className="text-xs text-gray-400">{t('admin.joined')}: {new Date(u.joinedAt).toLocaleDateString()}</p>
-                                    </div>
-                                </td>
-                                <td className="p-4">
-                                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${u.type === 'farmer' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'
-                                        }`}>
-                                        {u.type}
-                                    </span>
-                                </td>
-                                <td className="p-4 text-gray-600 font-mono text-sm">{u.mobile}</td>
-                                <td className="p-4">
-                                    <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${u.status === 'APPROVED' ? 'bg-green-50 text-green-600' :
-                                        u.status === 'REJECTED' ? 'bg-red-50 text-red-600' :
-                                            'bg-yellow-50 text-yellow-600'
-                                        }`}>
-                                        {u.status}
-                                    </span>
-                                </td>
-                                <td className="p-4 text-right">
-                                    <div className="flex justify-end gap-2">
-                                        {u.status === 'PENDING' && (
-                                            <>
-                                                <button
-                                                    onClick={() => handleApprove(u.id)}
-                                                    className="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-colors"
-                                                >
-                                                    {t('admin.approve')}
-                                                </button>
-                                                <button
-                                                    onClick={() => handleReject(u.id)}
-                                                    className="px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded-lg hover:bg-red-700 transition-colors"
-                                                >
-                                                    {t('admin.reject')}
-                                                </button>
-                                            </>
-                                        )}
-                                        {u.status === 'APPROVED' && (
-                                            <button
-                                                onClick={() => handleReject(u.id)}
-                                                className="text-xs text-red-600 hover:underline"
-                                            >
-                                                Revoke
-                                            </button>
-                                        )}
-                                        {u.status === 'REJECTED' && (
-                                            <button
-                                                onClick={() => handleApprove(u.id)}
-                                                className="text-xs text-green-600 hover:underline"
-                                            >
-                                                Re-approve
-                                            </button>
-                                        )}
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <AdminLayout>
+                <div className="flex items-center justify-center min-h-[60vh]">
+                    <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            </AdminLayout>
         );
-    };
+    }
 
     return (
-        <div className="min-h-screen bg-gray-50 pb-20 font-sans">
-            <header className="bg-white border-b sticky top-0 z-10 px-6 py-4 shadow-sm">
-                <div className="flex justify-between items-center max-w-7xl mx-auto">
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900">{t('admin.title')}</h1>
-                        <p className="text-gray-500 text-sm mt-1">{t('admin.subtitle')}</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <span className="text-sm font-medium text-gray-600">Admin</span>
-                        <button
-                            onClick={handleLogout}
-                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                            title={t('admin.logout')}
-                        >
-                            <LogOut className="w-5 h-5" />
-                        </button>
-                    </div>
-                </div>
-            </header>
-
-            <main className="max-w-7xl mx-auto p-6 space-y-8">
-                {/* Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 group hover:border-yellow-200 transition-colors">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-gray-500 font-medium">Pending Approvals</h3>
-                            <div className="bg-yellow-100 p-2 rounded-lg text-yellow-600 group-hover:bg-yellow-200 transition-colors">
-                                <AlertCircle className="w-5 h-5" />
-                            </div>
-                        </div>
-                        <p className="text-3xl font-bold text-gray-900">{pendingUsers.length}</p>
-                    </div>
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 group hover:border-blue-200 transition-colors">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-gray-500 font-medium">Total Users</h3>
-                            <div className="bg-blue-100 p-2 rounded-lg text-blue-600 group-hover:bg-blue-200 transition-colors">
-                                <Users className="w-5 h-5" />
-                            </div>
-                        </div>
-                        <p className="text-3xl font-bold text-gray-900">{users.length}</p>
-                    </div>
+        <AdminLayout>
+            <div className="space-y-6">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
+                    <p className="text-sm text-gray-500 mt-1">Platform statistics and activity summary.</p>
                 </div>
 
-                {/* User Management */}
-                <div className="space-y-4">
-                    <div className="flex gap-2 border-b border-gray-200 pb-1">
-                        {['pending', 'approved', 'rejected'].map(tab => (
-                            <button
-                                key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`px-4 py-2 rounded-t-lg text-sm font-medium transition-all relative top-0.5 ${activeTab === tab
-                                    ? 'bg-white text-green-600 border-b-2 border-green-600'
-                                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-                                    }`}
+                {/* KPI Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                    {statCards.map((stat, idx) => {
+                        const Icon = stat.icon;
+                        return (
+                            <div
+                                key={idx}
+                                className={`bg-white p-6 rounded-2xl border ${stat.borderColor} shadow-sm flex flex-col`}
                             >
-                                {t(`admin.${tab}`)}
-                                <span className={`ml-2 text-xs py-0.5 px-1.5 rounded-full ${activeTab === tab ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600'
-                                    }`}>
-                                    {users.filter(u => u.status.toLowerCase() === tab).length}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-
-                    {renderUserList(
-                        activeTab === 'pending' ? pendingUsers :
-                            activeTab === 'approved' ? approvedUsers :
-                                rejectedUsers
-                    )}
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-sm font-medium text-gray-500">{stat.title}</h3>
+                                    <div className={`p-2 rounded-lg ${stat.bgColor} ${stat.color}`}>
+                                        <Icon className="w-5 h-5" />
+                                    </div>
+                                </div>
+                                <div className="mt-auto">
+                                    <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
-            </main>
-        </div>
+
+                {/* We will add charts or recent activity feeds here later */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm min-h-[300px] flex flex-col items-center justify-center text-gray-400">
+                        <TrendingUp className="w-12 h-12 mb-3 text-gray-300" />
+                        <p>Revenue Chart Coming Soon</p>
+                    </div>
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm min-h-[300px] flex flex-col items-center justify-center text-gray-400">
+                        <Users className="w-12 h-12 mb-3 text-gray-300" />
+                        <p>User Growth Chart Coming Soon</p>
+                    </div>
+                </div>
+            </div>
+        </AdminLayout>
     );
 }
