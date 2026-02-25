@@ -2,44 +2,27 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // ---- Async Thunks ----
 
-export const sendOtpAsync = createAsyncThunk(
-    'auth/sendOtp',
-    async (mobile, { rejectWithValue }) => {
+// Login with phone + PIN
+export const loginAsync = createAsyncThunk(
+    'auth/login',
+    async ({ mobile, pin, userType }, { rejectWithValue }) => {
         try {
-            const res = await fetch('/api/auth/send-otp', {
+            const res = await fetch('/api/auth/login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mobile }),
+                body: JSON.stringify({ mobile, pin, userType }),
             });
             const data = await res.json();
             if (!res.ok) return rejectWithValue(data.error);
             return data;
         } catch (err) {
-            return rejectWithValue('Failed to send OTP');
+            return rejectWithValue('Login failed');
         }
     }
 );
 
-export const verifyOtpAsync = createAsyncThunk(
-    'auth/verifyOtp',
-    async ({ mobile, otp, userType }, { rejectWithValue }) => {
-        try {
-            const res = await fetch('/api/auth/verify-otp', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mobile, otp, userType }),
-            });
-            const data = await res.json();
-            if (!res.ok) return rejectWithValue(data.error);
-            return data;
-        } catch (err) {
-            return rejectWithValue('Failed to verify OTP');
-        }
-    }
-);
-
+// Register new user
 export const registerAsync = createAsyncThunk(
     'auth/register',
     async (userData, { rejectWithValue }) => {
@@ -59,6 +42,27 @@ export const registerAsync = createAsyncThunk(
     }
 );
 
+// Forgot PIN — reset using Aadhaar last 4
+export const forgotPinAsync = createAsyncThunk(
+    'auth/forgotPin',
+    async ({ mobile, aadharLast4, newPin, userType }, { rejectWithValue }) => {
+        try {
+            const res = await fetch('/api/auth/forgot-pin', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mobile, aadharLast4, newPin, userType }),
+            });
+            const data = await res.json();
+            if (!res.ok) return rejectWithValue(data.error);
+            return data;
+        } catch (err) {
+            return rejectWithValue('PIN reset failed');
+        }
+    }
+);
+
+// Fetch current user
 export const fetchMe = createAsyncThunk(
     'auth/fetchMe',
     async (_, { rejectWithValue }) => {
@@ -73,6 +77,7 @@ export const fetchMe = createAsyncThunk(
     }
 );
 
+// Logout
 export const logoutAsync = createAsyncThunk(
     'auth/logout',
     async (_, { rejectWithValue }) => {
@@ -85,6 +90,7 @@ export const logoutAsync = createAsyncThunk(
     }
 );
 
+// Admin login
 export const adminLoginAsync = createAsyncThunk(
     'auth/adminLogin',
     async ({ username, password }, { rejectWithValue }) => {
@@ -110,128 +116,68 @@ const initialState = {
     user: null,
     isAuthenticated: false,
     isLoading: false,
-    otpSent: false,
-    otpVerified: false,
     mobileNumber: '',
     error: null,
     userType: null, // 'farmer' | 'buyer' | 'admin'
     admin: null,
-    isNewUser: false,
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        clearError: (state) => {
+        clearError(state) {
             state.error = null;
         },
-        logout: (state) => {
+        logout(state) {
             state.user = null;
             state.isAuthenticated = false;
             state.userType = null;
-            state.otpSent = false;
-            state.otpVerified = false;
             state.mobileNumber = '';
             state.admin = null;
             state.error = null;
-            state.isNewUser = false;
         },
-        sessionExpired: (state) => {
+        sessionExpired(state) {
             state.user = null;
             state.isAuthenticated = false;
             state.userType = null;
-            state.otpSent = false;
-            state.otpVerified = false;
             state.mobileNumber = '';
             state.admin = null;
             state.error = 'Session expired. Please login again.';
         },
-        sendOtpStart: (state, action) => {
-            state.isLoading = true;
-            state.error = null;
-            state.mobileNumber = action.payload;
+        setLoading(state, action) {
+            state.isLoading = action.payload;
         },
-        sendOtpSuccess: (state) => {
-            state.isLoading = false;
-            state.otpSent = true;
-        },
-        sendOtpFailure: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
-        verifyOtpStart: (state) => {
-            state.isLoading = true;
-            state.error = null;
-        },
-        verifyOtpSuccess: (state, action) => {
-            state.isLoading = false;
-            state.otpVerified = true;
-            const { user } = action.payload;
-            if (user) {
-                state.isAuthenticated = true;
-                state.user = user;
-                state.userType = user.type;
-                state.error = null;
-            }
-        },
-        verifyOtpFailure: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
-        resetAuthFlow: (state) => {
-            state.otpSent = false;
-            state.otpVerified = false;
+        resetAuthFlow(state) {
             state.mobileNumber = '';
             state.error = null;
             state.isLoading = false;
-            state.isNewUser = false;
         },
         // Keep admin actions for compatibility
-        adminLogin: (state, action) => {
-            // Handled by async thunk now
+        adminLogin(state) {
+            // Handled by async thunk
         },
-        approveUser: (state, action) => {
-            // Handled by admin API now
+        approveUser(state) {
+            // Handled by admin API
         },
-        rejectUser: (state, action) => {
-            // Handled by admin API now
+        rejectUser(state) {
+            // Handled by admin API
         },
     },
     extraReducers: (builder) => {
-        // sendOtpAsync
+        // loginAsync
         builder
-            .addCase(sendOtpAsync.pending, (state) => {
+            .addCase(loginAsync.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(sendOtpAsync.fulfilled, (state) => {
+            .addCase(loginAsync.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.otpSent = true;
+                state.isAuthenticated = true;
+                state.user = action.payload.user;
+                state.userType = action.payload.user.type;
             })
-            .addCase(sendOtpAsync.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            });
-
-        // verifyOtpAsync
-        builder
-            .addCase(verifyOtpAsync.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(verifyOtpAsync.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.otpVerified = true;
-                if (action.payload.isNewUser) {
-                    state.isNewUser = true;
-                } else if (action.payload.user) {
-                    state.isAuthenticated = true;
-                    state.user = action.payload.user;
-                    state.userType = action.payload.user.type;
-                }
-            })
-            .addCase(verifyOtpAsync.rejected, (state, action) => {
+            .addCase(loginAsync.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
@@ -244,12 +190,25 @@ const authSlice = createSlice({
             })
             .addCase(registerAsync.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.isAuthenticated = true;
+                // Don't auto-login — user is PENDING approval
                 state.user = action.payload.user;
                 state.userType = action.payload.user.type;
-                state.otpVerified = true;
             })
             .addCase(registerAsync.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            });
+
+        // forgotPinAsync
+        builder
+            .addCase(forgotPinAsync.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(forgotPinAsync.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(forgotPinAsync.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
@@ -277,12 +236,9 @@ const authSlice = createSlice({
                 state.user = null;
                 state.isAuthenticated = false;
                 state.userType = null;
-                state.otpSent = false;
-                state.otpVerified = false;
                 state.mobileNumber = '';
                 state.admin = null;
                 state.error = null;
-                state.isNewUser = false;
             });
 
         // adminLoginAsync
@@ -306,12 +262,7 @@ const authSlice = createSlice({
 });
 
 export const {
-    sendOtpStart,
-    sendOtpSuccess,
-    sendOtpFailure,
-    verifyOtpStart,
-    verifyOtpSuccess,
-    verifyOtpFailure,
+    setLoading,
     resetAuthFlow,
     logout,
     clearError,
