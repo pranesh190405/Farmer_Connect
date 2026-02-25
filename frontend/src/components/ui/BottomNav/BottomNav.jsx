@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
@@ -8,33 +9,50 @@ import { Home, ShoppingBag, User, Store, List } from 'lucide-react';
 import styles from './BottomNav.module.css';
 
 export default function BottomNav() {
+    const [mounted, setMounted] = useState(false);
     const pathname = usePathname();
     const { t } = useTranslation('common');
     const { userType, isAuthenticated } = useSelector((state) => state.auth);
 
-    if (!isAuthenticated) return null;
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
-    // Default links (public)
+    // Don't render on server to avoid hydration mismatch
+    if (!mounted) return null;
+
+    // Hide on auth pages (login/register)
+    const authPages = ['/login', '/farmer/register', '/buyer/register', '/admin/login'];
+    if (authPages.some(page => pathname?.startsWith(page))) return null;
+
+    // Nav items for non-authenticated users
     let navItems = [
         { href: '/', label: t('nav.home'), icon: Home },
         { href: '/market', label: t('nav.market'), icon: Store },
-        { href: '/profile', label: t('nav.profile'), icon: User },
+        { href: '/login', label: t('auth.login.welcome'), icon: User },
     ];
 
-    if (userType === 'farmer') {
-        navItems = [
-            { href: '/farmer/dashboard', label: t('nav.home'), icon: Home },
-            { href: '/farmer/listings', label: t('nav.listings'), icon: List }, // Need to create this or redirect
-            { href: '/market', label: t('nav.market'), icon: Store },
-            { href: '/profile', label: t('nav.profile'), icon: User },
-        ];
-    } else if (userType === 'buyer') {
-        navItems = [
-            { href: '/buyer/dashboard', label: t('nav.home'), icon: Home },
-            { href: '/market', label: t('nav.market'), icon: Store },
-            // Maybe add Orders here later
-            { href: '/profile', label: t('nav.profile'), icon: User },
-        ];
+    if (isAuthenticated) {
+        if (userType === 'farmer') {
+            navItems = [
+                { href: '/farmer/dashboard', label: t('nav.home'), icon: Home },
+                { href: '/farmer/listings', label: t('nav.listings'), icon: List },
+                { href: '/market', label: t('nav.market'), icon: Store },
+                { href: '/profile', label: t('nav.profile'), icon: User },
+            ];
+        } else if (userType === 'buyer') {
+            navItems = [
+                { href: '/buyer/dashboard', label: t('nav.home'), icon: Home },
+                { href: '/market', label: t('nav.market'), icon: Store },
+                { href: '/profile', label: t('nav.profile'), icon: User },
+            ];
+        } else {
+            navItems = [
+                { href: '/', label: t('nav.home'), icon: Home },
+                { href: '/market', label: t('nav.market'), icon: Store },
+                { href: '/profile', label: t('nav.profile'), icon: User },
+            ];
+        }
     }
 
     return (

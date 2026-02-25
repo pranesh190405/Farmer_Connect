@@ -28,3 +28,8 @@ node_modules
 *.sln
 *.sw?
 backend/.env
+
+# PWA generated files (if using next-pwa in future)
+frontend/public/workbox-*.js
+frontend/public/workbox-*.js.map
+frontend/public/swe-worker-*.js

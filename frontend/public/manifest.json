@@ -1,12 +1,19 @@
 {
+    "id": "/",
     "name": "Digital Agri Market",
     "short_name": "AgriMarket",
-    "description": "Digital Agricultural Marketplace connecting farmers and buyers",
+    "description": "Digital Agricultural Marketplace connecting farmers and buyers directly",
     "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#16a34a",
     "orientation": "portrait-primary",
+    "categories": [
+        "shopping",
+        "food",
+        "business"
+    ],
     "icons": [
         {
             "src": "/icons/icon-192x192.png",
@@ -19,6 +26,12 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
         }
     ]
 }
