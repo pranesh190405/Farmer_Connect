@@ -15,7 +15,7 @@ const STEPS = {
     AADHAR: 'aadhar',
     PIN_SETUP: 'pin',
     CONFIRM: 'confirm',
-    PENDING: 'pending',
+    SUCCESS: 'success',
 };
 
 export default function FarmerRegisterPage() {
@@ -35,14 +35,12 @@ export default function FarmerRegisterPage() {
     const [confirmPin, setConfirmPin] = useState('');
     const [pinError, setPinError] = useState('');
 
-    // Redirect if authenticated and approved
+    // Redirect if authenticated
     useEffect(() => {
-        if (isAuthenticated && user?.status === 'APPROVED') {
+        if (isAuthenticated) {
             router.push('/farmer/dashboard');
-        } else if (user?.status === 'PENDING') {
-            setStep(STEPS.PENDING);
         }
-    }, [isAuthenticated, user, router]);
+    }, [isAuthenticated, router]);
 
     // Handle mobile input
     const handleMobileChange = (e) => {
@@ -100,8 +98,8 @@ export default function FarmerRegisterPage() {
                 aadharNumber,
                 address: address || '',
             })).unwrap();
-            // Success → PENDING step will show via useEffect
-            setStep(STEPS.PENDING);
+            // Success → Show success step
+            setStep(STEPS.SUCCESS);
         } catch (err) {
             if (String(err).includes('already exists')) {
                 alert(t('auth.buyer.userExists'));
@@ -263,24 +261,24 @@ export default function FarmerRegisterPage() {
         </div>
     );
 
-    // ── Render: Pending Step ──
-    const renderPendingStep = () => (
+    // ── Render: Success Step ──
+    const renderSuccessStep = () => (
         <div className={styles.stepContent}>
             <div className={styles.header}>
-                <div className={`${styles.iconWrapper} ${styles.pendingIcon}`}>
-                    <span className={styles.icon} role="img" aria-label="pending">⏳</span>
+                <div className={styles.iconWrapper}>
+                    <span className={styles.icon} role="img" aria-label="success">🎉</span>
                 </div>
-                <h1 className={styles.title} style={{ color: '#d97706' }}>{t('auth.farmer.verificationPendingTitle')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.verificationPendingDesc')}</p>
+                <h1 className={styles.title} style={{ color: '#10b981' }}>{t('auth.farmer.success')}</h1>
+                <p className={styles.subtitle}>{t('auth.farmer.successMessage')}</p>
             </div>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-6">
-                <p className="text-sm text-yellow-800 text-center">{t('auth.farmer.verificationPendingHint')}</p>
+            <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
+                <p className="text-sm text-green-800 text-center">Your account is ready. You can now login to your dashboard.</p>
             </div>
             <Button
-                onClick={() => { dispatch(resetAuthFlow()); setStep(STEPS.MOBILE); setMobile(''); }}
-                variant="outline" fullWidth
+                onClick={() => { dispatch(resetAuthFlow()); router.push('/login'); }}
+                fullWidth
             >
-                {t('auth.farmer.backToLogin')}
+                {t('auth.farmer.backToLogin') || 'Go to Login'}
             </Button>
         </div>
     );
@@ -292,7 +290,7 @@ export default function FarmerRegisterPage() {
                 {step === STEPS.AADHAR && renderAadharStep()}
                 {step === STEPS.PIN_SETUP && renderPinStep()}
                 {step === STEPS.CONFIRM && renderConfirmStep()}
-                {step === STEPS.PENDING && renderPendingStep()}
+                {step === STEPS.SUCCESS && renderSuccessStep()}
             </div>
         </main>
     );

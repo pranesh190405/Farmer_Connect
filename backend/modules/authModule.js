@@ -34,7 +34,7 @@ async function registerUser({ mobile, type, name, pin, aadharNumber, dateOfBirth
             aadhar_number, aadhar_verified, date_of_birth, address,
             business_name, tax_id, business_category, contact_name
         )
-         VALUES ($1, $2, $3, 'PENDING', $4, $5, $6, FALSE, $7, $8, $9, $10, $11, $12)
+         VALUES ($1, $2, $3, 'APPROVED', $4, $5, $6, FALSE, $7, $8, $9, $10, $11, $12)
          RETURNING *`,
         [
             mobile, name || '', type, trustScore, pinHash,
@@ -119,10 +119,6 @@ async function loginUser(mobile, pin, userType) {
     // Check user status
     if (user.status === 'REJECTED') {
         return { error: 'Your account has been rejected. Please contact support.' };
-    }
-
-    if (user.status === 'PENDING') {
-        return { error: 'Your account is pending approval.', status: 'PENDING' };
     }
 
     // APPROVED — generate token

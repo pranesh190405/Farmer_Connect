@@ -17,7 +17,7 @@ const STEPS = {
     BUSINESS_INFO: 'business',
     PIN_SETUP: 'pin',
     CATEGORY_SELECTION: 'category',
-    PENDING: 'pending',
+    SUCCESS: 'success',
 };
 
 // Business categories
@@ -66,12 +66,10 @@ export default function BuyerRegisterPage() {
 
     // Redirect if authenticated
     useEffect(() => {
-        if (isAuthenticated && user?.status === 'APPROVED') {
+        if (isAuthenticated) {
             router.push('/buyer/dashboard');
-        } else if (user?.status === 'PENDING') {
-            setStep(STEPS.PENDING);
         }
-    }, [isAuthenticated, user, router]);
+    }, [isAuthenticated, router]);
 
     // Update form field
     const updateField = (field, value) => {
@@ -151,7 +149,7 @@ export default function BuyerRegisterPage() {
                 businessCategory: formData.category,
                 contactName: formData.contactName,
             })).unwrap();
-            setStep(STEPS.PENDING);
+            setStep(STEPS.SUCCESS);
         } catch (err) {
             if (String(err).includes('already exists')) {
                 alert(t('auth.buyer.userExists'));
@@ -168,7 +166,7 @@ export default function BuyerRegisterPage() {
         else if (step === STEPS.BUSINESS_INFO) setStep(STEPS.AADHAR);
         else if (step === STEPS.PIN_SETUP) { setStep(STEPS.BUSINESS_INFO); setPin(''); setConfirmPin(''); }
         else if (step === STEPS.CATEGORY_SELECTION) setStep(STEPS.PIN_SETUP);
-        else if (step === STEPS.PENDING) { setStep(STEPS.MOBILE); dispatch(resetAuthFlow()); }
+        else if (step === STEPS.SUCCESS) { setStep(STEPS.MOBILE); dispatch(resetAuthFlow()); }
     };
 
     // ── Mobile Step ──
@@ -306,22 +304,22 @@ export default function BuyerRegisterPage() {
         </div>
     );
 
-    // ── Pending Step ──
-    const renderPendingStep = () => (
+    // ── Success Step ──
+    const renderSuccessStep = () => (
         <div className={styles.stepContent}>
             <div className={styles.header}>
-                <div className={`${styles.iconWrapper} ${styles.pendingIcon}`}>
-                    <span className={styles.icon} role="img" aria-label="pending">⏳</span>
+                <div className={styles.iconWrapper}>
+                    <span className={styles.icon} role="img" aria-label="success">🎉</span>
                 </div>
-                <h1 className={styles.title} style={{ color: '#d97706' }}>{t('auth.farmer.verificationPendingTitle')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.verificationPendingDesc')}</p>
+                <h1 className={styles.title} style={{ color: '#10b981' }}>{t('auth.farmer.success')}</h1>
+                <p className={styles.subtitle}>{t('auth.farmer.successMessage')}</p>
             </div>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-6">
-                <p className="text-sm text-yellow-800 text-center">{t('auth.farmer.verificationPendingHint')}</p>
+            <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
+                <p className="text-sm text-green-800 text-center">Your account is ready. You can now login to your dashboard.</p>
             </div>
-            <Button onClick={() => { dispatch(resetAuthFlow()); setStep(STEPS.MOBILE); setMobile(''); }}
-                variant="outline" fullWidth>
-                {t('auth.farmer.backToLogin')}
+            <Button onClick={() => { dispatch(resetAuthFlow()); router.push('/login'); }}
+                fullWidth>
+                {t('auth.farmer.backToLogin') || 'Go to Login'}
             </Button>
         </div>
     );
@@ -334,7 +332,7 @@ export default function BuyerRegisterPage() {
                 {step === STEPS.BUSINESS_INFO && renderBusinessInfoStep()}
                 {step === STEPS.PIN_SETUP && renderPinStep()}
                 {step === STEPS.CATEGORY_SELECTION && renderCategorySelectionStep()}
-                {step === STEPS.PENDING && renderPendingStep()}
+                {step === STEPS.SUCCESS && renderSuccessStep()}
             </div>
         </main>
     );
