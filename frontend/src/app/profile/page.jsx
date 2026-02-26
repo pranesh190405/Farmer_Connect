@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { logout } from '@/store/slices/authSlice';
+import ApiService from '@/services/apiService';
 import { ShieldCheck, AlertTriangle, MapPin, User, Phone, Globe, Bell, Lock, LogOut } from 'lucide-react';
 
 import Button from '@/components/ui/Button';
@@ -121,10 +122,19 @@ export default function ProfileSettingsPage() {
     // Handle save
     const handleSave = async () => {
         setIsSaving(true);
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setIsSaving(false);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 3000);
+        try {
+            await ApiService.updateProfile({
+                name: user.name,
+                mobile: user.mobile,
+            });
+            setSaved(true);
+            setTimeout(() => setSaved(false), 3000);
+        } catch (err) {
+            console.error('Failed to save profile:', err);
+            alert(t('profile.saveFailed') || 'Failed to save profile. Please try again.');
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const handleLogout = () => {
@@ -177,7 +187,6 @@ export default function ProfileSettingsPage() {
                                     value={user.mobile}
                                     onChange={(e) => setUser(prev => ({ ...prev, mobile: e.target.value }))}
                                     prefix={<Phone className="w-4 h-4 text-gray-400" />}
-                                    disabled
                                 />
                             </div>
 
