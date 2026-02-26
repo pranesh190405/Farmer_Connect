@@ -10,7 +10,6 @@ import { toast } from '@/components/ui/Toast/Toast';
 import Button from '@/components/ui/Button';
 import QualitySliders from '@/components/ui/QualitySliders';
 import Input from '@/components/ui/Input';
-import Select from '@/components/ui/Select';
 
 export default function NewListingPage() {
     const { t } = useTranslation('common');
@@ -25,13 +24,13 @@ export default function NewListingPage() {
         status: 'detecting', // 'detecting' | 'detected' | 'denied' | 'error' | 'manual'
     });
 
-    const CROP_TYPES = [
-        { value: 'Potato', label: t('listing.crops.potato') || 'Potato' },
-        { value: 'Onion', label: t('listing.crops.onion') || 'Onion' },
-        { value: 'Tomato', label: t('listing.crops.tomato') || 'Tomato' },
-        { value: 'Wheat', label: t('listing.crops.wheat') || 'Wheat' },
-        { value: 'Rice', label: t('listing.crops.rice') || 'Rice' },
-        { value: 'Cotton', label: t('listing.crops.cotton') || 'Cotton' },
+    const CROP_SUGGESTIONS = [
+        t('listing.crops.potato') || 'Potato',
+        t('listing.crops.onion') || 'Onion',
+        t('listing.crops.tomato') || 'Tomato',
+        t('listing.crops.wheat') || 'Wheat',
+        t('listing.crops.rice') || 'Rice',
+        t('listing.crops.cotton') || 'Cotton',
     ];
 
     const [formData, setFormData] = useState({
@@ -42,6 +41,12 @@ export default function NewListingPage() {
         minQty: '',
         quality: { size: 50, freshness: 80, ripeness: 60 }
     });
+
+    const [showCropSuggestions, setShowCropSuggestions] = useState(false);
+
+    const filteredSuggestions = CROP_SUGGESTIONS.filter(
+        crop => crop.toLowerCase().includes(formData.crop.toLowerCase())
+    );
 
     // Auto-detect location on mount
     useEffect(() => {
@@ -104,7 +109,7 @@ export default function NewListingPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.crop || !formData.quantity || !formData.price) {
+        if (!formData.crop.trim() || !formData.quantity || !formData.price) {
             toast.error(t('common.fillFields') || 'Please fill all required fields');
             return;
         }
@@ -113,7 +118,7 @@ export default function NewListingPage() {
 
         try {
             const newListing = {
-                cropName: `${formData.crop} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
+                cropName: `${formData.crop.trim()} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
                 category: 'vegetables',
                 variety: formData.variety || '',
                 quantity: parseFloat(formData.quantity),
@@ -159,13 +164,39 @@ export default function NewListingPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <Select
-                            label={t('listing.new.cropType')}
-                            placeholder={t('listing.new.selectCrop')}
-                            options={CROP_TYPES}
-                            value={formData.crop}
-                            onChange={(e) => setFormData(prev => ({ ...prev, crop: e.target.value }))}
-                        />
+                        {/* Combobox-style Crop Type Input */}
+                        <div className="relative">
+                            <Input
+                                label={t('listing.new.cropType')}
+                                placeholder={t('listing.new.selectCrop') || 'Type or select a crop'}
+                                value={formData.crop}
+                                onChange={(e) => {
+                                    setFormData(prev => ({ ...prev, crop: e.target.value }));
+                                    setShowCropSuggestions(true);
+                                }}
+                                onFocus={() => setShowCropSuggestions(true)}
+                                onBlur={() => setTimeout(() => setShowCropSuggestions(false), 150)}
+                                required
+                                autoComplete="off"
+                            />
+                            {showCropSuggestions && filteredSuggestions.length > 0 && (
+                                <ul className="absolute z-20 left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto" style={{ top: '100%', marginTop: '4px' }}>
+                                    {filteredSuggestions.map((crop) => (
+                                        <li
+                                            key={crop}
+                                            className="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 cursor-pointer transition-colors first:rounded-t-xl last:rounded-b-xl"
+                                            onMouseDown={(e) => {
+                                                e.preventDefault();
+                                                setFormData(prev => ({ ...prev, crop }));
+                                                setShowCropSuggestions(false);
+                                            }}
+                                        >
+                                            {crop}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
                         <Input
                             label={t('listing.new.variety')}
                             placeholder={t('listing.new.varietyPlaceholder')}
