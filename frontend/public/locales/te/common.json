@@ -10,56 +10,56 @@
         "profile": "పరఫల"
     },
     "dashboard": {
-        "welcomeFarmer": "Welcome back, Farmer!",
-        "manageCrops": "Manage your crops and orders",
-        "newListing": "New Listing",
-        "totalSales": "Total Sales",
-        "activeListings": "Active Listings",
-        "todaysPrice": "Today's Market Price",
+        "welcomeFarmer": "తిరిగి స్వాగతం, రైతు!",
+        "manageCrops": "మీ పంటలు మరియు ఆర్డర్లను నిర్వహించండి",
+        "newListing": "కొత్త జాబితా",
+        "totalSales": "మొత్తం అమ్మకాలు",
+        "activeListings": "సక్రియ జాబితాలు",
+        "todaysPrice": "ఈరోజు మార్కెట్ ధర",
         "status": {
-            "active": "Active",
-            "sold": "Sold",
-            "expired": "Expired"
+            "active": "సక్రియం",
+            "sold": "అమ్మబడింది",
+            "expired": "గడువు ముగిసింది"
         },
-        "noListings": "No listings found",
-        "startSellingDescription": "You haven't posted any listings yet. Start selling your produce today!",
-        "createFirstListing": "Create your first listing",
-        "welcomeBuyer": "Welcome back, Buyer!",
-        "findFreshProduce": "Find fresh produce directly from farmers",
-        "adminConsole": "Admin Console",
-        "systemOverview": "System Overview",
-        "totalFarmers": "Total Farmers",
-        "totalBuyers": "Total Buyers",
-        "totalRevenue": "Total Revenue",
-        "recentRegistrations": "Recent Registrations",
-        "user": "User",
-        "type": "Type",
-        "date": "Date",
-        "actions": "Actions",
+        "noListings": "జాబితాలు ఏవీ కనుగొనబడలేదు",
+        "startSellingDescription": "మీరు ఇంకా ఏ జాబితాలూ పోస్ట్ చేయలేదు. ఈరోజే మీ ఉత్పత్తులను అమ్మడం ప్రారంభించండి!",
+        "createFirstListing": "మీ మొదటి జాబితాను సృష్టించండి",
+        "welcomeBuyer": "తిరిగి స్వాగతం, కొనుగోలుదారు!",
+        "findFreshProduce": "రైతుల నుండి నేరుగా తాజా ఉత్పత్తులను కనుగొనండి",
+        "adminConsole": "అడ్మిన్ కన్సోల్",
+        "systemOverview": "సిస్టమ్ అవలోకనం",
+        "totalFarmers": "మొత్తం రైతులు",
+        "totalBuyers": "మొత్తం కొనుగోలుదారులు",
+        "totalRevenue": "మొత్తం ఆదాయం",
+        "recentRegistrations": "ఇటీవల నమోదులు",
+        "user": "వినియోగదారు",
+        "type": "రకం",
+        "date": "తేదీ",
+        "actions": "చర్యలు",
         "buyer": {
-            "welcome": "Welcome, Buyer",
-            "welcomeDesc": "Manage your orders and track deliveries",
-            "browseMarket": "Browse Market",
+            "welcome": "స్వాగతం, కొనుగోలుదారు",
+            "welcomeDesc": "మీ ఆర్డర్లను నిర్వహించండి మరియు డెలివరీలను ట్రాక్ చేయండి",
+            "browseMarket": "మార్కెట్ చూడండి",
             "stats": {
-                "totalOrders": "Total Orders",
-                "activeOrders": "Active Orders",
-                "completed": "Completed"
+                "totalOrders": "మొత్తం ఆర్డర్లు",
+                "activeOrders": "సక్రియ ఆర్డర్లు",
+                "completed": "పూర్తయినవి"
             },
             "tabs": {
-                "active": "Active Orders",
-                "completed": "Completed Orders",
-                "cancelled": "Cancelled Orders"
+                "active": "సక్రియ ఆర్డర్లు",
+                "completed": "పూర్తయిన ఆర్డర్లు",
+                "cancelled": "రద్దు చేసిన ఆర్డర్లు"
             },
             "empty": {
-                "title": "No {{status}} orders",
-                "desc": "You don't have any {{status}} orders at the moment.",
-                "startShopping": "Start Shopping"
+                "title": "{{status}} ఆర్డర్లు లేవు",
+                "desc": "ప్రస్తుతం మీకు {{status}} ఆర్డర్లు ఏవీ లేవు.",
+                "startShopping": "షాపింగ్ ప్రారంభించండి"
             },
-            "orderId": "Order #",
-            "inProgress": "In Progress",
-            "trackOrder": "Track Order"
+            "orderId": "ఆర్డర్ #",
+            "inProgress": "ప్రగతిలో ఉంది",
+            "trackOrder": "ఆర్డర్ ట్రాక్ చేయండి"
         },
-        "batchMode": "Batch Mode"
+        "batchMode": "బ్యాచ్ మోడ్"
     },
     "market": {
         "title": "మార్కెట్",
