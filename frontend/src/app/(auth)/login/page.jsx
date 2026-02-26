@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { sendOtpAsync, verifyOtpAsync } from '@/store/slices/authSlice';
+import { loginAsync } from '@/store/slices/authSlice';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import OTPInput from '@/components/ui/OTPInput';
 import { showToast } from '@/components/ui/Toast/Toast';
 import Link from 'next/link';
 
@@ -19,8 +18,7 @@ export default function LoginPage() {
 
     const [userType, setUserType] = useState('farmer'); // 'farmer' | 'buyer'
     const [mobile, setMobile] = useState('');
-    const [otp, setOtp] = useState('');
-    const [step, setStep] = useState('mobile'); // mobile | otp
+    const [pin, setPin] = useState('');
 
     useEffect(() => {
         if (isAuthenticated && user) {
@@ -36,37 +34,21 @@ export default function LoginPage() {
         }
     }, [error]);
 
-    const handleSendOtp = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         if (mobile.length !== 10) {
             showToast(t('auth.login.enterValidMobile'), 'error');
             return;
         }
-
-        try {
-            const result = await dispatch(sendOtpAsync(mobile)).unwrap();
-            setStep('otp');
-            showToast(t('auth.login.otpSent'), 'success');
-        } catch (err) {
-            showToast(err || t('auth.login.failedSendOtp'), 'error');
-        }
-    };
-
-    const handleVerifyOtp = async (e) => {
-        e.preventDefault();
-        if (otp.length < 4) {
-            showToast(t('auth.login.enterValidOtp'), 'error');
+        if (pin.length !== 4) {
+            showToast(t('auth.login.enterValidPin'), 'error');
             return;
         }
 
         try {
-            const result = await dispatch(verifyOtpAsync({ mobile, otp, userType })).unwrap();
-            if (result.isNewUser) {
-                showToast(t('auth.login.noAccountFound'), 'error');
-                router.push(`/${userType}/register`);
-            }
+            await dispatch(loginAsync({ mobile, pin, userType })).unwrap();
         } catch (err) {
-            showToast(err || t('auth.login.invalidOtp'), 'error');
+            showToast(err || t('auth.login.loginFailed'), 'error');
         }
     };
 
@@ -74,6 +56,7 @@ export default function LoginPage() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
                 <div className="text-center mb-8">
+                    <div className="text-4xl mb-3">🌾</div>
                     <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.login.welcome')}</h1>
                     <p className="text-gray-500">{t('auth.login.loginToContinue')}</p>
                 </div>
@@ -81,23 +64,21 @@ export default function LoginPage() {
                 {/* Role Tabs */}
                 <div className="flex bg-gray-100 p-1 rounded-xl mb-6">
                     <button
-                        className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${userType === 'farmer' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                        className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${userType === 'farmer' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
                         onClick={() => setUserType('farmer')}
-                        disabled={step === 'otp'}
                     >
-                        {t('auth.login.farmer')}
+                        🧑‍🌾 {t('auth.login.farmer')}
                     </button>
                     <button
-                        className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${userType === 'buyer' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                        className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${userType === 'buyer' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
                         onClick={() => setUserType('buyer')}
-                        disabled={step === 'otp'}
                     >
-                        {t('auth.login.buyer')}
+                        🛒 {t('auth.login.buyer')}
                     </button>
                     <button
-                        className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${userType === 'admin' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                        className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${userType === 'admin' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
                         onClick={() => setUserType('admin')}
                     >
@@ -112,44 +93,44 @@ export default function LoginPage() {
                         </Link>
                     </div>
                 ) : (
-                    <form onSubmit={step === 'mobile' ? handleSendOtp : handleVerifyOtp} className="space-y-6">
-                        {step === 'mobile' ? (
-                            <Input
-                                label={t('auth.farmer.mobileLabel')}
-                                placeholder={t('auth.farmer.mobilePlaceholder')}
-                                value={mobile}
-                                onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                                type="tel"
-                                required
-                            />
-                        ) : (
-                            <div className="space-y-2">
-                                <label className="block text-sm font-medium text-gray-700">{t('auth.login.enterOtp')}</label>
-                                <OTPInput length={6} value={otp} onChange={setOtp} />
-                                <div className="text-right">
-                                    <button
-                                        type="button"
-                                        onClick={() => setStep('mobile')}
-                                        className="text-xs text-green-600 hover:underline"
-                                    >
-                                        {t('auth.login.changeMobile')}
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                    <form onSubmit={handleLogin} className="space-y-5">
+                        <Input
+                            label={t('auth.login.mobileLabel')}
+                            placeholder={t('auth.login.mobilePlaceholder')}
+                            value={mobile}
+                            onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                            type="tel"
+                            inputMode="numeric"
+                            prefix="+91"
+                            required
+                        />
+
+                        <Input
+                            label={t('auth.login.pinLabel')}
+                            placeholder={t('auth.login.pinPlaceholder')}
+                            value={pin}
+                            onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                            type="password"
+                            inputMode="numeric"
+                            maxLength={4}
+                            required
+                        />
 
                         <Button type="submit" fullWidth isLoading={isLoading}>
-                            {step === 'mobile' ? t('auth.farmer.sendOtp') : t('auth.login.verifyLogin')}
+                            {t('auth.login.loginButton')}
                         </Button>
 
-                        {step === 'mobile' && (
-                            <p className="text-center text-sm text-gray-500 mt-4">
+                        <div className="text-center space-y-2">
+                            <Link href={`/forgot-pin?type=${userType}`} className="text-sm text-green-600 font-medium hover:underline block">
+                                {t('auth.login.forgotPin')}
+                            </Link>
+                            <p className="text-sm text-gray-500">
                                 {t('auth.login.noAccount')}{' '}
                                 <Link href={`/${userType}/register`} className="text-green-600 font-medium hover:underline">
                                     {t('auth.login.registerHere')}
                                 </Link>
                             </p>
-                        )}
+                        </div>
                     </form>
                 )}
             </div>

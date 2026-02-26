@@ -112,10 +112,41 @@ async function updateOrderStatus(req, res) {
     }
 }
 
+/**
+ * POST /api/orders/:id/complaints
+ * Create an order complaint (logged-in user)
+ */
+async function createComplaint(req, res) {
+    try {
+        const { issueType, description } = req.body;
+
+        if (!issueType || !description) {
+            return res.status(400).json({ error: 'Issue type and description are required' });
+        }
+
+        const complaint = await orderModule.createComplaint(
+            req.params.id,
+            req.user.id,
+            issueType,
+            description
+        );
+
+        res.status(201).json({
+            complaint,
+            message: 'Complaint raised successfully'
+        });
+
+    } catch (err) {
+        console.error('createComplaint error:', err);
+        res.status(500).json({ error: 'Failed to raise complaint' });
+    }
+}
+
 // Export controller functions
 module.exports = {
     createOrder,
     getMyOrders,
     getOrderById,
     updateOrderStatus,
+    createComplaint,
 };

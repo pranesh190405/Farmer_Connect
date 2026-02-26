@@ -205,11 +205,18 @@ export default function CheckoutPage() {
                                                 <CreditCard className="w-5 h-5 text-green-600" />
                                             </div>
                                             <div>
-                                                <p className="font-bold text-gray-900">{t('checkout.cod')}</p>
-                                                <p className="text-sm text-gray-500">{t('checkout.codDesc')}</p>
+                                                <p className="font-bold text-gray-900">Pay on Collection / Delivery</p>
+                                                <p className="text-sm text-gray-500">Pay when you collect or receive your order</p>
                                             </div>
                                         </div>
                                     </label>
+
+                                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-start gap-2">
+                                        <AlertTriangle className="w-5 h-5 text-yellow-600 shrink-0 mt-0.5" />
+                                        <p className="text-sm text-yellow-800">
+                                            Amount is to be paid just before collecting the order and not before.
+                                        </p>
+                                    </div>
 
                                     <div className="mt-4 flex gap-3">
                                         <button
