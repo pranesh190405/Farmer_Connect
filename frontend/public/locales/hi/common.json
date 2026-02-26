@@ -75,6 +75,14 @@
             "reset": "फ़िल्टर रीसेट करें",
             "active": "सक्रिय फ़िल्टर:"
         },
+        "regions": {
+            "maharashtra": "महाराष्ट्र",
+            "punjab": "पंजाब",
+            "madhyaPradesh": "मध्य प्रदेश",
+            "karnataka": "कर्नाटक",
+            "tamilNadu": "तमिल नाडु",
+            "gujarat": "गुजरात"
+        },
         "searchPlaceholder": "फसलें, किसान खोजें...",
         "noCrops": {
             "title": "कोई फसल नहीं मिली",

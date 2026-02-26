@@ -75,6 +75,14 @@
             "reset": "Reset Filters",
             "active": "Active filters:"
         },
+        "regions": {
+            "maharashtra": "Maharashtra",
+            "punjab": "Punjab",
+            "madhyaPradesh": "Madhya Pradesh",
+            "karnataka": "Karnataka",
+            "tamilNadu": "Tamil Nadu",
+            "gujarat": "Gujarat"
+        },
         "searchPlaceholder": "Search crops, farmers...",
         "noCrops": {
             "title": "No crops found",
