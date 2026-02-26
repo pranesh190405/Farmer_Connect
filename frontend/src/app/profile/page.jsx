@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { logout } from '@/store/slices/authSlice';
+import ApiService from '@/services/apiService';
 import { ShieldCheck, AlertTriangle, MapPin, User, Phone, Globe, Bell, Lock, LogOut } from 'lucide-react';
 
 import Button from '@/components/ui/Button';
@@ -120,11 +121,24 @@ export default function ProfileSettingsPage() {
 
     // Handle save
     const handleSave = async () => {
+        if (!/^\d{10}$/.test(user.mobile)) {
+            alert(t('profile.invalidMobile') || 'Mobile number must be exactly 10 digits.');
+            return;
+        }
         setIsSaving(true);
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setIsSaving(false);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 3000);
+        try {
+            await ApiService.updateProfile({
+                name: user.name,
+                mobile: user.mobile,
+            });
+            setSaved(true);
+            setTimeout(() => setSaved(false), 3000);
+        } catch (err) {
+            console.error('Failed to save profile:', err);
+            alert(t('profile.saveFailed') || 'Failed to save profile. Please try again.');
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const handleLogout = () => {
@@ -175,9 +189,13 @@ export default function ProfileSettingsPage() {
                                 <Input
                                     label={t('profile.mobile') || 'Mobile'}
                                     value={user.mobile}
-                                    onChange={(e) => setUser(prev => ({ ...prev, mobile: e.target.value }))}
+                                    onChange={(e) => {
+                                        const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                        setUser(prev => ({ ...prev, mobile: digits }));
+                                    }}
                                     prefix={<Phone className="w-4 h-4 text-gray-400" />}
-                                    disabled
+                                    maxLength={10}
+                                    placeholder="10-digit mobile number"
                                 />
                             </div>
 
