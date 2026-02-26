@@ -121,6 +121,10 @@ export default function ProfileSettingsPage() {
 
     // Handle save
     const handleSave = async () => {
+        if (!/^\d{10}$/.test(user.mobile)) {
+            alert(t('profile.invalidMobile') || 'Mobile number must be exactly 10 digits.');
+            return;
+        }
         setIsSaving(true);
         try {
             await ApiService.updateProfile({
@@ -185,8 +189,13 @@ export default function ProfileSettingsPage() {
                                 <Input
                                     label={t('profile.mobile') || 'Mobile'}
                                     value={user.mobile}
-                                    onChange={(e) => setUser(prev => ({ ...prev, mobile: e.target.value }))}
+                                    onChange={(e) => {
+                                        const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                        setUser(prev => ({ ...prev, mobile: digits }));
+                                    }}
                                     prefix={<Phone className="w-4 h-4 text-gray-400" />}
+                                    maxLength={10}
+                                    placeholder="10-digit mobile number"
                                 />
                             </div>
 

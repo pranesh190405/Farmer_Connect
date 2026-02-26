@@ -26,9 +26,7 @@ async function getProfile(req, res) {
  */
 async function updateProfile(req, res) {
     try {
-        console.log('updateProfile req.body:', req.body);
         const result = await userModule.updateProfile(req.user.id, req.body);
-        console.log('updateProfile result mobile:', result?.mobile);
 
         if (!result) {
             return res.status(404).json({ error: 'User not found' });
