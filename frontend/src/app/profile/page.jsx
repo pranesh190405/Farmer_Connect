@@ -299,7 +299,10 @@ export default function ProfileSettingsPage() {
                                         { value: 'hr', label: 'Haryanvi (हरियाणवी)' },
                                     ]}
                                     value={i18n.language || 'en'}
-                                    onChange={(e) => i18n.changeLanguage(e.target.value)}
+                                    onChange={(e) => {
+                                        i18n.changeLanguage(e.target.value);
+                                        localStorage.setItem('i18nextLng', e.target.value);
+                                    }}
                                 />
                             </div>
                         </div>

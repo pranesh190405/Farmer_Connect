@@ -10,6 +10,7 @@ import { toast } from '@/components/ui/Toast/Toast';
 import Button from '@/components/ui/Button';
 import QualitySliders from '@/components/ui/QualitySliders';
 import Input from '@/components/ui/Input';
+import Select from '@/components/ui/Select';
 
 export default function NewListingPage() {
     const { t } = useTranslation('common');
@@ -33,8 +34,18 @@ export default function NewListingPage() {
         t('listing.crops.cotton') || 'Cotton',
     ];
 
+    const CATEGORY_OPTIONS = [
+        { value: 'vegetables', label: t('categories.vegetables') || 'Vegetables' },
+        { value: 'fruits', label: t('categories.fruits') || 'Fruits' },
+        { value: 'grains', label: t('categories.grains') || 'Grains' },
+        { value: 'spices', label: t('categories.spices') || 'Spices' },
+        { value: 'flowers', label: t('categories.flowers') || 'Flowers' },
+        { value: 'dairy', label: t('categories.dairy') || 'Dairy' },
+    ];
+
     const [formData, setFormData] = useState({
         crop: '',
+        category: '',
         variety: '',
         quantity: '',
         price: '',
@@ -119,7 +130,7 @@ export default function NewListingPage() {
         try {
             const newListing = {
                 cropName: `${formData.crop.trim()} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
-                category: 'vegetables',
+                category: formData.category || 'vegetables',
                 variety: formData.variety || '',
                 quantity: parseFloat(formData.quantity),
                 unit: 'kg',
@@ -164,10 +175,10 @@ export default function NewListingPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Combobox-style Crop Type Input */}
+                        {/* Combobox-style Crop Name Input */}
                         <div className="relative">
                             <Input
-                                label={t('listing.new.cropType')}
+                                label={t('listing.new.cropName') || 'Crop Name'}
                                 placeholder={t('listing.new.selectCrop') || 'Type or select a crop'}
                                 value={formData.crop}
                                 onChange={(e) => {
@@ -204,6 +215,15 @@ export default function NewListingPage() {
                             onChange={(e) => setFormData(prev => ({ ...prev, variety: e.target.value }))}
                         />
                     </div>
+
+                    <Select
+                        label={t('listing.new.category') || 'Category'}
+                        placeholder={t('listing.new.selectCategory') || 'Select a category'}
+                        options={CATEGORY_OPTIONS}
+                        value={formData.category}
+                        onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                        required
+                    />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <Input
