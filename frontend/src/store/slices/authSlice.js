@@ -153,12 +153,9 @@ const authSlice = createSlice({
             state.error = null;
             state.isLoading = false;
         },
-        // Keep admin actions for compatibility
-        adminLogin(state) {
-            // Handled by async thunk
-        },
-        approveUser(state) {
-            // Handled by admin API
+        // Keep admin actions for compatibility (used by admin dashboard)
+        approveUser: (state, action) => {
+            // Handled by admin API now
         },
         rejectUser(state) {
             // Handled by admin API
@@ -266,7 +263,6 @@ export const {
     resetAuthFlow,
     logout,
     clearError,
-    adminLogin,
     approveUser,
     rejectUser,
     sessionExpired

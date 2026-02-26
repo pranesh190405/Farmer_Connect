@@ -7,15 +7,17 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
-dist
-dist-ssr
-*.local
 
-
-# next files
+# Next.js
 .next
-node_modules
+out
+build
+
+# Environment
+backend/.env
+frontend/.env*.local
 
 # Editor directories and files
 .vscode/*
@@ -27,9 +29,8 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
-backend/.env
 
-# PWA generated files (if using next-pwa in future)
+# PWA generated files
 frontend/public/workbox-*.js
 frontend/public/workbox-*.js.map
 frontend/public/swe-worker-*.js
