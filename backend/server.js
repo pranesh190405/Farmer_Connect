@@ -51,6 +51,10 @@ app.use((err, req, res, next) => {
     res.status(statusCode).json({ error: message });
 });
 
+app.get("/", (req, res) => {
+    res.send("Backend is running 🚀");
+});
+
 app.listen(PORT, () => {
     console.log(`🚀 Farmer Connect API running on http://localhost:${PORT}`);
     console.log(`📡 Health check: http://localhost:${PORT}/health`);
