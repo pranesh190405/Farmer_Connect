@@ -318,6 +318,24 @@
         "flowers": "Flowers",
         "dairy": "Dairy"
     },
+    "quality": {
+        "title": "Quality Parameters",
+        "size": "Size",
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large",
+        "freshness": "Freshness",
+        "average": "Average",
+        "fresh": "Fresh",
+        "farmFresh": "Farm Fresh",
+        "harvestedAgo": "Harvested >2d ago",
+        "justHarvested": "Just Harvested",
+        "ripeness": "Ripeness",
+        "raw": "Raw",
+        "semiRipe": "Semi-Ripe",
+        "fullyRipe": "Fully Ripe",
+        "ripe": "Ripe"
+    },
     "landing": {
         "hero": {
             "badge": "Fair Price • Fresh Produce • Direct Connection",
