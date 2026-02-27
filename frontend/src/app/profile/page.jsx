@@ -15,18 +15,44 @@ import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import styles from './page.module.css';
 
-// Indian states
+// All Indian states and union territories
 const STATES = [
-    { value: 'ap', label: 'Andhra Pradesh' },
-    { value: 'ka', label: 'Karnataka' },
-    { value: 'mh', label: 'Maharashtra' },
-    { value: 'tn', label: 'Tamil Nadu' },
-    { value: 'up', label: 'Uttar Pradesh' },
-    { value: 'mp', label: 'Madhya Pradesh' },
-    { value: 'gj', label: 'Gujarat' },
-    { value: 'rj', label: 'Rajasthan' },
-    { value: 'pb', label: 'Punjab' },
-    { value: 'hr', label: 'Haryana' },
+    { value: 'Andhra Pradesh', label: 'Andhra Pradesh' },
+    { value: 'Arunachal Pradesh', label: 'Arunachal Pradesh' },
+    { value: 'Assam', label: 'Assam' },
+    { value: 'Bihar', label: 'Bihar' },
+    { value: 'Chhattisgarh', label: 'Chhattisgarh' },
+    { value: 'Goa', label: 'Goa' },
+    { value: 'Gujarat', label: 'Gujarat' },
+    { value: 'Haryana', label: 'Haryana' },
+    { value: 'Himachal Pradesh', label: 'Himachal Pradesh' },
+    { value: 'Jharkhand', label: 'Jharkhand' },
+    { value: 'Karnataka', label: 'Karnataka' },
+    { value: 'Kerala', label: 'Kerala' },
+    { value: 'Madhya Pradesh', label: 'Madhya Pradesh' },
+    { value: 'Maharashtra', label: 'Maharashtra' },
+    { value: 'Manipur', label: 'Manipur' },
+    { value: 'Meghalaya', label: 'Meghalaya' },
+    { value: 'Mizoram', label: 'Mizoram' },
+    { value: 'Nagaland', label: 'Nagaland' },
+    { value: 'Odisha', label: 'Odisha' },
+    { value: 'Punjab', label: 'Punjab' },
+    { value: 'Rajasthan', label: 'Rajasthan' },
+    { value: 'Sikkim', label: 'Sikkim' },
+    { value: 'Tamil Nadu', label: 'Tamil Nadu' },
+    { value: 'Telangana', label: 'Telangana' },
+    { value: 'Tripura', label: 'Tripura' },
+    { value: 'Uttar Pradesh', label: 'Uttar Pradesh' },
+    { value: 'Uttarakhand', label: 'Uttarakhand' },
+    { value: 'West Bengal', label: 'West Bengal' },
+    { value: 'Andaman and Nicobar Islands', label: 'Andaman and Nicobar Islands' },
+    { value: 'Chandigarh', label: 'Chandigarh' },
+    { value: 'Dadra and Nagar Haveli and Daman and Diu', label: 'Dadra and Nagar Haveli and Daman and Diu' },
+    { value: 'Delhi', label: 'Delhi' },
+    { value: 'Jammu and Kashmir', label: 'Jammu and Kashmir' },
+    { value: 'Ladakh', label: 'Ladakh' },
+    { value: 'Lakshadweep', label: 'Lakshadweep' },
+    { value: 'Puducherry', label: 'Puducherry' },
 ];
 
 // Sample crop interests
@@ -58,6 +84,8 @@ export default function ProfileSettingsPage() {
     const [location, setLocation] = useState({
         state: '',
         district: '',
+        lat: null,
+        lng: null,
         autoDetect: false,
     });
 
@@ -76,12 +104,56 @@ export default function ProfileSettingsPage() {
     const [isSaving, setIsSaving] = useState(false);
     const [saved, setSaved] = useState(false);
     const [locationLoading, setLocationLoading] = useState(false);
+    const [profileLoading, setProfileLoading] = useState(true);
 
     useEffect(() => {
         if (!isAuthenticated) router.push('/login');
     }, [isAuthenticated, router]);
 
-    // Auto-detect location
+    // Load saved profile data (including location) on mount
+    useEffect(() => {
+        async function loadProfile() {
+            try {
+                const profile = await ApiService.getProfile();
+                if (profile) {
+                    // Populate location from saved data
+                    setLocation({
+                        state: profile.location?.state || '',
+                        district: profile.location?.district || '',
+                        lat: profile.location?.lat || null,
+                        lng: profile.location?.lng || null,
+                        autoDetect: false,
+                    });
+
+                    // Populate preferences from saved data
+                    setPreferences({
+                        cropInterests: profile.preferences?.cropInterests || [],
+                        smsAlerts: profile.preferences?.smsAlerts !== undefined ? profile.preferences.smsAlerts : true,
+                        priceAlerts: profile.preferences?.priceAlerts !== undefined ? profile.preferences.priceAlerts : true,
+                    });
+
+                    // Populate privacy from saved data
+                    setPrivacy({
+                        profilePublic: profile.preferences?.profilePublic !== undefined ? profile.preferences.profilePublic : true,
+                        showLocation: profile.preferences?.showLocation !== undefined ? profile.preferences.showLocation : true,
+                        showContact: profile.preferences?.showContact !== undefined ? profile.preferences.showContact : false,
+                    });
+                }
+            } catch (err) {
+                console.error('Failed to load profile:', err);
+            } finally {
+                setProfileLoading(false);
+            }
+        }
+
+        if (isAuthenticated) {
+            loadProfile();
+        } else {
+            setProfileLoading(false);
+        }
+    }, [isAuthenticated]);
+
+    // Auto-detect location using browser geolocation + reverse geocoding
     const handleAutoDetect = () => {
         if (!navigator.geolocation) {
             alert(t('profile.locationError') || 'Geolocation is not supported by your browser');
@@ -90,17 +162,37 @@ export default function ProfileSettingsPage() {
 
         setLocationLoading(true);
         navigator.geolocation.getCurrentPosition(
-            (position) => {
-                // Mock location set
-                setTimeout(() => {
-                    setLocation(prev => ({
-                        ...prev,
-                        state: 'ka',
-                        district: 'Bangalore Rural',
+            async (position) => {
+                try {
+                    const { latitude, longitude } = position.coords;
+
+                    // Use OpenStreetMap Nominatim for reverse geocoding
+                    const response = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`,
+                        {
+                            headers: {
+                                'Accept-Language': 'en',
+                            },
+                        }
+                    );
+                    const data = await response.json();
+
+                    const detectedState = data.address?.state || '';
+                    const detectedDistrict = data.address?.state_district || data.address?.county || '';
+
+                    setLocation({
+                        state: detectedState,
+                        district: detectedDistrict,
+                        lat: latitude,
+                        lng: longitude,
                         autoDetect: true,
-                    }));
+                    });
+                } catch (err) {
+                    console.error('Reverse geocoding failed:', err);
+                    alert(t('profile.locationRetrieveError') || 'Unable to determine your location. Please set it manually.');
+                } finally {
                     setLocationLoading(false);
-                }, 1000);
+                }
             },
             () => {
                 alert(t('profile.locationRetrieveError') || 'Unable to retrieve your location');
@@ -119,7 +211,7 @@ export default function ProfileSettingsPage() {
         }));
     };
 
-    // Handle save
+    // Handle save — saves profile, location, and preferences
     const handleSave = async () => {
         if (!/^\d{10}$/.test(user.mobile)) {
             alert(t('profile.invalidMobile') || 'Mobile number must be exactly 10 digits.');
@@ -127,10 +219,30 @@ export default function ProfileSettingsPage() {
         }
         setIsSaving(true);
         try {
+            // Save profile (name, mobile)
             await ApiService.updateProfile({
                 name: user.name,
                 mobile: user.mobile,
             });
+
+            // Save location (state, district, lat, lng)
+            await ApiService.updateLocation({
+                state: location.state,
+                district: location.district,
+                lat: location.lat || null,
+                lng: location.lng || null,
+            });
+
+            // Save preferences
+            await ApiService.updatePreferences({
+                cropInterests: preferences.cropInterests,
+                smsAlerts: preferences.smsAlerts,
+                priceAlerts: preferences.priceAlerts,
+                profilePublic: privacy.profilePublic,
+                showLocation: privacy.showLocation,
+                showContact: privacy.showContact,
+            });
+
             setSaved(true);
             setTimeout(() => setSaved(false), 3000);
         } catch (err) {
@@ -145,6 +257,21 @@ export default function ProfileSettingsPage() {
         dispatch(logout());
         router.push('/');
     };
+
+    if (profileLoading) {
+        return (
+            <AuthGuard>
+                <main className="min-h-screen bg-gray-50 pb-24 font-sans p-4 md:p-6">
+                    <div className="max-w-2xl mx-auto flex items-center justify-center py-20">
+                        <div className="text-gray-500 text-center">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-3"></div>
+                            <p>{t('profile.loading') || 'Loading profile...'}</p>
+                        </div>
+                    </div>
+                </main>
+            </AuthGuard>
+        );
+    }
 
     return (
         <AuthGuard>
@@ -236,6 +363,9 @@ export default function ProfileSettingsPage() {
                                 <MapPin className="w-5 h-5 text-green-600" />
                                 {t('profile.location') || 'Location'}
                             </h2>
+                            <p className="text-sm text-gray-500 mt-1">
+                                {t('profile.locationHint') || 'Auto-detect your location or set it manually. You can change this anytime to sell crops from a different location.'}
+                            </p>
                         </div>
                         <div className="p-6 space-y-4">
                             <div className="grid md:grid-cols-2 gap-4">
@@ -244,15 +374,23 @@ export default function ProfileSettingsPage() {
                                     placeholder={t('profile.selectState') || 'Select state'}
                                     options={STATES}
                                     value={location.state}
-                                    onChange={(e) => setLocation(prev => ({ ...prev, state: e.target.value }))}
+                                    onChange={(e) => setLocation(prev => ({ ...prev, state: e.target.value, autoDetect: false }))}
                                 />
                                 <Input
                                     label={t('profile.district') || 'District'}
                                     placeholder={t('profile.enterDistrict') || 'Enter district'}
                                     value={location.district}
-                                    onChange={(e) => setLocation(prev => ({ ...prev, district: e.target.value }))}
+                                    onChange={(e) => setLocation(prev => ({ ...prev, district: e.target.value, autoDetect: false }))}
                                 />
                             </div>
+
+                            {/* Show detected coordinates if auto-detected */}
+                            {location.autoDetect && location.lat && (
+                                <div className="text-xs text-gray-400 flex items-center gap-1">
+                                    📍 Auto-detected ({location.lat.toFixed(4)}, {location.lng.toFixed(4)})
+                                </div>
+                            )}
+
                             <Button
                                 variant="outline"
                                 size="sm"
