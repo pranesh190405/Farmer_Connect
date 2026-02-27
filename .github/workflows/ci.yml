@@ -42,7 +42,7 @@ jobs:
           sleep 5
 
           # Health-check – adjust the path if you have a dedicated /health route
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/ || true)
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5001/health || true)
 
           kill $SERVER_PID 2>/dev/null || true
 
