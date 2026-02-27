@@ -11,7 +11,7 @@ const pool = new Pool({
     database: process.env.DB_NAME,    // Database name
     password: process.env.DB_PASSWORD,// Database password
     port: parseInt(process.env.DB_PORT, 10), // Convert port to number
-    ssl: { rejectUnauthorized: false }, // Required for Neon DB
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false, // SSL only for cloud DBs
 });
 
 // Test database connection when server starts
