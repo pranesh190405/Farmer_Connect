@@ -11,12 +11,13 @@ const pool = new Pool({
     database: process.env.DB_NAME,    // Database name
     password: process.env.DB_PASSWORD,// Database password
     port: parseInt(process.env.DB_PORT, 10), // Convert port to number
+    ssl: { rejectUnauthorized: false }, // Required for Neon DB
 });
 
 // Test database connection when server starts
 pool.query('SELECT NOW()')
     .then(() => console.log('✅ PostgreSQL connected')) // Success message
-    .catch((err) => 
+    .catch((err) =>
         console.error('❌ PostgreSQL connection error:', err.message)
     );
 
