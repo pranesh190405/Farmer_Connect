@@ -311,6 +311,24 @@
         "flowers": "ফুল",
         "dairy": "দুগ্ধজাত"
     },
+    "quality": {
+        "title": "গুণমান পরামিতি",
+        "size": "আকার",
+        "small": "ছোট",
+        "medium": "মাঝারি",
+        "large": "বড়",
+        "freshness": "সতেজতা",
+        "average": "গড়",
+        "fresh": "সতেজ",
+        "farmFresh": "খামারের সতেজ",
+        "harvestedAgo": "২+ দিন আগে তোলা",
+        "justHarvested": "এইমাত্র তোলা",
+        "ripeness": "পরিপক্কতা",
+        "raw": "কাঁচা",
+        "semiRipe": "আধাপাকা",
+        "fullyRipe": "পুরোপুরি পাকা",
+        "ripe": "পাকা"
+    },
     "landing": {
         "hero": {
             "badge": "ন্যায্য মূল্য • তাজা পণ্য • সরাসরি সংযোগ",
