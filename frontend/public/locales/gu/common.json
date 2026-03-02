@@ -431,14 +431,14 @@
             "pricePlaceholder": "દા.ત. 25",
             "creating": "બનાવી રહ્યા છીએ...",
             "createButton": "યાદી બનાવો",
-            "location": "Location",
-            "detectingLocation": "Detecting your location...",
-            "locationDenied": "Location access was denied.",
-            "locationError": "Could not detect location.",
-            "enterManually": "Enter your location manually:",
-            "locationPlaceholder": "e.g. Nashik, Maharashtra",
-            "retryAutoDetect": "Retry auto-detect",
-            "editLocation": "Edit"
+            "location": "સ્થાન",
+            "detectingLocation": "તમારું સ્થાન શોધી રહ્યા છીએ...",
+            "locationDenied": "સ્થાનની પરવાનગી નકારવામાં આવી હતી.",
+            "locationError": "સ્થાન શોધી શકાયું નથી.",
+            "enterManually": "તમારું સ્થાન મેન્યુઅલી દાખલ કરો:",
+            "locationPlaceholder": "દા.ત. નાસિક, મહારાષ્ટ્ર",
+            "retryAutoDetect": "ફરીથી સ્વતઃ શોધવાનો પ્રયાસ કરો",
+            "editLocation": "ફેરફાર કરો"
         },
         "edit": {
             "title": "Edit Listing",

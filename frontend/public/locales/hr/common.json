@@ -431,14 +431,14 @@
             "pricePlaceholder": "जिसा 25",
             "creating": "बणा रहे सां...",
             "createButton": "लिस्टिंग बणाओ",
-            "location": "Location",
-            "detectingLocation": "Detecting your location...",
-            "locationDenied": "Location access was denied.",
-            "locationError": "Could not detect location.",
-            "enterManually": "Enter your location manually:",
-            "locationPlaceholder": "e.g. Nashik, Maharashtra",
-            "retryAutoDetect": "Retry auto-detect",
-            "editLocation": "Edit"
+            "location": "जगहा",
+            "detectingLocation": "थारी जगहा ढूंढन लाग रह्या सां...",
+            "locationDenied": "जगहा की परमिशन ना मिली।",
+            "locationError": "जगहा का बेरा ना लाग्या।",
+            "enterManually": "अपणी जगहा खुदै भर लो:",
+            "locationPlaceholder": "जिसा नासिक, महाराष्ट्र",
+            "retryAutoDetect": "फेर तै कोशिश कर",
+            "editLocation": "ठीक कर"
         },
         "edit": {
             "title": "Edit Listing",

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Upload, MapPin, Loader2 } from 'lucide-react';
@@ -13,7 +13,7 @@ import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 
 export default function NewListingPage() {
-    const { t } = useTranslation('common');
+    const { t, i18n } = useTranslation('common');
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -25,23 +25,23 @@ export default function NewListingPage() {
         status: 'detecting', // 'detecting' | 'detected' | 'denied' | 'error' | 'manual'
     });
 
-    const CROP_SUGGESTIONS = [
+    const CROP_SUGGESTIONS = useMemo(() => [
         t('listing.crops.potato') || 'Potato',
         t('listing.crops.onion') || 'Onion',
         t('listing.crops.tomato') || 'Tomato',
         t('listing.crops.wheat') || 'Wheat',
         t('listing.crops.rice') || 'Rice',
         t('listing.crops.cotton') || 'Cotton',
-    ];
+    ], [t]);
 
-    const CATEGORY_OPTIONS = [
+    const CATEGORY_OPTIONS = useMemo(() => [
         { value: 'vegetables', label: t('categories.vegetables') || 'Vegetables' },
         { value: 'fruits', label: t('categories.fruits') || 'Fruits' },
         { value: 'grains', label: t('categories.grains') || 'Grains' },
         { value: 'spices', label: t('categories.spices') || 'Spices' },
         { value: 'flowers', label: t('categories.flowers') || 'Flowers' },
         { value: 'dairy', label: t('categories.dairy') || 'Dairy' },
-    ];
+    ], [t]);
 
     const [formData, setFormData] = useState({
         crop: '',
@@ -59,7 +59,7 @@ export default function NewListingPage() {
         crop => crop.toLowerCase().includes(formData.crop.toLowerCase())
     );
 
-    // Auto-detect location on mount
+    // 1. Auto-detect coordinates on mount
     useEffect(() => {
         if (typeof window === 'undefined' || !navigator.geolocation) {
             setLocation(prev => ({ ...prev, status: 'error' }));
@@ -67,55 +67,68 @@ export default function NewListingPage() {
         }
 
         navigator.geolocation.getCurrentPosition(
-            async (position) => {
+            (position) => {
                 const { latitude, longitude } = position.coords;
-                setLocation(prev => ({ ...prev, lat: latitude, lng: longitude }));
-
-                // Reverse geocode using OpenStreetMap Nominatim (free, no API key)
-                try {
-                    const res = await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`,
-                        { headers: { 'Accept-Language': 'en' } }
-                    );
-                    const data = await res.json();
-                    const addr = data.address || {};
-                    // Build a short readable address: village/city, district, state
-                    const parts = [
-                        addr.village || addr.town || addr.city || addr.suburb || '',
-                        addr.county || addr.state_district || '',
-                        addr.state || '',
-                    ].filter(Boolean);
-                    const addressStr = parts.join(', ') || data.display_name || '';
-
-                    setLocation({
-                        address: addressStr,
-                        lat: latitude,
-                        lng: longitude,
-                        status: 'detected',
-                    });
-                } catch {
-                    // Geocoding failed but we still have coordinates
-                    setLocation({
-                        address: `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,
-                        lat: latitude,
-                        lng: longitude,
-                        status: 'detected',
-                    });
-                }
+                setLocation(prev => ({
+                    ...prev,
+                    lat: latitude,
+                    lng: longitude,
+                    status: prev.status === 'manual' ? 'manual' : 'detecting'
+                }));
             },
             (err) => {
                 console.warn('Geolocation error:', err.message);
                 if (err.code === 1) {
                     setLocation(prev => ({ ...prev, status: 'denied' }));
-                    toast.warning?.('Location access denied. Listing will be created without location.') ||
-                        toast.error?.('Location access denied');
+                    toast.warning?.(t('listing.new.locationDenied') || 'Location access was denied.');
                 } else {
                     setLocation(prev => ({ ...prev, status: 'error' }));
                 }
             },
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+            { enableHighAccuracy: true, timeout: 10000 }
         );
-    }, []);
+    }, [t]);
+
+    // 2. Reverse geocode when coordinates OR language changes
+    useEffect(() => {
+        if (!location.lat || !location.lng || location.status === 'manual') return;
+
+        const fetchAddress = async () => {
+            try {
+                // Determine language code (fallback Haryanvi to Hindi if needed, though Nominatim might handle it)
+                const lang = i18n.language === 'hr' ? 'hi' : i18n.language;
+
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?lat=${location.lat}&lon=${location.lng}&format=json&addressdetails=1`,
+                    { headers: { 'Accept-Language': lang || 'en' } }
+                );
+                const data = await res.json();
+                const addr = data.address || {};
+                const parts = [
+                    addr.village || addr.town || addr.city || addr.suburb || '',
+                    addr.county || addr.state_district || '',
+                    addr.state || '',
+                ].filter(Boolean);
+
+                const addressStr = parts.join(', ') || data.display_name || '';
+
+                setLocation(prev => ({
+                    ...prev,
+                    address: addressStr,
+                    status: 'detected',
+                }));
+            } catch (err) {
+                console.error('Geocoding error:', err);
+                setLocation(prev => ({
+                    ...prev,
+                    address: `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`,
+                    status: 'detected',
+                }));
+            }
+        };
+
+        fetchAddress();
+    }, [location.lat, location.lng, i18n.language, location.status]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -136,10 +149,10 @@ export default function NewListingPage() {
                 unit: 'kg',
                 expectedPrice: parseFloat(formData.price),
                 minQty: parseFloat(formData.minQty) || 50,
-                // Location data (auto-detected)
                 locationAddress: location.address || '',
                 locationLat: location.lat || null,
                 locationLng: location.lng || null,
+                quality: formData.quality,
             };
 
             await ApiService.addListing(newListing);
@@ -164,7 +177,6 @@ export default function NewListingPage() {
 
             <main className="max-w-2xl mx-auto p-6">
                 <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6">
-
                     {/* Image Upload Placeholder */}
                     <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 flex flex-col items-center justify-center text-gray-400 hover:border-green-500 hover:bg-green-50 hover:text-green-600 transition-all cursor-pointer group">
                         <div className="bg-gray-100 p-4 rounded-full mb-3 group-hover:bg-white">
@@ -175,7 +187,6 @@ export default function NewListingPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Combobox-style Crop Name Input */}
                         <div className="relative">
                             <Input
                                 label={t('listing.new.cropName') || 'Crop Name'}
@@ -255,14 +266,12 @@ export default function NewListingPage() {
                         onChange={(q) => setFormData(prev => ({ ...prev, quality: q }))}
                     />
 
-                    {/* Location Section — Auto-Detect + Manual Fallback */}
                     <div className="rounded-xl border border-gray-200 p-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             <MapPin className="w-4 h-4 inline-block mr-1 -mt-0.5" />
                             {t('listing.new.location') || 'Location'}
                         </label>
 
-                        {/* Detecting */}
                         {location.status === 'detecting' && (
                             <div className="flex items-center gap-2 text-sm text-gray-500">
                                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -270,7 +279,6 @@ export default function NewListingPage() {
                             </div>
                         )}
 
-                        {/* Detected — show address + option to edit manually */}
                         {location.status === 'detected' && (
                             <div className="space-y-2">
                                 <div className="flex items-center gap-2">
@@ -287,7 +295,6 @@ export default function NewListingPage() {
                             </div>
                         )}
 
-                        {/* Denied / Error / Manual — show input field */}
                         {(location.status === 'denied' || location.status === 'error' || location.status === 'manual') && (
                             <div className="space-y-3">
                                 {location.status === 'denied' && (
@@ -314,30 +321,9 @@ export default function NewListingPage() {
                                     onClick={() => {
                                         setLocation({ address: '', lat: null, lng: null, status: 'detecting' });
                                         navigator.geolocation?.getCurrentPosition(
-                                            async (position) => {
+                                            (position) => {
                                                 const { latitude, longitude } = position.coords;
-                                                try {
-                                                    const res = await fetch(
-                                                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`,
-                                                        { headers: { 'Accept-Language': 'en' } }
-                                                    );
-                                                    const data = await res.json();
-                                                    const addr = data.address || {};
-                                                    const parts = [
-                                                        addr.village || addr.town || addr.city || addr.suburb || '',
-                                                        addr.county || addr.state_district || '',
-                                                        addr.state || '',
-                                                    ].filter(Boolean);
-                                                    setLocation({
-                                                        address: parts.join(', ') || data.display_name || '',
-                                                        lat: latitude, lng: longitude, status: 'detected',
-                                                    });
-                                                } catch {
-                                                    setLocation({
-                                                        address: `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,
-                                                        lat: latitude, lng: longitude, status: 'detected',
-                                                    });
-                                                }
+                                                setLocation(prev => ({ ...prev, lat: latitude, lng: longitude, status: 'detecting' }));
                                             },
                                             () => setLocation(prev => ({ ...prev, status: 'denied' })),
                                             { enableHighAccuracy: true, timeout: 10000 }
@@ -356,7 +342,6 @@ export default function NewListingPage() {
                             {isLoading ? t('listing.new.creating') : t('listing.new.createButton')}
                         </Button>
                     </div>
-
                 </form>
             </main>
         </div>

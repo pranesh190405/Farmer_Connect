@@ -431,14 +431,14 @@
             "pricePlaceholder": "ਜਿਵੇਂ 25",
             "creating": "ਬਣਾ ਰਹੇ ਹਾਂ...",
             "createButton": "ਲਿਸਟਿੰਗ ਬਣਾਓ",
-            "location": "Location",
-            "detectingLocation": "Detecting your location...",
-            "locationDenied": "Location access was denied.",
-            "locationError": "Could not detect location.",
-            "enterManually": "Enter your location manually:",
-            "locationPlaceholder": "e.g. Nashik, Maharashtra",
-            "retryAutoDetect": "Retry auto-detect",
-            "editLocation": "Edit"
+            "location": "ਟਿਕਾਣਾ",
+            "detectingLocation": "ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਲੱਭ ਰਿਹਾ ਹੈ...",
+            "locationDenied": "ਟਿਕਾਣੇ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਦਿੱਤੀ ਗਈ।",
+            "locationError": "ਟਿਕਾਣਾ ਨਹੀਂ ਲੱਭ ਸਕਿਆ।",
+            "enterManually": "ਆਪਣਾ ਟਿਕਾਣਾ ਖੁਦ ਭਰੋ:",
+            "locationPlaceholder": "ਜਿਵੇਂ ਕਿ ਨਾਸਿਕ, ਮਹਾਰਾਸ਼ਟਰ",
+            "retryAutoDetect": "ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
+            "editLocation": "ਸੋਧੋ"
         },
         "edit": {
             "title": "Edit Listing",

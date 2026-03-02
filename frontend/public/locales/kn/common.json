@@ -431,14 +431,14 @@
             "pricePlaceholder": "ಉದಾ. 25",
             "creating": "ರಚಿಸಲಾಗುತ್ತಿದೆ...",
             "createButton": "ಪಟ್ಟಿ ರಚಿಸಿ",
-            "location": "Location",
-            "detectingLocation": "Detecting your location...",
-            "locationDenied": "Location access was denied.",
-            "locationError": "Could not detect location.",
-            "enterManually": "Enter your location manually:",
-            "locationPlaceholder": "e.g. Nashik, Maharashtra",
-            "retryAutoDetect": "Retry auto-detect",
-            "editLocation": "Edit"
+            "location": "ಸ್ಥಳ",
+            "detectingLocation": "ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಪತ್ತೆಹಚ್ಚಲಾಗುತ್ತಿದೆ...",
+            "locationDenied": "ಸ್ಥಳದ ಪ್ರವೇಶವನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ.",
+            "locationError": "ಸ್ಥಳವನ್ನು ಪತ್ತೆಹಚ್ಚಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+            "enterManually": "ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ನಮೂದಿಸಿ:",
+            "locationPlaceholder": "ಉದಾ. ನಾಸಿಕ್, ಮಹಾರಾಷ್ಟ್ರ",
+            "retryAutoDetect": "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ",
+            "editLocation": "ತಿದ್ದುಪಡಿ"
         },
         "edit": {
             "title": "Edit Listing",

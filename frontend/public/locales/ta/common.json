@@ -431,14 +431,14 @@
             "pricePlaceholder": "எ.கா. 25",
             "creating": "உருவாக்குகிறது...",
             "createButton": "பட்டியலை உருவாக்கு",
-            "location": "Location",
-            "detectingLocation": "Detecting your location...",
-            "locationDenied": "Location access was denied.",
-            "locationError": "Could not detect location.",
-            "enterManually": "Enter your location manually:",
-            "locationPlaceholder": "e.g. Nashik, Maharashtra",
-            "retryAutoDetect": "Retry auto-detect",
-            "editLocation": "Edit"
+            "location": "இடம்",
+            "detectingLocation": "உங்கள் இருப்பிடத்தைக் கண்டறிகிறது...",
+            "locationDenied": "இருப்பிட அணுகல் மறுக்கப்பட்டது.",
+            "locationError": "இருப்பிடத்தைக் கண்டறிய முடியவில்லை.",
+            "enterManually": "உங்கள் இருப்பிடத்தை கைமுறையாக உள்ளிடவும்:",
+            "locationPlaceholder": "எ.கா. நாசிக், மகாராஷ்டிரா",
+            "retryAutoDetect": "மீண்டும் தானாகக் கண்டறிய முயற்சிக்கவும்",
+            "editLocation": "திருத்து"
         },
         "edit": {
             "title": "Edit Listing",
