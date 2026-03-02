@@ -7,6 +7,10 @@ const client = new Client({
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
+    ssl: {
+        require: true,
+        rejectUnauthorized: false,
+    }
 });
 
 console.log('Testing database connection with following config:');
