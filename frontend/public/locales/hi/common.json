@@ -343,6 +343,24 @@
         "flowers": "फूल",
         "dairy": "डेयरी"
     },
+    "quality": {
+        "title": "गुणवत्ता मापदंड",
+        "size": "आकार",
+        "small": "छोटा",
+        "medium": "मध्यम",
+        "large": "बड़ा",
+        "freshness": "ताजगी",
+        "average": "औसत",
+        "fresh": "ताजा",
+        "farmFresh": "खेत का ताजा",
+        "harvestedAgo": "2 दिन से अधिक पहले काटा गया",
+        "justHarvested": "अभी काटा गया",
+        "ripeness": "परिपक्वता",
+        "raw": "कच्चा",
+        "semiRipe": "अधपका",
+        "fullyRipe": "पूरी तरह पका हुआ",
+        "ripe": "पका हुआ"
+    },
     "cart": {
         "title": "शॉपिंग कार्ट",
         "empty": "आपकी कार्ट खाली है",

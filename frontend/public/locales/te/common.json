@@ -318,6 +318,24 @@
         "flowers": "పవవల",
         "dairy": "పల ఉతపతతల"
     },
+    "quality": {
+        "title": "నాణ్యత పారామితులు",
+        "size": "పరిమాణం",
+        "small": "చిన్నది",
+        "medium": "మధ్యస్థం",
+        "large": "పెద్దది",
+        "freshness": "తాజాదనం",
+        "average": "సగటు",
+        "fresh": "తాజా",
+        "farmFresh": "పొలం నుండి తాజా",
+        "harvestedAgo": "2 రోజుల క్రితం కోసినది",
+        "justHarvested": "ఇప్పుడే కోసినది",
+        "ripeness": "పరిపక్వత",
+        "raw": "పచ్చి",
+        "semiRipe": "అర పక్వం",
+        "fullyRipe": "పూర్తి పక్వం",
+        "ripe": "పక్వం"
+    },
     "landing": {
         "hero": {
             "badge": "Fair Price • Fresh Produce • Direct Connection",

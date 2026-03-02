@@ -311,6 +311,24 @@
         "flowers": "ਫੁੱਲ",
         "dairy": "ਡੇਅਰੀ"
     },
+    "quality": {
+        "title": "ਗੁਣਵੱਤਾ ਮਾਪਦੰਡ",
+        "size": "ਆਕਾਰ",
+        "small": "ਛੋਟਾ",
+        "medium": "ਮੱਧਮ",
+        "large": "ਵੱਡਾ",
+        "freshness": "ਤਾਜ਼ਗੀ",
+        "average": "ਔਸਤ",
+        "fresh": "ਤਾਜ਼ਾ",
+        "farmFresh": "ਖੇਤ ਦਾ ਤਾਜ਼ਾ",
+        "harvestedAgo": "2+ ਦਿਨ ਪਹਿਲਾਂ ਵਢਿਆ ਗਿਆ",
+        "justHarvested": "ਹੁਣੇ ਵਢਿਆ ਗਿਆ",
+        "ripeness": "ਪੱਕਣਾ",
+        "raw": "ਕੱਚਾ",
+        "semiRipe": "ਅੱਧਾ ਪੱਕਿਆ",
+        "fullyRipe": "ਪੂਰਾ ਪੱਕਿਆ",
+        "ripe": "ਪੱਕਿਆ"
+    },
     "landing": {
         "hero": {
             "badge": "उचित मूल्य • ताज़ा उपज • सीधा संपर्क",

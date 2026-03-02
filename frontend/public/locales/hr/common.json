@@ -311,6 +311,24 @@
         "flowers": "फूल",
         "dairy": "डेयरी"
     },
+    "quality": {
+        "title": "गुणवत्ता की खातिर",
+        "size": "आकार",
+        "small": "छोटा",
+        "medium": "मझला",
+        "large": "बड़ा",
+        "freshness": "ताजगी",
+        "average": "ठीक-ठाक",
+        "fresh": "ताजा",
+        "farmFresh": "खेत का फ्रेश",
+        "harvestedAgo": "2 दिन ते पहले तोड्या गया",
+        "justHarvested": "ईबे तोड्या है",
+        "ripeness": "पकन के बारे में",
+        "raw": "कच्चा",
+        "semiRipe": "अधपका",
+        "fullyRipe": "जमा पक रहा",
+        "ripe": "पक्का"
+    },
     "landing": {
         "hero": {
             "badge": "सही दाम • ताज़ा माल • सीधा संपर्क",
