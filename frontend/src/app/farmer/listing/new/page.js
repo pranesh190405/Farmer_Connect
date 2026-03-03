@@ -80,7 +80,7 @@ export default function NewListingPage() {
                 console.warn('Geolocation error:', err.message);
                 if (err.code === 1) {
                     setLocation(prev => ({ ...prev, status: 'denied' }));
-                    toast.warning?.(t('listing.new.locationDenied') || 'Location access was denied.');
+                    toast.info(t('listing.new.locationDenied') || 'Location access was denied.');
                 } else {
                     setLocation(prev => ({ ...prev, status: 'error' }));
                 }
