@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { ApiService } from '@/services/apiService';
-import { showToast } from '@/components/ui/Toast/Toast';
+import { toast } from '@/components/ui/Toast/Toast';
 
 export default function AdminDashboard() {
     const { t } = useTranslation('common');
@@ -41,7 +41,7 @@ export default function AdminDashboard() {
                 }
             } catch (err) {
                 console.error("Failed to fetch admin stats", err);
-                showToast("Failed to load dashboard statistics", "error");
+                toast.error(t('common.error'));
             } finally {
                 setIsLoading(false);
             }
@@ -52,7 +52,7 @@ export default function AdminDashboard() {
 
     const statCards = [
         {
-            title: 'Total Users',
+            title: t('adminDashboard.totalUsers'),
             value: (stats.farmers || 0) + (stats.buyers || 0),
             icon: Users,
             color: 'text-blue-600',
@@ -60,7 +60,7 @@ export default function AdminDashboard() {
             borderColor: 'border-blue-100'
         },
         {
-            title: 'Pending Users',
+            title: t('adminDashboard.pendingUsers'),
             value: stats.pendingApprovals || 0,
             icon: AlertCircle,
             color: 'text-yellow-600',
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
             borderColor: 'border-yellow-100'
         },
         {
-            title: 'Active Listings',
+            title: t('adminDashboard.activeListings'),
             value: stats.activeListings || 0,
             icon: Leaf,
             color: 'text-green-600',
@@ -76,7 +76,7 @@ export default function AdminDashboard() {
             borderColor: 'border-green-100'
         },
         {
-            title: 'Total Orders',
+            title: t('adminDashboard.totalOrders'),
             value: stats.totalOrders || 0,
             icon: ShoppingCart,
             color: 'text-purple-600',
@@ -84,7 +84,7 @@ export default function AdminDashboard() {
             borderColor: 'border-purple-100'
         },
         {
-            title: 'Total Revenue',
+            title: t('adminDashboard.totalRevenue'),
             value: `₹${stats.totalRevenue?.toLocaleString('en-IN') || 0}`,
             icon: IndianRupee,
             color: 'text-emerald-600',
@@ -107,8 +107,8 @@ export default function AdminDashboard() {
         <AdminLayout>
             <div className="space-y-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
-                    <p className="text-sm text-gray-500 mt-1">Platform statistics and activity summary.</p>
+                    <h1 className="text-2xl font-bold text-gray-900">{t('adminDashboard.title')}</h1>
+                    <p className="text-sm text-gray-500 mt-1">{t('adminDashboard.subtitle')}</p>
                 </div>
 
                 {/* KPI Cards */}
@@ -138,11 +138,11 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm min-h-[300px] flex flex-col items-center justify-center text-gray-400">
                         <TrendingUp className="w-12 h-12 mb-3 text-gray-300" />
-                        <p>Revenue Chart Coming Soon</p>
+                        <p>{t('adminDashboard.revenueChartSoon')}</p>
                     </div>
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm min-h-[300px] flex flex-col items-center justify-center text-gray-400">
                         <Users className="w-12 h-12 mb-3 text-gray-300" />
-                        <p>User Growth Chart Coming Soon</p>
+                        <p>{t('adminDashboard.userGrowthSoon')}</p>
                     </div>
                 </div>
             </div>
