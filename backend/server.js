@@ -1,8 +1,12 @@
 require('dotenv').config();
 const checkEnv = require('./scripts/check-env');
 
-// Check environment variables before starting
-checkEnv();
+// ✅ UPDATE: Run environment check only if NOT in test mode
+// This prevents failures during integration testing (Jest)
+if (process.env.NODE_ENV !== 'test') {
+    // Check environment variables before starting
+    checkEnv();
+}
 
 const express = require('express');
 const cors = require('cors');
@@ -56,7 +60,14 @@ app.use((err, req, res, next) => {
     res.status(statusCode).json({ error: message });
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Farmer Connect API running on http://localhost:${PORT}`);
-    console.log(`📡 Health check: http://localhost:${PORT}/health`);
-});
+//UPDATE: Start server only if NOT in test mode
+// Prevents port conflict during integration testing (Supertest)
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        console.log(`🚀 Farmer Connect API running on http://localhost:${PORT}`);
+        console.log(`📡 Health check: http://localhost:${PORT}/health`);
+    });
+}
+
+// UPDATE: Export app for integration testing
+module.exports = app;

@@ -1,31 +1,39 @@
-// Import PostgreSQL connection pool
 const { Pool } = require('pg');
-
-// Load environment variables from .env file
 require('dotenv').config();
 
-// Create a new PostgreSQL connection pool
-const pool = new Pool({
-    user: process.env.DB_USER,        // Database username
-    host: process.env.DB_HOST,        // Database host (e.g., localhost)
-    database: process.env.DB_NAME,    // Database name
-    password: process.env.DB_PASSWORD,// Database password
-    port: parseInt(process.env.DB_PORT, 10), // Convert port to number
-    ssl: {
-        require: true,
-        rejectUnauthorized: false,
+let pool = null;
+
+// Only create real DB connection if NOT running tests
+if (process.env.NODE_ENV !== 'test') {
+    pool = new Pool({
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: parseInt(process.env.DB_PORT, 10),
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        }
+    });
+
+    // Test DB connection only in non-test environments
+    pool.query('SELECT NOW()')
+        .then(() => console.log('✅ PostgreSQL connected'))
+        .catch((err) =>
+            console.error('❌ PostgreSQL connection error:', err.message)
+        );
+}
+
+// Safe query wrapper
+const query = async (text, params) => {
+    if (!pool) {
+        throw new Error('Database not initialized (test mode)');
     }
-});
+    return pool.query(text, params);
+};
 
-// Test database connection when server starts
-pool.query('SELECT NOW()')
-    .then(() => console.log('✅ PostgreSQL connected'))
-    .catch((err) =>
-        console.error('❌ PostgreSQL connection error:', err.message)
-    );
-
-// Export query function for executing SQL queries
 module.exports = {
-    query: (text, params) => pool.query(text, params), // Reusable query method
-    pool, // Export pool if direct access is needed
+    query,
+    pool
 };

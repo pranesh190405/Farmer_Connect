@@ -34,3 +34,6 @@ frontend/.env*.local
 frontend/public/workbox-*.js
 frontend/public/workbox-*.js.map
 frontend/public/swe-worker-*.js
+
+# Test Coverage
+backend/coverage/
