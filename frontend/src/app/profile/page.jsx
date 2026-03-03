@@ -322,7 +322,7 @@ export default function ProfileSettingsPage() {
                                     }}
                                     prefix={<Phone className="w-4 h-4 text-gray-400" />}
                                     maxLength={10}
-                                    placeholder="10-digit mobile number"
+                                    placeholder={t('profile.mobilePlaceholder')}
                                 />
                             </div>
 
@@ -387,7 +387,7 @@ export default function ProfileSettingsPage() {
                             {/* Show detected coordinates if auto-detected */}
                             {location.autoDetect && location.lat && (
                                 <div className="text-xs text-gray-400 flex items-center gap-1">
-                                    📍 Auto-detected ({location.lat.toFixed(4)}, {location.lng.toFixed(4)})
+                                    📍 {t('profile.autoDetected', { lat: location.lat.toFixed(4), lng: location.lng.toFixed(4) })}
                                 </div>
                             )}
 
