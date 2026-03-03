@@ -58,7 +58,13 @@
             "taxIdPlaceholder": "e.g., 22AAAAA0000A1Z5",
             "title": "खरेदीदार नोंदणी",
             "userExists": "User account already exists. Redirecting to login...",
-            "whatYouBuy": "What do you buy?"
+            "whatYouBuy": "What do you buy?",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            }
         },
         "errors": {
             "aadharRequired": "Aadhar number is required for registration",
@@ -89,7 +95,8 @@
             "title": "शेतकरी नोंदणी",
             "verificationPendingDesc": "तुमचे खाते सध्या प्रशासकाच्या पुनरावलोकनात आहे.",
             "verificationPendingHint": "Please wait for admin approval. You can try logging in later to check your status.",
-            "verificationPendingTitle": "सत्यापन प्रलंबित"
+            "verificationPendingTitle": "सत्यापन प्रलंबित",
+            "successReady": "Your account is ready. You can now login to your dashboard."
         },
         "forgotPin": {
             "aadharLast4Label": "Last 4 Digits of Aadhaar",
@@ -198,7 +205,11 @@
         "thankYou": "तुमच्या ऑर्डरसाठी धन्यवाद",
         "title": "चेकआउट",
         "total": "Total",
-        "trackOrder": "Track Order"
+        "trackOrder": "Track Order",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "common": {
         "back": "मागे",
@@ -245,7 +256,20 @@
             },
             "trackOrder": "Track Order",
             "welcome": "Welcome, Buyer",
-            "welcomeDesc": "Manage your orders and track deliveries"
+            "welcomeDesc": "Manage your orders and track deliveries",
+            "raiseIssue": "Raise Issue",
+            "issueType": "Issue Type",
+            "issueDescription": "Description",
+            "issueDescPlaceholder": "Please describe the issue with the order",
+            "issueSubmit": "Submit Issue",
+            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
+            "issueFailed": "Failed to raise issue. Please try again later.",
+            "issueTypes": {
+                "quality": "Quality Problem",
+                "delivery": "Delivery Issue",
+                "quantity": "Quantity Mismatch",
+                "other": "Other"
+            }
         },
         "createFirstListing": "तुमची पहिली लिस्टिंग तयार करा",
         "date": "Date",
@@ -443,7 +467,11 @@
         "type": "खाते प्रकार",
         "verificationPending": "सत्यापन प्रलंबित",
         "verified": "सत्यापित",
-        "verifiedFarmer": "सत्यापित शेतकरी"
+        "verifiedFarmer": "सत्यापित शेतकरी",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "quality": {
         "average": "सामान्य",

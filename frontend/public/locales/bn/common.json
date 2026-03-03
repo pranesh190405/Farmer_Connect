@@ -58,7 +58,13 @@
             "taxIdPlaceholder": "যেমন, 22AAAAA0000A1Z5",
             "title": "ক্রেতা নিবন্ধন",
             "userExists": "ব্যবহারকারীর অ্যাকাউন্ট ইতিমধ্যে বিদ্যমান। লগইনে পুনর্নির্দেশ করা হচ্ছে...",
-            "whatYouBuy": "আপনি কী কেনেন?"
+            "whatYouBuy": "আপনি কী কেনেন?",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            }
         },
         "errors": {
             "aadharRequired": "নিবন্ধনের জন্য আধার নম্বর প্রয়োজন",
@@ -89,7 +95,8 @@
             "title": "কৃষক নিবন্ধন",
             "verificationPendingDesc": "আপনার অ্যাকাউন্ট বর্তমানে প্রশাসকের পর্যালোচনায় আছে।",
             "verificationPendingHint": "অনুগ্রহ করে প্রশাসকের অনুমোদনের জন্য অপেক্ষা করুন। আপনি পরে আপনার অবস্থা পরীক্ষা করতে লগইন করতে পারেন।",
-            "verificationPendingTitle": "যাচাই মুলতুবি"
+            "verificationPendingTitle": "যাচাই মুলতুবি",
+            "successReady": "Your account is ready. You can now login to your dashboard."
         },
         "forgotPin": {
             "aadharLast4Label": "আধারের শেষ 4 সংখ্যা",
@@ -198,7 +205,11 @@
         "thankYou": "আপনার অর্ডারের জন্য ধন্যবাদ",
         "title": "চেকআউট",
         "total": "মোট",
-        "trackOrder": "অর্ডার ট্র্যাক করুন"
+        "trackOrder": "অর্ডার ট্র্যাক করুন",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "common": {
         "back": "ফিরে যান",
@@ -245,7 +256,20 @@
             },
             "trackOrder": "অর্ডার ট্র্যাক করুন",
             "welcome": "স্বাগতম, ক্রেতা",
-            "welcomeDesc": "আপনার অর্ডার পরিচালনা করুন এবং ডেলিভারি ট্র্যাক করুন"
+            "welcomeDesc": "আপনার অর্ডার পরিচালনা করুন এবং ডেলিভারি ট্র্যাক করুন",
+            "raiseIssue": "Raise Issue",
+            "issueType": "Issue Type",
+            "issueDescription": "Description",
+            "issueDescPlaceholder": "Please describe the issue with the order",
+            "issueSubmit": "Submit Issue",
+            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
+            "issueFailed": "Failed to raise issue. Please try again later.",
+            "issueTypes": {
+                "quality": "Quality Problem",
+                "delivery": "Delivery Issue",
+                "quantity": "Quantity Mismatch",
+                "other": "Other"
+            }
         },
         "createFirstListing": "আপনার প্রথম তালিকা তৈরি করুন",
         "date": "তারিখ",
@@ -443,7 +467,11 @@
         "type": "অ্যাকাউন্ট ধরন",
         "verificationPending": "যাচাই মুলতুবি",
         "verified": "যাচাইকৃত",
-        "verifiedFarmer": "যাচাইকৃত কৃষক"
+        "verifiedFarmer": "যাচাইকৃত কৃষক",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "quality": {
         "average": "গড়",
