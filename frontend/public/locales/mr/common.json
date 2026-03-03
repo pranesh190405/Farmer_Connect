@@ -246,39 +246,39 @@
         "adminConsole": "Admin Console",
         "batchMode": "बॅच मोड",
         "buyer": {
-            "browseMarket": "Browse Market",
+            "browseMarket": "बाजार ब्राउझ करा",
             "empty": {
-                "desc": "You don't have any {{status}} orders at the moment.",
-                "startShopping": "Start Shopping",
-                "title": "No {{status}} orders"
+                "desc": "तुमच्याकडे सध्या कोणतेही {{status}} ऑर्डर्स नाहीत.",
+                "startShopping": "खरेदी सुरू करा",
+                "title": "कोणतेही {{status}} ऑर्डर्स नाहीत"
             },
-            "inProgress": "In Progress",
-            "orderId": "Order #",
+            "inProgress": "प्रगतीपथावर",
+            "orderId": "ऑर्डर #",
             "stats": {
-                "activeOrders": "Active Orders",
-                "completed": "Completed",
-                "totalOrders": "Total Orders"
+                "activeOrders": "सक्रिय ऑर्डर्स",
+                "completed": "पूर्ण झाले",
+                "totalOrders": "एकूण ऑर्डर्स"
             },
             "tabs": {
-                "active": "Active Orders",
-                "cancelled": "Cancelled Orders",
-                "completed": "Completed Orders"
+                "active": "सक्रिय ऑर्डर्स",
+                "cancelled": "रद्द केलेले ऑर्डर्स",
+                "completed": "पूर्ण ऑर्डर्स"
             },
-            "trackOrder": "Track Order",
+            "trackOrder": "ऑर्डर ट्रॅक करा",
             "welcome": "स्वागत आहे, खरेदीदार",
             "welcomeDesc": "तुमच्या ऑर्डर्स व्यवस्थापित करा आणि डिलिव्हरी ट्रॅक करा",
-            "raiseIssue": "Raise Issue",
-            "issueType": "Issue Type",
-            "issueDescription": "Description",
-            "issueDescPlaceholder": "Please describe the issue with the order",
-            "issueSubmit": "Submit Issue",
-            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
-            "issueFailed": "Failed to raise issue. Please try again later.",
+            "raiseIssue": "समस्या नोंदवा",
+            "issueType": "समस्येचा प्रकार",
+            "issueDescription": "वर्णन",
+            "issueDescPlaceholder": "कृपया ऑर्डरमधील समस्येचे वर्णन करा",
+            "issueSubmit": "समस्या सबमिट करा",
+            "issueSuccess": "समस्या यशस्वीरित्या नोंदवली गेली. प्रशासक लवकरच त्याचे पुनरावलोकन करतील.",
+            "issueFailed": "समस्या नोंदवण्यात अयशस्वी. कृपया नंतर पुन्हा प्रयत्न करा.",
             "issueTypes": {
-                "quality": "Quality Problem",
-                "delivery": "Delivery Issue",
-                "quantity": "Quantity Mismatch",
-                "other": "Other"
+                "quality": "गुणवत्तेची समस्या",
+                "delivery": "डिलिव्हरीची समस्या",
+                "quantity": "प्रमाणातील तफावत",
+                "other": "इतर"
             }
         },
         "createFirstListing": "तुमची पहिली लिस्टिंग तयार करा",

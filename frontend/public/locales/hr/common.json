@@ -246,39 +246,39 @@
         "adminConsole": "एडमिन कंसोल",
         "batchMode": "बैच मोड",
         "buyer": {
-            "browseMarket": "Browse Market",
+            "browseMarket": "बाज़ार ब्राउज़ करें",
             "empty": {
-                "desc": "You don't have any {{status}} orders at the moment.",
-                "startShopping": "Start Shopping",
-                "title": "No {{status}} orders"
+                "desc": "इस समय आपके पास कोई {{status}} ऑर्डर नहीं है।",
+                "startShopping": "खरीदारी शुरू करें",
+                "title": "कोई {{status}} ऑर्डर नहीं"
             },
-            "inProgress": "In Progress",
-            "orderId": "Order #",
+            "inProgress": "प्रगति पर है",
+            "orderId": "ऑर्डर #",
             "stats": {
-                "activeOrders": "Active Orders",
-                "completed": "Completed",
-                "totalOrders": "Total Orders"
+                "activeOrders": "सक्रिय ऑर्डर",
+                "completed": "पूरी हो चुकी",
+                "totalOrders": "कुल ऑर्डर"
             },
             "tabs": {
-                "active": "Active Orders",
-                "cancelled": "Cancelled Orders",
-                "completed": "Completed Orders"
+                "active": "सक्रिय ऑर्डर",
+                "cancelled": "रद्द किए गए ऑर्डर",
+                "completed": "पूरे किए गए ऑर्डर"
             },
-            "trackOrder": "Track Order",
-            "welcome": "Welcome, Buyer",
-            "welcomeDesc": "Manage your orders and track deliveries",
-            "raiseIssue": "Raise Issue",
-            "issueType": "Issue Type",
-            "issueDescription": "Description",
-            "issueDescPlaceholder": "Please describe the issue with the order",
-            "issueSubmit": "Submit Issue",
-            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
-            "issueFailed": "Failed to raise issue. Please try again later.",
+            "trackOrder": "ऑर्डर ट्रैक करें",
+            "welcome": "स्वागत है, खरीदार",
+            "welcomeDesc": "अपने ऑर्डर प्रबंधित करें और डिलीवरी ट्रैक करें",
+            "raiseIssue": "समस्या दर्ज करें",
+            "issueType": "समस्या का प्रकार",
+            "issueDescription": "विवरण",
+            "issueDescPlaceholder": "कृपया ऑर्डर के साथ समस्या का वर्णन करें",
+            "issueSubmit": "समस्या सबमिट करें",
+            "issueSuccess": "समस्या सफलतापूर्वक दर्ज की गई। व्यवस्थापक जल्द ही इसकी समीक्षा करेंगे।",
+            "issueFailed": "समस्या दर्ज करने में विफल। कृपया बाद में पुनः प्रयास करें।",
             "issueTypes": {
-                "quality": "Quality Problem",
-                "delivery": "Delivery Issue",
-                "quantity": "Quantity Mismatch",
-                "other": "Other"
+                "quality": "गुणवत्ता की समस्या",
+                "delivery": "वितरण समस्या",
+                "quantity": "मात्रा बेमेल",
+                "other": "अन्य"
             }
         },
         "createFirstListing": "पहली लिस्टिंग बणाओ",

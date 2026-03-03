@@ -246,39 +246,39 @@
         "adminConsole": "అడ్మిన్ కన్సోల్",
         "batchMode": "బ్యాచ్ మోడ్",
         "buyer": {
-            "browseMarket": "మార్కెట్ చూడండి",
+            "browseMarket": "మార్కెట్ బ్రౌజ్ చేయండి",
             "empty": {
-                "desc": "ప్రస్తుతం మీకు {{status}} ఆర్డర్లు ఏవీ లేవు.",
+                "desc": "ప్రస్తుతం మీకు ఎలాంటి {{status}} ఆర్డర్‌లు లేవు.",
                 "startShopping": "షాపింగ్ ప్రారంభించండి",
-                "title": "{{status}} ఆర్డర్లు లేవు"
+                "title": "{{status}} ఆర్డర్‌లు లేవు"
             },
-            "inProgress": "ప్రగతిలో ఉంది",
+            "inProgress": "పురోగతిలో ఉంది",
             "orderId": "ఆర్డర్ #",
             "stats": {
-                "activeOrders": "సక్రియ ఆర్డర్లు",
+                "activeOrders": "యాక్టివ్ ఆర్డర్‌లు",
                 "completed": "పూర్తయినవి",
-                "totalOrders": "మొత్తం ఆర్డర్లు"
+                "totalOrders": "మొత్తం ఆర్డర్‌లు"
             },
             "tabs": {
-                "active": "సక్రియ ఆర్డర్లు",
-                "cancelled": "రద్దు చేసిన ఆర్డర్లు",
-                "completed": "పూర్తయిన ఆర్డర్లు"
+                "active": "సక్రియ ఆర్డర్‌లు",
+                "cancelled": "రద్దు చేయబడిన ఆర్డర్‌లు",
+                "completed": "పూర్తయిన ఆర్డర్‌లు"
             },
             "trackOrder": "ఆర్డర్ ట్రాక్ చేయండి",
             "welcome": "స్వాగతం, కొనుగోలుదారు",
-            "welcomeDesc": "మీ ఆర్డర్లను నిర్వహించండి మరియు డెలివరీలను ట్రాక్ చేయండి",
-            "raiseIssue": "Raise Issue",
-            "issueType": "Issue Type",
-            "issueDescription": "Description",
-            "issueDescPlaceholder": "Please describe the issue with the order",
-            "issueSubmit": "Submit Issue",
-            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
-            "issueFailed": "Failed to raise issue. Please try again later.",
+            "welcomeDesc": "మీ ఆర్డర్‌లను నిర్వహించండి మరియు డెలివరీలను ట్రాక్ చేయండి",
+            "raiseIssue": "సమస్యను నివేదించండి",
+            "issueType": "సమస్య రకం",
+            "issueDescription": "వివరణ",
+            "issueDescPlaceholder": "దయచేసి ఆర్డర్‌తో ఉన్న సమస్యను వివరించండి",
+            "issueSubmit": "సమస్యను సమర్పించండి",
+            "issueSuccess": "సమస్య విజయవంతంగా నివేదించబడింది. అడ్మిన్ త్వరలో దీన్ని సమీక్షిస్తారు.",
+            "issueFailed": "సమస్యను నివేదించడంలో విఫలమైంది. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.",
             "issueTypes": {
-                "quality": "Quality Problem",
-                "delivery": "Delivery Issue",
-                "quantity": "Quantity Mismatch",
-                "other": "Other"
+                "quality": "నాణ్యత సమస్య",
+                "delivery": "డెలివరీ సమస్య",
+                "quantity": "పరిమాణం సరిపోలలేదు",
+                "other": "ఇతరం"
             }
         },
         "createFirstListing": "మీ మొదటి జాబితాను సృష్టించండి",

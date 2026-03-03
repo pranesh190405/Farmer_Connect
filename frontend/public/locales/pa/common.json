@@ -246,9 +246,9 @@
         "adminConsole": "ਐਡਮਿਨ ਕੰਸੋਲ",
         "batchMode": "ਬੈਚ ਮੋਡ",
         "buyer": {
-            "browseMarket": "ਮੰਡੀ ਦੇਖੋ",
+            "browseMarket": "ਬਾਜ਼ਾਰ ਬ੍ਰਾਊਜ਼ ਕਰੋ",
             "empty": {
-                "desc": "ਸਾਡੇ ਕੋਲ ਇਸ ਸਮੇਂ ਕੋਈ {{status}} ਆਰਡਰ ਨਹੀਂ ਹਨ।",
+                "desc": "ਇਸ ਸਮੇਂ ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ {{status}} ਆਰਡਰ ਨਹੀਂ ਹੈ।",
                 "startShopping": "ਖਰੀਦਦਾਰੀ ਸ਼ੁਰੂ ਕਰੋ",
                 "title": "ਕੋਈ {{status}} ਆਰਡਰ ਨਹੀਂ"
             },
@@ -256,29 +256,29 @@
             "orderId": "ਆਰਡਰ #",
             "stats": {
                 "activeOrders": "ਸਰਗਰਮ ਆਰਡਰ",
-                "completed": "ਪੂਰੇ ਹੋਏ",
+                "completed": "ਮੁਕੰਮਲ",
                 "totalOrders": "ਕੁੱਲ ਆਰਡਰ"
             },
             "tabs": {
                 "active": "ਸਰਗਰਮ ਆਰਡਰ",
                 "cancelled": "ਰੱਦ ਕੀਤੇ ਆਰਡਰ",
-                "completed": "ਪੂਰੇ ਹੋਏ ਆਰਡਰ"
+                "completed": "ਮੁਕੰਮਲ ਆਰਡਰ"
             },
-            "trackOrder": "ਆਰਡਰ ਟ੍ਰੈਕ ਕਰੋ",
-            "welcome": "ਜੀ ਆਇਆਂ ਨੂੰ, ਖਰੀਦਦਾਰ!",
-            "welcomeDesc": "ਆਪਣੇ ਆਰਡਰ ਪ੍ਰਬੰਧਿਤ ਕਰੋ ਅਤੇ ਡਿਲੀਵਰੀ ਟ੍ਰੈਕ ਕਰੋ",
-            "raiseIssue": "Raise Issue",
-            "issueType": "Issue Type",
-            "issueDescription": "Description",
-            "issueDescPlaceholder": "Please describe the issue with the order",
-            "issueSubmit": "Submit Issue",
-            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
-            "issueFailed": "Failed to raise issue. Please try again later.",
+            "trackOrder": "ਆਰਡਰ ਟਰੈਕ ਕਰੋ",
+            "welcome": "ਜੀ ਆਇਆਂ ਨੂੰ, ਖਰੀਦਦਾਰ",
+            "welcomeDesc": "ਆਪਣੇ ਆਰਡਰ ਪ੍ਰਬੰਧਿਤ ਕਰੋ ਅਤੇ ਡਿਲਿਵਰੀ ਟਰੈਕ ਕਰੋ",
+            "raiseIssue": "ਸਮੱਸਿਆ ਦਰਜ ਕਰੋ",
+            "issueType": "ਸਮੱਸਿਆ ਦੀ ਕਿਸਮ",
+            "issueDescription": "ਵਰਣਨ",
+            "issueDescPlaceholder": "ਕਿਰਪਾ ਕਰਕੇ ਆਰਡਰ ਨਾਲ ਸਮੱਸਿਆ ਦਾ ਵਰਣਨ ਕਰੋ",
+            "issueSubmit": "ਸਮੱਸਿਆ ਦਰਜ ਕਰੋ",
+            "issueSuccess": "ਸਮੱਸਿਆ ਸਫਲਤਾਪੂਰਵਕ ਦਰਜ ਕੀਤੀ ਗਈ। ਐਡਮਿਨ ਜਲਦੀ ਹੀ ਇਸਦੀ ਸਮੀਖਿਆ ਕਰੇਗਾ।",
+            "issueFailed": "ਸਮੱਸਿਆ ਦਰਜ ਕਰਨ ਵਿੱਚ ਅਸਫਲ। ਕਿਰਪਾ ਕਰਕੇ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
             "issueTypes": {
-                "quality": "Quality Problem",
-                "delivery": "Delivery Issue",
-                "quantity": "Quantity Mismatch",
-                "other": "Other"
+                "quality": "ਗੁਣਵੱਤਾ ਦੀ ਸਮੱਸਿਆ",
+                "delivery": "ਡਿਲਿਵਰੀ ਦੀ ਸਮੱਸਿਆ",
+                "quantity": "ਮਾਤਰਾ ਬੇਮੇਲ",
+                "other": "ਹੋਰ"
             }
         },
         "createFirstListing": "ਆਪਣੀ ਪਹਿਲੀ ਸੂਚੀ ਬਣਾਓ",

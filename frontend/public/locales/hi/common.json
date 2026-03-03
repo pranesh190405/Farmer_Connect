@@ -246,39 +246,39 @@
         "adminConsole": "व्यवस्थापक कंसोल",
         "batchMode": "बैच मोड",
         "buyer": {
-            "browseMarket": "बाज़ार देखें",
+            "browseMarket": "बाज़ार ब्राउज़ करें",
             "empty": {
-                "desc": "आपके पास इस समय कोई {{status}} ऑर्डर नहीं है।",
+                "desc": "इस समय आपके पास कोई {{status}} ऑर्डर नहीं है।",
                 "startShopping": "खरीदारी शुरू करें",
                 "title": "कोई {{status}} ऑर्डर नहीं"
             },
-            "inProgress": "प्रगति में",
+            "inProgress": "प्रगति पर है",
             "orderId": "ऑर्डर #",
             "stats": {
                 "activeOrders": "सक्रिय ऑर्डर",
-                "completed": "पूर्ण",
+                "completed": "पूरी हो चुकी",
                 "totalOrders": "कुल ऑर्डर"
             },
             "tabs": {
                 "active": "सक्रिय ऑर्डर",
-                "cancelled": "रद्द ऑर्डर",
-                "completed": "पूर्ण ऑर्डर"
+                "cancelled": "रद्द किए गए ऑर्डर",
+                "completed": "पूरे किए गए ऑर्डर"
             },
             "trackOrder": "ऑर्डर ट्रैक करें",
             "welcome": "स्वागत है, खरीदार",
             "welcomeDesc": "अपने ऑर्डर प्रबंधित करें और डिलीवरी ट्रैक करें",
-            "raiseIssue": "Raise Issue",
-            "issueType": "Issue Type",
-            "issueDescription": "Description",
-            "issueDescPlaceholder": "Please describe the issue with the order",
-            "issueSubmit": "Submit Issue",
-            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
-            "issueFailed": "Failed to raise issue. Please try again later.",
+            "raiseIssue": "समस्या दर्ज करें",
+            "issueType": "समस्या का प्रकार",
+            "issueDescription": "विवरण",
+            "issueDescPlaceholder": "कृपया ऑर्डर के साथ समस्या का वर्णन करें",
+            "issueSubmit": "समस्या सबमिट करें",
+            "issueSuccess": "समस्या सफलतापूर्वक दर्ज की गई। व्यवस्थापक जल्द ही इसकी समीक्षा करेंगे।",
+            "issueFailed": "समस्या दर्ज करने में विफल। कृपया बाद में पुनः प्रयास करें।",
             "issueTypes": {
-                "quality": "Quality Problem",
-                "delivery": "Delivery Issue",
-                "quantity": "Quantity Mismatch",
-                "other": "Other"
+                "quality": "गुणवत्ता की समस्या",
+                "delivery": "वितरण समस्या",
+                "quantity": "मात्रा बेमेल",
+                "other": "अन्य"
             }
         },
         "createFirstListing": "अपनी पहली लिस्टिंग बनाएं",

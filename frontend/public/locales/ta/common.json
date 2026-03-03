@@ -246,39 +246,39 @@
         "adminConsole": "நிர்வாகி கன்சோல்",
         "batchMode": "பேட்ச் முறை",
         "buyer": {
-            "browseMarket": "Browse Market",
+            "browseMarket": "சந்தையை உலாவுக",
             "empty": {
-                "desc": "You don't have any {{status}} orders at the moment.",
-                "startShopping": "Start Shopping",
-                "title": "No {{status}} orders"
+                "desc": "தற்போது உங்களிடம் {{status}} ஆர்டர்கள் எதுவும் இல்லை.",
+                "startShopping": "ஷாப்பிங் தொடங்கவும்",
+                "title": "{{status}} ஆர்டர்கள் இல்லை"
             },
-            "inProgress": "In Progress",
-            "orderId": "Order #",
+            "inProgress": "செயலில் உள்ளது",
+            "orderId": "ஆர்டர் #",
             "stats": {
-                "activeOrders": "Active Orders",
-                "completed": "Completed",
-                "totalOrders": "Total Orders"
+                "activeOrders": "செயலில் உள்ள ஆர்டர்கள்",
+                "completed": "முடிந்தவை",
+                "totalOrders": "மொத்த ஆர்டர்கள்"
             },
             "tabs": {
-                "active": "Active Orders",
-                "cancelled": "Cancelled Orders",
-                "completed": "Completed Orders"
+                "active": "செயலில் உள்ள ஆர்டர்கள்",
+                "cancelled": "ரத்து செய்யப்பட்ட ஆர்டர்கள்",
+                "completed": "முடிந்த ஆர்டர்கள்"
             },
-            "trackOrder": "Track Order",
+            "trackOrder": "ஆர்டரைக் கண்காணிக்கவும்",
             "welcome": "வரவேற்கிறோம், வாங்குபவர்",
             "welcomeDesc": "உங்கள் ஆர்டர்களை நிர்வகிக்கவும் மற்றும் விநியோகங்களை கண்காணிக்கவும்",
-            "raiseIssue": "Raise Issue",
-            "issueType": "Issue Type",
-            "issueDescription": "Description",
-            "issueDescPlaceholder": "Please describe the issue with the order",
-            "issueSubmit": "Submit Issue",
-            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
-            "issueFailed": "Failed to raise issue. Please try again later.",
+            "raiseIssue": "சிக்கலை எழுப்பு",
+            "issueType": "சிக்கல் வகை",
+            "issueDescription": "விளக்கம்",
+            "issueDescPlaceholder": "ஆர்டரில் உள்ள சிக்கலை விவரிக்கவும்",
+            "issueSubmit": "சிக்கலை சமர்ப்பி",
+            "issueSuccess": "சிக்கல் வெற்றிகரமாக எழுப்பப்பட்டது. நிர்வாகி விரைவில் மதிப்பாய்வு செய்வார்.",
+            "issueFailed": "சிக்கலை எழுப்ப முடியவில்லை. பின்னர் மீண்டும் முயற்சிக்கவும்.",
             "issueTypes": {
-                "quality": "Quality Problem",
-                "delivery": "Delivery Issue",
-                "quantity": "Quantity Mismatch",
-                "other": "Other"
+                "quality": "தர சிக்கல்",
+                "delivery": "விநியோக சிக்கல்",
+                "quantity": "அளவு பொருந்தவில்லை",
+                "other": "மற்றவை"
             }
         },
         "createFirstListing": "உங்கள் முதல் பட்டியலை உருவாக்கவும்",

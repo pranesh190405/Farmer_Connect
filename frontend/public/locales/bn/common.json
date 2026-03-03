@@ -246,10 +246,10 @@
         "adminConsole": "অ্যাডমিন কনসোল",
         "batchMode": "ব্যাচ মোড",
         "buyer": {
-            "browseMarket": "বাজার ব্রাউজ করুন",
+            "browseMarket": "মার্কেট ব্রাউজ করুন",
             "empty": {
-                "desc": "আপনার এই মুহূর্তে কোনো {{status}} অর্ডার নেই।",
-                "startShopping": "কেনাকাটা শুরু করুন",
+                "desc": "এই মুহূর্তে আপনার কোনো {{status}} অর্ডার নেই।",
+                "startShopping": "শপিং শুরু করুন",
                 "title": "কোনো {{status}} অর্ডার নেই"
             },
             "inProgress": "চলমান",
@@ -267,18 +267,18 @@
             "trackOrder": "অর্ডার ট্র্যাক করুন",
             "welcome": "স্বাগতম, ক্রেতা",
             "welcomeDesc": "আপনার অর্ডার পরিচালনা করুন এবং ডেলিভারি ট্র্যাক করুন",
-            "raiseIssue": "Raise Issue",
-            "issueType": "Issue Type",
-            "issueDescription": "Description",
-            "issueDescPlaceholder": "Please describe the issue with the order",
-            "issueSubmit": "Submit Issue",
-            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
-            "issueFailed": "Failed to raise issue. Please try again later.",
+            "raiseIssue": "সমস্যা রিপোর্ট করুন",
+            "issueType": "সমস্যার ধরন",
+            "issueDescription": "বিবরণ",
+            "issueDescPlaceholder": "অনুগ্রহ করে অর্ডারের সমস্যাটি বর্ণনা করুন",
+            "issueSubmit": "সমস্যা জমা দিন",
+            "issueSuccess": "সমস্যা সফলভাবে রিপোর্ট করা হয়েছে। অ্যাডমিন শীঘ্রই এটি পর্যালোচনা করবেন।",
+            "issueFailed": "সমস্যা রিপোর্ট করতে ব্যর্থ। অনুগ্রহ করে পরে আবার চেষ্টা করুন।",
             "issueTypes": {
-                "quality": "Quality Problem",
-                "delivery": "Delivery Issue",
-                "quantity": "Quantity Mismatch",
-                "other": "Other"
+                "quality": "মানের সমস্যা",
+                "delivery": "ডেলিভারি সমস্যা",
+                "quantity": "পরিমাণ অমিল",
+                "other": "অন্যান্য"
             }
         },
         "createFirstListing": "আপনার প্রথম তালিকা তৈরি করুন",

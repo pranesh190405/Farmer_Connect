@@ -246,39 +246,39 @@
         "adminConsole": "Admin Console",
         "batchMode": "ಬ್ಯಾಚ್ ಮೋಡ್",
         "buyer": {
-            "browseMarket": "Browse Market",
+            "browseMarket": "ಮಾರುಕಟ್ಟೆ ಬ್ರೌಸ್ ಮಾಡಿ",
             "empty": {
-                "desc": "You don't have any {{status}} orders at the moment.",
-                "startShopping": "Start Shopping",
-                "title": "No {{status}} orders"
+                "desc": "ಪ್ರಸ್ತುತ ನಿಮ್ಮಲ್ಲಿ ಯಾವುದೇ {{status}} ಆದೇಶಗಳಿಲ್ಲ.",
+                "startShopping": "ಶಾಪಿಂಗ್ ಪ್ರಾರಂಭಿಸಿ",
+                "title": "ಯಾವುದೇ {{status}} ಆದೇಶಗಳಿಲ್ಲ"
             },
-            "inProgress": "In Progress",
-            "orderId": "Order #",
+            "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
+            "orderId": "ಆದೇಶ #",
             "stats": {
-                "activeOrders": "Active Orders",
-                "completed": "Completed",
-                "totalOrders": "Total Orders"
+                "activeOrders": "ಸಕ್ರಿಯ ಆದೇಶಗಳು",
+                "completed": "ಪೂರ್ಣಗೊಂಡಿದೆ",
+                "totalOrders": "ಒಟ್ಟು ಆದೇಶಗಳು"
             },
             "tabs": {
-                "active": "Active Orders",
-                "cancelled": "Cancelled Orders",
-                "completed": "Completed Orders"
+                "active": "ಸಕ್ರಿಯ ಆದೇಶಗಳು",
+                "cancelled": "ರದ್ದುಗೊಳಿಸಿದ ಆದೇಶಗಳು",
+                "completed": "ಪೂರ್ಣಗೊಂಡ ಆದೇಶಗಳು"
             },
-            "trackOrder": "Track Order",
+            "trackOrder": "ಆದೇಶವನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
             "welcome": "ಸ್ವಾಗತ, ಖರೀದಿದಾರ",
             "welcomeDesc": "ನಿಮ್ಮ ಆದೇಶಗಳನ್ನು ನಿರ್ವಹಿಸಿ ಮತ್ತು ವಿತರಣೆಗಳನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
-            "raiseIssue": "Raise Issue",
-            "issueType": "Issue Type",
-            "issueDescription": "Description",
-            "issueDescPlaceholder": "Please describe the issue with the order",
-            "issueSubmit": "Submit Issue",
-            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
-            "issueFailed": "Failed to raise issue. Please try again later.",
+            "raiseIssue": "ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಿ",
+            "issueType": "ಸಮಸ್ಯೆಯ ಪ್ರಕಾರ",
+            "issueDescription": "ವಿವರಣೆ",
+            "issueDescPlaceholder": "ದಯವಿಟ್ಟು ಆದೇಶದೊಂದಿಗೆ ಇರುವ ಸಮಸ್ಯೆಯನ್ನು ವಿವರಿಸಿ",
+            "issueSubmit": "ಸಮಸ್ಯೆಯನ್ನು ಸಲ್ಲಿಸಿ",
+            "issueSuccess": "ಸಮಸ್ಯೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ವರದಿ ಮಾಡಲಾಗಿದೆ. ನಿರ್ವಾಹಕರು ಶೀಘ್ರದಲ್ಲೇ ಪರಿಶೀಲಿಸುತ್ತಾರೆ.",
+            "issueFailed": "ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
             "issueTypes": {
-                "quality": "Quality Problem",
-                "delivery": "Delivery Issue",
-                "quantity": "Quantity Mismatch",
-                "other": "Other"
+                "quality": "ಗುಣಮಟ್ಟದ ಸಮಸ್ಯೆ",
+                "delivery": "ವಿತರಣಾ ಸಮಸ್ಯೆ",
+                "quantity": "ಪ್ರಮಾಣ ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ",
+                "other": "ಇತರೆ"
             }
         },
         "createFirstListing": "ನಿಮ್ಮ ಮೊದಲ ಪಟ್ಟಿ ರಚಿಸಿ",
