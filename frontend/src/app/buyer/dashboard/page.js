@@ -84,11 +84,11 @@ export default function BuyerDashboard() {
                 issueType,
                 description: issueDescription
             });
-            toast.success('Issue raised successfully. Admin will review it shortly.');
+            toast.success(t('dashboard.buyer.issueSuccess'));
             setIsIssueModalOpen(false);
         } catch (error) {
             console.error('Failed to raise issue:', error);
-            toast.error('Failed to raise issue. Please try again later.');
+            toast.error(t('dashboard.buyer.issueFailed'));
         } finally {
             setIsSubmittingIssue(false);
         }
@@ -232,7 +232,7 @@ export default function BuyerDashboard() {
                                                         onClick={() => handleOpenIssueModal(order.id)}
                                                         className="w-full flex items-center justify-center gap-1 text-sm font-medium text-red-600 hover:text-red-700 py-1.5 px-3 rounded-lg border border-red-200 hover:bg-red-50 transition-colors"
                                                     >
-                                                        Raise Issue
+                                                        {t('dashboard.buyer.raiseIssue')}
                                                     </button>
                                                 )}
                                             </div>
@@ -250,7 +250,7 @@ export default function BuyerDashboard() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
                     <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
                         <div className="flex justify-between items-center mb-5">
-                            <h3 className="text-xl font-bold text-gray-900">Raise Issue</h3>
+                            <h3 className="text-xl font-bold text-gray-900">{t('dashboard.buyer.raiseIssue')}</h3>
                             <button onClick={() => setIsIssueModalOpen(false)} className="text-gray-400 hover:text-gray-600 p-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                             </button>
@@ -258,24 +258,24 @@ export default function BuyerDashboard() {
 
                         <form onSubmit={handleSubmitIssue} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Issue Type</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('dashboard.buyer.issueType')}</label>
                                 <select
                                     className="w-full border border-gray-300 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                     value={issueType}
                                     onChange={(e) => setIssueType(e.target.value)}
                                 >
-                                    <option value="QUALITY">Quality Problem</option>
-                                    <option value="DELIVERY">Delivery Issue</option>
-                                    <option value="QUANTITY">Quantity Mismatch</option>
-                                    <option value="OTHER">Other</option>
+                                    <option value="QUALITY">{t('dashboard.buyer.issueTypes.quality')}</option>
+                                    <option value="DELIVERY">{t('dashboard.buyer.issueTypes.delivery')}</option>
+                                    <option value="QUANTITY">{t('dashboard.buyer.issueTypes.quantity')}</option>
+                                    <option value="OTHER">{t('dashboard.buyer.issueTypes.other')}</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">{t('dashboard.buyer.issueDescription')}</label>
                                 <textarea
                                     className="w-full border border-gray-300 rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none min-h-[120px]"
-                                    placeholder="Please describe the issue with order #"
+                                    placeholder={t('dashboard.buyer.issueDescPlaceholder')}
                                     value={issueDescription}
                                     onChange={(e) => setIssueDescription(e.target.value)}
                                     required
@@ -288,7 +288,7 @@ export default function BuyerDashboard() {
                                     onClick={() => setIsIssueModalOpen(false)}
                                     className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
                                 >
-                                    Cancel
+                                    {t('common.cancel')}
                                 </button>
                                 <button
                                     type="submit"
@@ -298,7 +298,7 @@ export default function BuyerDashboard() {
                                     {isSubmittingIssue ? (
                                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                     ) : (
-                                        'Submit Issue'
+                                        t('dashboard.buyer.issueSubmit')
                                     )}
                                 </button>
                             </div>
