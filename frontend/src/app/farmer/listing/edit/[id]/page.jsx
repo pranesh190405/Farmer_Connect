@@ -50,6 +50,8 @@ export default function EditListingPage({ params }) {
         quality: { size: 50, freshness: 80, ripeness: 60 }
     });
 
+    const [initialFormData, setInitialFormData] = useState(null);
+
     useEffect(() => {
         if (id) {
             fetchListingDetails();
@@ -77,7 +79,7 @@ export default function EditListingPage({ params }) {
                 const price = listing.price.replace(/[^\d.]/g, '');
                 const minQty = listing.minQty.replace(/\D/g, '');
 
-                setFormData({
+                const data = {
                     crop: cropName,
                     category: listing.category || '',
                     variety: variety,
@@ -85,7 +87,10 @@ export default function EditListingPage({ params }) {
                     price: price,
                     minQty: minQty,
                     quality: listing.quality || { size: 50, freshness: 80, ripeness: 60 }
-                });
+                };
+
+                setFormData(data);
+                setInitialFormData(data);
             } else {
                 showToast('Listing not found', 'error');
                 router.push('/farmer/dashboard');
@@ -221,7 +226,12 @@ export default function EditListingPage({ params }) {
                         <Button type="button" variant="outline" fullWidth onClick={() => router.back()}>
                             {t('common.cancel') || 'Cancel'}
                         </Button>
-                        <Button type="submit" fullWidth isLoading={isLoading} disabled={isLoading}>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            isLoading={isLoading}
+                            disabled={isLoading || (initialFormData && JSON.stringify(formData) === JSON.stringify(initialFormData))}
+                        >
                             {isLoading ? t('listing.edit.saving') || 'Saving...' : t('listing.edit.saveButton') || 'Save Changes'}
                         </Button>
                     </div>

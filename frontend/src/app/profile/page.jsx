@@ -106,6 +106,11 @@ export default function ProfileSettingsPage() {
     const [locationLoading, setLocationLoading] = useState(false);
     const [profileLoading, setProfileLoading] = useState(true);
 
+    const [initialUser, setInitialUser] = useState(null);
+    const [initialLocation, setInitialLocation] = useState(null);
+    const [initialPreferences, setInitialPreferences] = useState(null);
+    const [initialPrivacy, setInitialPrivacy] = useState(null);
+
     useEffect(() => {
         if (!isAuthenticated) router.push('/login');
     }, [isAuthenticated, router]);
@@ -117,27 +122,43 @@ export default function ProfileSettingsPage() {
                 const profile = await ApiService.getProfile();
                 if (profile) {
                     // Populate location from saved data
-                    setLocation({
+                    const locData = {
                         state: profile.location?.state || '',
                         district: profile.location?.district || '',
                         lat: profile.location?.lat || null,
                         lng: profile.location?.lng || null,
                         autoDetect: false,
-                    });
+                    };
+                    setLocation(locData);
+                    setInitialLocation(locData);
 
                     // Populate preferences from saved data
-                    setPreferences({
+                    const prefData = {
                         cropInterests: profile.preferences?.cropInterests || [],
                         smsAlerts: profile.preferences?.smsAlerts !== undefined ? profile.preferences.smsAlerts : true,
                         priceAlerts: profile.preferences?.priceAlerts !== undefined ? profile.preferences.priceAlerts : true,
-                    });
+                    };
+                    setPreferences(prefData);
+                    setInitialPreferences(prefData);
 
                     // Populate privacy from saved data
-                    setPrivacy({
+                    const privData = {
                         profilePublic: profile.preferences?.profilePublic !== undefined ? profile.preferences.profilePublic : true,
                         showLocation: profile.preferences?.showLocation !== undefined ? profile.preferences.showLocation : true,
                         showContact: profile.preferences?.showContact !== undefined ? profile.preferences.showContact : false,
-                    });
+                    };
+                    setPrivacy(privData);
+                    setInitialPrivacy(privData);
+
+                    const userData = {
+                        name: profile.name || authUser?.name || '',
+                        mobile: profile.mobile || authUser?.mobile || '',
+                        userType: profile.type || authUser?.type || 'farmer',
+                        aadharNumber: profile.aadharNumber || authUser?.aadharNumber || '',
+                        aadharVerified: profile.aadharVerified || authUser?.aadharVerified || false
+                    };
+                    setUser(userData);
+                    setInitialUser(userData);
                 }
             } catch (err) {
                 console.error('Failed to load profile:', err);
@@ -242,6 +263,12 @@ export default function ProfileSettingsPage() {
                 showLocation: privacy.showLocation,
                 showContact: privacy.showContact,
             });
+
+            // Update initial state to match the freshly saved ones
+            setInitialUser({ ...user });
+            setInitialLocation({ ...location });
+            setInitialPreferences({ ...preferences });
+            setInitialPrivacy({ ...privacy });
 
             setSaved(true);
             setTimeout(() => setSaved(false), 3000);
@@ -467,9 +494,26 @@ export default function ProfileSettingsPage() {
                     {/* Save Button */}
                     <div className="mt-6 pt-6 border-t border-gray-100">
                         <div className="flex flex-col gap-3">
-                            <Button onClick={handleSave} isLoading={isSaving} fullWidth className="shadow-lg">
-                                {saved ? `✓ ${t('profile.changesSaved') || 'Changes Saved'}` : t('profile.saveChanges') || 'Save Changes'}
-                            </Button>
+                            {(() => {
+                                const hasChanges = initialUser ? (
+                                    JSON.stringify(user) !== JSON.stringify(initialUser) ||
+                                    JSON.stringify(location) !== JSON.stringify(initialLocation) ||
+                                    JSON.stringify(preferences) !== JSON.stringify(initialPreferences) ||
+                                    JSON.stringify(privacy) !== JSON.stringify(initialPrivacy)
+                                ) : false;
+
+                                return (
+                                    <Button
+                                        onClick={handleSave}
+                                        isLoading={isSaving}
+                                        disabled={!hasChanges && !saved}
+                                        fullWidth
+                                        className="shadow-lg"
+                                    >
+                                        {saved ? `✓ ${t('profile.changesSaved') || 'Changes Saved'}` : t('profile.saveChanges') || 'Save Changes'}
+                                    </Button>
+                                );
+                            })()}
                             <Button onClick={handleLogout} variant="danger" fullWidth>
                                 <LogOut className="w-4 h-4 mr-2" />
                                 {t('profile.logout') || 'Logout'}
