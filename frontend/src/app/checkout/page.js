@@ -85,7 +85,7 @@ export default function CheckoutPage() {
             toast.success(t('checkout.orderPlaced'));
         } catch (err) {
             console.error('Place order failed:', err);
-            toast.error(err.message || 'Failed to place order. Please try again.');
+            toast.error(err.message || t('checkout.orderFailed'));
         } finally {
             setLoading(false);
         }
@@ -205,8 +205,8 @@ export default function CheckoutPage() {
                                                 <CreditCard className="w-5 h-5 text-green-600" />
                                             </div>
                                             <div>
-                                                <p className="font-bold text-gray-900">Pay on Collection / Delivery</p>
-                                                <p className="text-sm text-gray-500">Pay when you collect or receive your order</p>
+                                                <p className="font-bold text-gray-900">{t('checkout.payOnCollection')}</p>
+                                                <p className="text-sm text-gray-500">{t('checkout.payOnCollectionDesc')}</p>
                                             </div>
                                         </div>
                                     </label>
@@ -214,7 +214,7 @@ export default function CheckoutPage() {
                                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-start gap-2">
                                         <AlertTriangle className="w-5 h-5 text-yellow-600 shrink-0 mt-0.5" />
                                         <p className="text-sm text-yellow-800">
-                                            Amount is to be paid just before collecting the order and not before.
+                                            {t('checkout.paymentWarning')}
                                         </p>
                                     </div>
 
