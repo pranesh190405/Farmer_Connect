@@ -272,7 +272,7 @@ export default function FarmerRegisterPage() {
                 <p className={styles.subtitle}>{t('auth.farmer.successMessage')}</p>
             </div>
             <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
-                <p className="text-sm text-green-800 text-center">Your account is ready. You can now login to your dashboard.</p>
+                <p className="text-sm text-green-800 text-center">{t('auth.farmer.successReady')}</p>
             </div>
             <Button
                 onClick={() => { dispatch(resetAuthFlow()); router.push('/login'); }}

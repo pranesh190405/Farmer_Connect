@@ -111,10 +111,10 @@ export default function BuyerRegisterPage() {
     // Validate business info
     const validateBusinessInfo = () => {
         const newErrors = {};
-        if (!formData.businessName.trim()) newErrors.businessName = 'Business name is required';
-        if (!formData.taxId.trim()) newErrors.taxId = 'Tax ID / GST Number is required';
-        if (!formData.category) newErrors.category = 'Please select a business category';
-        if (!formData.contactName.trim()) newErrors.contactName = 'Contact person name is required';
+        if (!formData.businessName.trim()) newErrors.businessName = t('auth.buyer.errors.businessNameRequired');
+        if (!formData.taxId.trim()) newErrors.taxId = t('auth.buyer.errors.taxIdRequired');
+        if (!formData.category) newErrors.category = t('auth.buyer.errors.categoryRequired');
+        if (!formData.contactName.trim()) newErrors.contactName = t('auth.buyer.errors.contactNameRequired');
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -315,7 +315,7 @@ export default function BuyerRegisterPage() {
                 <p className={styles.subtitle}>{t('auth.farmer.successMessage')}</p>
             </div>
             <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
-                <p className="text-sm text-green-800 text-center">Your account is ready. You can now login to your dashboard.</p>
+                <p className="text-sm text-green-800 text-center">{t('auth.farmer.successReady')}</p>
             </div>
             <Button onClick={() => { dispatch(resetAuthFlow()); router.push('/login'); }}
                 fullWidth>
