@@ -64,7 +64,17 @@
                 "taxIdRequired": "Tax ID / GST Number is required",
                 "categoryRequired": "Please select a business category",
                 "contactNameRequired": "Contact person name is required"
-            }
+            },
+            "mobileLabel": "மொபைல் எண்",
+            "mobilePlaceholder": "10 இலக்க மொபைல் எண்ணை உள்ளிடவும்",
+            "aadharTitle": "அடையாள சரிபார்ப்பு",
+            "aadharSubtitle": "சரிபார்ப்புக்கு உங்கள் ஆதார் எண்ணை உள்ளிடவும்",
+            "aadharLabel": "ஆதார் எண்",
+            "aadharPlaceholder": "12 இலக்க ஆதார் எண்ணை உள்ளிடவும்",
+            "success": "கணக்கு உருவாக்கப்பட்டது!",
+            "successMessage": "டிஜிட்டல் வேளாண் சந்தைக்கு வரவேற்கிறோம்",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "உள்நுழைவுக்குத் திரும்பு"
         },
         "errors": {
             "aadharRequired": "பதிவுக்கு ஆதார் எண் தேவை",
@@ -255,8 +265,8 @@
                 "completed": "Completed Orders"
             },
             "trackOrder": "Track Order",
-            "welcome": "Welcome, Buyer",
-            "welcomeDesc": "Manage your orders and track deliveries",
+            "welcome": "வரவேற்கிறோம், வாங்குபவர்",
+            "welcomeDesc": "உங்கள் ஆர்டர்களை நிர்வகிக்கவும் மற்றும் விநியோகங்களை கண்காணிக்கவும்",
             "raiseIssue": "Raise Issue",
             "issueType": "Issue Type",
             "issueDescription": "Description",

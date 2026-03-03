@@ -64,7 +64,17 @@
                 "taxIdRequired": "Tax ID / GST Number is required",
                 "categoryRequired": "Please select a business category",
                 "contactNameRequired": "Contact person name is required"
-            }
+            },
+            "mobileLabel": "మొబైల్ నంబర్",
+            "mobilePlaceholder": "మీ 10-అంకెల మొబైల్ నంబర్ నమోదు చేయండి",
+            "aadharTitle": "గుర్తింపు ధృవీకరణ",
+            "aadharSubtitle": "ధృవీకరణ కోసం మీ ఆధార్ నంబర్ నమోదు చేయండి",
+            "aadharLabel": "ఆధార్ నంబర్",
+            "aadharPlaceholder": "12-అంకెల ఆధార్ నంబర్ నమోదు చేయండి",
+            "success": "ఖాతా సృష్టించబడింది!",
+            "successMessage": "డిజిటల్ వ్యవసాయ మార్కెట్‌కి స్వాగతం",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "లాగిన్‌కి తిరిగి వెళ్లండి"
         },
         "errors": {
             "aadharRequired": "నమోదు కోసం ఆధార్ నంబర్ అవసరం",

@@ -165,7 +165,17 @@
                 "taxIdRequired": "Tax ID / GST Number is required",
                 "categoryRequired": "Please select a business category",
                 "contactNameRequired": "Contact person name is required"
-            }
+            },
+            "mobileLabel": "Mobile Number",
+            "mobilePlaceholder": "Enter your 10-digit mobile",
+            "aadharTitle": "Identity Verification",
+            "aadharSubtitle": "Enter your Aadhaar number for verification",
+            "aadharLabel": "Aadhaar Number",
+            "aadharPlaceholder": "Enter your 12-digit Aadhaar",
+            "success": "Account Created!",
+            "successMessage": "Welcome to Digital Agri Market",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "Back to Login"
         },
         "login": {
             "welcome": "Welcome Back",

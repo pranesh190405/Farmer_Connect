@@ -64,7 +64,17 @@
                 "taxIdRequired": "Tax ID / GST Number is required",
                 "categoryRequired": "Please select a business category",
                 "contactNameRequired": "Contact person name is required"
-            }
+            },
+            "mobileLabel": "মোবাইল নম্বর",
+            "mobilePlaceholder": "আপনার 10-সংখ্যার মোবাইল নম্বর লিখুন",
+            "aadharTitle": "পরিচয় যাচাইকরণ",
+            "aadharSubtitle": "যাচাইকরণের জন্য আপনার আধার নম্বর লিখুন",
+            "aadharLabel": "আধার নম্বর",
+            "aadharPlaceholder": "আপনার 12-সংখ্যার আধার নম্বর লিখুন",
+            "success": "অ্যাকাউন্ট তৈরি হয়েছে!",
+            "successMessage": "ডিজিটাল কৃষি বাজারে স্বাগতম",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "লগইনে ফিরে যান"
         },
         "errors": {
             "aadharRequired": "নিবন্ধনের জন্য আধার নম্বর প্রয়োজন",

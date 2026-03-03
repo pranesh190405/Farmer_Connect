@@ -287,7 +287,7 @@ export default function ProfileSettingsPage() {
                         {user.aadharVerified ? (
                             <div className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium text-sm">
                                 <ShieldCheck className="w-4 h-4" />
-                                {t('profile.verifiedFarmer') || 'Verified Farmer'}
+                                {user.userType === 'buyer' ? (t('profile.verifiedBuyer') || 'Verified Buyer') : (t('profile.verifiedFarmer') || 'Verified Farmer')}
                             </div>
                         ) : (
                             <div className="flex items-center gap-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full font-medium text-sm">

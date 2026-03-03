@@ -64,7 +64,17 @@
                 "taxIdRequired": "Tax ID / GST Number is required",
                 "categoryRequired": "Please select a business category",
                 "contactNameRequired": "Contact person name is required"
-            }
+            },
+            "mobileLabel": "ਮੋਬਾਈਲ ਨੰਬਰ",
+            "mobilePlaceholder": "ਆਪਣਾ 10-ਅੰਕਾਂ ਦਾ ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ",
+            "aadharTitle": "Identity Verification",
+            "aadharSubtitle": "Enter your Aadhar for verification",
+            "aadharLabel": "ਆਧਾਰ ਨੰਬਰ",
+            "aadharPlaceholder": "Enter your 12-digit Aadhar",
+            "success": "ਖਾਤਾ ਬਣਾਇਆ ਗਿਆ!",
+            "successMessage": "ਡਿਜੀਟਲ ਖੇਤੀ ਮੰਡੀ ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "ਲੌਗਇਨ 'ਤੇ ਵਾਪਸ ਜਾਓ"
         },
         "errors": {
             "aadharRequired": "Aadhar number is required for registration",

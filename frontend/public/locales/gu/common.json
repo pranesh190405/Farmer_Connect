@@ -64,7 +64,17 @@
                 "taxIdRequired": "Tax ID / GST Number is required",
                 "categoryRequired": "Please select a business category",
                 "contactNameRequired": "Contact person name is required"
-            }
+            },
+            "mobileLabel": "મોબાઇલ નંબર",
+            "mobilePlaceholder": "તમારો 10-અંકનો મોબાઇલ નંબર દાખલ કરો",
+            "aadharTitle": "Identity Verification",
+            "aadharSubtitle": "Enter your Aadhar for verification",
+            "aadharLabel": "આધાર નંબર",
+            "aadharPlaceholder": "Enter your 12-digit Aadhar",
+            "success": "ખાતું બનાવવામાં આવ્યું!",
+            "successMessage": "ડિજિટલ કૃષિ બજારમાં આપનું સ્વાગત છે",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "લૉગિન પર પાછા જાઓ"
         },
         "errors": {
             "aadharRequired": "Aadhar number is required for registration",
@@ -255,8 +265,8 @@
                 "completed": "Completed Orders"
             },
             "trackOrder": "Track Order",
-            "welcome": "Welcome, Buyer",
-            "welcomeDesc": "Manage your orders and track deliveries",
+            "welcome": "સ્વાગત છે, ખરીદનાર",
+            "welcomeDesc": "તમારા ઓર્ડર્સ મેનેજ કરો અને ડિલિવરી ટ્રેક કરો",
             "raiseIssue": "Raise Issue",
             "issueType": "Issue Type",
             "issueDescription": "Description",

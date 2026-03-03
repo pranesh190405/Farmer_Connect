@@ -64,7 +64,17 @@
                 "taxIdRequired": "Tax ID / GST Number is required",
                 "categoryRequired": "Please select a business category",
                 "contactNameRequired": "Contact person name is required"
-            }
+            },
+            "mobileLabel": "मोबाइल नंबर",
+            "mobilePlaceholder": "अपना 10 अंकों का मोबाइल नंबर दर्ज करें",
+            "aadharTitle": "पहचान सत्यापन",
+            "aadharSubtitle": "सत्यापन के लिए अपना आधार नंबर दर्ज करें",
+            "aadharLabel": "आधार नंबर",
+            "aadharPlaceholder": "अपना 12 अंकों का आधार नंबर दर्ज करें",
+            "success": "खाता बन गया!",
+            "successMessage": "डिजिटल कृषि बाज़ार में आपका स्वागत है",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "लॉगिन पर वापस जाएं"
         },
         "errors": {
             "aadharRequired": "पंजीकरण के लिए आधार नंबर आवश्यक है",
