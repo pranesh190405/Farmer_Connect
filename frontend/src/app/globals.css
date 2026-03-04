@@ -6,28 +6,32 @@
    ======================================== */
 
 :root {
-  /* Primary Colors - Agricultural Theme */
-  --color-primary: #16a34a;
-  /* Green - Main brand */
-  --color-primary-dark: #15803d;
-  --color-primary-light: #22c55e;
+  /* Primary Colors - Forest & Gold Theme */
+  --color-primary: #10b981;
+  /* Emerald - Main brand */
+  --color-primary-dark: #065f46;
+  --color-primary-light: #34d399;
+
+  /* Accent Colors - Gold */
+  --color-accent: #d97706;
+  --color-accent-light: #fbbf24;
 
   /* Status Colors */
-  --color-success: #16a34a;
-  /* Green - Sold/High Demand */
-  --color-warning: #eab308;
-  /* Yellow - Pending */
+  --color-success: #10b981;
+  /* Emerald - Sold/High Demand */
+  --color-warning: #d97706;
+  /* Gold - Pending */
   --color-danger: #dc2626;
   /* Red - Action Required */
   --color-info: #0ea5e9;
   /* Blue - Info */
 
-  /* Neutral Colors */
-  --background: #ffffff;
-  --foreground: #171717;
-  --muted: #737373;
-  --border: #e5e5e5;
-  --surface: #f5f5f5;
+  /* Neutral Colors - Warm Tones */
+  --background: #fefce8;
+  --foreground: #1c1917;
+  --muted: #78716c;
+  --border: #e7e5e4;
+  --surface: #fffef5;
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -166,115 +170,295 @@ body {
 
 /* === Directional Fades === */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-24px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
+
 @keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(24px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* === Scale & Bounce === */
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.85); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
+
 @keyframes bounceIn {
-  0%   { opacity: 0; transform: scale(0.3); }
-  50%  { opacity: 1; transform: scale(1.05); }
-  70%  { transform: scale(0.95); }
-  100% { transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  70% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* === Continuous Motion === */
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-12px) rotate(2deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
 }
+
 @keyframes floatSlow {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-8px) rotate(-1deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
 }
 
 /* === Ambient Orb Motion === */
 @keyframes orbFloat1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(30px, -30px) scale(1.05); }
-  66%  { transform: translate(-20px, 20px) scale(0.95); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
+
 @keyframes orbFloat2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(-25px, 25px) scale(0.95); }
-  66%  { transform: translate(35px, -15px) scale(1.05); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(-25px, 25px) scale(0.95);
+  }
+
+  66% {
+    transform: translate(35px, -15px) scale(1.05);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 /* === Micro-interactions === */
 @keyframes pulseGlow {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
-  50%      { opacity: 0.8; box-shadow: 0 0 20px rgba(16, 185, 129, 0.7); }
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  }
+
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);
+  }
 }
+
 @keyframes gradientShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
+
 @keyframes shimmer {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
+
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* === Utility Classes === */
-.animate-fadeInUp    { animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
-.animate-fadeInDown  { animation: fadeInDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
-.animate-fadeInLeft  { animation: fadeInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
-.animate-fadeInRight { animation: fadeInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
-.animate-scaleIn     { animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
-.animate-bounceIn    { animation: bounceIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) both; }
-.animate-float       { animation: float 6s ease-in-out infinite; }
-.animate-floatSlow   { animation: floatSlow 8s ease-in-out infinite; }
-.animate-pulseGlow   { animation: pulseGlow 2s ease-in-out infinite; }
-.animate-shimmer     { animation: shimmer 2.5s linear infinite; }
-.animate-gradientShift { animation: gradientShift 3s ease infinite; }
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-fadeInDown {
+  animation: fadeInDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-fadeInLeft {
+  animation: fadeInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-fadeInRight {
+  animation: fadeInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-bounceIn {
+  animation: bounceIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-floatSlow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-pulseGlow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s linear infinite;
+}
+
+.animate-gradientShift {
+  animation: gradientShift 3s ease infinite;
+}
 
 /* Staggered Delay Classes */
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
-.delay-6 { animation-delay: 0.6s; }
-.delay-7 { animation-delay: 0.7s; }
-.delay-8 { animation-delay: 0.8s; }
+.delay-1 {
+  animation-delay: 0.1s;
+}
+
+.delay-2 {
+  animation-delay: 0.2s;
+}
+
+.delay-3 {
+  animation-delay: 0.3s;
+}
+
+.delay-4 {
+  animation-delay: 0.4s;
+}
+
+.delay-5 {
+  animation-delay: 0.5s;
+}
+
+.delay-6 {
+  animation-delay: 0.6s;
+}
+
+.delay-7 {
+  animation-delay: 0.7s;
+}
+
+.delay-8 {
+  animation-delay: 0.8s;
+}
 
 /* === Global Smooth Transitions === */
-a, button, input, select, textarea {
+a,
+button,
+input,
+select,
+textarea {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* === Glassmorphism Utility === */
+/* === Glassmorphism Utility (warm tint) === */
 .glass {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 254, 245, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(231, 229, 228, 0.4);
 }
+
 .glass-strong {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 254, 245, 0.94);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(231, 229, 228, 0.5);
 }
