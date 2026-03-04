@@ -49,25 +49,44 @@ export default function FarmerDashboard() {
     const activeCount = listings.filter(l => l.status === 'active').length;
 
     return (
-        <div className="min-h-screen bg-gray-50 pb-24 font-sans">
+        <div className="min-h-screen pb-24 font-sans" style={{ background: 'linear-gradient(180deg, #fefce8 0%, #fffef5 50%, #fefce8 100%)' }}>
             <main className="max-w-7xl mx-auto p-6 space-y-8">
-                {/* Welcome + Actions */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                {/* Welcome + Actions — Gradient Banner */}
+                <div style={{
+                    background: 'linear-gradient(135deg, #065f46, #10b981)',
+                    borderRadius: '20px', padding: '2rem', color: 'white',
+                    display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
+                    alignItems: 'center', gap: '1rem',
+                    boxShadow: '0 8px 30px rgba(6,95,70,0.3)'
+                }}>
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">{t('dashboard.welcomeFarmer')}</h1>
-                        <p className="text-gray-500 text-sm mt-1">{t('dashboard.manageCrops')}</p>
+                        <h1 style={{ fontSize: '1.5rem', fontWeight: 800 }}>{t('dashboard.welcomeFarmer')}</h1>
+                        <p style={{ opacity: 0.85, fontSize: '0.875rem', marginTop: '0.25rem' }}>{t('dashboard.manageCrops')}</p>
                     </div>
-                    <div className="flex gap-3">
+                    <div style={{ display: 'flex', gap: '0.75rem' }}>
                         <Link
                             href="/farmer/listing/batch"
-                            className="bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full font-medium flex items-center gap-2 text-sm hover:bg-gray-50 hover:border-gray-300 transition-all"
+                            style={{
+                                background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)',
+                                color: 'white', padding: '0.625rem 1.25rem', borderRadius: '9999px',
+                                fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                fontSize: '0.875rem', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.3)',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
                         >
                             <Package className="w-4 h-4" />
                             {t('dashboard.batchMode') || 'Batch Mode'}
                         </Link>
                         <Link
                             href="/farmer/listing/new"
-                            className="bg-green-600 text-white px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 text-sm hover:bg-green-700 active:scale-95 transition-all shadow-md hover:shadow-lg"
+                            style={{
+                                background: '#fbbf24', color: '#1c1917',
+                                padding: '0.625rem 1.5rem', borderRadius: '9999px',
+                                fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                fontSize: '0.875rem', textDecoration: 'none',
+                                boxShadow: '0 4px 15px rgba(251,191,36,0.4)',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
                         >
                             <Plus className="w-5 h-5" />
                             {t('dashboard.newListing')}
@@ -75,38 +94,56 @@ export default function FarmerDashboard() {
                     </div>
                 </div>
 
-                {/* Stats */}
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
-                    <div className="p-3 rounded-xl bg-green-100 text-green-600">
+                {/* Stats Card — emerald gradient icon */}
+                <div style={{
+                    background: '#fffef5', borderRadius: '16px', padding: '1.5rem',
+                    border: '1px solid #e7e5e4', display: 'flex', alignItems: 'center', gap: '1rem',
+                    boxShadow: '0 4px 20px rgba(28,25,23,0.04)',
+                    transition: 'box-shadow 0.3s'
+                }}>
+                    <div style={{
+                        padding: '0.75rem', borderRadius: '14px',
+                        background: 'linear-gradient(135deg, #ecfdf5, #d1fae5)',
+                        color: '#065f46'
+                    }}>
                         <Package className="w-6 h-6" />
                     </div>
                     <div>
-                        <p className="text-gray-500 text-sm font-medium">{t('dashboard.activeListings')}</p>
-                        <h3 className="text-2xl font-bold text-gray-900">{activeCount}</h3>
+                        <p style={{ color: '#78716c', fontSize: '0.875rem', fontWeight: 500 }}>{t('dashboard.activeListings')}</p>
+                        <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1c1917' }}>{activeCount}</h3>
                     </div>
                 </div>
 
-                {/* Tabs */}
+                {/* Tabs — emerald active states */}
                 <div>
-                    <div className="flex gap-8 border-b border-gray-200">
+                    <div style={{ display: 'flex', gap: '2rem', borderBottom: '2px solid #e7e5e4' }}>
                         {['active', 'sold', 'expired'].map((tab) => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`
-                                    pb-3 text-base font-medium capitalize transition-all relative
-                                    ${activeTab === tab
-                                        ? 'text-green-600'
-                                        : 'text-gray-400 hover:text-gray-600'
-                                    }
-                                `}
+                                style={{
+                                    paddingBottom: '0.75rem', fontSize: '1rem', fontWeight: 600,
+                                    textTransform: 'capitalize', position: 'relative', background: 'none',
+                                    border: 'none', cursor: 'pointer',
+                                    color: activeTab === tab ? '#065f46' : '#a8a29e',
+                                    transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                                }}
                             >
                                 {t(`dashboard.status.${tab}`) || tab}
-                                <span className={`ml-2 text-xs py-0.5 px-2 rounded-full ${activeTab === tab ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                                <span style={{
+                                    marginLeft: '0.5rem', fontSize: '0.75rem', padding: '0.125rem 0.5rem',
+                                    borderRadius: '9999px',
+                                    background: activeTab === tab ? '#ecfdf5' : '#f5f5f4',
+                                    color: activeTab === tab ? '#065f46' : '#78716c'
+                                }}>
                                     {listings.filter(l => l.status === tab).length}
                                 </span>
                                 {activeTab === tab && (
-                                    <div className="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 rounded-t-full" />
+                                    <div style={{
+                                        position: 'absolute', bottom: '-2px', left: 0, width: '100%',
+                                        height: '3px', background: 'linear-gradient(90deg, #065f46, #10b981)',
+                                        borderRadius: '3px 3px 0 0'
+                                    }} />
                                 )}
                             </button>
                         ))}
@@ -115,74 +152,100 @@ export default function FarmerDashboard() {
 
                 {/* Listings Grid */}
                 {loading ? (
-                    <div className="text-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-                        <p className="mt-4 text-gray-500">{t('common.loading')}</p>
+                    <div style={{ textAlign: 'center', padding: '5rem 0' }}>
+                        <div className="animate-spin rounded-full h-12 w-12 mx-auto" style={{ borderBottom: '3px solid #065f46', borderLeft: '3px solid transparent', borderRight: '3px solid transparent', borderTop: '3px solid transparent' }}></div>
+                        <p style={{ marginTop: '1rem', color: '#78716c' }}>{t('common.loading')}</p>
                     </div>
                 ) : listings.filter(l => l.status === activeTab).length === 0 ? (
-                    <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
-                        <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500">
-                            <Package className="w-10 h-10 opacity-50" />
+                    <div style={{
+                        textAlign: 'center', padding: '5rem 0', background: '#fffef5',
+                        borderRadius: '20px', border: '2px dashed #d6d3d1'
+                    }}>
+                        <div style={{
+                            width: '80px', height: '80px', borderRadius: '50%',
+                            background: 'linear-gradient(135deg, #ecfdf5, #d1fae5)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            margin: '0 auto 1.5rem', color: '#10b981'
+                        }}>
+                            <Package className="w-10 h-10" style={{ opacity: 0.6 }} />
                         </div>
-                        <h3 className="text-gray-900 font-bold text-lg mb-2">{t('dashboard.noListings')}</h3>
-                        <p className="text-gray-500 text-sm max-w-xs mx-auto mb-6">
+                        <h3 style={{ color: '#1c1917', fontWeight: 700, fontSize: '1.125rem', marginBottom: '0.5rem' }}>{t('dashboard.noListings')}</h3>
+                        <p style={{ color: '#78716c', fontSize: '0.875rem', maxWidth: '20rem', margin: '0 auto 1.5rem' }}>
                             {t('dashboard.startSellingDescription')}
                         </p>
-                        <Link
-                            href="/farmer/listing/new"
-                            className="text-green-600 font-semibold hover:text-green-700 hover:underline"
-                        >
+                        <Link href="/farmer/listing/new" style={{ color: '#065f46', fontWeight: 700, textDecoration: 'none' }}>
                             + {t('dashboard.createFirstListing')}
                         </Link>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {listings.filter(l => l.status === activeTab).map((item) => (
-                            <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all group">
-                                <div className="relative h-48 overflow-hidden bg-gradient-to-br from-green-50 to-green-100">
+                            <div key={item.id} style={{
+                                background: '#fffef5', borderRadius: '20px',
+                                border: '1px solid #e7e5e4', overflow: 'hidden',
+                                boxShadow: '0 4px 20px rgba(28,25,23,0.04)',
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                                onMouseEnter={e => {
+                                    e.currentTarget.style.transform = 'translateY(-4px)';
+                                    e.currentTarget.style.boxShadow = '0 16px 40px rgba(6,95,70,0.1)';
+                                    e.currentTarget.style.borderColor = 'rgba(6,95,70,0.2)';
+                                }}
+                                onMouseLeave={e => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(28,25,23,0.04)';
+                                    e.currentTarget.style.borderColor = '#e7e5e4';
+                                }}
+                            >
+                                <div style={{ position: 'relative', height: '12rem', overflow: 'hidden', background: 'linear-gradient(135deg, #ecfdf5, #d1fae5)' }}>
                                     {item.image ? (
-                                        <img
-                                            src={item.image}
-                                            alt={item.crop}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
+                                        <img src={item.image} alt={item.crop} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }} />
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <Package className="w-12 h-12 text-green-300" />
+                                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Package className="w-12 h-12" style={{ color: '#34d399' }} />
                                         </div>
                                     )}
-                                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow-sm">
+                                    <div style={{
+                                        position: 'absolute', top: '0.75rem', right: '0.75rem',
+                                        background: 'rgba(255,254,245,0.9)', backdropFilter: 'blur(8px)',
+                                        padding: '0.25rem 0.75rem', borderRadius: '9999px',
+                                        fontSize: '0.75rem', fontWeight: 700, color: '#1c1917'
+                                    }}>
                                         {item.quantity}
                                     </div>
                                 </div>
 
-                                <div className="p-5">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <h3 className="font-bold text-gray-900 text-lg truncate pr-2">{translateCropName(item.crop, t)}</h3>
-                                        <button className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-50">
+                                <div style={{ padding: '1.25rem' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                                        <h3 style={{ fontWeight: 700, color: '#1c1917', fontSize: '1.125rem' }}>{translateCropName(item.crop, t)}</h3>
+                                        <button style={{ color: '#a8a29e', padding: '0.25rem', borderRadius: '50%', background: 'none', border: 'none', cursor: 'pointer' }}>
                                             <MoreVertical className="w-5 h-5" />
                                         </button>
                                     </div>
 
-                                    <div className="flex items-baseline gap-1 mb-4">
-                                        <span className="text-2xl font-bold text-green-700">{item.price}</span>
+                                    <div style={{ marginBottom: '1rem' }}>
+                                        <span style={{ fontSize: '1.5rem', fontWeight: 800, color: '#065f46' }}>{item.price}</span>
                                     </div>
 
-                                    <div className="flex items-center gap-4 text-sm text-gray-500 pt-4 border-t border-gray-50">
-                                        <div className="flex items-center gap-1.5">
+                                    <div style={{
+                                        display: 'flex', alignItems: 'center', gap: '1rem',
+                                        fontSize: '0.875rem', color: '#78716c',
+                                        paddingTop: '1rem', borderTop: '1px solid #e7e5e4'
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
                                             <Clock className="w-4 h-4" />
                                             {item.date}
                                         </div>
-                                        <div className="ml-auto flex gap-2">
+                                        <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
                                             <Link
                                                 href={`/farmer/listing/edit/${item.id}`}
-                                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                style={{ padding: '0.5rem', color: '#0ea5e9', borderRadius: '0.5rem', transition: 'background 0.2s' }}
                                                 title={t('common.edit')}
                                             >
                                                 <Edit className="w-4 h-4" />
                                             </Link>
                                             <button
-                                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                style={{ padding: '0.5rem', color: '#dc2626', borderRadius: '0.5rem', background: 'none', border: 'none', cursor: 'pointer', transition: 'background 0.2s' }}
                                                 title={t('common.delete')}
                                                 onClick={() => handleDelete(item.id)}
                                             >
