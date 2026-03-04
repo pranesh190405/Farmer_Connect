@@ -16,7 +16,7 @@ export default function LoginPage() {
     const dispatch = useDispatch();
     const { isAuthenticated, user, error, isLoading } = useSelector((state) => state.auth);
 
-    const [userType, setUserType] = useState('farmer'); // 'farmer' | 'buyer'
+    const [userType, setUserType] = useState('farmer');
     const [mobile, setMobile] = useState('');
     const [pin, setPin] = useState('');
 
@@ -52,87 +52,152 @@ export default function LoginPage() {
         }
     };
 
+    const roles = [
+        { key: 'farmer', emoji: '🧑‍🌾', label: t('auth.login.farmer') },
+        { key: 'buyer', emoji: '🛒', label: t('auth.login.buyer') },
+        { key: 'admin', emoji: '⚙️', label: t('auth.login.admin') },
+    ];
+
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
-                <div className="text-center mb-8">
-                    <div className="text-4xl mb-3">🌾</div>
-                    <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.login.welcome')}</h1>
-                    <p className="text-gray-500">{t('auth.login.loginToContinue')}</p>
+        <div style={{
+            minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem', position: 'relative', overflow: 'hidden',
+            background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 30%, #ffffff 60%, #ecfdf5 100%)'
+        }}>
+
+            {/* Animated Background Orbs */}
+            <div style={{
+                position: 'absolute', top: '-100px', right: '-80px',
+                width: '350px', height: '350px',
+                background: 'radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(60px)',
+                animation: 'orbFloat1 15s ease-in-out infinite'
+            }} />
+            <div style={{
+                position: 'absolute', bottom: '-120px', left: '-100px',
+                width: '400px', height: '400px',
+                background: 'radial-gradient(circle, rgba(5,150,105,0.12) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(60px)',
+                animation: 'orbFloat2 18s ease-in-out infinite'
+            }} />
+            <div style={{
+                position: 'absolute', top: '30%', right: '20%',
+                width: '200px', height: '200px',
+                background: 'radial-gradient(circle, rgba(234,179,8,0.08) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(40px)',
+                animation: 'orbFloat1 20s ease-in-out infinite reverse'
+            }} />
+
+            {/* Login Card */}
+            <div className="animate-scaleIn" style={{
+                position: 'relative', width: '100%', maxWidth: '440px',
+                background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+                borderRadius: '24px', padding: '2.5rem',
+                border: '1px solid rgba(255,255,255,0.5)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.08), 0 4px 20px rgba(16,185,129,0.06)',
+                overflow: 'hidden'
+            }}>
+
+                {/* Shimmer overlay */}
+                <div style={{
+                    position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                    animation: 'shimmer 4s linear infinite', pointerEvents: 'none', opacity: 0.6
+                }} />
+
+                {/* Header */}
+                <div style={{ textAlign: 'center', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
+                    <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🌾</div>
+                    <h1 className="animate-fadeInUp delay-1" style={{
+                        fontSize: '1.75rem', fontWeight: 800, color: '#111827', marginBottom: '0.5rem'
+                    }}>{t('auth.login.welcome')}</h1>
+                    <p className="animate-fadeInUp delay-2" style={{ color: '#6b7280', fontSize: '0.95rem' }}>
+                        {t('auth.login.loginToContinue')}
+                    </p>
                 </div>
 
                 {/* Role Tabs */}
-                <div className="flex bg-gray-100 p-1 rounded-xl mb-6">
-                    <button
-                        className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${userType === 'farmer' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                        onClick={() => setUserType('farmer')}
-                    >
-                        🧑‍🌾 {t('auth.login.farmer')}
-                    </button>
-                    <button
-                        className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${userType === 'buyer' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                        onClick={() => setUserType('buyer')}
-                    >
-                        🛒 {t('auth.login.buyer')}
-                    </button>
-                    <button
-                        className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${userType === 'admin' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                        onClick={() => setUserType('admin')}
-                    >
-                        {t('auth.login.admin')}
-                    </button>
+                <div className="animate-fadeInUp delay-3" style={{
+                    display: 'flex', background: '#f3f4f6', padding: '4px',
+                    borderRadius: '14px', marginBottom: '1.5rem', position: 'relative', zIndex: 1
+                }}>
+                    {roles.map((role) => (
+                        <button
+                            key={role.key}
+                            onClick={() => setUserType(role.key)}
+                            style={{
+                                flex: 1, padding: '0.75rem 0', borderRadius: '10px',
+                                fontSize: '0.875rem', fontWeight: 600, border: 'none', cursor: 'pointer',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                background: userType === role.key ? 'white' : 'transparent',
+                                color: userType === role.key ? '#059669' : '#6b7280',
+                                boxShadow: userType === role.key ? '0 2px 10px rgba(0,0,0,0.08)' : 'none',
+                                transform: userType === role.key ? 'scale(1.02)' : 'scale(1)'
+                            }}
+                        >
+                            {role.emoji} {role.label}
+                        </button>
+                    ))}
                 </div>
 
-                {userType === 'admin' ? (
-                    <div className="text-center">
-                        <Link href="/admin/login" className="text-green-600 font-medium hover:underline">
-                            {t('auth.login.goToAdminLogin')}
-                        </Link>
-                    </div>
-                ) : (
-                    <form onSubmit={handleLogin} className="space-y-5">
-                        <Input
-                            label={t('auth.login.mobileLabel')}
-                            placeholder={t('auth.login.mobilePlaceholder')}
-                            value={mobile}
-                            onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                            type="tel"
-                            inputMode="numeric"
-                            prefix="+91"
-                            required
-                        />
-
-                        <Input
-                            label={t('auth.login.pinLabel')}
-                            placeholder={t('auth.login.pinPlaceholder')}
-                            value={pin}
-                            onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                            type="password"
-                            inputMode="numeric"
-                            maxLength={4}
-                            required
-                        />
-
-                        <Button type="submit" fullWidth isLoading={isLoading}>
-                            {t('auth.login.loginButton')}
-                        </Button>
-
-                        <div className="text-center space-y-2">
-                            <Link href={`/forgot-pin?type=${userType}`} className="text-sm text-green-600 font-medium hover:underline block">
-                                {t('auth.login.forgotPin')}
+                {/* Form or Admin Link */}
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                    {userType === 'admin' ? (
+                        <div className="animate-fadeInUp" style={{ textAlign: 'center', padding: '1rem 0' }}>
+                            <Link href="/admin/login" style={{
+                                color: '#059669', fontWeight: 600, textDecoration: 'none',
+                                fontSize: '1rem', transition: 'color 0.2s'
+                            }}>
+                                {t('auth.login.goToAdminLogin')}
                             </Link>
-                            <p className="text-sm text-gray-500">
-                                {t('auth.login.noAccount')}{' '}
-                                <Link href={`/${userType}/register`} className="text-green-600 font-medium hover:underline">
-                                    {t('auth.login.registerHere')}
-                                </Link>
-                            </p>
                         </div>
-                    </form>
-                )}
+                    ) : (
+                        <form onSubmit={handleLogin} className="animate-fadeInUp delay-4" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                            <Input
+                                label={t('auth.login.mobileLabel')}
+                                placeholder={t('auth.login.mobilePlaceholder')}
+                                value={mobile}
+                                onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                type="tel"
+                                inputMode="numeric"
+                                prefix="+91"
+                                required
+                            />
+
+                            <Input
+                                label={t('auth.login.pinLabel')}
+                                placeholder={t('auth.login.pinPlaceholder')}
+                                value={pin}
+                                onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                                type="password"
+                                inputMode="numeric"
+                                maxLength={4}
+                                required
+                            />
+
+                            <Button type="submit" fullWidth isLoading={isLoading}>
+                                {t('auth.login.loginButton')}
+                            </Button>
+
+                            <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <Link href={`/forgot-pin?type=${userType}`} style={{
+                                    fontSize: '0.875rem', color: '#059669', fontWeight: 600,
+                                    textDecoration: 'none', transition: 'color 0.2s'
+                                }}>
+                                    {t('auth.login.forgotPin')}
+                                </Link>
+                                <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                                    {t('auth.login.noAccount')}{' '}
+                                    <Link href={`/${userType}/register`} style={{
+                                        color: '#059669', fontWeight: 600, textDecoration: 'none'
+                                    }}>
+                                        {t('auth.login.registerHere')}
+                                    </Link>
+                                </p>
+                            </div>
+                        </form>
+                    )}
+                </div>
             </div>
         </div>
     );
