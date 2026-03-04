@@ -62,28 +62,28 @@ export default function LoginPage() {
         <div style={{
             minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: '1rem', position: 'relative', overflow: 'hidden',
-            background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 30%, #ffffff 60%, #ecfdf5 100%)'
+            background: 'linear-gradient(135deg, #fefce8 0%, #fffef5 30%, #fefce8 60%, #fef3c7 100%)'
         }}>
 
-            {/* Animated Background Orbs */}
+            {/* Animated Background Orbs — emerald + gold */}
             <div style={{
                 position: 'absolute', top: '-100px', right: '-80px',
                 width: '350px', height: '350px',
-                background: 'radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(6,95,70,0.12) 0%, transparent 70%)',
                 borderRadius: '50%', filter: 'blur(60px)',
                 animation: 'orbFloat1 15s ease-in-out infinite'
             }} />
             <div style={{
                 position: 'absolute', bottom: '-120px', left: '-100px',
                 width: '400px', height: '400px',
-                background: 'radial-gradient(circle, rgba(5,150,105,0.12) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(217,119,6,0.1) 0%, transparent 70%)',
                 borderRadius: '50%', filter: 'blur(60px)',
                 animation: 'orbFloat2 18s ease-in-out infinite'
             }} />
             <div style={{
                 position: 'absolute', top: '30%', right: '20%',
                 width: '200px', height: '200px',
-                background: 'radial-gradient(circle, rgba(234,179,8,0.08) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 70%)',
                 borderRadius: '50%', filter: 'blur(40px)',
                 animation: 'orbFloat1 20s ease-in-out infinite reverse'
             }} />
@@ -91,34 +91,34 @@ export default function LoginPage() {
             {/* Login Card */}
             <div className="animate-scaleIn" style={{
                 position: 'relative', width: '100%', maxWidth: '440px',
-                background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+                background: 'rgba(255,254,245,0.9)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
                 borderRadius: '24px', padding: '2.5rem',
-                border: '1px solid rgba(255,255,255,0.5)',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.08), 0 4px 20px rgba(16,185,129,0.06)',
+                border: '1px solid rgba(231,229,228,0.5)',
+                boxShadow: '0 20px 60px rgba(28,25,23,0.06), 0 4px 20px rgba(6,95,70,0.04)',
                 overflow: 'hidden'
             }}>
 
-                {/* Shimmer overlay */}
+                {/* Gold shimmer overlay */}
                 <div style={{
                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-                    animation: 'shimmer 4s linear infinite', pointerEvents: 'none', opacity: 0.6
+                    background: 'linear-gradient(90deg, transparent, rgba(251,191,36,0.08), transparent)',
+                    animation: 'shimmer 4s linear infinite', pointerEvents: 'none'
                 }} />
 
                 {/* Header */}
                 <div style={{ textAlign: 'center', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
                     <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🌾</div>
                     <h1 className="animate-fadeInUp delay-1" style={{
-                        fontSize: '1.75rem', fontWeight: 800, color: '#111827', marginBottom: '0.5rem'
+                        fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem'
                     }}>{t('auth.login.welcome')}</h1>
-                    <p className="animate-fadeInUp delay-2" style={{ color: '#6b7280', fontSize: '0.95rem' }}>
+                    <p className="animate-fadeInUp delay-2" style={{ color: '#78716c', fontSize: '0.95rem' }}>
                         {t('auth.login.loginToContinue')}
                     </p>
                 </div>
 
                 {/* Role Tabs */}
                 <div className="animate-fadeInUp delay-3" style={{
-                    display: 'flex', background: '#f3f4f6', padding: '4px',
+                    display: 'flex', background: '#f5f5f4', padding: '4px',
                     borderRadius: '14px', marginBottom: '1.5rem', position: 'relative', zIndex: 1
                 }}>
                     {roles.map((role) => (
@@ -130,8 +130,8 @@ export default function LoginPage() {
                                 fontSize: '0.875rem', fontWeight: 600, border: 'none', cursor: 'pointer',
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                 background: userType === role.key ? 'white' : 'transparent',
-                                color: userType === role.key ? '#059669' : '#6b7280',
-                                boxShadow: userType === role.key ? '0 2px 10px rgba(0,0,0,0.08)' : 'none',
+                                color: userType === role.key ? '#065f46' : '#78716c',
+                                boxShadow: userType === role.key ? '0 2px 10px rgba(28,25,23,0.08)' : 'none',
                                 transform: userType === role.key ? 'scale(1.02)' : 'scale(1)'
                             }}
                         >
@@ -145,7 +145,7 @@ export default function LoginPage() {
                     {userType === 'admin' ? (
                         <div className="animate-fadeInUp" style={{ textAlign: 'center', padding: '1rem 0' }}>
                             <Link href="/admin/login" style={{
-                                color: '#059669', fontWeight: 600, textDecoration: 'none',
+                                color: '#065f46', fontWeight: 600, textDecoration: 'none',
                                 fontSize: '1rem', transition: 'color 0.2s'
                             }}>
                                 {t('auth.login.goToAdminLogin')}
@@ -181,15 +181,15 @@ export default function LoginPage() {
 
                             <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                 <Link href={`/forgot-pin?type=${userType}`} style={{
-                                    fontSize: '0.875rem', color: '#059669', fontWeight: 600,
+                                    fontSize: '0.875rem', color: '#d97706', fontWeight: 600,
                                     textDecoration: 'none', transition: 'color 0.2s'
                                 }}>
                                     {t('auth.login.forgotPin')}
                                 </Link>
-                                <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                                <p style={{ fontSize: '0.875rem', color: '#78716c' }}>
                                     {t('auth.login.noAccount')}{' '}
                                     <Link href={`/${userType}/register`} style={{
-                                        color: '#059669', fontWeight: 600, textDecoration: 'none'
+                                        color: '#065f46', fontWeight: 600, textDecoration: 'none'
                                     }}>
                                         {t('auth.login.registerHere')}
                                     </Link>
