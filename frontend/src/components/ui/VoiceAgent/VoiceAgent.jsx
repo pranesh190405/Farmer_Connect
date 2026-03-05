@@ -61,7 +61,7 @@ export default function VoiceAgent() {
                         // Web Speech API requires internet (sends audio to Google).
                         // Silently ignore on localhost or show a subtle warning.
                         console.warn('Speech recognition requires an internet connection.');
-                        showToast(t('voice.requiresInternet'), 'warning');
+                        showToast(t('voice.requiresInternet'), 'info');
                         break;
                     case 'no-speech':
                         // User didn't say anything — not a real error.
@@ -107,7 +107,7 @@ export default function VoiceAgent() {
             // Trigger logout? Maybe too dangerous for voice
             showToast(t('voice.useMenuLogout'), 'info');
         } else {
-            showToast(t('voice.commandNotRecognized'), 'warning');
+            showToast(t('voice.commandNotRecognized'), 'info');
         }
     };
 

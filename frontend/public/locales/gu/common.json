@@ -58,7 +58,23 @@
             "taxIdPlaceholder": "e.g., 22AAAAA0000A1Z5",
             "title": "ખરીદદાર નોંધણી",
             "userExists": "User account already exists. Redirecting to login...",
-            "whatYouBuy": "What do you buy?"
+            "whatYouBuy": "What do you buy?",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            },
+            "mobileLabel": "મોબાઇલ નંબર",
+            "mobilePlaceholder": "તમારો 10-અંકનો મોબાઇલ નંબર દાખલ કરો",
+            "aadharTitle": "Identity Verification",
+            "aadharSubtitle": "Enter your Aadhar for verification",
+            "aadharLabel": "આધાર નંબર",
+            "aadharPlaceholder": "Enter your 12-digit Aadhar",
+            "success": "ખાતું બનાવવામાં આવ્યું!",
+            "successMessage": "ડિજિટલ કૃષિ બજારમાં આપનું સ્વાગત છે",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "લૉગિન પર પાછા જાઓ"
         },
         "errors": {
             "aadharRequired": "Aadhar number is required for registration",
@@ -89,7 +105,8 @@
             "title": "ખેડૂત નોંધણી",
             "verificationPendingDesc": "તમારું ખાતું હાલમાં વ્યવસ્થાપકની સમીક્ષામાં છે.",
             "verificationPendingHint": "Please wait for admin approval. You can try logging in later to check your status.",
-            "verificationPendingTitle": "ચકાસણી બાકી છે"
+            "verificationPendingTitle": "ચકાસણી બાકી છે",
+            "successReady": "Your account is ready. You can now login to your dashboard."
         },
         "forgotPin": {
             "aadharLast4Label": "Last 4 Digits of Aadhaar",
@@ -198,7 +215,11 @@
         "thankYou": "તમારા ઓર્ડર માટે આભાર",
         "title": "ચેકઆઉટ",
         "total": "Total",
-        "trackOrder": "Track Order"
+        "trackOrder": "Track Order",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "common": {
         "back": "પાછળ",
@@ -225,27 +246,40 @@
         "adminConsole": "Admin Console",
         "batchMode": "બેચ મોડ",
         "buyer": {
-            "browseMarket": "Browse Market",
+            "browseMarket": "બજાર બ્રાઉઝ કરો",
             "empty": {
-                "desc": "You don't have any {{status}} orders at the moment.",
-                "startShopping": "Start Shopping",
-                "title": "No {{status}} orders"
+                "desc": "તમારી પાસે અત્યારે કોઈ {{status}} ઓર્ડર નથી.",
+                "startShopping": "ખરીદી શરૂ કરો",
+                "title": "કોઈ {{status}} ઓર્ડર નથી"
             },
-            "inProgress": "In Progress",
-            "orderId": "Order #",
+            "inProgress": "પ્રગતિમાં છે",
+            "orderId": "ઓર્ડર #",
             "stats": {
-                "activeOrders": "Active Orders",
-                "completed": "Completed",
-                "totalOrders": "Total Orders"
+                "activeOrders": "સક્રિય ઓર્ડર",
+                "completed": "પૂર્ણ થયેલ",
+                "totalOrders": "કુલ ઓર્ડર"
             },
             "tabs": {
-                "active": "Active Orders",
-                "cancelled": "Cancelled Orders",
-                "completed": "Completed Orders"
+                "active": "સક્રિય ઓર્ડર",
+                "cancelled": "રદ કરેલ ઓર્ડર",
+                "completed": "પૂર્ણ થયેલ ઓર્ડર"
             },
-            "trackOrder": "Track Order",
-            "welcome": "Welcome, Buyer",
-            "welcomeDesc": "Manage your orders and track deliveries"
+            "trackOrder": "ઓર્ડર ટ્રેક કરો",
+            "welcome": "સ્વાગત છે, ખરીદનાર",
+            "welcomeDesc": "તમારા ઓર્ડર્સ મેનેજ કરો અને ડિલિવરી ટ્રેક કરો",
+            "raiseIssue": "સમસ્યા નોંધાવો",
+            "issueType": "સમસ્યાનો પ્રકાર",
+            "issueDescription": "વર્ણન",
+            "issueDescPlaceholder": "કૃપા કરીને ઓર્ડર સાથેની સમસ્યાનું વર્ણન કરો",
+            "issueSubmit": "સમસ્યા સબમિટ કરો",
+            "issueSuccess": "સમસ્યા સફળતાપૂર્વક નોંધાઈ છે. એડમિન ટૂંક સમયમાં તેની સમીક્ષા કરશે.",
+            "issueFailed": "સમસ્યા નોંધાવવામાં નિષ્ફળ. કૃપા કરીને થોડા સમય પછી ફરી પ્રયાસ કરો.",
+            "issueTypes": {
+                "quality": "ગુણવત્તાની સમસ્યા",
+                "delivery": "ડિલિવરી સમસ્યા",
+                "quantity": "જથ્થામાં વિસંગતતા",
+                "other": "અન્ય"
+            }
         },
         "createFirstListing": "તમારી પ્રથમ યાદી બનાવો",
         "date": "Date",
@@ -443,7 +477,11 @@
         "type": "ખાતાનો પ્રકાર",
         "verificationPending": "ચકાસણી બાકી છે",
         "verified": "ચકાસાયેલ",
-        "verifiedFarmer": "ચકાસાયેલ ખેડૂત"
+        "verifiedFarmer": "ચકાસાયેલ ખેડૂત",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "quality": {
         "average": "સરેરાશ",

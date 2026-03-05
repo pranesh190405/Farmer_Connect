@@ -49,7 +49,7 @@ export default function Button({
             {isLoading ? (
                 <span className={styles.spinner} aria-hidden="true" />
             ) : null}
-            <span className={`${styles.content} ${isLoading ? styles.hiddenText : ''}`}>
+            <span className={[styles.content, isLoading ? styles.hiddenText : ''].filter(Boolean).join(' ')}>
                 {children}
             </span>
         </button>

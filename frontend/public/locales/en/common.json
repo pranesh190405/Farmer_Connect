@@ -57,7 +57,20 @@
             },
             "orderId": "Order #",
             "inProgress": "In Progress",
-            "trackOrder": "Track Order"
+            "trackOrder": "Track Order",
+            "raiseIssue": "Raise Issue",
+            "issueType": "Issue Type",
+            "issueDescription": "Description",
+            "issueDescPlaceholder": "Please describe the issue with the order",
+            "issueSubmit": "Submit Issue",
+            "issueSuccess": "Issue raised successfully. Admin will review it shortly.",
+            "issueFailed": "Failed to raise issue. Please try again later.",
+            "issueTypes": {
+                "quality": "Quality Problem",
+                "delivery": "Delivery Issue",
+                "quantity": "Quantity Mismatch",
+                "other": "Other"
+            }
         },
         "batchMode": "Batch Mode"
     },
@@ -112,6 +125,7 @@
             "reviewInfo": "Please review your information",
             "success": "Account Created!",
             "successMessage": "Welcome to Digital Agri Market",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
             "continue": "Continue to Dashboard",
             "verificationPendingTitle": "Verification Pending",
             "verificationPendingDesc": "Your account is currently under review by the administrator.",
@@ -145,7 +159,23 @@
             "selectCategories": "Select categories you are interested in",
             "completeRegistration": "Complete Registration",
             "selectOneCategory": "Please select at least one category",
-            "userExists": "User account already exists. Redirecting to login..."
+            "userExists": "User account already exists. Redirecting to login...",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            },
+            "mobileLabel": "Mobile Number",
+            "mobilePlaceholder": "Enter your 10-digit mobile",
+            "aadharTitle": "Identity Verification",
+            "aadharSubtitle": "Enter your Aadhaar number for verification",
+            "aadharLabel": "Aadhaar Number",
+            "aadharPlaceholder": "Enter your 12-digit Aadhaar",
+            "success": "Account Created!",
+            "successMessage": "Welcome to Digital Agri Market",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "Back to Login"
         },
         "login": {
             "welcome": "Welcome Back",
@@ -311,7 +341,11 @@
         "verified": "Verified",
         "pendingAdminApproval": "Pending Admin Approval",
         "notProvided": "Not Provided",
-        "changesSaved": "Changes Saved"
+        "changesSaved": "Changes Saved",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "categories": {
         "vegetables": "Vegetables",
@@ -420,7 +454,11 @@
         "total": "Total",
         "safePayment": "Safe & Secure Payment",
         "qty": "Qty",
-        "checkStatus": "Check Status"
+        "checkStatus": "Check Status",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "listing": {
         "new": {

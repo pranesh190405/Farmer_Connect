@@ -5,17 +5,23 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 // Create a new PostgreSQL connection pool
-const pool = new Pool({
+const poolConfig = {
     user: process.env.DB_USER,        // Database username
     host: process.env.DB_HOST,        // Database host (e.g., localhost)
     database: process.env.DB_NAME,    // Database name
     password: process.env.DB_PASSWORD,// Database password
     port: parseInt(process.env.DB_PORT, 10), // Convert port to number
-    ssl: {
+};
+
+// Use SSL only in production or when explicitly enabled
+if (process.env.NODE_ENV === 'production' || process.env.DB_SSL === 'true') {
+    poolConfig.ssl = {
         require: true,
         rejectUnauthorized: false,
-    }
-});
+    };
+}
+
+const pool = new Pool(poolConfig);
 
 // Test database connection when server starts
 pool.query('SELECT NOW()')

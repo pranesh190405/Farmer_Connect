@@ -111,10 +111,10 @@ export default function BuyerRegisterPage() {
     // Validate business info
     const validateBusinessInfo = () => {
         const newErrors = {};
-        if (!formData.businessName.trim()) newErrors.businessName = 'Business name is required';
-        if (!formData.taxId.trim()) newErrors.taxId = 'Tax ID / GST Number is required';
-        if (!formData.category) newErrors.category = 'Please select a business category';
-        if (!formData.contactName.trim()) newErrors.contactName = 'Contact person name is required';
+        if (!formData.businessName.trim()) newErrors.businessName = t('auth.buyer.errors.businessNameRequired');
+        if (!formData.taxId.trim()) newErrors.taxId = t('auth.buyer.errors.taxIdRequired');
+        if (!formData.category) newErrors.category = t('auth.buyer.errors.categoryRequired');
+        if (!formData.contactName.trim()) newErrors.contactName = t('auth.buyer.errors.contactNameRequired');
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -181,8 +181,8 @@ export default function BuyerRegisterPage() {
             </div>
             <div className={styles.form}>
                 <Input
-                    label={t('auth.farmer.mobileLabel')} type="tel" inputMode="numeric"
-                    placeholder={t('auth.farmer.mobilePlaceholder')} value={mobile}
+                    label={t('auth.buyer.mobileLabel')} type="tel" inputMode="numeric"
+                    placeholder={t('auth.buyer.mobilePlaceholder')} value={mobile}
                     onChange={(e) => { setMobile(e.target.value.replace(/\D/g, '').slice(0, 10)); setMobileError(''); }}
                     prefix="+91" error={mobileError || error} required
                 />
@@ -201,13 +201,13 @@ export default function BuyerRegisterPage() {
                 <div className={styles.iconWrapper}>
                     <span className={styles.icon} role="img" aria-label="aadhar">🪪</span>
                 </div>
-                <h1 className={styles.title}>{t('auth.farmer.aadharTitle')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.aadharSubtitle')}</p>
+                <h1 className={styles.title}>{t('auth.buyer.aadharTitle')}</h1>
+                <p className={styles.subtitle}>{t('auth.buyer.aadharSubtitle')}</p>
             </div>
             <div className={styles.form}>
                 <Input
-                    label={t('auth.farmer.aadharLabel')} type="tel" inputMode="numeric"
-                    placeholder={t('auth.farmer.aadharPlaceholder')} value={aadharNumber}
+                    label={t('auth.buyer.aadharLabel')} type="tel" inputMode="numeric"
+                    placeholder={t('auth.buyer.aadharPlaceholder')} value={aadharNumber}
                     onChange={(e) => { setAadharNumber(e.target.value.replace(/\D/g, '').slice(0, 12)); setAadharError(''); }}
                     error={aadharError} required maxLength={12}
                 />
@@ -311,15 +311,15 @@ export default function BuyerRegisterPage() {
                 <div className={styles.iconWrapper}>
                     <span className={styles.icon} role="img" aria-label="success">🎉</span>
                 </div>
-                <h1 className={styles.title} style={{ color: '#10b981' }}>{t('auth.farmer.success')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.successMessage')}</p>
+                <h1 className={styles.title} style={{ color: '#10b981' }}>{t('auth.buyer.success')}</h1>
+                <p className={styles.subtitle}>{t('auth.buyer.successMessage')}</p>
             </div>
             <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
-                <p className="text-sm text-green-800 text-center">Your account is ready. You can now login to your dashboard.</p>
+                <p className="text-sm text-green-800 text-center">{t('auth.buyer.successReady')}</p>
             </div>
             <Button onClick={() => { dispatch(resetAuthFlow()); router.push('/login'); }}
                 fullWidth>
-                {t('auth.farmer.backToLogin') || 'Go to Login'}
+                {t('auth.buyer.backToLogin') || 'Go to Login'}
             </Button>
         </div>
     );

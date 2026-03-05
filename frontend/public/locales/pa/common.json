@@ -58,7 +58,23 @@
             "taxIdPlaceholder": "e.g., 22AAAAA0000A1Z5",
             "title": "ਖਰੀਦਦਾਰ ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
             "userExists": "User account already exists. Redirecting to login...",
-            "whatYouBuy": "What do you buy?"
+            "whatYouBuy": "What do you buy?",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            },
+            "mobileLabel": "ਮੋਬਾਈਲ ਨੰਬਰ",
+            "mobilePlaceholder": "ਆਪਣਾ 10-ਅੰਕਾਂ ਦਾ ਮੋਬਾਈਲ ਨੰਬਰ ਦਰਜ ਕਰੋ",
+            "aadharTitle": "Identity Verification",
+            "aadharSubtitle": "Enter your Aadhar for verification",
+            "aadharLabel": "ਆਧਾਰ ਨੰਬਰ",
+            "aadharPlaceholder": "Enter your 12-digit Aadhar",
+            "success": "ਖਾਤਾ ਬਣਾਇਆ ਗਿਆ!",
+            "successMessage": "ਡਿਜੀਟਲ ਖੇਤੀ ਮੰਡੀ ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "ਲੌਗਇਨ 'ਤੇ ਵਾਪਸ ਜਾਓ"
         },
         "errors": {
             "aadharRequired": "Aadhar number is required for registration",
@@ -89,7 +105,8 @@
             "title": "ਕਿਸਾਨ ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
             "verificationPendingDesc": "ਤੁਹਾਡਾ ਖਾਤਾ ਮੌਜੂਦਾ ਸਮੇਂ ਪ੍ਰਸ਼ਾਸਕ ਦੀ ਸਮੀਖਿਆ ਵਿੱਚ ਹੈ.",
             "verificationPendingHint": "Please wait for admin approval. You can try logging in later to check your status.",
-            "verificationPendingTitle": "ਤਸਦੀਕ ਬਕਾਇਆ"
+            "verificationPendingTitle": "ਤਸਦੀਕ ਬਕਾਇਆ",
+            "successReady": "Your account is ready. You can now login to your dashboard."
         },
         "forgotPin": {
             "aadharLast4Label": "Last 4 Digits of Aadhaar",
@@ -198,7 +215,11 @@
         "thankYou": "ਤੁਹਾਡੇ ਆਰਡਰ ਲਈ ਧੰਨਵਾਦ",
         "title": "ਚੈੱਕਆਉਟ",
         "total": "Total",
-        "trackOrder": "Track Order"
+        "trackOrder": "Track Order",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "common": {
         "back": "ਪਿੱਛੇ",
@@ -225,9 +246,9 @@
         "adminConsole": "ਐਡਮਿਨ ਕੰਸੋਲ",
         "batchMode": "ਬੈਚ ਮੋਡ",
         "buyer": {
-            "browseMarket": "ਮੰਡੀ ਦੇਖੋ",
+            "browseMarket": "ਬਾਜ਼ਾਰ ਬ੍ਰਾਊਜ਼ ਕਰੋ",
             "empty": {
-                "desc": "ਸਾਡੇ ਕੋਲ ਇਸ ਸਮੇਂ ਕੋਈ {{status}} ਆਰਡਰ ਨਹੀਂ ਹਨ।",
+                "desc": "ਇਸ ਸਮੇਂ ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ {{status}} ਆਰਡਰ ਨਹੀਂ ਹੈ।",
                 "startShopping": "ਖਰੀਦਦਾਰੀ ਸ਼ੁਰੂ ਕਰੋ",
                 "title": "ਕੋਈ {{status}} ਆਰਡਰ ਨਹੀਂ"
             },
@@ -235,17 +256,30 @@
             "orderId": "ਆਰਡਰ #",
             "stats": {
                 "activeOrders": "ਸਰਗਰਮ ਆਰਡਰ",
-                "completed": "ਪੂਰੇ ਹੋਏ",
+                "completed": "ਮੁਕੰਮਲ",
                 "totalOrders": "ਕੁੱਲ ਆਰਡਰ"
             },
             "tabs": {
                 "active": "ਸਰਗਰਮ ਆਰਡਰ",
                 "cancelled": "ਰੱਦ ਕੀਤੇ ਆਰਡਰ",
-                "completed": "ਪੂਰੇ ਹੋਏ ਆਰਡਰ"
+                "completed": "ਮੁਕੰਮਲ ਆਰਡਰ"
             },
-            "trackOrder": "ਆਰਡਰ ਟ੍ਰੈਕ ਕਰੋ",
-            "welcome": "ਜੀ ਆਇਆਂ ਨੂੰ, ਖਰੀਦਦਾਰ!",
-            "welcomeDesc": "ਆਪਣੇ ਆਰਡਰ ਪ੍ਰਬੰਧਿਤ ਕਰੋ ਅਤੇ ਡਿਲੀਵਰੀ ਟ੍ਰੈਕ ਕਰੋ"
+            "trackOrder": "ਆਰਡਰ ਟਰੈਕ ਕਰੋ",
+            "welcome": "ਜੀ ਆਇਆਂ ਨੂੰ, ਖਰੀਦਦਾਰ",
+            "welcomeDesc": "ਆਪਣੇ ਆਰਡਰ ਪ੍ਰਬੰਧਿਤ ਕਰੋ ਅਤੇ ਡਿਲਿਵਰੀ ਟਰੈਕ ਕਰੋ",
+            "raiseIssue": "ਸਮੱਸਿਆ ਦਰਜ ਕਰੋ",
+            "issueType": "ਸਮੱਸਿਆ ਦੀ ਕਿਸਮ",
+            "issueDescription": "ਵਰਣਨ",
+            "issueDescPlaceholder": "ਕਿਰਪਾ ਕਰਕੇ ਆਰਡਰ ਨਾਲ ਸਮੱਸਿਆ ਦਾ ਵਰਣਨ ਕਰੋ",
+            "issueSubmit": "ਸਮੱਸਿਆ ਦਰਜ ਕਰੋ",
+            "issueSuccess": "ਸਮੱਸਿਆ ਸਫਲਤਾਪੂਰਵਕ ਦਰਜ ਕੀਤੀ ਗਈ। ਐਡਮਿਨ ਜਲਦੀ ਹੀ ਇਸਦੀ ਸਮੀਖਿਆ ਕਰੇਗਾ।",
+            "issueFailed": "ਸਮੱਸਿਆ ਦਰਜ ਕਰਨ ਵਿੱਚ ਅਸਫਲ। ਕਿਰਪਾ ਕਰਕੇ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+            "issueTypes": {
+                "quality": "ਗੁਣਵੱਤਾ ਦੀ ਸਮੱਸਿਆ",
+                "delivery": "ਡਿਲਿਵਰੀ ਦੀ ਸਮੱਸਿਆ",
+                "quantity": "ਮਾਤਰਾ ਬੇਮੇਲ",
+                "other": "ਹੋਰ"
+            }
         },
         "createFirstListing": "ਆਪਣੀ ਪਹਿਲੀ ਸੂਚੀ ਬਣਾਓ",
         "date": "ਮਿਤੀ",
@@ -443,7 +477,11 @@
         "type": "ਖਾਤਾ ਕਿਸਮ",
         "verificationPending": "ਤਸਦੀਕ ਬਕਾਇਆ",
         "verified": "ਤਸਦੀਕਸ਼ੁਦਾ",
-        "verifiedFarmer": "ਤਸਦੀਕਸ਼ੁਦਾ ਕਿਸਾਨ"
+        "verifiedFarmer": "ਤਸਦੀਕਸ਼ੁਦਾ ਕਿਸਾਨ",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "quality": {
         "average": "ਔਸਤ",
