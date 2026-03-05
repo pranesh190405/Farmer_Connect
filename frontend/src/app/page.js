@@ -55,6 +55,16 @@ export default function Home() {
               <ShoppingBag className="w-5 h-5 text-gray-400 group-hover:text-green-600 transition-colors" />
             </Link>
           </div>
+
+          <div className="mt-8 animate-fade-in-up delay-[400ms]">
+            <p className="text-gray-600 font-medium" suppressHydrationWarning>
+              {t('auth.login.alreadyHaveAccount') || 'Already have an account?'} {' '}
+              <Link href="/login" className="text-green-600 font-bold hover:underline hover:text-green-700 transition-colors inline-flex items-center gap-1" suppressHydrationWarning>
+                {t('auth.login.loginButton') || 'Log In'}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
 

@@ -32,6 +32,11 @@ export default function Header({ showVoiceSearch = false, onVoiceResult }) {
                     {showVoiceSearch && (
                         <VoiceSearch onResult={onVoiceResult} />
                     )}
+                    {!user && (
+                        <Link href="/login" className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors shadow-sm text-sm hidden sm:block" suppressHydrationWarning>
+                            {t('auth.login.loginButton') || 'Log In'}
+                        </Link>
+                    )}
                     {user?.type === 'buyer' && <CartButton />}
                     <LanguageSwitcher variant="header" />
                 </div>
