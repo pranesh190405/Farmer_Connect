@@ -10,8 +10,10 @@
         "dev": "node --watch server.js"
     },
     "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"]
-  },
+        "setupFilesAfterEnv": [
+            "<rootDir>/tests/setup.js"
+        ]
+    },
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.6",
@@ -24,6 +26,7 @@
         "pg": "^8.13.1"
     },
     "devDependencies": {
+        "artillery": "^2.0.30",
         "jest": "^30.2.0",
         "supertest": "^7.2.2"
     }
