@@ -29,6 +29,7 @@ export default function Home() {
         {/* Background Video */}
         <video
           autoPlay muted loop playsInline
+          suppressHydrationWarning
           style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
             objectFit: 'cover', zIndex: 1
