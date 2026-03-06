@@ -32,11 +32,6 @@ export default function Header({ showVoiceSearch = false, onVoiceResult }) {
                     {showVoiceSearch && (
                         <VoiceSearch onResult={onVoiceResult} />
                     )}
-                    {!user && (
-                        <Link href="/login" className={styles.loginBtn} suppressHydrationWarning>
-                            {t('auth.login.loginButton') || 'Log In'}
-                        </Link>
-                    )}
                     {user?.type === 'buyer' && <CartButton />}
                     <LanguageSwitcher variant="header" />
                 </div>
