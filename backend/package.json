@@ -5,10 +5,13 @@
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "test" : "jest",
-        "test:coverage" : "jest --coverage",
+        "test": "set NODE_ENV=test&& jest",
+        "test:coverage": "set NODE_ENV=test&& jest --coverage",
         "dev": "node --watch server.js"
     },
+    "jest": {
+    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"]
+  },
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.6",
