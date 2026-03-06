@@ -25,12 +25,10 @@ export default function BottomNav() {
     const authPages = ['/login', '/farmer/register', '/buyer/register', '/admin/login'];
     if (authPages.some(page => pathname?.startsWith(page))) return null;
 
-    // Nav items for non-authenticated users
-    let navItems = [
-        { href: '/', label: t('nav.home'), icon: Home },
-        { href: '/market', label: t('nav.market'), icon: Store },
-        { href: '/login', label: t('auth.login.welcome'), icon: User },
-    ];
+    // Hide bottom nav entirely if user is not logged in
+    if (!isAuthenticated) return null;
+
+    let navItems = [];
 
     if (isAuthenticated) {
         if (userType === 'farmer') {
