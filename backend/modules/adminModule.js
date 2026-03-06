@@ -87,12 +87,13 @@ async function approveUser(userId, adminNotes) {
     const result = await db.query(
         `UPDATE users SET 
             status = 'APPROVED', 
+            aadhar_verified = TRUE,
             trust_score = LEAST(trust_score + 30, 100),
             admin_notes = $2,
             verified_at = NOW(),
             updated_at = NOW()
          WHERE id = $1 AND type != 'admin'
-         RETURNING id, name, type, status, trust_score`,
+         RETURNING id, name, type, status, trust_score, aadhar_verified`,
         [userId, adminNotes || '']
     );
 
