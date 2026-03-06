@@ -17,6 +17,7 @@
  * ============================================================================
  */
 
+//User insertions
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
