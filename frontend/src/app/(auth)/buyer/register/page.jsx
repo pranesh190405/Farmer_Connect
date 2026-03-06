@@ -8,7 +8,7 @@ import { registerAsync, resetAuthFlow } from '@/store/slices/authSlice';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
-import styles from './page.module.css';
+import Link from 'next/link';
 
 // Registration steps
 const STEPS = {
@@ -154,7 +154,7 @@ export default function BuyerRegisterPage() {
             if (String(err).includes('already exists')) {
                 alert(t('auth.buyer.userExists'));
                 dispatch(resetAuthFlow());
-                window.location.href = '/login';
+                window.location.href = '/login?type=buyer';
                 return;
             }
         }
@@ -169,164 +169,256 @@ export default function BuyerRegisterPage() {
         else if (step === STEPS.SUCCESS) { setStep(STEPS.MOBILE); dispatch(resetAuthFlow()); }
     };
 
-    // ── Mobile Step ──
+    // Shared back button
+    const BackButton = () => (
+        <div style={{ position: 'relative', zIndex: 1 }}>
+            <button onClick={handleBack} style={{
+                background: 'none', border: 'none', color: '#78716c', fontSize: '0.875rem',
+                cursor: 'pointer', padding: '0.5rem 0', transition: 'color 0.2s', marginBottom: '0.5rem'
+            }}>← {t('common.back')}</button>
+        </div>
+    );
+
+    // ── Step Renderers ──
+
     const renderMobileStep = () => (
-        <div className={styles.stepContent}>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="buyer">🛒</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.buyer.title')}</h1>
-                <p className={styles.subtitle}>{t('auth.buyer.loginOrRegister')}</p>
+        <>
+            <div style={{ textAlign: 'center', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🛒</div>
+                <h1 className="animate-fadeInUp delay-1" style={{
+                    fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem'
+                }}>{t('auth.buyer.title')}</h1>
+                <p className="animate-fadeInUp delay-2" style={{ color: '#78716c', fontSize: '0.95rem' }}>
+                    {t('auth.buyer.loginOrRegister')}
+                </p>
             </div>
-            <div className={styles.form}>
-                <Input
-                    label={t('auth.buyer.mobileLabel')} type="tel" inputMode="numeric"
-                    placeholder={t('auth.buyer.mobilePlaceholder')} value={mobile}
-                    onChange={(e) => { setMobile(e.target.value.replace(/\D/g, '').slice(0, 10)); setMobileError(''); }}
-                    prefix="+91" error={mobileError || error} required
-                />
-                <Button onClick={handleMobileSubmit} isLoading={isLoading} fullWidth>
-                    {t('auth.buyer.continue')}
-                </Button>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <form onSubmit={(e) => { e.preventDefault(); handleMobileSubmit(); }} className="animate-fadeInUp delay-3" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <Input
+                        label={t('auth.buyer.mobileLabel')} type="tel" inputMode="numeric"
+                        placeholder={t('auth.buyer.mobilePlaceholder')} value={mobile}
+                        onChange={(e) => { setMobile(e.target.value.replace(/\D/g, '').slice(0, 10)); setMobileError(''); }}
+                        prefix="+91" error={mobileError || error} required
+                    />
+                    <Button type="submit" isLoading={isLoading} fullWidth>
+                        {t('auth.buyer.continue')}
+                    </Button>
+                    <div style={{ textAlign: 'center' }}>
+                        <p style={{ fontSize: '0.875rem', color: '#78716c' }}>
+                            {t('auth.login.alreadyHaveAccount') || 'Already have an account?'}{' '}
+                            <Link href="/login?type=buyer" style={{
+                                color: '#065f46', fontWeight: 600, textDecoration: 'none'
+                            }}>
+                                {t('auth.login.loginButton') || 'Log In'}
+                            </Link>
+                        </p>
+                    </div>
+                </form>
             </div>
-        </div>
+        </>
     );
 
-    // ── Aadhaar Step ──
     const renderAadharStep = () => (
-        <div className={styles.stepContent}>
-            <button className={styles.backButton} onClick={handleBack}>← {t('common.back')}</button>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="aadhar">🪪</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.buyer.aadharTitle')}</h1>
-                <p className={styles.subtitle}>{t('auth.buyer.aadharSubtitle')}</p>
+        <>
+            <BackButton />
+            <div style={{ textAlign: 'center', marginBottom: '1rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🪪</div>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem' }}>
+                    {t('auth.buyer.aadharTitle')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.buyer.aadharSubtitle')}</p>
             </div>
-            <div className={styles.form}>
-                <Input
-                    label={t('auth.buyer.aadharLabel')} type="tel" inputMode="numeric"
-                    placeholder={t('auth.buyer.aadharPlaceholder')} value={aadharNumber}
-                    onChange={(e) => { setAadharNumber(e.target.value.replace(/\D/g, '').slice(0, 12)); setAadharError(''); }}
-                    error={aadharError} required maxLength={12}
-                />
-                <Button onClick={handleAadharSubmit} disabled={aadharNumber.length !== 12} fullWidth>
-                    {t('common.next')}
-                </Button>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <form onSubmit={(e) => { e.preventDefault(); handleAadharSubmit(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <Input
+                        label={t('auth.buyer.aadharLabel')} type="tel" inputMode="numeric"
+                        placeholder={t('auth.buyer.aadharPlaceholder')} value={aadharNumber}
+                        onChange={(e) => { setAadharNumber(e.target.value.replace(/\D/g, '').slice(0, 12)); setAadharError(''); }}
+                        error={aadharError} required maxLength={12}
+                    />
+                    <Button type="submit" disabled={aadharNumber.length !== 12} fullWidth>
+                        {t('common.next')}
+                    </Button>
+                </form>
             </div>
-        </div>
+        </>
     );
 
-    // ── Business Info Step ──
     const renderBusinessInfoStep = () => (
-        <div className={styles.stepContent}>
-            <button className={styles.backButton} onClick={handleBack}>← {t('common.back')}</button>
-            <div className={styles.header}>
-                <h1 className={styles.title}>{t('auth.buyer.businessDetails')}</h1>
-                <p className={styles.subtitle}>{t('auth.buyer.completeProfile')}</p>
+        <>
+            <BackButton />
+            <div style={{ textAlign: 'center', marginBottom: '1rem', position: 'relative', zIndex: 1 }}>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem' }}>
+                    {t('auth.buyer.businessDetails')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.buyer.completeProfile')}</p>
             </div>
-            <div className={styles.form}>
-                <Input label={t('auth.buyer.businessName')} placeholder={t('auth.buyer.businessNamePlaceholder')}
-                    value={formData.businessName} onChange={(e) => updateField('businessName', e.target.value)}
-                    error={errors.businessName} required />
-                <Input label={t('auth.buyer.taxId')} placeholder={t('auth.buyer.taxIdPlaceholder')}
-                    value={formData.taxId} onChange={(e) => updateField('taxId', e.target.value.toUpperCase())}
-                    error={errors.taxId} hint={t('auth.buyer.gstHint')} required />
-                <Select label={t('auth.buyer.category')} placeholder={t('auth.buyer.selectBusinessType')}
-                    options={BUSINESS_CATEGORIES} value={formData.category}
-                    onChange={(e) => updateField('category', e.target.value)} error={errors.category} required />
-                <Input label={t('auth.buyer.contactPerson')} placeholder={t('auth.buyer.contactPlaceholder')}
-                    value={formData.contactName} onChange={(e) => updateField('contactName', e.target.value)}
-                    error={errors.contactName} required />
-                <Button onClick={handleBusinessInfoSubmit} fullWidth>
-                    {t('common.next')}
-                </Button>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <form onSubmit={(e) => { e.preventDefault(); handleBusinessInfoSubmit(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <Input label={t('auth.buyer.businessName')} placeholder={t('auth.buyer.businessNamePlaceholder')}
+                        value={formData.businessName} onChange={(e) => updateField('businessName', e.target.value)}
+                        error={errors.businessName} required />
+                    <Input label={t('auth.buyer.taxId')} placeholder={t('auth.buyer.taxIdPlaceholder')}
+                        value={formData.taxId} onChange={(e) => updateField('taxId', e.target.value.toUpperCase())}
+                        error={errors.taxId} hint={t('auth.buyer.gstHint')} required />
+                    <Select label={t('auth.buyer.category')} placeholder={t('auth.buyer.selectBusinessType')}
+                        options={BUSINESS_CATEGORIES} value={formData.category}
+                        onChange={(e) => updateField('category', e.target.value)} error={errors.category} required />
+                    <Input label={t('auth.buyer.contactPerson')} placeholder={t('auth.buyer.contactPlaceholder')}
+                        value={formData.contactName} onChange={(e) => updateField('contactName', e.target.value)}
+                        error={errors.contactName} required />
+                    <Button type="submit" fullWidth>
+                        {t('common.next')}
+                    </Button>
+                </form>
             </div>
-        </div>
+        </>
     );
 
-    // ── PIN Setup Step ──
     const renderPinStep = () => (
-        <div className={styles.stepContent}>
-            <button className={styles.backButton} onClick={handleBack}>← {t('common.back')}</button>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="pin">🔐</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.pin.setupTitle')}</h1>
-                <p className={styles.subtitle}>{t('auth.pin.setupSubtitle')}</p>
+        <>
+            <BackButton />
+            <div style={{ textAlign: 'center', marginBottom: '1rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🔐</div>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem' }}>
+                    {t('auth.pin.setupTitle')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.pin.setupSubtitle')}</p>
             </div>
-            <div className={styles.form}>
-                <Input label={t('auth.pin.enterPin')} type="password" inputMode="numeric"
-                    placeholder="● ● ● ●" value={pin}
-                    onChange={(e) => { setPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }}
-                    maxLength={4} required />
-                <Input label={t('auth.pin.confirmPin')} type="password" inputMode="numeric"
-                    placeholder="● ● ● ●" value={confirmPin}
-                    onChange={(e) => { setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }}
-                    error={pinError} maxLength={4} required />
-                <Button onClick={handlePinSubmit} disabled={pin.length !== 4 || confirmPin.length !== 4} fullWidth>
-                    {t('common.next')}
-                </Button>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <form onSubmit={(e) => { e.preventDefault(); handlePinSubmit(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <Input label={t('auth.pin.enterPin')} type="password" inputMode="numeric"
+                        placeholder="● ● ● ●" value={pin}
+                        onChange={(e) => { setPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }}
+                        maxLength={4} required />
+                    <Input label={t('auth.pin.confirmPin')} type="password" inputMode="numeric"
+                        placeholder="● ● ● ●" value={confirmPin}
+                        onChange={(e) => { setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }}
+                        error={pinError} maxLength={4} required />
+                    <Button type="submit" disabled={pin.length !== 4 || confirmPin.length !== 4} fullWidth>
+                        {t('common.next')}
+                    </Button>
+                </form>
             </div>
-        </div>
+        </>
     );
 
-    // ── Category Selection Step ──
     const renderCategorySelectionStep = () => (
-        <div className={styles.stepContent}>
-            <button className={styles.backButton} onClick={handleBack}>← {t('common.back')}</button>
-            <div className={styles.header}>
-                <h1 className={styles.title}>{t('auth.buyer.whatYouBuy')}</h1>
-                <p className={styles.subtitle}>{t('auth.buyer.selectCategories')}</p>
+        <>
+            <BackButton />
+            <div style={{ textAlign: 'center', marginBottom: '1rem', position: 'relative', zIndex: 1 }}>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem' }}>
+                    {t('auth.buyer.whatYouBuy')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.buyer.selectCategories')}</p>
             </div>
-            <div className={styles.form}>
-                <div className="grid grid-cols-2 gap-3 mb-6">
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                    display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', marginBottom: '1.5rem'
+                }}>
                     {INTEREST_CATEGORIES.map((cat) => (
                         <button key={cat.id}
-                            className={`p-4 rounded-xl border flex flex-col items-center gap-2 transition-all ${formData.interestedCategories.includes(cat.id)
-                                ? 'border-green-600 bg-green-50 text-green-700 font-medium ring-1 ring-green-600'
-                                : 'border-gray-200 hover:border-green-400 hover:bg-gray-50 text-gray-600'}`}
-                            onClick={() => toggleCategory(cat.id)}>
-                            <span className="text-2xl">{cat.icon}</span>
-                            <span className="text-sm">{t(cat.label)}</span>
+                            style={{
+                                padding: '1rem', borderRadius: '12px',
+                                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
+                                transition: 'all 0.2s ease',
+                                border: formData.interestedCategories.includes(cat.id)
+                                    ? '2px solid #065f46' : '2px solid #e7e5e4',
+                                background: formData.interestedCategories.includes(cat.id)
+                                    ? '#f0fdf4' : 'white',
+                                color: formData.interestedCategories.includes(cat.id)
+                                    ? '#065f46' : '#57534e',
+                                fontWeight: formData.interestedCategories.includes(cat.id) ? 600 : 400,
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => toggleCategory(cat.id)}
+                        >
+                            <span style={{ fontSize: '1.5rem' }}>{cat.icon}</span>
+                            <span style={{ fontSize: '0.875rem' }}>{t(cat.label)}</span>
                         </button>
                     ))}
                 </div>
                 {errors.interestedCategories && (
-                    <p className="text-red-500 text-sm text-center mb-4">{errors.interestedCategories}</p>
+                    <p style={{ color: '#ef4444', fontSize: '0.875rem', textAlign: 'center', marginBottom: '1rem' }}>{errors.interestedCategories}</p>
                 )}
                 <Button onClick={handleCategorySubmit} isLoading={isLoading} fullWidth>
                     {t('auth.buyer.completeRegistration')}
                 </Button>
             </div>
-        </div>
+        </>
     );
 
-    // ── Success Step ──
     const renderSuccessStep = () => (
-        <div className={styles.stepContent}>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="success">🎉</span>
+        <>
+            <div style={{ textAlign: 'center', marginBottom: '1.5rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🎉</div>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#10b981', marginBottom: '0.5rem' }}>
+                    {t('auth.buyer.success')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.buyer.successMessage')}</p>
+            </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                    background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px',
+                    padding: '1rem', marginBottom: '1.5rem'
+                }}>
+                    <p style={{ fontSize: '0.875rem', color: '#166534', textAlign: 'center' }}>{t('auth.buyer.successReady')}</p>
                 </div>
-                <h1 className={styles.title} style={{ color: '#10b981' }}>{t('auth.buyer.success')}</h1>
-                <p className={styles.subtitle}>{t('auth.buyer.successMessage')}</p>
+                <Button onClick={() => { dispatch(resetAuthFlow()); router.push('/login?type=buyer'); }}
+                    fullWidth>
+                    {t('auth.buyer.backToLogin') || 'Go to Login'}
+                </Button>
             </div>
-            <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
-                <p className="text-sm text-green-800 text-center">{t('auth.buyer.successReady')}</p>
-            </div>
-            <Button onClick={() => { dispatch(resetAuthFlow()); router.push('/login'); }}
-                fullWidth>
-                {t('auth.buyer.backToLogin') || 'Go to Login'}
-            </Button>
-        </div>
+        </>
     );
 
     return (
-        <main className={styles.container}>
-            <div className={styles.card}>
+        <div style={{
+            minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem', position: 'relative', overflow: 'hidden',
+            background: 'linear-gradient(135deg, #fefce8 0%, #fffef5 30%, #fefce8 60%, #fef3c7 100%)'
+        }}>
+
+            {/* Animated Background Orbs */}
+            <div style={{
+                position: 'absolute', top: '-100px', right: '-80px',
+                width: '350px', height: '350px',
+                background: 'radial-gradient(circle, rgba(6,95,70,0.12) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(60px)',
+                animation: 'orbFloat1 15s ease-in-out infinite'
+            }} />
+            <div style={{
+                position: 'absolute', bottom: '-120px', left: '-100px',
+                width: '400px', height: '400px',
+                background: 'radial-gradient(circle, rgba(217,119,6,0.1) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(60px)',
+                animation: 'orbFloat2 18s ease-in-out infinite'
+            }} />
+            <div style={{
+                position: 'absolute', top: '30%', right: '20%',
+                width: '200px', height: '200px',
+                background: 'radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(40px)',
+                animation: 'orbFloat1 20s ease-in-out infinite reverse'
+            }} />
+
+            {/* Registration Card */}
+            <div className="animate-scaleIn" style={{
+                position: 'relative', width: '100%', maxWidth: '440px',
+                background: 'rgba(255,254,245,0.9)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+                borderRadius: '24px', padding: '2.5rem',
+                border: '1px solid rgba(231,229,228,0.5)',
+                boxShadow: '0 20px 60px rgba(28,25,23,0.06), 0 4px 20px rgba(6,95,70,0.04)',
+                overflow: 'hidden'
+            }}>
+
+                {/* Gold shimmer overlay */}
+                <div style={{
+                    position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(251,191,36,0.08), transparent)',
+                    animation: 'shimmer 4s linear infinite', pointerEvents: 'none'
+                }} />
+
                 {step === STEPS.MOBILE && renderMobileStep()}
                 {step === STEPS.AADHAR && renderAadharStep()}
                 {step === STEPS.BUSINESS_INFO && renderBusinessInfoStep()}
@@ -334,6 +426,6 @@ export default function BuyerRegisterPage() {
                 {step === STEPS.CATEGORY_SELECTION && renderCategorySelectionStep()}
                 {step === STEPS.SUCCESS && renderSuccessStep()}
             </div>
-        </main>
+        </div>
     );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { loginAsync } from '@/store/slices/authSlice';
@@ -13,10 +13,13 @@ import Link from 'next/link';
 export default function LoginPage() {
     const { t } = useTranslation('common');
     const router = useRouter();
+    const searchParams = useSearchParams();
     const dispatch = useDispatch();
     const { isAuthenticated, user, error, isLoading } = useSelector((state) => state.auth);
 
-    const [userType, setUserType] = useState('farmer');
+    const typeParam = searchParams.get('type');
+    const initialType = ['farmer', 'buyer', 'admin'].includes(typeParam) ? typeParam : 'farmer';
+    const [userType, setUserType] = useState(initialType);
     const [mobile, setMobile] = useState('');
     const [pin, setPin] = useState('');
 

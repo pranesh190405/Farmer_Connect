@@ -92,7 +92,7 @@ export default function Home() {
             display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center'
           }}>
             {/* Start Selling — emerald */}
-            <Link href="/farmer/register" style={{
+            <Link href="/login?type=farmer" style={{
               position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
               background: 'linear-gradient(135deg, #065f46, #10b981, #065f46)',
               backgroundSize: '200% 200%', animation: 'gradientShift 3s ease infinite',
@@ -106,7 +106,7 @@ export default function Home() {
             </Link>
 
             {/* Start Buying — warm gold accent */}
-            <Link href="/buyer/register" style={{
+            <Link href="/login?type=buyer" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
               background: 'rgba(255,254,245,0.92)', backdropFilter: 'blur(10px)',
               color: '#1c1917', padding: '1rem 2rem', borderRadius: '14px',

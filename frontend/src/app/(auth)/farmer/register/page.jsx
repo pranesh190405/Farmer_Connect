@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { registerAsync, resetAuthFlow } from '@/store/slices/authSlice';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import styles from './page.module.css';
+import Link from 'next/link';
 
 // Registration steps
 const STEPS = {
@@ -104,7 +104,7 @@ export default function FarmerRegisterPage() {
             if (String(err).includes('already exists')) {
                 alert(t('auth.buyer.userExists'));
                 dispatch(resetAuthFlow());
-                window.location.href = '/login';
+                window.location.href = '/login?type=farmer';
                 return;
             }
         }
@@ -118,180 +118,262 @@ export default function FarmerRegisterPage() {
         else { dispatch(resetAuthFlow()); setStep(STEPS.MOBILE); }
     };
 
-    // ── Render: Mobile Step ──
+    // ── Step renderers ──
+
     const renderMobileStep = () => (
-        <div className={styles.stepContent}>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="farmer">🌾</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.farmer.title')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.subtitle')}</p>
+        <>
+            <div style={{ textAlign: 'center', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🌾</div>
+                <h1 className="animate-fadeInUp delay-1" style={{
+                    fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem'
+                }}>{t('auth.farmer.title')}</h1>
+                <p className="animate-fadeInUp delay-2" style={{ color: '#78716c', fontSize: '0.95rem' }}>
+                    {t('auth.farmer.subtitle')}
+                </p>
             </div>
-            <div className={styles.form}>
-                <Input
-                    label={t('auth.farmer.mobileLabel')}
-                    type="tel" inputMode="numeric"
-                    placeholder={t('auth.farmer.mobilePlaceholder')}
-                    value={mobile} onChange={handleMobileChange}
-                    prefix="+91" error={mobileError || error}
-                    required autoComplete="tel"
-                />
-                <Input
-                    label={t('auth.farmer.nameLabel')}
-                    placeholder={t('auth.farmer.namePlaceholder')}
-                    value={name} onChange={(e) => setName(e.target.value)}
-                />
-                <Button onClick={handleMobileSubmit} disabled={mobile.length !== 10} fullWidth>
-                    {t('common.next')}
-                </Button>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <form onSubmit={(e) => { e.preventDefault(); handleMobileSubmit(); }} className="animate-fadeInUp delay-3" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <Input
+                        label={t('auth.farmer.mobileLabel')}
+                        type="tel" inputMode="numeric"
+                        placeholder={t('auth.farmer.mobilePlaceholder')}
+                        value={mobile} onChange={handleMobileChange}
+                        prefix="+91" error={mobileError || error}
+                        required autoComplete="tel"
+                    />
+                    <Input
+                        label={t('auth.farmer.nameLabel')}
+                        placeholder={t('auth.farmer.namePlaceholder')}
+                        value={name} onChange={(e) => setName(e.target.value)}
+                    />
+                    <Button type="submit" disabled={mobile.length !== 10} fullWidth>
+                        {t('common.next')}
+                    </Button>
+                    <div style={{ textAlign: 'center' }}>
+                        <p style={{ fontSize: '0.875rem', color: '#78716c' }}>
+                            {t('auth.login.alreadyHaveAccount') || 'Already have an account?'}{' '}
+                            <Link href="/login?type=farmer" style={{
+                                color: '#065f46', fontWeight: 600, textDecoration: 'none'
+                            }}>
+                                {t('auth.login.loginButton') || 'Log In'}
+                            </Link>
+                        </p>
+                    </div>
+                </form>
             </div>
-        </div>
+        </>
     );
 
-    // ── Render: Aadhaar Step ──
     const renderAadharStep = () => (
-        <div className={styles.stepContent}>
-            <button className={styles.backButton} onClick={handleBack}>← {t('common.back')}</button>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="aadhar">🪪</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.farmer.aadharTitle')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.aadharSubtitle')}</p>
+        <>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <button onClick={handleBack} style={{
+                    background: 'none', border: 'none', color: '#78716c', fontSize: '0.875rem',
+                    cursor: 'pointer', padding: '0.5rem 0', transition: 'color 0.2s', marginBottom: '0.5rem'
+                }}>← {t('common.back')}</button>
             </div>
-            <div className={styles.form}>
-                <Input
-                    label={t('auth.farmer.aadharLabel')}
-                    type="tel" inputMode="numeric"
-                    placeholder={t('auth.farmer.aadharPlaceholder')}
-                    value={aadharNumber} onChange={handleAadharChange}
-                    error={aadharError} required maxLength={12}
-                />
-                <Input
-                    label={t('auth.farmer.addressLabel')}
-                    placeholder={t('auth.farmer.addressPlaceholder')}
-                    value={address} onChange={(e) => setAddress(e.target.value)}
-                />
-                <Button onClick={handleAadharSubmit} disabled={aadharNumber.length !== 12} fullWidth>
-                    {t('common.next')}
-                </Button>
+            <div style={{ textAlign: 'center', marginBottom: '1rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🪪</div>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem' }}>
+                    {t('auth.farmer.aadharTitle')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.farmer.aadharSubtitle')}</p>
             </div>
-        </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <form onSubmit={(e) => { e.preventDefault(); handleAadharSubmit(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <Input
+                        label={t('auth.farmer.aadharLabel')}
+                        type="tel" inputMode="numeric"
+                        placeholder={t('auth.farmer.aadharPlaceholder')}
+                        value={aadharNumber} onChange={handleAadharChange}
+                        error={aadharError} required maxLength={12}
+                    />
+                    <Input
+                        label={t('auth.farmer.addressLabel')}
+                        placeholder={t('auth.farmer.addressPlaceholder')}
+                        value={address} onChange={(e) => setAddress(e.target.value)}
+                    />
+                    <Button type="submit" disabled={aadharNumber.length !== 12} fullWidth>
+                        {t('common.next')}
+                    </Button>
+                </form>
+            </div>
+        </>
     );
 
-    // ── Render: PIN Setup Step ──
     const renderPinStep = () => (
-        <div className={styles.stepContent}>
-            <button className={styles.backButton} onClick={handleBack}>← {t('common.back')}</button>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="pin">🔐</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.pin.setupTitle')}</h1>
-                <p className={styles.subtitle}>{t('auth.pin.setupSubtitle')}</p>
+        <>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <button onClick={handleBack} style={{
+                    background: 'none', border: 'none', color: '#78716c', fontSize: '0.875rem',
+                    cursor: 'pointer', padding: '0.5rem 0', transition: 'color 0.2s', marginBottom: '0.5rem'
+                }}>← {t('common.back')}</button>
             </div>
-            <div className={styles.form}>
-                <Input
-                    label={t('auth.pin.enterPin')}
-                    type="password" inputMode="numeric"
-                    placeholder="● ● ● ●"
-                    value={pin} onChange={(e) => { setPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }}
-                    maxLength={4} required
-                />
-                <Input
-                    label={t('auth.pin.confirmPin')}
-                    type="password" inputMode="numeric"
-                    placeholder="● ● ● ●"
-                    value={confirmPin} onChange={(e) => { setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }}
-                    error={pinError} maxLength={4} required
-                />
-                <Button onClick={handlePinSubmit} disabled={pin.length !== 4 || confirmPin.length !== 4} fullWidth>
-                    {t('common.next')}
-                </Button>
+            <div style={{ textAlign: 'center', marginBottom: '1rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🔐</div>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem' }}>
+                    {t('auth.pin.setupTitle')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.pin.setupSubtitle')}</p>
             </div>
-        </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <form onSubmit={(e) => { e.preventDefault(); handlePinSubmit(); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    <Input
+                        label={t('auth.pin.enterPin')}
+                        type="password" inputMode="numeric"
+                        placeholder="● ● ● ●"
+                        value={pin} onChange={(e) => { setPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }}
+                        maxLength={4} required
+                    />
+                    <Input
+                        label={t('auth.pin.confirmPin')}
+                        type="password" inputMode="numeric"
+                        placeholder="● ● ● ●"
+                        value={confirmPin} onChange={(e) => { setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }}
+                        error={pinError} maxLength={4} required
+                    />
+                    <Button type="submit" disabled={pin.length !== 4 || confirmPin.length !== 4} fullWidth>
+                        {t('common.next')}
+                    </Button>
+                </form>
+            </div>
+        </>
     );
 
-    // ── Render: Confirm Step ──
     const renderConfirmStep = () => (
-        <div className={styles.stepContent}>
-            <button className={styles.backButton} onClick={handleBack}>← {t('common.back')}</button>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="check">✓</span>
-                </div>
-                <h1 className={styles.title}>{t('auth.farmer.confirmDetails')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.reviewInfo')}</p>
+        <>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <button onClick={handleBack} style={{
+                    background: 'none', border: 'none', color: '#78716c', fontSize: '0.875rem',
+                    cursor: 'pointer', padding: '0.5rem 0', transition: 'color 0.2s', marginBottom: '0.5rem'
+                }}>← {t('common.back')}</button>
             </div>
-            <div className={styles.form}>
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 space-y-4">
+            <div style={{ textAlign: 'center', marginBottom: '1rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>✓</div>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem' }}>
+                    {t('auth.farmer.confirmDetails')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.farmer.reviewInfo')}</p>
+            </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                    background: '#f5f5f4', border: '1px solid #e7e5e4', borderRadius: '12px',
+                    padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.25rem'
+                }}>
                     <div>
-                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.mobileLabel')}</label>
-                        <p className="text-base font-semibold text-gray-900 mt-1">+91 {mobile}</p>
+                        <label style={{ fontSize: '0.75rem', fontWeight: 500, color: '#78716c', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('auth.farmer.mobileLabel')}</label>
+                        <p style={{ fontSize: '1rem', fontWeight: 600, color: '#1c1917', marginTop: '0.25rem' }}>+91 {mobile}</p>
                     </div>
                     {name && (
                         <div>
-                            <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.nameLabel')}</label>
-                            <p className="text-base font-semibold text-gray-900 mt-1">{name}</p>
+                            <label style={{ fontSize: '0.75rem', fontWeight: 500, color: '#78716c', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('auth.farmer.nameLabel')}</label>
+                            <p style={{ fontSize: '1rem', fontWeight: 600, color: '#1c1917', marginTop: '0.25rem' }}>{name}</p>
                         </div>
                     )}
                     <div>
-                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.aadharLabel')}</label>
-                        <p className="text-base font-semibold text-gray-900 mt-1">XXXX XXXX {aadharNumber.slice(-4)}</p>
+                        <label style={{ fontSize: '0.75rem', fontWeight: 500, color: '#78716c', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('auth.farmer.aadharLabel')}</label>
+                        <p style={{ fontSize: '1rem', fontWeight: 600, color: '#1c1917', marginTop: '0.25rem' }}>XXXX XXXX {aadharNumber.slice(-4)}</p>
                     </div>
                     {address && (
                         <div>
-                            <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.farmer.addressLabel')}</label>
-                            <p className="text-base font-semibold text-gray-900 mt-1">{address}</p>
+                            <label style={{ fontSize: '0.75rem', fontWeight: 500, color: '#78716c', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('auth.farmer.addressLabel')}</label>
+                            <p style={{ fontSize: '1rem', fontWeight: 600, color: '#1c1917', marginTop: '0.25rem' }}>{address}</p>
                         </div>
                     )}
                     <div>
-                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t('auth.pin.label')}</label>
-                        <p className="text-base font-semibold text-gray-900 mt-1">● ● ● ●</p>
+                        <label style={{ fontSize: '0.75rem', fontWeight: 500, color: '#78716c', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('auth.pin.label')}</label>
+                        <p style={{ fontSize: '1rem', fontWeight: 600, color: '#1c1917', marginTop: '0.25rem' }}>● ● ● ●</p>
                     </div>
                 </div>
 
-                {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+                {error && <p style={{ color: '#ef4444', fontSize: '0.875rem', textAlign: 'center' }}>{error}</p>}
 
                 <Button onClick={handleConfirmRegistration} isLoading={isLoading} fullWidth>
                     {t('common.submit')}
                 </Button>
             </div>
-        </div>
+        </>
     );
 
-    // ── Render: Success Step ──
     const renderSuccessStep = () => (
-        <div className={styles.stepContent}>
-            <div className={styles.header}>
-                <div className={styles.iconWrapper}>
-                    <span className={styles.icon} role="img" aria-label="success">🎉</span>
+        <>
+            <div style={{ textAlign: 'center', marginBottom: '1.5rem', position: 'relative', zIndex: 1 }}>
+                <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🎉</div>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#10b981', marginBottom: '0.5rem' }}>
+                    {t('auth.farmer.success')}
+                </h1>
+                <p style={{ color: '#78716c', fontSize: '0.95rem' }}>{t('auth.farmer.successMessage')}</p>
+            </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                    background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px',
+                    padding: '1rem', marginBottom: '1.5rem'
+                }}>
+                    <p style={{ fontSize: '0.875rem', color: '#166534', textAlign: 'center' }}>{t('auth.farmer.successReady')}</p>
                 </div>
-                <h1 className={styles.title} style={{ color: '#10b981' }}>{t('auth.farmer.success')}</h1>
-                <p className={styles.subtitle}>{t('auth.farmer.successMessage')}</p>
+                <Button
+                    onClick={() => { dispatch(resetAuthFlow()); router.push('/login?type=farmer'); }}
+                    fullWidth
+                >
+                    {t('auth.farmer.backToLogin') || 'Go to Login'}
+                </Button>
             </div>
-            <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
-                <p className="text-sm text-green-800 text-center">{t('auth.farmer.successReady')}</p>
-            </div>
-            <Button
-                onClick={() => { dispatch(resetAuthFlow()); router.push('/login'); }}
-                fullWidth
-            >
-                {t('auth.farmer.backToLogin') || 'Go to Login'}
-            </Button>
-        </div>
+        </>
     );
 
     return (
-        <main className={styles.container}>
-            <div className={styles.card}>
+        <div style={{
+            minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem', position: 'relative', overflow: 'hidden',
+            background: 'linear-gradient(135deg, #fefce8 0%, #fffef5 30%, #fefce8 60%, #fef3c7 100%)'
+        }}>
+
+            {/* Animated Background Orbs */}
+            <div style={{
+                position: 'absolute', top: '-100px', right: '-80px',
+                width: '350px', height: '350px',
+                background: 'radial-gradient(circle, rgba(6,95,70,0.12) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(60px)',
+                animation: 'orbFloat1 15s ease-in-out infinite'
+            }} />
+            <div style={{
+                position: 'absolute', bottom: '-120px', left: '-100px',
+                width: '400px', height: '400px',
+                background: 'radial-gradient(circle, rgba(217,119,6,0.1) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(60px)',
+                animation: 'orbFloat2 18s ease-in-out infinite'
+            }} />
+            <div style={{
+                position: 'absolute', top: '30%', right: '20%',
+                width: '200px', height: '200px',
+                background: 'radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 70%)',
+                borderRadius: '50%', filter: 'blur(40px)',
+                animation: 'orbFloat1 20s ease-in-out infinite reverse'
+            }} />
+
+            {/* Registration Card */}
+            <div className="animate-scaleIn" style={{
+                position: 'relative', width: '100%', maxWidth: '440px',
+                background: 'rgba(255,254,245,0.9)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+                borderRadius: '24px', padding: '2.5rem',
+                border: '1px solid rgba(231,229,228,0.5)',
+                boxShadow: '0 20px 60px rgba(28,25,23,0.06), 0 4px 20px rgba(6,95,70,0.04)',
+                overflow: 'hidden'
+            }}>
+
+                {/* Gold shimmer overlay */}
+                <div style={{
+                    position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(251,191,36,0.08), transparent)',
+                    animation: 'shimmer 4s linear infinite', pointerEvents: 'none'
+                }} />
+
                 {step === STEPS.MOBILE && renderMobileStep()}
                 {step === STEPS.AADHAR && renderAadharStep()}
                 {step === STEPS.PIN_SETUP && renderPinStep()}
                 {step === STEPS.CONFIRM && renderConfirmStep()}
                 {step === STEPS.SUCCESS && renderSuccessStep()}
             </div>
-        </main>
+        </div>
     );
 }
