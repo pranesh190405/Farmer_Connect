@@ -1,0 +1,30 @@
+config:
+  target: "http://localhost:5001"
+
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: "Warm up"
+
+    - duration: 30
+      arrivalRate: 20
+      name: "Moderate load"
+
+    - duration: 30
+      arrivalRate: 50
+      name: "High load"
+
+scenarios:
+
+  - name: "Health check API"
+    flow:
+      - get:
+          url: "/health"
+
+  - name: "Auth login API"
+    flow:
+      - post:
+          url: "/api/auth/login"
+          json:
+            mobile: "9876543210"
+            pin: "1234"

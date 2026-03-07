@@ -16,38 +16,39 @@ DROP TABLE IF EXISTS users CASCADE;
 -- Stores all system users: farmers, buyers, and admin
 -- =============================================================================
 CREATE TABLE users (
-    id            SERIAL PRIMARY KEY,  -- Auto-increment user ID
-    mobile        VARCHAR(15) NOT NULL,
-    email         VARCHAR(255),
-    name          VARCHAR(100) NOT NULL DEFAULT '',
-    type          VARCHAR(10) NOT NULL 
-                   CHECK (type IN ('farmer', 'buyer', 'admin')), -- Role-based control
-    status        VARCHAR(10) NOT NULL DEFAULT 'APPROVED'
-                   CHECK (status IN ('PENDING', 'APPROVED', 'REJECTED')),
+    id SERIAL PRIMARY KEY,
+    mobile VARCHAR(15) NOT NULL,
+    email VARCHAR(255),
+    name VARCHAR(100) NOT NULL DEFAULT '',
+    type VARCHAR(10) NOT NULL 
+        CHECK (type IN ('farmer', 'buyer', 'admin')),
+    status VARCHAR(10) NOT NULL DEFAULT 'APPROVED'
+        CHECK (status IN ('PENDING', 'APPROVED', 'REJECTED')),
+
     aadhar_number VARCHAR(12) DEFAULT '',
     aadhar_verified BOOLEAN DEFAULT FALSE,
     date_of_birth DATE,
-    address       TEXT DEFAULT '',
-    password_hash VARCHAR(255) DEFAULT '', -- For admin login (bcrypt)
-    
-    -- Buyer-specific fields
+    address TEXT DEFAULT '',
+
+    password_hash VARCHAR(255) DEFAULT '', -- admin login
+    pin_hash VARCHAR(255) DEFAULT '',      -- farmer/buyer login
+
     business_name VARCHAR(100) DEFAULT '',
-    tax_id        VARCHAR(20) DEFAULT '',
+    tax_id VARCHAR(20) DEFAULT '',
     business_category VARCHAR(50) DEFAULT '',
-    contact_name  VARCHAR(100) DEFAULT '',
+    contact_name VARCHAR(100) DEFAULT '',
 
-    -- Trust & verification fields
-    trust_score       INTEGER DEFAULT 0,
+    trust_score INTEGER DEFAULT 0,
     profile_photo_url TEXT DEFAULT '',
-    document_url      TEXT DEFAULT '',
-    document_type     VARCHAR(20) DEFAULT '',
-    admin_notes       TEXT DEFAULT '',
-    verified_at       TIMESTAMP,
+    document_url TEXT DEFAULT '',
+    document_type VARCHAR(20) DEFAULT '',
+    admin_notes TEXT DEFAULT '',
+    verified_at TIMESTAMP,
 
-    created_at    TIMESTAMP DEFAULT NOW(),
-    updated_at    TIMESTAMP DEFAULT NOW(),
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
 
-    UNIQUE(mobile, type) -- Same mobile can exist for different roles
+    UNIQUE(mobile, type)
 );
 
 -- =============================================================================
@@ -57,7 +58,7 @@ CREATE TABLE users (
 CREATE TABLE otp_codes (
     id         SERIAL PRIMARY KEY,
     mobile     VARCHAR(15) NOT NULL,
-    otp        VARCHAR(6) NOT NULL,
+    otp        VARCHAR(6) NOT NULL, 
     expires_at TIMESTAMP NOT NULL, -- OTP expiry time
     used       BOOLEAN DEFAULT FALSE, -- Prevent reuse
     created_at TIMESTAMP DEFAULT NOW()
