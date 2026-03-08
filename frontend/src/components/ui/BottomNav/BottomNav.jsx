@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Home, ShoppingBag, User, Store } from 'lucide-react';
+import { Home, ShoppingBag, User, Store, List, Package } from 'lucide-react';
 import styles from './BottomNav.module.css';
 
 export default function BottomNav() {
@@ -25,12 +25,10 @@ export default function BottomNav() {
     const authPages = ['/login', '/farmer/register', '/buyer/register', '/admin/login'];
     if (authPages.some(page => pathname?.startsWith(page))) return null;
 
-    // Nav items for non-authenticated users
-    let navItems = [
-        { href: '/', label: t('nav.home'), icon: Home },
-        { href: '/market', label: t('nav.market'), icon: Store },
-        { href: '/login', label: t('auth.login.welcome'), icon: User },
-    ];
+    // Hide bottom nav entirely if user is not logged in
+    if (!isAuthenticated) return null;
+
+    let navItems = [];
 
     if (isAuthenticated) {
         if (userType === 'farmer') {

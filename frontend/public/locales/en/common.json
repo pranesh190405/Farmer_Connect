@@ -191,6 +191,7 @@
             "forgotPin": "Forgot PIN?",
             "noAccount": "Don't have an account?",
             "registerHere": "Register here",
+            "alreadyHaveAccount": "Already have an account?",
             "enterValidMobile": "Enter valid 10-digit mobile number",
             "enterValidPin": "Enter valid 4-digit PIN",
             "loginFailed": "Login failed. Please try again."

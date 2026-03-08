@@ -148,6 +148,19 @@ export class ApiService {
         }
     }
 
+    static async updateOrderStatus(orderId, status) {
+        try {
+            const data = await apiFetch(`/api/orders/${orderId}/status`, {
+                method: 'PUT',
+                body: JSON.stringify({ status }),
+            });
+            return data.order;
+        } catch (err) {
+            console.error('updateOrderStatus error:', err);
+            throw err;
+        }
+    }
+
     // === User Profile ===
 
     static async getProfile() {
@@ -221,10 +234,11 @@ export class ApiService {
         }
     }
 
-    static async approveUser(userId) {
+    static async approveUser(userId, notes = '') {
         try {
             const data = await apiFetch(`/api/admin/users/${userId}/approve`, {
                 method: 'PUT',
+                body: JSON.stringify({ notes }),
             });
             return data;
         } catch (err) {
@@ -233,10 +247,11 @@ export class ApiService {
         }
     }
 
-    static async rejectUser(userId) {
+    static async rejectUser(userId, notes = '') {
         try {
             const data = await apiFetch(`/api/admin/users/${userId}/reject`, {
                 method: 'PUT',
+                body: JSON.stringify({ notes }),
             });
             return data;
         } catch (err) {
