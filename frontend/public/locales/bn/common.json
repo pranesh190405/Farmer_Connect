@@ -58,7 +58,23 @@
             "taxIdPlaceholder": "যেমন, 22AAAAA0000A1Z5",
             "title": "ক্রেতা নিবন্ধন",
             "userExists": "ব্যবহারকারীর অ্যাকাউন্ট ইতিমধ্যে বিদ্যমান। লগইনে পুনর্নির্দেশ করা হচ্ছে...",
-            "whatYouBuy": "আপনি কী কেনেন?"
+            "whatYouBuy": "আপনি কী কেনেন?",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            },
+            "mobileLabel": "মোবাইল নম্বর",
+            "mobilePlaceholder": "আপনার 10-সংখ্যার মোবাইল নম্বর লিখুন",
+            "aadharTitle": "পরিচয় যাচাইকরণ",
+            "aadharSubtitle": "যাচাইকরণের জন্য আপনার আধার নম্বর লিখুন",
+            "aadharLabel": "আধার নম্বর",
+            "aadharPlaceholder": "আপনার 12-সংখ্যার আধার নম্বর লিখুন",
+            "success": "অ্যাকাউন্ট তৈরি হয়েছে!",
+            "successMessage": "ডিজিটাল কৃষি বাজারে স্বাগতম",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "লগইনে ফিরে যান"
         },
         "errors": {
             "aadharRequired": "নিবন্ধনের জন্য আধার নম্বর প্রয়োজন",
@@ -89,7 +105,8 @@
             "title": "কৃষক নিবন্ধন",
             "verificationPendingDesc": "আপনার অ্যাকাউন্ট বর্তমানে প্রশাসকের পর্যালোচনায় আছে।",
             "verificationPendingHint": "অনুগ্রহ করে প্রশাসকের অনুমোদনের জন্য অপেক্ষা করুন। আপনি পরে আপনার অবস্থা পরীক্ষা করতে লগইন করতে পারেন।",
-            "verificationPendingTitle": "যাচাই মুলতুবি"
+            "verificationPendingTitle": "যাচাই মুলতুবি",
+            "successReady": "Your account is ready. You can now login to your dashboard."
         },
         "forgotPin": {
             "aadharLast4Label": "আধারের শেষ 4 সংখ্যা",
@@ -198,7 +215,11 @@
         "thankYou": "আপনার অর্ডারের জন্য ধন্যবাদ",
         "title": "চেকআউট",
         "total": "মোট",
-        "trackOrder": "অর্ডার ট্র্যাক করুন"
+        "trackOrder": "অর্ডার ট্র্যাক করুন",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "common": {
         "back": "ফিরে যান",
@@ -225,10 +246,10 @@
         "adminConsole": "অ্যাডমিন কনসোল",
         "batchMode": "ব্যাচ মোড",
         "buyer": {
-            "browseMarket": "বাজার ব্রাউজ করুন",
+            "browseMarket": "মার্কেট ব্রাউজ করুন",
             "empty": {
-                "desc": "আপনার এই মুহূর্তে কোনো {{status}} অর্ডার নেই।",
-                "startShopping": "কেনাকাটা শুরু করুন",
+                "desc": "এই মুহূর্তে আপনার কোনো {{status}} অর্ডার নেই।",
+                "startShopping": "শপিং শুরু করুন",
                 "title": "কোনো {{status}} অর্ডার নেই"
             },
             "inProgress": "চলমান",
@@ -245,7 +266,20 @@
             },
             "trackOrder": "অর্ডার ট্র্যাক করুন",
             "welcome": "স্বাগতম, ক্রেতা",
-            "welcomeDesc": "আপনার অর্ডার পরিচালনা করুন এবং ডেলিভারি ট্র্যাক করুন"
+            "welcomeDesc": "আপনার অর্ডার পরিচালনা করুন এবং ডেলিভারি ট্র্যাক করুন",
+            "raiseIssue": "সমস্যা রিপোর্ট করুন",
+            "issueType": "সমস্যার ধরন",
+            "issueDescription": "বিবরণ",
+            "issueDescPlaceholder": "অনুগ্রহ করে অর্ডারের সমস্যাটি বর্ণনা করুন",
+            "issueSubmit": "সমস্যা জমা দিন",
+            "issueSuccess": "সমস্যা সফলভাবে রিপোর্ট করা হয়েছে। অ্যাডমিন শীঘ্রই এটি পর্যালোচনা করবেন।",
+            "issueFailed": "সমস্যা রিপোর্ট করতে ব্যর্থ। অনুগ্রহ করে পরে আবার চেষ্টা করুন।",
+            "issueTypes": {
+                "quality": "মানের সমস্যা",
+                "delivery": "ডেলিভারি সমস্যা",
+                "quantity": "পরিমাণ অমিল",
+                "other": "অন্যান্য"
+            }
         },
         "createFirstListing": "আপনার প্রথম তালিকা তৈরি করুন",
         "date": "তারিখ",
@@ -395,7 +429,6 @@
     },
     "nav": {
         "home": "হোম",
-        "listings": "তালিকা",
         "market": "বাজার",
         "profile": "প্রোফাইল"
     },
@@ -443,7 +476,11 @@
         "type": "অ্যাকাউন্ট ধরন",
         "verificationPending": "যাচাই মুলতুবি",
         "verified": "যাচাইকৃত",
-        "verifiedFarmer": "যাচাইকৃত কৃষক"
+        "verifiedFarmer": "যাচাইকৃত কৃষক",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "quality": {
         "average": "গড়",

@@ -81,29 +81,56 @@ async function getOrderById(req, res) {
 
 /**
  * PUT /api/orders/:id/status
- * Update order status (e.g., pending, shipped, delivered)
+ * Update order status
+ * - Farmer can set 'shipped' (for orders containing their listings)
+ * - Buyer can set 'delivered' (for their own orders that are 'shipped')
  */
 async function updateOrderStatus(req, res) {
     try {
         const { status } = req.body;
+        const userId = req.user.id;
+        const userType = req.user.type;
 
-        // Status field is required
         if (!status) {
             return res.status(400).json({ error: 'Status is required' });
         }
 
-        const order = await orderModule.updateOrderStatus(
-            req.params.id,
-            status
-        );
+        // Validate transitions based on user type
+        if (userType === 'farmer' && status !== 'shipped') {
+            return res.status(403).json({ error: 'Farmers can only mark orders as shipped' });
+        }
+        if (userType === 'buyer' && status !== 'delivered') {
+            return res.status(403).json({ error: 'Buyers can only mark orders as delivered' });
+        }
 
+        // Fetch order to validate ownership
+        const order = await orderModule.getOrderById(req.params.id);
         if (!order) {
             return res.status(404).json({ error: 'Order not found' });
         }
 
+        // If farmer: must be 'placed' status and order must contain their listings
+        if (userType === 'farmer') {
+            if (order.status !== 'placed') {
+                return res.status(400).json({ error: 'Can only ship orders that are placed' });
+            }
+        }
+
+        // If buyer: must be 'shipped' status and order must belong to them
+        if (userType === 'buyer') {
+            if (order.buyerId !== userId) {
+                return res.status(403).json({ error: 'This is not your order' });
+            }
+            if (order.status !== 'shipped') {
+                return res.status(400).json({ error: 'Can only confirm delivery for shipped orders' });
+            }
+        }
+
+        const updated = await orderModule.updateOrderStatus(req.params.id, status);
+
         res.json({
-            order,
-            message: 'Order status updated'
+            order: updated,
+            message: status === 'shipped' ? 'Order marked as shipped' : 'Delivery confirmed'
         });
 
     } catch (err) {

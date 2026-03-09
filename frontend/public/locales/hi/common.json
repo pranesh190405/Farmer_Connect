@@ -58,7 +58,23 @@
             "taxIdPlaceholder": "उदा., 22AAAAA0000A1Z5",
             "title": "खरीदार पंजीकरण",
             "userExists": "उपयोगकर्ता खाता पहले से मौजूद है। लॉगिन पर जा रहे हैं...",
-            "whatYouBuy": "आप क्या खरीदते हैं?"
+            "whatYouBuy": "आप क्या खरीदते हैं?",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            },
+            "mobileLabel": "मोबाइल नंबर",
+            "mobilePlaceholder": "अपना 10 अंकों का मोबाइल नंबर दर्ज करें",
+            "aadharTitle": "पहचान सत्यापन",
+            "aadharSubtitle": "सत्यापन के लिए अपना आधार नंबर दर्ज करें",
+            "aadharLabel": "आधार नंबर",
+            "aadharPlaceholder": "अपना 12 अंकों का आधार नंबर दर्ज करें",
+            "success": "खाता बन गया!",
+            "successMessage": "डिजिटल कृषि बाज़ार में आपका स्वागत है",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "लॉगिन पर वापस जाएं"
         },
         "errors": {
             "aadharRequired": "पंजीकरण के लिए आधार नंबर आवश्यक है",
@@ -89,7 +105,8 @@
             "title": "किसान पंजीकरण",
             "verificationPendingDesc": "आपका खाता वर्तमान में व्यवस्थापक द्वारा समीक्षाधीन है।",
             "verificationPendingHint": "कृपया व्यवस्थापक की मंजूरी की प्रतीक्षा करें। आप बाद में अपनी स्थिति जांचने के लिए लॉगिन कर सकते हैं।",
-            "verificationPendingTitle": "सत्यापन लंबित"
+            "verificationPendingTitle": "सत्यापन लंबित",
+            "successReady": "Your account is ready. You can now login to your dashboard."
         },
         "forgotPin": {
             "aadharLast4Label": "आधार के अंतिम 4 अंक",
@@ -198,7 +215,11 @@
         "thankYou": "आपके ऑर्डर के लिए धन्यवाद",
         "title": "चेकआउट",
         "total": "कुल",
-        "trackOrder": "ऑर्डर ट्रैक करें"
+        "trackOrder": "ऑर्डर ट्रैक करें",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "common": {
         "back": "वापस",
@@ -225,27 +246,40 @@
         "adminConsole": "व्यवस्थापक कंसोल",
         "batchMode": "बैच मोड",
         "buyer": {
-            "browseMarket": "बाज़ार देखें",
+            "browseMarket": "बाज़ार ब्राउज़ करें",
             "empty": {
-                "desc": "आपके पास इस समय कोई {{status}} ऑर्डर नहीं है।",
+                "desc": "इस समय आपके पास कोई {{status}} ऑर्डर नहीं है।",
                 "startShopping": "खरीदारी शुरू करें",
                 "title": "कोई {{status}} ऑर्डर नहीं"
             },
-            "inProgress": "प्रगति में",
+            "inProgress": "प्रगति पर है",
             "orderId": "ऑर्डर #",
             "stats": {
                 "activeOrders": "सक्रिय ऑर्डर",
-                "completed": "पूर्ण",
+                "completed": "पूरी हो चुकी",
                 "totalOrders": "कुल ऑर्डर"
             },
             "tabs": {
                 "active": "सक्रिय ऑर्डर",
-                "cancelled": "रद्द ऑर्डर",
-                "completed": "पूर्ण ऑर्डर"
+                "cancelled": "रद्द किए गए ऑर्डर",
+                "completed": "पूरे किए गए ऑर्डर"
             },
             "trackOrder": "ऑर्डर ट्रैक करें",
             "welcome": "स्वागत है, खरीदार",
-            "welcomeDesc": "अपने ऑर्डर प्रबंधित करें और डिलीवरी ट्रैक करें"
+            "welcomeDesc": "अपने ऑर्डर प्रबंधित करें और डिलीवरी ट्रैक करें",
+            "raiseIssue": "समस्या दर्ज करें",
+            "issueType": "समस्या का प्रकार",
+            "issueDescription": "विवरण",
+            "issueDescPlaceholder": "कृपया ऑर्डर के साथ समस्या का वर्णन करें",
+            "issueSubmit": "समस्या सबमिट करें",
+            "issueSuccess": "समस्या सफलतापूर्वक दर्ज की गई। व्यवस्थापक जल्द ही इसकी समीक्षा करेंगे।",
+            "issueFailed": "समस्या दर्ज करने में विफल। कृपया बाद में पुनः प्रयास करें।",
+            "issueTypes": {
+                "quality": "गुणवत्ता की समस्या",
+                "delivery": "वितरण समस्या",
+                "quantity": "मात्रा बेमेल",
+                "other": "अन्य"
+            }
         },
         "createFirstListing": "अपनी पहली लिस्टिंग बनाएं",
         "date": "तिथि",
@@ -395,7 +429,6 @@
     },
     "nav": {
         "home": "होम",
-        "listings": "सूची",
         "market": "बाज़ार",
         "profile": "प्रोफ़ाइल"
     },
@@ -443,7 +476,11 @@
         "type": "खाता प्रकार",
         "verificationPending": "सत्यापन लंबित",
         "verified": "सत्यापित",
-        "verifiedFarmer": "सत्यापित किसान"
+        "verifiedFarmer": "सत्यापित किसान",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "quality": {
         "average": "औसत",

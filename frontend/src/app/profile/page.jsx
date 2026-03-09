@@ -106,6 +106,11 @@ export default function ProfileSettingsPage() {
     const [locationLoading, setLocationLoading] = useState(false);
     const [profileLoading, setProfileLoading] = useState(true);
 
+    const [initialUser, setInitialUser] = useState(null);
+    const [initialLocation, setInitialLocation] = useState(null);
+    const [initialPreferences, setInitialPreferences] = useState(null);
+    const [initialPrivacy, setInitialPrivacy] = useState(null);
+
     useEffect(() => {
         if (!isAuthenticated) router.push('/login');
     }, [isAuthenticated, router]);
@@ -117,27 +122,43 @@ export default function ProfileSettingsPage() {
                 const profile = await ApiService.getProfile();
                 if (profile) {
                     // Populate location from saved data
-                    setLocation({
+                    const locData = {
                         state: profile.location?.state || '',
                         district: profile.location?.district || '',
                         lat: profile.location?.lat || null,
                         lng: profile.location?.lng || null,
                         autoDetect: false,
-                    });
+                    };
+                    setLocation(locData);
+                    setInitialLocation(locData);
 
                     // Populate preferences from saved data
-                    setPreferences({
+                    const prefData = {
                         cropInterests: profile.preferences?.cropInterests || [],
                         smsAlerts: profile.preferences?.smsAlerts !== undefined ? profile.preferences.smsAlerts : true,
                         priceAlerts: profile.preferences?.priceAlerts !== undefined ? profile.preferences.priceAlerts : true,
-                    });
+                    };
+                    setPreferences(prefData);
+                    setInitialPreferences(prefData);
 
                     // Populate privacy from saved data
-                    setPrivacy({
+                    const privData = {
                         profilePublic: profile.preferences?.profilePublic !== undefined ? profile.preferences.profilePublic : true,
                         showLocation: profile.preferences?.showLocation !== undefined ? profile.preferences.showLocation : true,
                         showContact: profile.preferences?.showContact !== undefined ? profile.preferences.showContact : false,
-                    });
+                    };
+                    setPrivacy(privData);
+                    setInitialPrivacy(privData);
+
+                    const userData = {
+                        name: profile.name || authUser?.name || '',
+                        mobile: profile.mobile || authUser?.mobile || '',
+                        userType: profile.type || authUser?.type || 'farmer',
+                        aadharNumber: profile.aadharNumber || authUser?.aadharNumber || '',
+                        aadharVerified: profile.aadharVerified || authUser?.aadharVerified || false
+                    };
+                    setUser(userData);
+                    setInitialUser(userData);
                 }
             } catch (err) {
                 console.error('Failed to load profile:', err);
@@ -243,6 +264,12 @@ export default function ProfileSettingsPage() {
                 showContact: privacy.showContact,
             });
 
+            // Update initial state to match the freshly saved ones
+            setInitialUser({ ...user });
+            setInitialLocation({ ...location });
+            setInitialPreferences({ ...preferences });
+            setInitialPrivacy({ ...privacy });
+
             setSaved(true);
             setTimeout(() => setSaved(false), 3000);
         } catch (err) {
@@ -261,10 +288,10 @@ export default function ProfileSettingsPage() {
     if (profileLoading) {
         return (
             <AuthGuard>
-                <main className="min-h-screen bg-gray-50 pb-24 font-sans p-4 md:p-6">
+                <main className="min-h-screen pb-24 font-sans p-4 md:p-6" style={{ background: '#fefce8' }}>
                     <div className="max-w-2xl mx-auto flex items-center justify-center py-20">
-                        <div className="text-gray-500 text-center">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-3"></div>
+                        <div className="text-center" style={{ color: '#78716c' }}>
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style={{ borderBottomColor: '#065f46' }}></div>
                             <p>{t('profile.loading') || 'Loading profile...'}</p>
                         </div>
                     </div>
@@ -275,22 +302,22 @@ export default function ProfileSettingsPage() {
 
     return (
         <AuthGuard>
-            <main className="min-h-screen bg-gray-50 pb-24 font-sans p-4 md:p-6">
+            <main className="min-h-screen pb-24 font-sans p-4 md:p-6" style={{ background: '#fefce8' }}>
                 <div className="max-w-2xl mx-auto space-y-6">
 
                     {/* Header */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900">{t('profile.title') || 'Profile Settings'}</h1>
-                            <p className="text-gray-500 text-sm">{t('profile.manageAccount') || 'Manage your account and preferences'}</p>
+                            <h1 className="text-2xl font-bold" style={{ color: '#1c1917' }}>{t('profile.title') || 'Profile Settings'}</h1>
+                            <p className="text-sm" style={{ color: '#78716c' }}>{t('profile.manageAccount') || 'Manage your account and preferences'}</p>
                         </div>
                         {user.aadharVerified ? (
-                            <div className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium text-sm">
+                            <div className="flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm" style={{ background: '#ecfdf5', color: '#065f46' }}>
                                 <ShieldCheck className="w-4 h-4" />
-                                {t('profile.verifiedFarmer') || 'Verified Farmer'}
+                                {user.userType === 'buyer' ? (t('profile.verifiedBuyer') || 'Verified Buyer') : (t('profile.verifiedFarmer') || 'Verified Farmer')}
                             </div>
                         ) : (
-                            <div className="flex items-center gap-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full font-medium text-sm">
+                            <div className="flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm" style={{ background: '#fef3c7', color: '#92400e' }}>
                                 <AlertTriangle className="w-4 h-4" />
                                 {t('profile.verificationPending') || 'Verification Pending'}
                             </div>
@@ -298,10 +325,10 @@ export default function ProfileSettingsPage() {
                     </div>
 
                     {/* Profile Info */}
-                    <section className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="p-6 border-b border-gray-100">
-                            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <User className="w-5 h-5 text-green-600" />
+                    <section className="rounded-2xl shadow-sm overflow-hidden" style={{ background: '#fffef5', border: '1px solid #e7e5e4' }}>
+                        <div className="p-6" style={{ borderBottom: '1px solid #e7e5e4' }}>
+                            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: '#1c1917' }}>
+                                <User className="w-5 h-5" style={{ color: '#065f46' }} />
                                 {t('profile.accountInfo') || 'Account Information'}
                             </h2>
                         </div>
@@ -322,33 +349,33 @@ export default function ProfileSettingsPage() {
                                     }}
                                     prefix={<Phone className="w-4 h-4 text-gray-400" />}
                                     maxLength={10}
-                                    placeholder="10-digit mobile number"
+                                    placeholder={t('profile.mobilePlaceholder')}
                                 />
                             </div>
 
                             {/* Aadhar Section */}
-                            <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                            <div className="rounded-xl p-4" style={{ background: '#fefce8', border: '1px solid #e7e5e4' }}>
                                 <div className="flex justify-between items-start mb-2">
-                                    <label className="text-sm font-medium text-gray-700">{t('profile.aadharNumber') || 'Aadhar Number'}</label>
+                                    <label className="text-sm font-medium" style={{ color: '#44403c' }}>{t('profile.aadharNumber') || 'Aadhar Number'}</label>
                                     {user.aadharVerified ? (
-                                        <span className="text-xs font-bold text-green-600 flex items-center gap-1">
+                                        <span className="text-xs font-bold flex items-center gap-1" style={{ color: '#065f46' }}>
                                             <ShieldCheck className="w-3 h-3" /> {t('profile.verified') || 'Verified'}
                                         </span>
                                     ) : (
-                                        <span className="text-xs font-bold text-yellow-600 flex items-center gap-1">
+                                        <span className="text-xs font-bold flex items-center gap-1" style={{ color: '#d97706' }}>
                                             <AlertTriangle className="w-3 h-3" /> {t('profile.pendingAdminApproval') || 'Pending Admin Approval'}
                                         </span>
                                     )}
                                 </div>
-                                <div className="font-mono text-lg font-medium text-gray-900 tracking-wider">
+                                <div className="font-mono text-lg font-medium tracking-wider" style={{ color: '#1c1917' }}>
                                     {user.aadharNumber ? user.aadharNumber.replace(/(\d{4})(\d{4})(\d{4})/, '$1 **** $3') : (t('profile.notProvided') || 'Not Provided')}
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-4">
                                 <div className="flex-1">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('profile.type') || 'Account Type'}</label>
-                                    <div className="px-4 py-2.5 bg-gray-100 rounded-lg text-gray-700 font-medium capitalize border border-gray-200">
+                                    <label className="block text-sm font-medium mb-1" style={{ color: '#44403c' }}>{t('profile.type') || 'Account Type'}</label>
+                                    <div className="px-4 py-2.5 rounded-lg font-medium capitalize" style={{ background: '#fefce8', color: '#44403c', border: '1px solid #e7e5e4' }}>
                                         {user.userType}
                                     </div>
                                 </div>
@@ -357,13 +384,13 @@ export default function ProfileSettingsPage() {
                     </section>
 
                     {/* Location */}
-                    <section className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="p-6 border-b border-gray-100">
-                            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <MapPin className="w-5 h-5 text-green-600" />
+                    <section className="rounded-2xl shadow-sm overflow-hidden" style={{ background: '#fffef5', border: '1px solid #e7e5e4' }}>
+                        <div className="p-6" style={{ borderBottom: '1px solid #e7e5e4' }}>
+                            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: '#1c1917' }}>
+                                <MapPin className="w-5 h-5" style={{ color: '#065f46' }} />
                                 {t('profile.location') || 'Location'}
                             </h2>
-                            <p className="text-sm text-gray-500 mt-1">
+                            <p className="text-sm mt-1" style={{ color: '#78716c' }}>
                                 {t('profile.locationHint') || 'Auto-detect your location or set it manually. You can change this anytime to sell crops from a different location.'}
                             </p>
                         </div>
@@ -387,7 +414,7 @@ export default function ProfileSettingsPage() {
                             {/* Show detected coordinates if auto-detected */}
                             {location.autoDetect && location.lat && (
                                 <div className="text-xs text-gray-400 flex items-center gap-1">
-                                    📍 Auto-detected ({location.lat.toFixed(4)}, {location.lng.toFixed(4)})
+                                    📍 {t('profile.autoDetected', { lat: location.lat.toFixed(4), lng: location.lng.toFixed(4) })}
                                 </div>
                             )}
 
@@ -404,18 +431,18 @@ export default function ProfileSettingsPage() {
                     </section>
 
                     {/* Alerts */}
-                    <section className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="p-6 border-b border-gray-100">
-                            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <Bell className="w-5 h-5 text-green-600" />
+                    <section className="rounded-2xl shadow-sm overflow-hidden" style={{ background: '#fffef5', border: '1px solid #e7e5e4' }}>
+                        <div className="p-6" style={{ borderBottom: '1px solid #e7e5e4' }}>
+                            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: '#1c1917' }}>
+                                <Bell className="w-5 h-5" style={{ color: '#065f46' }} />
                                 {t('profile.notifications') || 'Notifications'}
                             </h2>
                         </div>
                         <div className="p-6 space-y-4">
-                            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                            <div className="flex items-center justify-between p-3 rounded-xl" style={{ background: '#fefce8' }}>
                                 <div>
-                                    <strong className="text-gray-900 block">{t('profile.smsAlerts') || 'SMS Alerts'}</strong>
-                                    <p className="text-sm text-gray-500">{t('profile.smsAlertsDesc') || 'Receive important updates via SMS'}</p>
+                                    <strong className="block" style={{ color: '#1c1917' }}>{t('profile.smsAlerts') || 'SMS Alerts'}</strong>
+                                    <p className="text-sm" style={{ color: '#78716c' }}>{t('profile.smsAlertsDesc') || 'Receive important updates via SMS'}</p>
                                 </div>
                                 <label className="relative inline-flex items-center cursor-pointer">
                                     <input
@@ -424,17 +451,17 @@ export default function ProfileSettingsPage() {
                                         onChange={(e) => setPreferences(prev => ({ ...prev, smsAlerts: e.target.checked }))}
                                         className="sr-only peer"
                                     />
-                                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                                    <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-700"></div>
                                 </label>
                             </div>
                         </div>
                     </section>
 
                     {/* Language */}
-                    <section className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="p-6 border-b border-gray-100">
-                            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <Globe className="w-5 h-5 text-green-600" />
+                    <section className="rounded-2xl shadow-sm overflow-hidden" style={{ background: '#fffef5', border: '1px solid #e7e5e4' }}>
+                        <div className="p-6" style={{ borderBottom: '1px solid #e7e5e4' }}>
+                            <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: '#1c1917' }}>
+                                <Globe className="w-5 h-5" style={{ color: '#065f46' }} />
                                 {t('profile.language') || 'Language'}
                             </h2>
                         </div>
@@ -465,11 +492,28 @@ export default function ProfileSettingsPage() {
                     </section>
 
                     {/* Save Button */}
-                    <div className="mt-6 pt-6 border-t border-gray-100">
+                    <div className="mt-6 pt-6" style={{ borderTop: '1px solid #e7e5e4' }}>
                         <div className="flex flex-col gap-3">
-                            <Button onClick={handleSave} isLoading={isSaving} fullWidth className="shadow-lg">
-                                {saved ? `✓ ${t('profile.changesSaved') || 'Changes Saved'}` : t('profile.saveChanges') || 'Save Changes'}
-                            </Button>
+                            {(() => {
+                                const hasChanges = initialUser ? (
+                                    JSON.stringify(user) !== JSON.stringify(initialUser) ||
+                                    JSON.stringify(location) !== JSON.stringify(initialLocation) ||
+                                    JSON.stringify(preferences) !== JSON.stringify(initialPreferences) ||
+                                    JSON.stringify(privacy) !== JSON.stringify(initialPrivacy)
+                                ) : false;
+
+                                return (
+                                    <Button
+                                        onClick={handleSave}
+                                        isLoading={isSaving}
+                                        disabled={!hasChanges && !saved}
+                                        fullWidth
+                                        className="shadow-lg"
+                                    >
+                                        {saved ? `✓ ${t('profile.changesSaved') || 'Changes Saved'}` : t('profile.saveChanges') || 'Save Changes'}
+                                    </Button>
+                                );
+                            })()}
                             <Button onClick={handleLogout} variant="danger" fullWidth>
                                 <LogOut className="w-4 h-4 mr-2" />
                                 {t('profile.logout') || 'Logout'}

@@ -29,8 +29,6 @@ export default function CheckoutPage() {
     const [address, setAddress] = useState(user?.address || '');
     const [paymentMethod, setPaymentMethod] = useState('cod');
 
-    const isVerified = user?.aadharVerified;
-
     // Guard: Redirect if not authenticated or empty cart
     useEffect(() => {
         if (!isAuthenticated) {
@@ -39,14 +37,6 @@ export default function CheckoutPage() {
             router.push('/market');
         }
     }, [isAuthenticated, items, router, step]);
-
-    // Guard: Redirect if not verified
-    useEffect(() => {
-        if (isAuthenticated && !isVerified) {
-            toast.error(t('cart.verificationRequired') || 'Aadhar verification required');
-            router.push('/market'); // Or cart, but market is safer
-        }
-    }, [isAuthenticated, isVerified, router, t]);
 
     const handlePlaceOrder = async () => {
         if (!address.trim()) {
@@ -85,33 +75,14 @@ export default function CheckoutPage() {
             toast.success(t('checkout.orderPlaced'));
         } catch (err) {
             console.error('Place order failed:', err);
-            toast.error(err.message || 'Failed to place order. Please try again.');
+            toast.error(err.message || t('checkout.orderFailed'));
         } finally {
             setLoading(false);
         }
     };
 
     if (!isAuthenticated || (items.length === 0 && step !== 3)) {
-        return null; // or loading spinner
-    }
-
-    if (!isVerified) {
-        return (
-            <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
-                <div className="bg-white p-8 rounded-2xl shadow-sm text-center max-w-md w-full">
-                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4 text-yellow-600">
-                        <AlertTriangle className="w-8 h-8" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('cart.verificationRequired') || 'Verification Required'}</h2>
-                    <p className="text-gray-500 mb-6">
-                        {t('cart.pendingVerification') || 'Your account needs admin approval before you can place orders.'}
-                    </p>
-                    <Link href="/profile">
-                        <Button fullWidth>{t('checkout.checkStatus')}</Button>
-                    </Link>
-                </div>
-            </div>
-        );
+        return null;
     }
 
     if (step === 3) {
@@ -205,8 +176,8 @@ export default function CheckoutPage() {
                                                 <CreditCard className="w-5 h-5 text-green-600" />
                                             </div>
                                             <div>
-                                                <p className="font-bold text-gray-900">Pay on Collection / Delivery</p>
-                                                <p className="text-sm text-gray-500">Pay when you collect or receive your order</p>
+                                                <p className="font-bold text-gray-900">{t('checkout.payOnCollection')}</p>
+                                                <p className="text-sm text-gray-500">{t('checkout.payOnCollectionDesc')}</p>
                                             </div>
                                         </div>
                                     </label>
@@ -214,7 +185,7 @@ export default function CheckoutPage() {
                                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-start gap-2">
                                         <AlertTriangle className="w-5 h-5 text-yellow-600 shrink-0 mt-0.5" />
                                         <p className="text-sm text-yellow-800">
-                                            Amount is to be paid just before collecting the order and not before.
+                                            {t('checkout.paymentWarning')}
                                         </p>
                                     </div>
 

@@ -33,7 +33,7 @@
     background: var(--color-primary-dark);
     border-color: var(--color-primary-dark);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+    box-shadow: 0 4px 12px rgba(6, 95, 70, 0.3);
 }
 
 .primary:active:not(:disabled) {
@@ -57,7 +57,7 @@
 }
 
 .outline:hover:not(:disabled) {
-    background: rgba(22, 163, 74, 0.1);
+    background: rgba(6, 95, 70, 0.1);
 }
 
 .danger {

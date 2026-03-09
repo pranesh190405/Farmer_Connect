@@ -58,7 +58,23 @@
             "taxIdPlaceholder": "ఉదా., 22AAAAA0000A1Z5",
             "title": "కొనుగోలుదారు రిజిస్ట్రేషన్",
             "userExists": "వినియోగదారు ఖాతా ఇప్పటికే ఉంది. లాగిన్‌కి మళ్లిస్తోంది...",
-            "whatYouBuy": "మీరు ఏమి కొనుగోలు చేస్తారు?"
+            "whatYouBuy": "మీరు ఏమి కొనుగోలు చేస్తారు?",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            },
+            "mobileLabel": "మొబైల్ నంబర్",
+            "mobilePlaceholder": "మీ 10-అంకెల మొబైల్ నంబర్ నమోదు చేయండి",
+            "aadharTitle": "గుర్తింపు ధృవీకరణ",
+            "aadharSubtitle": "ధృవీకరణ కోసం మీ ఆధార్ నంబర్ నమోదు చేయండి",
+            "aadharLabel": "ఆధార్ నంబర్",
+            "aadharPlaceholder": "12-అంకెల ఆధార్ నంబర్ నమోదు చేయండి",
+            "success": "ఖాతా సృష్టించబడింది!",
+            "successMessage": "డిజిటల్ వ్యవసాయ మార్కెట్‌కి స్వాగతం",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "లాగిన్‌కి తిరిగి వెళ్లండి"
         },
         "errors": {
             "aadharRequired": "నమోదు కోసం ఆధార్ నంబర్ అవసరం",
@@ -89,7 +105,8 @@
             "title": "రైతు రిజిస్ట్రేషన్",
             "verificationPendingDesc": "మీ ఖాతా ప్రస్తుతం నిర్వాహకుడి సమీక్షలో ఉంది.",
             "verificationPendingHint": "నిర్వాహకుడి ఆమోదం కోసం వేచి ఉండండి.",
-            "verificationPendingTitle": "ధృవీకరణ పెండింగ్‌లో ఉంది"
+            "verificationPendingTitle": "ధృవీకరణ పెండింగ్‌లో ఉంది",
+            "successReady": "Your account is ready. You can now login to your dashboard."
         },
         "forgotPin": {
             "aadharLast4Label": "ఆధార్ చివరి 4 అంకెలు",
@@ -198,7 +215,11 @@
         "thankYou": "మీ ఆర్డర్‌కు ధన్యవాదాలు",
         "title": "చెక్అవుట్",
         "total": "మొత్తం",
-        "trackOrder": "ఆర్డర్ ట్రాక్ చేయండి"
+        "trackOrder": "ఆర్డర్ ట్రాక్ చేయండి",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "common": {
         "back": "వెనుకకు",
@@ -225,27 +246,40 @@
         "adminConsole": "అడ్మిన్ కన్సోల్",
         "batchMode": "బ్యాచ్ మోడ్",
         "buyer": {
-            "browseMarket": "మార్కెట్ చూడండి",
+            "browseMarket": "మార్కెట్ బ్రౌజ్ చేయండి",
             "empty": {
-                "desc": "ప్రస్తుతం మీకు {{status}} ఆర్డర్లు ఏవీ లేవు.",
+                "desc": "ప్రస్తుతం మీకు ఎలాంటి {{status}} ఆర్డర్‌లు లేవు.",
                 "startShopping": "షాపింగ్ ప్రారంభించండి",
-                "title": "{{status}} ఆర్డర్లు లేవు"
+                "title": "{{status}} ఆర్డర్‌లు లేవు"
             },
-            "inProgress": "ప్రగతిలో ఉంది",
+            "inProgress": "పురోగతిలో ఉంది",
             "orderId": "ఆర్డర్ #",
             "stats": {
-                "activeOrders": "సక్రియ ఆర్డర్లు",
+                "activeOrders": "యాక్టివ్ ఆర్డర్‌లు",
                 "completed": "పూర్తయినవి",
-                "totalOrders": "మొత్తం ఆర్డర్లు"
+                "totalOrders": "మొత్తం ఆర్డర్‌లు"
             },
             "tabs": {
-                "active": "సక్రియ ఆర్డర్లు",
-                "cancelled": "రద్దు చేసిన ఆర్డర్లు",
-                "completed": "పూర్తయిన ఆర్డర్లు"
+                "active": "సక్రియ ఆర్డర్‌లు",
+                "cancelled": "రద్దు చేయబడిన ఆర్డర్‌లు",
+                "completed": "పూర్తయిన ఆర్డర్‌లు"
             },
             "trackOrder": "ఆర్డర్ ట్రాక్ చేయండి",
             "welcome": "స్వాగతం, కొనుగోలుదారు",
-            "welcomeDesc": "మీ ఆర్డర్లను నిర్వహించండి మరియు డెలివరీలను ట్రాక్ చేయండి"
+            "welcomeDesc": "మీ ఆర్డర్‌లను నిర్వహించండి మరియు డెలివరీలను ట్రాక్ చేయండి",
+            "raiseIssue": "సమస్యను నివేదించండి",
+            "issueType": "సమస్య రకం",
+            "issueDescription": "వివరణ",
+            "issueDescPlaceholder": "దయచేసి ఆర్డర్‌తో ఉన్న సమస్యను వివరించండి",
+            "issueSubmit": "సమస్యను సమర్పించండి",
+            "issueSuccess": "సమస్య విజయవంతంగా నివేదించబడింది. అడ్మిన్ త్వరలో దీన్ని సమీక్షిస్తారు.",
+            "issueFailed": "సమస్యను నివేదించడంలో విఫలమైంది. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.",
+            "issueTypes": {
+                "quality": "నాణ్యత సమస్య",
+                "delivery": "డెలివరీ సమస్య",
+                "quantity": "పరిమాణం సరిపోలలేదు",
+                "other": "ఇతరం"
+            }
         },
         "createFirstListing": "మీ మొదటి జాబితాను సృష్టించండి",
         "date": "తేదీ",
@@ -395,7 +429,6 @@
     },
     "nav": {
         "home": "హోమ్",
-        "listings": "జాబితాలు",
         "market": "మార్కెట్",
         "profile": "ప్రొఫైల్"
     },
@@ -443,7 +476,11 @@
         "type": "ఖాతా రకం",
         "verificationPending": "ధృవీకరణ పెండింగ్‌లో ఉంది",
         "verified": "ధృవీకరించబడింది",
-        "verifiedFarmer": "ధృవీకరించబడిన రైతు"
+        "verifiedFarmer": "ధృవీకరించబడిన రైతు",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "quality": {
         "average": "సగటు",

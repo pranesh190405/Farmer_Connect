@@ -58,7 +58,23 @@
             "taxIdPlaceholder": "e.g., 22AAAAA0000A1Z5",
             "title": "ಖರೀದಿದಾರ ನೋಂದಣಿ",
             "userExists": "User account already exists. Redirecting to login...",
-            "whatYouBuy": "What do you buy?"
+            "whatYouBuy": "What do you buy?",
+            "errors": {
+                "businessNameRequired": "Business name is required",
+                "taxIdRequired": "Tax ID / GST Number is required",
+                "categoryRequired": "Please select a business category",
+                "contactNameRequired": "Contact person name is required"
+            },
+            "mobileLabel": "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+            "mobilePlaceholder": "ನಿಮ್ಮ 10-ಅಂಕಿಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+            "aadharTitle": "Identity Verification",
+            "aadharSubtitle": "Enter your Aadhar for verification",
+            "aadharLabel": "ಆಧಾರ್ ಸಂಖ್ಯೆ",
+            "aadharPlaceholder": "Enter your 12-digit Aadhar",
+            "success": "ಖಾತೆ ರಚಿಸಲಾಗಿದೆ!",
+            "successMessage": "ಡಿಜಿಟಲ್ ಕೃಷಿ ಮಾರುಕಟ್ಟೆಗೆ ಸುಸ್ವಾಗತ",
+            "successReady": "Your account is ready. You can now login to your dashboard.",
+            "backToLogin": "ಲಾಗಿನ್‌ಗೆ ಹಿಂತಿರುಗಿ"
         },
         "errors": {
             "aadharRequired": "Aadhar number is required for registration",
@@ -89,7 +105,8 @@
             "title": "ರೈತ ನೋಂದಣಿ",
             "verificationPendingDesc": "ನಿಮ್ಮ ಖಾತೆ ಪ್ರಸ್ತುತ ನಿರ್ವಾಹಕರ ವಿಮರ್ಶೆಯಲ್ಲಿದೆ.",
             "verificationPendingHint": "Please wait for admin approval. You can try logging in later to check your status.",
-            "verificationPendingTitle": "ಪರಿಶೀಲನೆ ಬಾಕಿ ಇದೆ"
+            "verificationPendingTitle": "ಪರಿಶೀಲನೆ ಬಾಕಿ ಇದೆ",
+            "successReady": "Your account is ready. You can now login to your dashboard."
         },
         "forgotPin": {
             "aadharLast4Label": "Last 4 Digits of Aadhaar",
@@ -198,7 +215,11 @@
         "thankYou": "ನಿಮ್ಮ ಆರ್ಡರ್‌ಗೆ ಧನ್ಯವಾದಗಳು",
         "title": "ಚೆಕ್ಔಟ್",
         "total": "Total",
-        "trackOrder": "Track Order"
+        "trackOrder": "Track Order",
+        "payOnCollection": "Pay on Collection / Delivery",
+        "payOnCollectionDesc": "Pay when you collect or receive your order",
+        "paymentWarning": "Amount is to be paid just before collecting the order and not before.",
+        "orderFailed": "Failed to place order. Please try again."
     },
     "common": {
         "back": "ಹಿಂದೆ",
@@ -225,27 +246,40 @@
         "adminConsole": "Admin Console",
         "batchMode": "ಬ್ಯಾಚ್ ಮೋಡ್",
         "buyer": {
-            "browseMarket": "Browse Market",
+            "browseMarket": "ಮಾರುಕಟ್ಟೆ ಬ್ರೌಸ್ ಮಾಡಿ",
             "empty": {
-                "desc": "You don't have any {{status}} orders at the moment.",
-                "startShopping": "Start Shopping",
-                "title": "No {{status}} orders"
+                "desc": "ಪ್ರಸ್ತುತ ನಿಮ್ಮಲ್ಲಿ ಯಾವುದೇ {{status}} ಆದೇಶಗಳಿಲ್ಲ.",
+                "startShopping": "ಶಾಪಿಂಗ್ ಪ್ರಾರಂಭಿಸಿ",
+                "title": "ಯಾವುದೇ {{status}} ಆದೇಶಗಳಿಲ್ಲ"
             },
-            "inProgress": "In Progress",
-            "orderId": "Order #",
+            "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
+            "orderId": "ಆದೇಶ #",
             "stats": {
-                "activeOrders": "Active Orders",
-                "completed": "Completed",
-                "totalOrders": "Total Orders"
+                "activeOrders": "ಸಕ್ರಿಯ ಆದೇಶಗಳು",
+                "completed": "ಪೂರ್ಣಗೊಂಡಿದೆ",
+                "totalOrders": "ಒಟ್ಟು ಆದೇಶಗಳು"
             },
             "tabs": {
-                "active": "Active Orders",
-                "cancelled": "Cancelled Orders",
-                "completed": "Completed Orders"
+                "active": "ಸಕ್ರಿಯ ಆದೇಶಗಳು",
+                "cancelled": "ರದ್ದುಗೊಳಿಸಿದ ಆದೇಶಗಳು",
+                "completed": "ಪೂರ್ಣಗೊಂಡ ಆದೇಶಗಳು"
             },
-            "trackOrder": "Track Order",
-            "welcome": "Welcome, Buyer",
-            "welcomeDesc": "Manage your orders and track deliveries"
+            "trackOrder": "ಆದೇಶವನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+            "welcome": "ಸ್ವಾಗತ, ಖರೀದಿದಾರ",
+            "welcomeDesc": "ನಿಮ್ಮ ಆದೇಶಗಳನ್ನು ನಿರ್ವಹಿಸಿ ಮತ್ತು ವಿತರಣೆಗಳನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+            "raiseIssue": "ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಿ",
+            "issueType": "ಸಮಸ್ಯೆಯ ಪ್ರಕಾರ",
+            "issueDescription": "ವಿವರಣೆ",
+            "issueDescPlaceholder": "ದಯವಿಟ್ಟು ಆದೇಶದೊಂದಿಗೆ ಇರುವ ಸಮಸ್ಯೆಯನ್ನು ವಿವರಿಸಿ",
+            "issueSubmit": "ಸಮಸ್ಯೆಯನ್ನು ಸಲ್ಲಿಸಿ",
+            "issueSuccess": "ಸಮಸ್ಯೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ವರದಿ ಮಾಡಲಾಗಿದೆ. ನಿರ್ವಾಹಕರು ಶೀಘ್ರದಲ್ಲೇ ಪರಿಶೀಲಿಸುತ್ತಾರೆ.",
+            "issueFailed": "ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+            "issueTypes": {
+                "quality": "ಗುಣಮಟ್ಟದ ಸಮಸ್ಯೆ",
+                "delivery": "ವಿತರಣಾ ಸಮಸ್ಯೆ",
+                "quantity": "ಪ್ರಮಾಣ ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ",
+                "other": "ಇತರೆ"
+            }
         },
         "createFirstListing": "ನಿಮ್ಮ ಮೊದಲ ಪಟ್ಟಿ ರಚಿಸಿ",
         "date": "Date",
@@ -395,7 +429,6 @@
     },
     "nav": {
         "home": "ಮುಖಪುಟ",
-        "listings": "ಪಟ್ಟಿಗಳು",
         "market": "ಮಾರುಕಟ್ಟೆ",
         "profile": "ಪ್ರೊಫೈಲ್"
     },
@@ -443,7 +476,11 @@
         "type": "ಖಾತೆ ಪ್ರಕಾರ",
         "verificationPending": "ಪರಿಶೀಲನೆ ಬಾಕಿ ಇದೆ",
         "verified": "ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
-        "verifiedFarmer": "ಪರಿಶೀಲಿಸಿದ ರೈತ"
+        "verifiedFarmer": "ಪರಿಶೀಲಿಸಿದ ರೈತ",
+        "mobilePlaceholder": "10-digit mobile number",
+        "autoDetected": "Auto-detected ({{lat}}, {{lng}})",
+        "invalidMobile": "Mobile number must be exactly 10 digits.",
+        "saveFailed": "Failed to save profile. Please try again."
     },
     "quality": {
         "average": "ಸರಾಸರಿ",
