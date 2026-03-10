@@ -66,5 +66,21 @@ const requireFarmer = (req, res, next) => {
     next();
 };
 
+/**
+ * Middleware: Require buyer role
+ * Must be used AFTER requireAuth
+ */
+const requireBuyer = (req, res, next) => {
+
+    // Ensure logged-in user is buyer
+    if (req.user.type !== 'buyer') {
+        return res.status(403).json({
+            error: 'Buyer access required.'
+        });
+    }
+
+    next();
+};
+
 // Export middlewares
-module.exports = { requireAuth, requireAdmin, requireFarmer };
+module.exports = { requireAuth, requireAdmin, requireFarmer, requireBuyer };

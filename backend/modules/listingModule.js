@@ -8,7 +8,8 @@ async function createListing(farmerId, data) {
         cropName, category, variety, quantity, unit,
         expectedPrice, qualityGrade, description, imageUrl,
         locationAddress, locationLat, locationLng,
-        isOrganic, harvestDate, minQty
+        isOrganic, harvestDate, minQty,
+        biddingEnabled, biddingEndTime
     } = data;
 
     const result = await db.query(
@@ -16,15 +17,17 @@ async function createListing(farmerId, data) {
             farmer_id, crop_name, category, variety, quantity, unit,
             expected_price, quality_grade, description, image_url,
             location_address, location_lat, location_lng,
-            is_organic, harvest_date, min_qty, status
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, 'active')
+            is_organic, harvest_date, min_qty, status,
+            bidding_enabled, bidding_end_time
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, 'active', $17, $18)
         RETURNING *`,
         [
             farmerId, cropName, category || 'vegetables', variety || '',
             quantity, unit || 'kg', expectedPrice, qualityGrade || 'B',
             description || '', imageUrl || '',
             locationAddress || '', locationLat || null, locationLng || null,
-            isOrganic || false, harvestDate || null, minQty || 1
+            isOrganic || false, harvestDate || null, minQty || 1,
+            biddingEnabled || false, biddingEndTime || null
         ]
     );
 
@@ -263,6 +266,8 @@ function formatListing(row) {
         minQty: `${row.min_qty} ${row.unit}`,
         minQtyValue: parseFloat(row.min_qty),
         rating: parseFloat(row.rating),
+        biddingEnabled: row.bidding_enabled || false,
+        biddingEndTime: row.bidding_end_time || null,
         date: new Date(row.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
         createdAt: row.created_at,
         updatedAt: row.updated_at,

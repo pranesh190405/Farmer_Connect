@@ -28,7 +28,11 @@ const initialState = {
 
         // Meta
         harvestDate: new Date().toISOString().split('T')[0],
-        isOrganic: false
+        isOrganic: false,
+
+        // Bidding
+        biddingEnabled: false,
+        biddingEndTime: '',
     },
     status: 'idle', // 'idle', 'loading', 'succeeded', 'failed'
     error: null
