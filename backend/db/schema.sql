@@ -181,7 +181,7 @@ CREATE TABLE order_items (
 -- Default Admin
 -- Password: admin123 (bcrypt hashed)
 INSERT INTO users (
-    mobile, email, name, type, status, password_hash,
+    mobile, email, name, type, status, pin_hash,
     aadhar_number, aadhar_verified, date_of_birth, address
 )
 VALUES (
