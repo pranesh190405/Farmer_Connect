@@ -210,4 +210,4 @@ CREATE TABLE order_complaints (
     status VARCHAR(20) DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'RESOLVED', 'CLOSED')),
     admin_response TEXT DEFAULT '',
     created_at TIMESTAMP DEFAULT NOW()
-);
+); 

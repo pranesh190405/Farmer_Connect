@@ -53,8 +53,8 @@ async function getListings(filters = {}) {
         query += ` AND l.status = $${paramIndex++}`;
         params.push(status);
     } else {
-        // Default: show active listings for market
-        query += ` AND l.status = 'active'`;
+        // Default: show active listings + recently sold (within 24h)
+        query += ` AND (l.status = 'active' OR (l.status = 'sold' AND l.updated_at > NOW() - INTERVAL '24 hours'))`;
     }
 
     if (search) {

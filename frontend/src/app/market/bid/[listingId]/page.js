@@ -167,9 +167,13 @@ export default function BiddingPage() {
                     {/* Winner Banner (when auction ended) */}
                     {isEnded && bidding.winner && (
                         <div className={styles.winnerBanner}>
-                            <Trophy size={28} style={{ margin: '0 auto 0.5rem' }} />
-                            <div className={styles.winnerTitle}>Auction Winner!</div>
-                            <div className={styles.winnerName}>{bidding.winner.buyerName}</div>
+                            <div className={styles.winnerIcon}>
+                                <Trophy size={18} />
+                            </div>
+                            <div className={styles.winnerInfo}>
+                                <div className={styles.winnerTitle}>Auction Winner</div>
+                                <div className={styles.winnerName}>{bidding.winner.buyerName}</div>
+                            </div>
                             <div className={styles.winnerAmount}>₹{bidding.winner.amount.toFixed(2)}/{listing.unit}</div>
                         </div>
                     )}

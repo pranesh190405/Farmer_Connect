@@ -353,50 +353,51 @@
 /* ─── Winner Banner ──────────────── */
 .winnerBanner {
     grid-column: 1 / -1;
-    background: linear-gradient(135deg, #fbbf24, #d97706);
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
     border-radius: 1rem;
-    padding: 1.5rem;
-    text-align: center;
-    color: white;
-    position: relative;
-    overflow: hidden;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.winnerBanner::before {
-    content: '🏆';
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2.5rem;
-    opacity: 0.3;
+.winnerIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #dcfce7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #16a34a;
 }
 
-.winnerBanner::after {
-    content: '🏆';
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2.5rem;
-    opacity: 0.3;
+.winnerInfo {
+    flex: 1;
 }
 
 .winnerTitle {
-    font-size: 1.25rem;
-    font-weight: 800;
-    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #16a34a;
+    margin-bottom: 0.125rem;
 }
 
 .winnerName {
-    font-size: 1rem;
-    opacity: 0.9;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #111827;
 }
 
 .winnerAmount {
-    font-size: 1.5rem;
+    font-size: 1.125rem;
     font-weight: 800;
-    margin-top: 0.5rem;
+    color: #065f46;
+    white-space: nowrap;
 }
 
 /* ─── Error / Loading ──────────── */
@@ -413,9 +414,19 @@
 }
 
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-4px); }
-    75% { transform: translateX(4px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    75% {
+        transform: translateX(4px);
+    }
 }
 
 .successBox {
@@ -447,7 +458,9 @@
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .emptyBids {
@@ -472,6 +485,15 @@
 }
 
 @keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.3); }
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.3);
+    }
 }

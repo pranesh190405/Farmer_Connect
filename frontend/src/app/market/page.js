@@ -283,8 +283,19 @@ export default function MarketPage() {
                                                     fill
                                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                                     className="object-cover"
-                                                    style={{ transition: 'transform 0.7s' }}
+                                                    style={{ transition: 'transform 0.7s', ...(item.status === 'sold' ? { filter: 'grayscale(40%) brightness(0.85)' } : {}) }}
                                                 />
+                                                {item.status === 'sold' && (
+                                                    <div style={{
+                                                        position: 'absolute', top: '0.75rem', right: '0.75rem',
+                                                        background: '#dc2626', padding: '0.25rem 0.75rem',
+                                                        borderRadius: '6px', fontSize: '0.6875rem',
+                                                        fontWeight: 800, color: 'white',
+                                                        textTransform: 'uppercase', letterSpacing: '0.05em'
+                                                    }}>
+                                                        Sold
+                                                    </div>
+                                                )}
                                                 <div style={{
                                                     position: 'absolute', bottom: '0.75rem', left: '0.75rem',
                                                     background: 'rgba(6,95,70,0.85)', backdropFilter: 'blur(8px)',
@@ -317,26 +328,28 @@ export default function MarketPage() {
 
                                                 <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1rem' }}>
                                                     <div>
-                                                        <p style={{ fontSize: '1.5rem', fontWeight: 800, color: '#065f46' }}>{item.price}</p>
+                                                        <p style={{ fontSize: '1.5rem', fontWeight: 800, color: item.status === 'sold' ? '#9ca3af' : '#065f46' }}>{item.price}</p>
                                                         <p style={{ fontSize: '0.75rem', color: '#a8a29e', fontWeight: 500 }}>{t('market.card.min')} {item.minQty} {item.unit}</p>
                                                     </div>
-                                                    <button
-                                                        onClick={() => handleAddToCart(item)}
-                                                        style={{
-                                                            background: 'linear-gradient(135deg, #065f46, #10b981)',
-                                                            color: 'white', padding: '0.625rem 1rem',
-                                                            borderRadius: '12px', fontWeight: 700, fontSize: '0.875rem',
-                                                            border: 'none', cursor: 'pointer',
-                                                            boxShadow: '0 4px 15px rgba(6,95,70,0.3)',
-                                                            display: 'flex', alignItems: 'center', gap: '0.5rem',
-                                                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                                                        }}
-                                                    >
-                                                        <ShoppingCart className="w-4 h-4" />
-                                                        {t('market.card.add')}
-                                                    </button>
+                                                    {item.status !== 'sold' && (
+                                                        <button
+                                                            onClick={() => handleAddToCart(item)}
+                                                            style={{
+                                                                background: 'linear-gradient(135deg, #065f46, #10b981)',
+                                                                color: 'white', padding: '0.625rem 1rem',
+                                                                borderRadius: '12px', fontWeight: 700, fontSize: '0.875rem',
+                                                                border: 'none', cursor: 'pointer',
+                                                                boxShadow: '0 4px 15px rgba(6,95,70,0.3)',
+                                                                display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                                                            }}
+                                                        >
+                                                            <ShoppingCart className="w-4 h-4" />
+                                                            {t('market.card.add')}
+                                                        </button>
+                                                    )}
                                                 </div>
-                                                {item.biddingEnabled && (
+                                                {item.status !== 'sold' && item.biddingEnabled && (
                                                     <button
                                                         onClick={() => router.push(`/market/bid/${item.id}`)}
                                                         style={{
