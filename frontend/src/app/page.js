@@ -84,7 +84,7 @@ export default function Home() {
           </p>
 
           {/* Single Get Started Button */}
-          <div className="animate-fadeInUp delay-3">
+          <div className="animate-fadeInUp delay-3 flex justify-center gap-4">
             <Link href="/login" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.75rem',
               background: 'linear-gradient(135deg, #065f46, #10b981, #065f46)',
@@ -96,6 +96,48 @@ export default function Home() {
             }} suppressHydrationWarning>
               Get Started
               <ArrowRight style={{ width: 22, height: 22 }} />
+            </Link>
+
+            <Link href="/report" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.75rem',
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '2px solid rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              color: 'white', padding: '1.125rem 2rem', borderRadius: '14px',
+              fontWeight: 600, fontSize: '1.125rem', textDecoration: 'none',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+            onMouseEnter={e => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={e => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.transform = 'translateY(0)';
+            }}
+            suppressHydrationWarning>
+              Project Report
+            </Link>
+
+            <Link href="/manual" style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.75rem',
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '2px solid rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(10px)',
+              color: 'white', padding: '1.125rem 2rem', borderRadius: '14px',
+              fontWeight: 600, fontSize: '1.125rem', textDecoration: 'none',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+            onMouseEnter={e => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={e => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.transform = 'translateY(0)';
+            }}
+            suppressHydrationWarning>
+              User Manual
             </Link>
           </div>
 

@@ -18,6 +18,7 @@
     "@ducanh2912/next-pwa": "^10.2.9",
     "@reduxjs/toolkit": "^2.11.2",
     "autoprefixer": "^10.4.24",
+    "chart.js": "^4.5.1",
     "framer-motion": "^12.34.0",
     "i18next": "^25.8.0",
     "i18next-browser-languagedetector": "^8.2.0",
