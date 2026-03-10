@@ -28,7 +28,7 @@ CREATE TABLE users (
     aadhar_verified BOOLEAN DEFAULT FALSE,
     date_of_birth DATE,
     address       TEXT DEFAULT '',
-    password_hash VARCHAR(255) DEFAULT '', -- For admin login (bcrypt)
+    pin_hash VARCHAR(255) DEFAULT '', -- For admin login (bcrypt)
     
     -- Buyer-specific fields
     business_name VARCHAR(100) DEFAULT '',
