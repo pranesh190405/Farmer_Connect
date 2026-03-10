@@ -10,11 +10,10 @@ const nextConfig = {
     ],
   },
   async rewrites() {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
     return [
       {
         source: '/api/:path*',
-        destination: `${backendUrl}/api/:path*`,
+        destination: 'https://dxcluqe5p3r1v.cloudfront.net/api/:path*',
       },
     ];
   },
