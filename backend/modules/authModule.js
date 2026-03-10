@@ -174,7 +174,7 @@ async function adminLogin(email, password) {
 
     const admin = result.rows[0];
 
-    const isMatch = await bcrypt.compare(password, admin.password_hash);
+    const isMatch = await bcrypt.compare(password, admin.pin_hash);
     if (!isMatch) {
         return { error: 'Invalid credentials' };
     }
