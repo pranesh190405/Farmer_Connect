@@ -14,7 +14,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://agronexus-env.eba-zhws2hp8.ap-south-1.elasticbeanstalk.com//api/:path*',
+        destination: 'http://agronexus-env.eba-zhws2hp8.ap-south-1.elasticbeanstalk.com/api/:path*',
       },
     ];
   },
