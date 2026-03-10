@@ -87,8 +87,12 @@ async function loginUser(mobile, pin, userType) {
         user.failed_login_attempts = 0;
     }
 
-    // Verify PIN
-    const isMatch = await bcrypt.compare(pin, user.pin_hash);
+    // Verify PIN — support both pin_hash (new schema) and password_hash (old schema)
+    const storedHash = user.pin_hash || user.password_hash;
+    if (!storedHash) {
+        return { error: 'Account setup incomplete. Please contact support.' };
+    }
+    const isMatch = await bcrypt.compare(pin, storedHash);
 
     if (!isMatch) {
         const newAttempts = (user.failed_login_attempts || 0) + 1;
