@@ -5,6 +5,8 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { AlertCircle, CheckCircle, Clock, MessageSquare, X } from 'lucide-react';
 import { showToast } from '@/components/ui/Toast/Toast';
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+
 export default function AdminComplaintsPage() {
     const [complaints, setComplaints] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +23,7 @@ export default function AdminComplaintsPage() {
 
     const fetchComplaints = async () => {
         try {
-            const res = await fetch('/api/admin/complaints', { credentials: 'include' });
+            const res = await fetch(`${BASE_URL}/api/admin/complaints`, { credentials: 'include' });
             if (res.ok) {
                 const data = await res.json();
                 setComplaints(data.complaints || []);
@@ -40,7 +42,7 @@ export default function AdminComplaintsPage() {
 
         setIsSubmitting(true);
         try {
-            const res = await fetch(`/api/admin/complaints/${resolveModal.id}/resolve`, {
+            const res = await fetch(`${BASE_URL}/api/admin/complaints/${resolveModal.id}/resolve`, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -107,8 +109,8 @@ export default function AdminComplaintsPage() {
                             key={status}
                             onClick={() => setStatusFilter(status)}
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${statusFilter === status
-                                    ? 'bg-red-50 text-red-700 border border-red-200'
-                                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                                ? 'bg-red-50 text-red-700 border border-red-200'
+                                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
                                 }`}
                         >
                             {status.charAt(0) + status.slice(1).toLowerCase()}
