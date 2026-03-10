@@ -9,7 +9,8 @@
     "lint": "eslint",
     "clean": "npx rimraf .next",
     "i18n:check": "node scripts/check-i18n.mjs",
-    "i18n:sync": "node scripts/sync-i18n.mjs"
+    "i18n:sync": "node scripts/sync-i18n.mjs",
+    "test" : "jest"
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
@@ -30,8 +31,15 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "babel-jest": "^30.3.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
     "tailwindcss": "^4"
   }
 }

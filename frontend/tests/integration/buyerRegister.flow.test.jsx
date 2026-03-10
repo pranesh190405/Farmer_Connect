@@ -1,0 +1,42 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import BuyerRegisterPage from "../../src/app/(auth)/buyer/register/page";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "../../src/store/slices/authSlice";
+
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({ push: jest.fn() })
+}));
+
+jest.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: (key) => key
+  })
+}));
+
+describe("Buyer Register Flow Integration Test", () => {
+
+  const store = configureStore({
+    reducer: {
+      auth: authReducer
+    }
+  });
+
+  test("user can enter mobile number", async () => {
+
+    render(
+      <Provider store={store}>
+        <BuyerRegisterPage />
+      </Provider>
+    );
+
+    const mobileInput = await screen.findByRole("textbox");
+
+    await userEvent.type(mobileInput, "9876543210");
+
+    expect(mobileInput.value).toBe("9876543210");
+
+  });
+
+});
