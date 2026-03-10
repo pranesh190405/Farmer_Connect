@@ -1,10 +1,12 @@
-const http = require('http');const BASE_URL = 'https://dxcluqe5p3r1v.cloudfront.net/api';
+const http = require('http');
+
+const BASE_URL = 'http://localhost:5001/api';
 
 async function request(method, path, body = null, token = null) {
     return new Promise((resolve, reject) => {
         const options = {
-            hostname: 'dxcluqe5p3r1v.cloudfront.net',
-            port: 443,
+            hostname: 'localhost',
+            port: 5001,
             path: '/api' + path,
             method: method,
             headers: {
@@ -49,8 +51,9 @@ async function runTests() {
         // ignore
     }
 
+    // Let's correct the request function to handle root paths if needed, or just manually check root health
     const healthCheck = new Promise((resolve) => {
-        http.get('https://dxcluqe5p3r1v.cloudfront.net/health', (res) => {
+        http.get('http://localhost:5001/health', (res) => {
             resolve(res.statusCode);
         }).on('error', () => resolve(500));
     });

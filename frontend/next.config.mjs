@@ -14,7 +14,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://dxcluqe5p3r1v.cloudfront.net/api/:path*',
+        destination: 'https://dxcluqe5p3r1v.cloudfront.net/:path*',
       },
     ];
   },
