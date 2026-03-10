@@ -10,7 +10,9 @@
     "clean": "npx rimraf .next",
     "i18n:check": "node scripts/check-i18n.mjs",
     "i18n:sync": "node scripts/sync-i18n.mjs",
-    "test" : "jest"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
