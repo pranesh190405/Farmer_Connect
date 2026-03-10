@@ -38,8 +38,27 @@ export default function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="AgriMarket" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                  pageLanguage: 'en',
+                  autoDisplay: false
+                }, 'google_translate_element');
+              }
+            `,
+          }}
+        />
+        <script
+          type="text/javascript"
+          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          defer
+        />
       </head>
       <body className={`${inter.variable} antialiased`}>
+        <div id="google_translate_element" style={{ display: 'none' }}></div>
         <Providers>
           <OfflineBanner />
           <Header />

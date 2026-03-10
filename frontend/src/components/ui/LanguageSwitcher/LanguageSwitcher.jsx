@@ -18,25 +18,49 @@ const LANGUAGES = [
 ];
 
 export default function LanguageSwitcher({ variant = 'default' }) {
-    const { i18n, t } = useTranslation('common');
+    const { t } = useTranslation('common');
     const [mounted, setMounted] = useState(false);
     const [currentLang, setCurrentLang] = useState('en');
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         setMounted(true);
-        setCurrentLang(i18n.language);
-    }, [i18n.language]);
+        // Extract language from googtrans cookie or fallback to 'en'
+        const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
+        if (match && match[1]) {
+            setCurrentLang(match[1]);
+        } else {
+            setCurrentLang('en');
+        }
+    }, []);
 
     if (!mounted) {
-        return null; // or a loading skeleton/default state
+        return null;
     }
 
     const changeLanguage = (langCode) => {
-        i18n.changeLanguage(langCode);
-        localStorage.setItem('i18nextLng', langCode);
+        // We DO NOT call i18n.changeLanguage() because React reconciliation 
+        // wipes out Google Translate's DOM mutations across the entire app.
+        // Instead, we let Google Translate cleanly handle 100% of the UI natively.
         setCurrentLang(langCode);
+
+        // Update Google Translate cookie
+        const domain = window.location.hostname;
+        const cookieDomain = domain === 'localhost' ? '' : `; domain=${domain}`;
+
+        if (langCode === 'en') {
+            document.cookie = `googtrans=/en/en; path=/${cookieDomain}`;
+            document.cookie = `googtrans=/en/en; path=/`;
+        } else {
+            document.cookie = `googtrans=/en/${langCode}; path=/${cookieDomain}`;
+            document.cookie = `googtrans=/en/${langCode}; path=/`;
+        }
+
         setIsOpen(false);
+        // Add a slight delay before reload to ensure the cookie is fully saved
+        setTimeout(() => {
+            window.location.reload();
+        }, 100);
     };
 
     const currentLanguage = LANGUAGES.find(lang => lang.code === currentLang) || LANGUAGES[0];

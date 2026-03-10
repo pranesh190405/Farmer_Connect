@@ -462,3 +462,29 @@ textarea {
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(231, 229, 228, 0.5);
 }
+
+/* ========================================
+   GOOGLE TRANSLATE HIDDEN STYLES
+   ======================================== */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget-icon {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+.goog-tooltip {
+  display: none !important;
+}
+
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
