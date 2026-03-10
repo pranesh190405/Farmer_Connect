@@ -2,9 +2,11 @@
  * ApiService — Calls real backend API endpoints
  */
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+
 // Helper for API calls
 async function apiFetch(url, options = {}) {
-    const res = await fetch(url, {
+    const res = await fetch(`${BASE_URL}${url}`, {
         ...options,
         credentials: 'include',
         headers: {
