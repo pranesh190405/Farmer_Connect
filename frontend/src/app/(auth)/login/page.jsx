@@ -64,9 +64,9 @@ function LoginContent() {
     };
 
     const roles = [
-        { key: 'farmer', label: 'Farmer' },
-        { key: 'buyer', label: 'Buyer' },
-        { key: 'admin', label: 'Admin' },
+        { key: 'farmer', emoji: '🧑‍🌾', label: t('auth.login.farmer') },
+        { key: 'buyer', emoji: '🛒', label: t('auth.login.buyer') },
+        { key: 'admin', emoji: '⚙️', label: t('auth.login.admin') },
     ];
 
     return (
@@ -118,14 +118,12 @@ function LoginContent() {
 
                 {/* Header */}
                 <div style={{ textAlign: 'center', marginBottom: '2rem', position: 'relative', zIndex: 1 }}>
+                    <div className="animate-bounceIn" style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🌾</div>
                     <h1 className="animate-fadeInUp delay-1" style={{
                         fontSize: '1.75rem', fontWeight: 800, color: '#1c1917', marginBottom: '0.5rem'
-                    }}>Farmer Connect</h1>
-                    <h2 className="animate-fadeInUp delay-1" style={{
-                        fontSize: '1.25rem', fontWeight: 700, color: '#1c1917', marginBottom: '0.25rem'
-                    }}>Welcome Back</h2>
+                    }}>{t('auth.login.welcome')}</h1>
                     <p className="animate-fadeInUp delay-2" style={{ color: '#78716c', fontSize: '0.95rem' }}>
-                        Login to continue
+                        {t('auth.login.loginToContinue')}
                     </p>
                 </div>
 
@@ -148,7 +146,7 @@ function LoginContent() {
                                 transform: userType === role.key ? 'scale(1.02)' : 'scale(1)'
                             }}
                         >
-                            {role.label}
+                            {role.emoji} {role.label}
                         </button>
                     ))}
                 </div>
@@ -161,14 +159,14 @@ function LoginContent() {
                                 color: '#065f46', fontWeight: 600, textDecoration: 'none',
                                 fontSize: '1rem', transition: 'color 0.2s'
                             }}>
-                                Go to Admin Login
+                                {t('auth.login.goToAdminLogin')}
                             </Link>
                         </div>
                     ) : (
                         <form onSubmit={handleLogin} className="animate-fadeInUp delay-4" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                             <Input
-                                label="Mobile Number"
-                                placeholder="Enter your 10-digit mobile"
+                                label={t('auth.login.mobileLabel')}
+                                placeholder={t('auth.login.mobilePlaceholder')}
                                 value={mobile}
                                 onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
                                 type="tel"
@@ -178,8 +176,8 @@ function LoginContent() {
                             />
 
                             <Input
-                                label="4-Digit PIN"
-                                placeholder="Enter your PIN"
+                                label={t('auth.login.pinLabel')}
+                                placeholder={t('auth.login.pinPlaceholder')}
                                 value={pin}
                                 onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
                                 type="password"
@@ -189,7 +187,7 @@ function LoginContent() {
                             />
 
                             <Button type="submit" fullWidth isLoading={isLoading}>
-                                Login
+                                {t('auth.login.loginButton')}
                             </Button>
 
                             <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -197,14 +195,14 @@ function LoginContent() {
                                     fontSize: '0.875rem', color: '#d97706', fontWeight: 600,
                                     textDecoration: 'none', transition: 'color 0.2s'
                                 }}>
-                                    Forgot PIN?
+                                    {t('auth.login.forgotPin')}
                                 </Link>
                                 <p style={{ fontSize: '0.875rem', color: '#78716c' }}>
-                                    {"Don't have an account?"}{' '}
+                                    {t('auth.login.noAccount')}{' '}
                                     <Link href={`/${userType}/register`} style={{
                                         color: '#065f46', fontWeight: 600, textDecoration: 'none'
                                     }}>
-                                        Register here
+                                        {t('auth.login.registerHere')}
                                     </Link>
                                 </p>
                             </div>
