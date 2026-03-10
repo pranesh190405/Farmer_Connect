@@ -178,12 +178,7 @@ async function adminLogin(email, password) {
 
     const admin = result.rows[0];
 
-    // Support both pin_hash (new schema) and password_hash (old schema)
-    const adminHash = admin.pin_hash || admin.password_hash;
-    if (!adminHash) {
-        return { error: 'Admin account not configured correctly.' };
-    }
-    const isMatch = await bcrypt.compare(password, adminHash);
+    const isMatch = await bcrypt.compare(password, admin.pin_hash);
     if (!isMatch) {
         return { error: 'Invalid credentials' };
     }
