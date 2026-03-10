@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
-
 // ---- Async Thunks ----
 
 // Login with phone + PIN
@@ -9,7 +7,7 @@ export const loginAsync = createAsyncThunk(
     'auth/login',
     async ({ mobile, pin, userType }, { rejectWithValue }) => {
         try {
-            const res = await fetch(`${BASE_URL}/api/auth/login`, {
+            const res = await fetch('/api/auth/login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -29,7 +27,7 @@ export const registerAsync = createAsyncThunk(
     'auth/register',
     async (userData, { rejectWithValue }) => {
         try {
-            const res = await fetch(`${BASE_URL}/api/auth/register`, {
+            const res = await fetch('/api/auth/register', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -49,7 +47,7 @@ export const forgotPinAsync = createAsyncThunk(
     'auth/forgotPin',
     async ({ mobile, aadharLast4, newPin, userType }, { rejectWithValue }) => {
         try {
-            const res = await fetch(`${BASE_URL}/api/auth/forgot-pin`, {
+            const res = await fetch('/api/auth/forgot-pin', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -69,7 +67,7 @@ export const fetchMe = createAsyncThunk(
     'auth/fetchMe',
     async (_, { rejectWithValue }) => {
         try {
-            const res = await fetch(`${BASE_URL}/api/auth/me`, { credentials: 'include' });
+            const res = await fetch('/api/auth/me', { credentials: 'include' });
             const data = await res.json();
             if (!res.ok) return rejectWithValue(data.error);
             return data;
@@ -84,7 +82,7 @@ export const logoutAsync = createAsyncThunk(
     'auth/logout',
     async (_, { rejectWithValue }) => {
         try {
-            await fetch(`${BASE_URL}/api/auth/logout`, { method: 'POST', credentials: 'include' });
+            await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
             return {};
         } catch (err) {
             return rejectWithValue('Logout failed');
@@ -97,7 +95,7 @@ export const adminLoginAsync = createAsyncThunk(
     'auth/adminLogin',
     async ({ email, password }, { rejectWithValue }) => {
         try {
-            const res = await fetch(`${BASE_URL}/api/auth/admin-login`, {
+            const res = await fetch('/api/auth/admin-login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },

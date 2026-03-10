@@ -5,8 +5,6 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { Search, MapPin, Package, Clock, Filter, AlertCircle } from 'lucide-react';
 import { showToast } from '@/components/ui/Toast/Toast';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
-
 export default function AdminListingsPage() {
     const [listings, setListings] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +15,7 @@ export default function AdminListingsPage() {
         const fetchListings = async () => {
             try {
                 // Fetch listings from backend
-                const response = await fetch(`${BASE_URL}/api/listings?limit=100`); // Fetch a good chunk for admin view
+                const response = await fetch('/api/listings?limit=100'); // Fetch a good chunk for admin view
                 if (response.ok) {
                     const data = await response.json();
                     setListings(data.listings);
