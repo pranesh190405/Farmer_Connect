@@ -5,6 +5,8 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { Search, ShoppingBag, MapPin, Truck, CheckCircle, Clock, XCircle, FileText } from 'lucide-react';
 import { showToast } from '@/components/ui/Toast/Toast';
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+
 export default function AdminOrdersPage() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +18,7 @@ export default function AdminOrdersPage() {
             try {
                 // Future admin API for all orders: /api/admin/orders
                 // For now, we simulate fetching all orders
-                const response = await fetch('/api/orders/my'); // This is user-specific, but placeholder for now
+                const response = await fetch(`${BASE_URL}/api/orders/my`); // This is user-specific, but placeholder for now
                 if (response.ok) {
                     const data = await response.json();
                     setOrders(data.orders || []);
