@@ -1,3 +1,4 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -13,12 +14,10 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5001/api/:path*',
+        destination: 'http://agronexus-env.eba-zhws2hp8.ap-south-1.elasticbeanstalk.com//api/:path*',
       },
     ];
   },
 };
 
 export default nextConfig;
-
-
