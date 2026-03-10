@@ -66,7 +66,7 @@ export default function LanguageSwitcher({ variant = 'default' }) {
     const currentLanguage = LANGUAGES.find(lang => lang.code === currentLang) || LANGUAGES[0];
 
     return (
-        <div className={`${styles.switcher} ${styles[variant]}`}>
+        <div className={`${styles.switcher} ${styles[variant]} notranslate`}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={styles.mainButton}
@@ -79,7 +79,7 @@ export default function LanguageSwitcher({ variant = 'default' }) {
             </button>
 
             {isOpen && (
-                <div className={styles.dropdown}>
+                <div className={`${styles.dropdown} notranslate`}>
                     {LANGUAGES.map((lang) => (
                         <button
                             key={lang.code}

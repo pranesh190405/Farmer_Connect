@@ -58,7 +58,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${inter.variable} antialiased`}>
-        <div id="google_translate_element" style={{ display: 'none' }}></div>
         <Providers>
           <OfflineBanner />
           <Header />
@@ -70,6 +69,12 @@ export default function RootLayout({ children }) {
           <ToastContainer />
           <ServiceWorkerRegistration />
         </Providers>
+        {/* Google Translate element — must exist in DOM for the SDK to work,
+            but is visually hidden via both inline styles and globals.css */}
+        <div id="google_translate_element" aria-hidden="true" style={{
+          position: 'absolute', left: '-9999px', top: '-9999px',
+          width: 0, height: 0, overflow: 'hidden', visibility: 'hidden'
+        }}></div>
       </body>
     </html>
   );
