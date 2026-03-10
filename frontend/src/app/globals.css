@@ -462,3 +462,75 @@ textarea {
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(231, 229, 228, 0.5);
 }
+
+/* ========================================
+   GOOGLE TRANSLATE HIDDEN STYLES
+   Hide ALL Google Translate UI elements so
+   only our custom LanguageSwitcher is visible.
+   IMPORTANT: Do NOT use .skiptranslate alone
+   as Google adds this class to <body> too!
+   ======================================== */
+
+/* Hide the Google Translate widget container — use multiple methods
+   because Google Translate overrides inline styles when it initializes */
+#google_translate_element {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+}
+
+/* Hide Google Translate gadget (the dropdown widget it creates) */
+.goog-te-gadget {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Hide the banner frame (iframe) injected at document top.
+   Target only iframes with skiptranslate, NOT body.skiptranslate */
+iframe.skiptranslate,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame {
+  display: none !important;
+  height: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Prevent Google from pushing the body down when banner is injected */
+body {
+  top: 0px !important;
+}
+
+/* Hide Google Translate icon and tooltips */
+.goog-te-gadget-icon {
+  display: none !important;
+}
+
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+/* Remove Google Translate highlight styles on hover */
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Hide Google Translate internal popup menu */
+.VIpgJd-ZVi9od-ORHb-OEVmcd {
+  display: none !important;
+}
+
+/* Hide any div.skiptranslate that is NOT the body */
+div.skiptranslate {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
