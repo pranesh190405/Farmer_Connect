@@ -5,20 +5,20 @@
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "test": "set NODE_ENV=test&& jest",
-        "test:coverage": "set NODE_ENV=test&& jest --coverage",
-        "test" : "jest",
-        "test:coverage" : "jest --coverage",
+        "test": "jest",
+        "test:coverage": "jest --coverage",
         "dev": "node --watch server.js"
     },
     "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"]
-  },
+        "setupFilesAfterEnv": [
+            "<rootDir>/tests/setup.js"
+        ]
+    },
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
-        "dotenv": "^16.4.7",
+        "dotenv": "^16.6.1",
         "express": "^4.21.2",
         "express-validator": "^7.3.1",
         "jsonwebtoken": "^9.0.2",
