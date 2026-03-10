@@ -244,6 +244,41 @@ export class ApiService {
             throw err;
         }
     }
+
+    // === Bidding ===
+
+    static async getBidSession(listingId) {
+        try {
+            const data = await apiFetch(`/api/bids/listing/${listingId}`);
+            return data;
+        } catch (err) {
+            console.error('getBidSession error:', err);
+            return null;
+        }
+    }
+
+    static async placeBid(listingId, amount) {
+        try {
+            const data = await apiFetch(`/api/bids/listing/${listingId}`, {
+                method: 'POST',
+                body: JSON.stringify({ amount }),
+            });
+            return data;
+        } catch (err) {
+            console.error('placeBid error:', err);
+            throw err;
+        }
+    }
+
+    static async getMyBids() {
+        try {
+            const data = await apiFetch('/api/bids/my');
+            return data.bids || [];
+        } catch (err) {
+            console.error('getMyBids error:', err);
+            return [];
+        }
+    }
 }
 
 export default ApiService;

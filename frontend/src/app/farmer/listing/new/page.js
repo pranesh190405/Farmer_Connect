@@ -50,7 +50,9 @@ export default function NewListingPage() {
         quantity: '',
         price: '',
         minQty: '',
-        quality: { size: 50, freshness: 80, ripeness: 60 }
+        quality: { size: 50, freshness: 80, ripeness: 60 },
+        biddingEnabled: false,
+        biddingEndTime: '',
     });
 
     const [showCropSuggestions, setShowCropSuggestions] = useState(false);
@@ -141,18 +143,33 @@ export default function NewListingPage() {
         setIsLoading(true);
 
         try {
+            // Convert quality sliders to a letter grade
+            const q = formData.quality || {};
+            const avgQuality = ((q.size || 50) + (q.freshness || 50) + (q.ripeness || 50)) / 3;
+            let qualityGrade = 'B';
+            if (avgQuality >= 80) qualityGrade = 'A';
+            else if (avgQuality >= 60) qualityGrade = 'B';
+            else if (avgQuality >= 40) qualityGrade = 'C';
+            else qualityGrade = 'D';
+
             const newListing = {
-                cropName: `${formData.crop.trim()} ${formData.variety ? `(${formData.variety})` : ''}`.trim(),
+                cropName: formData.crop.trim(),
                 category: formData.category || 'vegetables',
                 variety: formData.variety || '',
                 quantity: parseFloat(formData.quantity),
                 unit: 'kg',
                 expectedPrice: parseFloat(formData.price),
-                minQty: parseFloat(formData.minQty) || 50,
+                qualityGrade,
+                description: '',
+                imageUrl: '',
+                minQty: parseFloat(formData.minQty) || 1,
                 locationAddress: location.address || '',
                 locationLat: location.lat || null,
                 locationLng: location.lng || null,
-                quality: formData.quality,
+                isOrganic: false,
+                harvestDate: null,
+                biddingEnabled: formData.biddingEnabled || false,
+                biddingEndTime: formData.biddingEndTime || null,
             };
 
             await ApiService.addListing(newListing);
@@ -265,6 +282,81 @@ export default function NewListingPage() {
                         initialQuality={formData.quality}
                         onChange={(q) => setFormData(prev => ({ ...prev, quality: q }))}
                     />
+
+                    {/* ─── Bidding Section ─── */}
+                    <div style={{
+                        borderRadius: '0.75rem',
+                        border: '1px solid #fde68a',
+                        backgroundColor: '#fffbeb',
+                        padding: '1rem',
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#111827' }}>
+                                    Enable Bidding
+                                </label>
+                                <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.125rem' }}>
+                                    Allow buyers to competitively bid on this crop
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setFormData(prev => ({ ...prev, biddingEnabled: !prev.biddingEnabled }))}
+                                style={{
+                                    position: 'relative',
+                                    display: 'inline-flex',
+                                    height: '1.75rem',
+                                    width: '3rem',
+                                    alignItems: 'center',
+                                    borderRadius: '9999px',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    transition: 'background-color 0.2s',
+                                    backgroundColor: formData.biddingEnabled ? '#f59e0b' : '#d1d5db',
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        display: 'inline-block',
+                                        height: '1.25rem',
+                                        width: '1.25rem',
+                                        borderRadius: '50%',
+                                        backgroundColor: 'white',
+                                        boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                                        transition: 'transform 0.2s',
+                                        transform: formData.biddingEnabled ? 'translateX(1.5rem)' : 'translateX(0.25rem)',
+                                    }}
+                                />
+                            </button>
+                        </div>
+
+                        {formData.biddingEnabled && (
+                            <div style={{ marginTop: '1rem' }}>
+                                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#374151', marginBottom: '0.5rem' }}>
+                                    Bidding End Time{' '}
+                                    <span style={{ color: '#ef4444' }}>*</span>
+                                </label>
+                                <input
+                                    type="datetime-local"
+                                    value={formData.biddingEndTime}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, biddingEndTime: e.target.value }))}
+                                    min={new Date().toISOString().slice(0, 16)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.625rem 0.75rem',
+                                        borderRadius: '0.5rem',
+                                        border: '1px solid #d1d5db',
+                                        fontSize: '0.875rem',
+                                        outline: 'none',
+                                    }}
+                                    required
+                                />
+                                <p style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.375rem' }}>
+                                    Buyers can place bids until this date and time
+                                </p>
+                            </div>
+                        )}
+                    </div>
 
                     <div className="rounded-xl border border-gray-200 p-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2">

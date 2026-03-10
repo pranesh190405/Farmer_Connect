@@ -3,7 +3,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { resetListing } from '@/store/slices/listingSlice';
-import { CheckCircle, MapPin, Package, Tag, Star } from 'lucide-react';
+import { CheckCircle, MapPin, Package, Tag, Star, Gavel } from 'lucide-react';
 import { useState } from 'react';
 import { ApiService } from '@/services/apiService';
 
@@ -30,6 +30,8 @@ export default function StepReview() {
                 locationAddress: formData.location?.address || '',
                 locationLat: formData.location?.lat || null,
                 locationLng: formData.location?.lng || null,
+                biddingEnabled: formData.biddingEnabled || false,
+                biddingEndTime: formData.biddingEndTime || null,
             });
 
             alert('Listing Created Successfully!');
@@ -99,6 +101,19 @@ export default function StepReview() {
                         {formData.location.address || `${formData.location.lat}, ${formData.location.lng}`}
                     </p>
                 </div>
+
+                {/* Bidding Info */}
+                {formData.biddingEnabled && (
+                    <div style={{ padding: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#92400e', backgroundColor: '#fffbeb' }}>
+                        <Gavel style={{ width: '1.25rem', height: '1.25rem', color: '#f59e0b', flexShrink: 0 }} />
+                        <div>
+                            <p style={{ fontSize: '0.875rem', fontWeight: 700 }}>Bidding Enabled</p>
+                            <p style={{ fontSize: '0.75rem', color: '#d97706' }}>
+                                Ends: {new Date(formData.biddingEndTime).toLocaleString()}
+                            </p>
+                        </div>
+                    </div>
+                )}
             </div>
 
             <button

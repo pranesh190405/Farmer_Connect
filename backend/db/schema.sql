@@ -123,8 +123,24 @@ CREATE TABLE listings (
     harvest_date    DATE,
     min_qty         DECIMAL(10, 2) DEFAULT 1,
     rating          DECIMAL(3, 1) DEFAULT 0,
+    bidding_enabled BOOLEAN DEFAULT FALSE,
+    bidding_end_time TIMESTAMP,
     created_at      TIMESTAMP DEFAULT NOW(),
     updated_at      TIMESTAMP DEFAULT NOW()
+);
+
+-- =============================================================================
+-- 5b. BIDS TABLE
+-- Buyers place bids on bidding-enabled listings
+-- =============================================================================
+CREATE TABLE bids (
+    id          SERIAL PRIMARY KEY,
+    listing_id  INTEGER NOT NULL
+                REFERENCES listings(id) ON DELETE CASCADE,
+    buyer_id    INTEGER NOT NULL
+                REFERENCES users(id) ON DELETE CASCADE,
+    amount      DECIMAL(10, 2) NOT NULL,
+    created_at  TIMESTAMP DEFAULT NOW()
 );
 
 -- =============================================================================

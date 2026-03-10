@@ -95,7 +95,7 @@ export default function AdminUsersPage() {
                                     </td>
                                     <td className="p-6">
                                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${u.type === 'farmer' ? 'bg-green-100 text-green-800' :
-                                                u.type === 'buyer' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                                            u.type === 'buyer' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
                                             }`}>
                                             {u.type}
                                         </span>
@@ -172,8 +172,8 @@ export default function AdminUsersPage() {
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`px-4 py-2 rounded-md text-sm font-medium transition-all flex-1 sm:flex-none capitalize ${activeTab === tab
-                                        ? 'bg-white text-gray-900 shadow-sm border border-gray-200/60'
-                                        : 'text-gray-500 hover:text-gray-700'
+                                    ? 'bg-white text-gray-900 shadow-sm border border-gray-200/60'
+                                    : 'text-gray-500 hover:text-gray-700'
                                     }`}
                             >
                                 {tab}

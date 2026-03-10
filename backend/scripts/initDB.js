@@ -265,6 +265,7 @@ async function seed() {
         desc: 'Premium quality Bt Cotton, hand-picked and sun-dried. Low moisture content, ready for ginning.',
         addr: 'Mandvi APMC Yard, Kutch, Gujarat', lat: 23.2420, lng: 69.6669,
         organic: false, harvest: '2026-02-15', minQty: 50, rating: 4.5, status: 'active',
+        biddingEnabled: false, biddingEndTime: null,
       },
       {
         farmerId: farmerIds[0], cropName: 'Groundnut', category: 'oilseeds',
@@ -273,6 +274,7 @@ async function seed() {
         desc: 'Fresh harvest groundnuts, bold kernel type. Ideal for oil extraction or direct consumption.',
         addr: 'Bhuj Mandi, Kutch, Gujarat', lat: 23.2519, lng: 69.6696,
         organic: false, harvest: '2026-01-20', minQty: 25, rating: 4.2, status: 'active',
+        biddingEnabled: false, biddingEndTime: null,
       },
       // — Lakshmi Naidu (Andhra Pradesh) —
       {
@@ -282,6 +284,7 @@ async function seed() {
         desc: 'Aromatic Sona Masoori rice, freshly milled. Low GI variety, preferred across South India.',
         addr: 'Nellore Agricultural Market, AP', lat: 14.4426, lng: 79.9865,
         organic: false, harvest: '2026-02-01', minQty: 100, rating: 4.7, status: 'active',
+        biddingEnabled: true, biddingEndTime: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
       },
       {
         farmerId: farmerIds[1], cropName: 'Chili', category: 'spices',
@@ -290,6 +293,7 @@ async function seed() {
         desc: 'Fiery red Guntur chillies, ASTA colour value 80+. Sun-dried, minimal seeds. Export quality.',
         addr: 'Guntur Mirchi Yard, AP', lat: 16.3067, lng: 80.4365,
         organic: true, harvest: '2026-01-10', minQty: 10, rating: 4.8, status: 'active',
+        biddingEnabled: false, biddingEndTime: null,
       },
       // — Gurpreet Singh (Punjab) —
       {
@@ -299,6 +303,7 @@ async function seed() {
         desc: 'Premium Punjab wheat, high protein content. Golden grain, zero pest damage. MSP-grade quality.',
         addr: 'Khanna Grain Market, Punjab', lat: 30.6942, lng: 76.2180,
         organic: false, harvest: '2026-03-01', minQty: 500, rating: 4.6, status: 'active',
+        biddingEnabled: true, biddingEndTime: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
       },
       {
         farmerId: farmerIds[2], cropName: 'Potato', category: 'vegetables',
@@ -307,6 +312,7 @@ async function seed() {
         desc: 'Fresh Kufri Jyoti potatoes, medium-sized, clean skin. Suitable for chips and curries.',
         addr: 'Ludhiana Sabzi Mandi, Punjab', lat: 30.9010, lng: 75.8573,
         organic: false, harvest: '2026-02-20', minQty: 50, rating: 3.9, status: 'active',
+        biddingEnabled: false, biddingEndTime: null,
       },
     ];
 
@@ -317,13 +323,15 @@ async function seed() {
                     (farmer_id, crop_name, category, variety, quantity, unit,
                      expected_price, quality_grade, description, image_url,
                      location_address, location_lat, location_lng,
-                     status, is_organic, harvest_date, min_qty, rating)
-                 VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,'',$10,$11,$12,$13,$14,$15,$16,$17)
+                     status, is_organic, harvest_date, min_qty, rating,
+                     bidding_enabled, bidding_end_time)
+                 VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,'',$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
                  RETURNING id`,
         [l.farmerId, l.cropName, l.category, l.variety, l.quantity, l.unit,
         l.price, l.grade, l.desc,
         l.addr, l.lat, l.lng,
-        l.status, l.organic, l.harvest, l.minQty, l.rating]
+        l.status, l.organic, l.harvest, l.minQty, l.rating,
+        l.biddingEnabled || false, l.biddingEndTime || null]
       );
       listingIds.push(res.rows[0].id);
     }
