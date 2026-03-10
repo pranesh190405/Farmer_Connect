@@ -6,11 +6,12 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import AuthGuard from '@/components/AuthGuard';
-import { Search, Filter, ShoppingCart, Heart, MapPin, Store, SlidersHorizontal, X, Star } from 'lucide-react';
+import { Search, Filter, ShoppingCart, Heart, MapPin, Store, SlidersHorizontal, X, Star, Gavel } from 'lucide-react';
 import { addToCart, openCart } from '@/store/slices/cartSlice';
 import { toast } from '@/components/ui/Toast/Toast';
 import { ApiService } from '@/services/apiService';
 import { translateCropName } from '@/utils/translateCropName';
+import { useRouter } from 'next/navigation';
 
 // Regions
 const REGIONS = [
@@ -28,6 +29,7 @@ const CATEGORIES = ['vegetables', 'fruits', 'grains', 'spices', 'flowers'];
 export default function MarketPage() {
     const { t } = useTranslation('common');
     const dispatch = useDispatch();
+    const router = useRouter();
     const [mounted, setMounted] = useState(false);
 
     // Filters
@@ -334,6 +336,33 @@ export default function MarketPage() {
                                                         {t('market.card.add')}
                                                     </button>
                                                 </div>
+                                                {item.biddingEnabled && (
+                                                    <button
+                                                        onClick={() => router.push(`/market/bid/${item.id}`)}
+                                                        style={{
+                                                            marginTop: '0.5rem',
+                                                            width: '100%',
+                                                            backgroundColor: '#f59e0b',
+                                                            color: 'white',
+                                                            padding: '0.625rem 1rem',
+                                                            borderRadius: '0.75rem',
+                                                            fontWeight: 700,
+                                                            fontSize: '0.875rem',
+                                                            border: 'none',
+                                                            cursor: 'pointer',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            gap: '0.5rem',
+                                                            transition: 'background-color 0.2s',
+                                                        }}
+                                                        onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d97706'}
+                                                        onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#f59e0b'}
+                                                    >
+                                                        <Gavel className="w-4 h-4" />
+                                                        Place a Bid
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
                                     ))}

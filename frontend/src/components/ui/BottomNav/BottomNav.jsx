@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Home, ShoppingBag, User, Store, List, Package } from 'lucide-react';
+import { Home, ShoppingBag, User, Store } from 'lucide-react';
 import styles from './BottomNav.module.css';
 
 export default function BottomNav() {
