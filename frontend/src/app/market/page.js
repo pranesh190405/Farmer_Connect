@@ -110,81 +110,119 @@ export default function MarketPage() {
 
     return (
         <AuthGuard>
-            <div className="min-h-screen bg-gray-50 pb-24 font-sans">
+            <div className="min-h-screen pb-24 font-sans" style={{ background: 'linear-gradient(180deg, #fefce8 0%, #fffef5 50%, #fefce8 100%)' }}>
                 <main className="max-w-7xl mx-auto p-4 md:p-6">
                     {/* Page Title + Search */}
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-                        <div className="flex items-center justify-between w-full md:w-auto">
+                    <div style={{
+                        background: 'linear-gradient(135deg, #065f46, #10b981)',
+                        borderRadius: '20px', padding: '1.5rem 2rem', marginBottom: '1.5rem',
+                        display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
+                        alignItems: 'center', gap: '1rem',
+                        boxShadow: '0 8px 30px rgba(6,95,70,0.3)'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                             <div>
-                                <h1 className="text-2xl font-bold text-gray-900">{t('nav.market')}</h1>
-                                <p className="text-gray-500 text-sm mt-1">{t('market.subtitle')}</p>
+                                <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white' }}>{t('nav.market')}</h1>
+                                <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.875rem', marginTop: '0.25rem' }}>{t('market.subtitle')}</p>
                             </div>
 
                             {/* Mobile Filter Toggle */}
                             <button
-                                className="md:hidden p-2 bg-gray-100 rounded-lg text-gray-600 hover:bg-gray-200"
+                                className="md:hidden"
                                 onClick={() => setShowFilters(!showFilters)}
+                                style={{
+                                    padding: '0.5rem', background: 'rgba(255,255,255,0.2)',
+                                    borderRadius: '0.5rem', color: 'white', border: 'none', cursor: 'pointer'
+                                }}
                             >
                                 <SlidersHorizontal className="w-5 h-5" />
                             </button>
                         </div>
 
-                        <div className="flex items-center gap-3 w-full md:w-auto bg-gray-100 rounded-xl px-4 py-2 ring-1 ring-gray-200 focus-within:ring-2 focus-within:ring-green-500 focus-within:bg-white transition-all">
-                            <Search className="w-5 h-5 text-gray-400" />
+                        <div style={{
+                            display: 'flex', alignItems: 'center', gap: '0.75rem', width: '100%',
+                            maxWidth: '24rem', background: 'rgba(255,255,255,0.15)',
+                            backdropFilter: 'blur(10px)', borderRadius: '12px',
+                            padding: '0.625rem 1rem', border: '1px solid rgba(255,255,255,0.25)'
+                        }}>
+                            <Search className="w-5 h-5" style={{ color: 'rgba(255,255,255,0.7)' }} />
                             <input
                                 type="text"
                                 placeholder={t('market.searchPlaceholder')}
-                                className="bg-transparent border-none outline-none text-sm w-full md:w-80 text-gray-900 placeholder-gray-500"
+                                style={{
+                                    background: 'transparent', border: 'none', outline: 'none',
+                                    fontSize: '0.875rem', width: '100%', color: 'white'
+                                }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
                     </div>
+
                     <div className="flex flex-col lg:flex-row gap-8">
                         {/* Sidebar Filters */}
-                        <aside className={`fixed inset-0 z-30 bg-white lg:static lg:bg-transparent lg:w-64 lg:block ${showFilters ? 'block' : 'hidden'} h-full overflow-y-auto lg:h-auto lg:overflow-visible p-4 lg:p-0 shadow-xl lg:shadow-none transition-all duration-300`}>
-                            <div className="flex justify-between items-center lg:hidden mb-4">
-                                <h3 className="font-bold text-lg text-gray-900">{t('market.filters.title') || 'Filters'}</h3>
-                                <button onClick={() => setShowFilters(false)} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200">
+                        <aside className={`fixed inset-0 z-30 lg:static lg:w-64 lg:block ${showFilters ? 'block' : 'hidden'} h-full overflow-y-auto lg:h-auto lg:overflow-visible shadow-xl lg:shadow-none transition-all duration-300`}
+                            style={{
+                                background: showFilters ? '#fffef5' : 'transparent',
+                                padding: showFilters ? '1rem' : '0'
+                            }}
+                        >
+                            <div className="flex justify-between items-center lg:hidden" style={{ marginBottom: '1rem' }}>
+                                <h3 style={{ fontWeight: 700, fontSize: '1.125rem', color: '#1c1917' }}>{t('market.filters.title') || 'Filters'}</h3>
+                                <button onClick={() => setShowFilters(false)} style={{
+                                    padding: '0.5rem', background: '#f5f5f4', borderRadius: '50%',
+                                    border: 'none', cursor: 'pointer'
+                                }}>
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>
 
-                            <div className="space-y-6">
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                                 {/* Categories */}
-                                <div>
-                                    <h3 className="font-bold text-gray-900 mb-3 block">{t('market.filters.categories')}</h3>
-                                    <div className="space-y-2">
-                                        <label className="flex items-center gap-2 cursor-pointer group">
+                                <div style={{
+                                    background: '#fffef5', borderRadius: '16px',
+                                    padding: '1.25rem', border: '1px solid #e7e5e4'
+                                }}>
+                                    <h3 style={{ fontWeight: 700, color: '#1c1917', marginBottom: '0.75rem' }}>{t('market.filters.categories')}</h3>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
                                             <input
                                                 type="radio"
                                                 name="category"
-                                                className="w-4 h-4 text-green-600 focus:ring-green-500 border-gray-300"
                                                 checked={selectedCategory === 'all'}
                                                 onChange={() => setSelectedCategory('all')}
+                                                style={{ accentColor: '#065f46' }}
                                             />
-                                            <span className="text-gray-600 group-hover:text-green-700 transition-colors">{t('market.filters.allCategories')}</span>
+                                            <span style={{ color: '#44403c' }}>{t('market.filters.allCategories')}</span>
                                         </label>
                                         {CATEGORIES.map(cat => (
-                                            <label key={cat} className="flex items-center gap-2 cursor-pointer group">
+                                            <label key={cat} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
                                                 <input
                                                     type="radio"
                                                     name="category"
-                                                    className="w-4 h-4 text-green-600 focus:ring-green-500 border-gray-300"
                                                     checked={selectedCategory === cat}
                                                     onChange={() => setSelectedCategory(cat)}
+                                                    style={{ accentColor: '#065f46' }}
                                                 />
-                                                <span className="text-gray-600 group-hover:text-green-700 transition-colors capitalize">{t('categories.' + cat)}</span>
+                                                <span style={{ color: '#44403c', textTransform: 'capitalize' }}>{t('categories.' + cat)}</span>
                                             </label>
                                         ))}
                                     </div>
                                 </div>
 
                                 {/* Regions */}
-                                <div>
-                                    <h3 className="font-bold text-gray-900 mb-3 block">{t('market.filters.regions')}</h3>
+                                <div style={{
+                                    background: '#fffef5', borderRadius: '16px',
+                                    padding: '1.25rem', border: '1px solid #e7e5e4'
+                                }}>
+                                    <h3 style={{ fontWeight: 700, color: '#1c1917', marginBottom: '0.75rem' }}>{t('market.filters.regions')}</h3>
                                     <select
-                                        className="w-full p-2.5 bg-white border border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all"
+                                        style={{
+                                            width: '100%', padding: '0.625rem',
+                                            background: '#fefce8', border: '1px solid #e7e5e4',
+                                            borderRadius: '12px', outline: 'none', color: '#1c1917',
+                                            fontSize: '0.875rem'
+                                        }}
                                         value={selectedRegion}
                                         onChange={(e) => setSelectedRegion(e.target.value)}
                                     >
@@ -203,87 +241,128 @@ export default function MarketPage() {
                             {isLoading ? (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {[1, 2, 3, 4, 5, 6].map(i => (
-                                        <div key={i} className="bg-white rounded-2xl h-80 animate-pulse border border-gray-100"></div>
+                                        <div key={i} style={{
+                                            background: '#fffef5', borderRadius: '20px',
+                                            height: '20rem', border: '1px solid #e7e5e4'
+                                        }} className="animate-pulse"></div>
                                     ))}
                                 </div>
                             ) : filteredCrops.length === 0 ? (
-                                <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
-                                    <h3 className="text-lg font-bold text-gray-900">{t('market.noCrops.title')}</h3>
+                                <div style={{
+                                    textAlign: 'center', padding: '5rem 0', background: '#fffef5',
+                                    borderRadius: '20px', border: '2px dashed #d6d3d1'
+                                }}>
+                                    <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#1c1917' }}>{t('market.noCrops.title')}</h3>
                                 </div>
                             ) : (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {filteredCrops.map((item) => (
-                                        <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all group flex flex-col">
+                                        <div key={item.id} style={{
+                                            background: '#fffef5', borderRadius: '20px',
+                                            border: '1px solid #e7e5e4', overflow: 'hidden',
+                                            boxShadow: '0 4px 20px rgba(28,25,23,0.04)',
+                                            display: 'flex', flexDirection: 'column',
+                                            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                                        }}
+                                            onMouseEnter={e => {
+                                                e.currentTarget.style.transform = 'translateY(-4px)';
+                                                e.currentTarget.style.boxShadow = '0 16px 40px rgba(6,95,70,0.12)';
+                                                e.currentTarget.style.borderColor = 'rgba(6,95,70,0.2)';
+                                            }}
+                                            onMouseLeave={e => {
+                                                e.currentTarget.style.transform = 'translateY(0)';
+                                                e.currentTarget.style.boxShadow = '0 4px 20px rgba(28,25,23,0.04)';
+                                                e.currentTarget.style.borderColor = '#e7e5e4';
+                                            }}
+                                        >
                                             {/* Image */}
-                                            <div className="relative h-48 overflow-hidden bg-gray-100">
+                                            <div style={{ position: 'relative', height: '12rem', overflow: 'hidden', background: '#f5f5f4' }}>
                                                 <Image
                                                     src={item.image}
                                                     alt={item.name}
                                                     fill
                                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                                    className="object-cover"
+                                                    style={{ transition: 'transform 0.7s' }}
                                                 />
-                                                <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1">
+                                                <div style={{
+                                                    position: 'absolute', bottom: '0.75rem', left: '0.75rem',
+                                                    background: 'rgba(6,95,70,0.85)', backdropFilter: 'blur(8px)',
+                                                    padding: '0.25rem 0.75rem', borderRadius: '9999px',
+                                                    fontSize: '0.75rem', fontWeight: 700, color: 'white',
+                                                    display: 'flex', alignItems: 'center', gap: '0.25rem'
+                                                }}>
                                                     <MapPin className="w-3 h-3" />
                                                     {item.location}
                                                 </div>
                                             </div>
 
                                             {/* Content */}
-                                            <div className="p-5 flex-1 flex flex-col">
-                                                <div className="flex justify-between items-start mb-2">
-                                                    <h3 className="font-bold text-gray-900 text-lg truncate pr-2">{translateCropName(item.name, t)}</h3>
-                                                    <div className="flex items-center gap-1 bg-green-50 px-2 py-0.5 rounded text-xs font-bold text-green-700">
-                                                        <Star className="w-3 h-3 fill-green-700" /> {item.rating}
+                                            <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                                                    <h3 style={{ fontWeight: 700, color: '#1c1917', fontSize: '1.125rem' }}>{translateCropName(item.name, t)}</h3>
+                                                    <div style={{
+                                                        display: 'flex', alignItems: 'center', gap: '0.25rem',
+                                                        background: '#fef3c7', padding: '0.125rem 0.5rem',
+                                                        borderRadius: '6px', fontSize: '0.75rem',
+                                                        fontWeight: 700, color: '#92400e'
+                                                    }}>
+                                                        <Star className="w-3 h-3" style={{ fill: '#d97706' }} /> {item.rating}
                                                     </div>
                                                 </div>
-                                                <div className="flex items-center gap-1 text-sm text-gray-500 mb-4">
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', color: '#78716c', marginBottom: '1rem' }}>
                                                     <Store className="w-3.5 h-3.5" />
-                                                    <span className="truncate">{item.farmer}</span>
+                                                    <span>{item.farmer}</span>
                                                 </div>
 
-                                                <div className="mt-auto">
-                                                    <div className="flex items-end justify-between gap-4">
-                                                        <div>
-                                                            <p className="text-2xl font-bold text-green-700">{item.price}</p>
-                                                            <p className="text-xs text-gray-400 font-medium">{t('market.card.min')} {item.minQty} {item.unit}</p>
-                                                        </div>
-                                                        <button
-                                                            onClick={() => handleAddToCart(item)}
-                                                            className="bg-green-600 text-white px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-green-700 active:scale-95 transition-all shadow-lg shadow-green-100 flex items-center gap-2"
-                                                        >
-                                                            <ShoppingCart className="w-4 h-4" />
-                                                            {t('market.card.add')}
-                                                        </button>
+                                                <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1rem' }}>
+                                                    <div>
+                                                        <p style={{ fontSize: '1.5rem', fontWeight: 800, color: '#065f46' }}>{item.price}</p>
+                                                        <p style={{ fontSize: '0.75rem', color: '#a8a29e', fontWeight: 500 }}>{t('market.card.min')} {item.minQty} {item.unit}</p>
                                                     </div>
-                                                    {item.biddingEnabled && (
-                                                        <button
-                                                            onClick={() => router.push(`/market/bid/${item.id}`)}
-                                                            style={{
-                                                                marginTop: '0.5rem',
-                                                                width: '100%',
-                                                                backgroundColor: '#f59e0b',
-                                                                color: 'white',
-                                                                padding: '0.625rem 1rem',
-                                                                borderRadius: '0.75rem',
-                                                                fontWeight: 700,
-                                                                fontSize: '0.875rem',
-                                                                border: 'none',
-                                                                cursor: 'pointer',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                gap: '0.5rem',
-                                                                transition: 'background-color 0.2s',
-                                                            }}
-                                                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d97706'}
-                                                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#f59e0b'}
-                                                        >
-                                                            <Gavel className="w-4 h-4" />
-                                                            Place a Bid
-                                                        </button>
-                                                    )}
+                                                    <button
+                                                        onClick={() => handleAddToCart(item)}
+                                                        style={{
+                                                            background: 'linear-gradient(135deg, #065f46, #10b981)',
+                                                            color: 'white', padding: '0.625rem 1rem',
+                                                            borderRadius: '12px', fontWeight: 700, fontSize: '0.875rem',
+                                                            border: 'none', cursor: 'pointer',
+                                                            boxShadow: '0 4px 15px rgba(6,95,70,0.3)',
+                                                            display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                                                        }}
+                                                    >
+                                                        <ShoppingCart className="w-4 h-4" />
+                                                        {t('market.card.add')}
+                                                    </button>
                                                 </div>
+                                                {item.biddingEnabled && (
+                                                    <button
+                                                        onClick={() => router.push(`/market/bid/${item.id}`)}
+                                                        style={{
+                                                            marginTop: '0.5rem',
+                                                            width: '100%',
+                                                            backgroundColor: '#f59e0b',
+                                                            color: 'white',
+                                                            padding: '0.625rem 1rem',
+                                                            borderRadius: '0.75rem',
+                                                            fontWeight: 700,
+                                                            fontSize: '0.875rem',
+                                                            border: 'none',
+                                                            cursor: 'pointer',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            gap: '0.5rem',
+                                                            transition: 'background-color 0.2s',
+                                                        }}
+                                                        onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d97706'}
+                                                        onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#f59e0b'}
+                                                    >
+                                                        <Gavel className="w-4 h-4" />
+                                                        Place a Bid
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
                                     ))}

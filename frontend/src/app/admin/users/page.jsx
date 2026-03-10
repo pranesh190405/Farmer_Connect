@@ -1,210 +1,287 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Check, X, Search, Filter } from 'lucide-react';
+import { Check, X, Search, Shield, ShieldCheck, ShieldX } from 'lucide-react';
 import AdminLayout from '@/components/layout/AdminLayout';
-import { approveUser, rejectUser } from '@/store/slices/authSlice';
-import { showToast } from '@/components/ui/Toast/Toast';
+import { ApiService } from '@/services/apiService';
+import { toast } from '@/components/ui/Toast/Toast';
 
 export default function AdminUsersPage() {
     const { t } = useTranslation('common');
-    const dispatch = useDispatch();
-
-    // Fallback to empty array if undefined
-    const { users = [] } = useSelector((state) => state.auth) || {};
-
-    const [activeTab, setActiveTab] = useState('pending');
+    const [users, setUsers] = useState([]);
+    const [activeTab, setActiveTab] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const [actionLoading, setActionLoading] = useState(null);
 
-    // Load users (mock logic initially, will plug into real API later)
     useEffect(() => {
-        // Here we would typically dispatch a fetchAllUsers action
-        // For now, authSlice handles the mock initial state well enough for the UI
-    }, [dispatch]);
+        fetchUsers();
+    }, []);
 
-    const handleApprove = (id) => {
-        if (window.confirm('Are you sure you want to approve this user?')) {
-            dispatch(approveUser(id));
-            showToast(t('admin.userApproved') || 'User approved successfully', 'success');
+    const fetchUsers = async () => {
+        try {
+            const data = await ApiService.getAdminUsers();
+            setUsers(data);
+        } catch (err) {
+            console.error('Failed to fetch users:', err);
+            toast.error('Failed to load users');
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const handleReject = (userId) => {
-        const reason = window.prompt("Please provide a reason for rejection:");
-        if (reason) {
-            // Future API integration for reject with notes
-            dispatch(rejectUser(userId));
-            showToast(t('admin.userRejected') || 'User rejected', 'info');
+    const handleApprove = async (id) => {
+        if (!window.confirm('Approve this user and verify their Aadhaar?')) return;
+        setActionLoading(id);
+        try {
+            await ApiService.approveUser(id, 'Approved by admin');
+            toast.success('User approved & Aadhaar verified');
+            fetchUsers();
+        } catch (err) {
+            toast.error(err.message || 'Failed to approve');
+        } finally {
+            setActionLoading(null);
         }
     };
 
-    const getFilteredUsers = (status) => {
+    const handleReject = async (id) => {
+        const reason = window.prompt('Reason for rejection:');
+        if (!reason) return;
+        setActionLoading(id);
+        try {
+            await ApiService.rejectUser(id, reason);
+            toast.success('User rejected');
+            fetchUsers();
+        } catch (err) {
+            toast.error(err.message || 'Failed to reject');
+        } finally {
+            setActionLoading(null);
+        }
+    };
+
+    const getFilteredUsers = () => {
         return users.filter(u => {
-            const matchesStatus = u.status === status;
-            const matchesSearch = u.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                u.mobile?.includes(searchQuery) ||
-                u.type?.toLowerCase().includes(searchQuery.toLowerCase());
-            return matchesStatus && matchesSearch;
+            if (u.type === 'admin') return false;
+            const matchesTab = activeTab === 'all' ||
+                (activeTab === 'pending' && u.status === 'PENDING') ||
+                (activeTab === 'approved' && u.status === 'APPROVED') ||
+                (activeTab === 'rejected' && u.status === 'REJECTED');
+            const q = searchQuery.toLowerCase();
+            const matchesSearch = !q ||
+                (u.name || '').toLowerCase().includes(q) ||
+                (u.mobile || '').includes(q) ||
+                (u.type || '').toLowerCase().includes(q);
+            return matchesTab && matchesSearch;
         });
     };
 
-    const pendingUsers = getFilteredUsers('PENDING');
-    const approvedUsers = getFilteredUsers('APPROVED');
-    const rejectedUsers = getFilteredUsers('REJECTED');
+    const filteredUsers = getFilteredUsers();
+    const counts = {
+        all: users.filter(u => u.type !== 'admin').length,
+        pending: users.filter(u => u.status === 'PENDING' && u.type !== 'admin').length,
+        approved: users.filter(u => u.status === 'APPROVED' && u.type !== 'admin').length,
+        rejected: users.filter(u => u.status === 'REJECTED' && u.type !== 'admin').length,
+    };
 
-    const renderUserList = (list) => {
-        if (list.length === 0) {
-            return (
-                <div className="text-center py-16 bg-white rounded-xl border border-dashed border-gray-300">
-                    <div className="text-4xl mb-3">👥</div>
-                    <h3 className="text-lg font-medium text-gray-900">No users found</h3>
-                    <p className="text-gray-500 mt-1">Try changing your search query or tab.</p>
-                </div>
-            );
-        }
-
+    const statusBadge = (status) => {
+        const colors = {
+            APPROVED: { bg: '#ecfdf5', color: '#065f46', border: '#bbf7d0' },
+            PENDING: { bg: '#fef3c7', color: '#92400e', border: '#fde68a' },
+            REJECTED: { bg: '#fef2f2', color: '#991b1b', border: '#fecaca' },
+        };
+        const c = colors[status] || colors.PENDING;
         return (
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse min-w-[800px]">
-                        <thead>
-                            <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="py-4 px-6 font-semibold text-gray-600 text-sm">User Details</th>
-                                <th className="py-4 px-6 font-semibold text-gray-600 text-sm">Role</th>
-                                <th className="py-4 px-6 font-semibold text-gray-600 text-sm">Contact</th>
-                                <th className="py-4 px-6 font-semibold text-gray-600 text-sm">Verification Date</th>
-                                <th className="py-4 px-6 font-semibold text-gray-600 text-sm text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {list.map((u) => (
-                                <tr key={u.id} className="hover:bg-gray-50/50 transition-colors">
-                                    <td className="p-6">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-sm shrink-0">
-                                                {(u.name?.[0] || 'U').toUpperCase()}
-                                            </div>
-                                            <div>
-                                                <p className="font-semibold text-gray-900">{u.name || 'Unknown User'}</p>
-                                                <p className="text-xs text-gray-500 font-mono mt-0.5">ID: {u.id.substring(0, 8)}</p>
-                                                {u.businessName && <p className="text-xs text-indigo-600 mt-0.5">{u.businessName}</p>}
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="p-6">
-                                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${u.type === 'farmer' ? 'bg-green-100 text-green-800' :
-                                            u.type === 'buyer' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
-                                            }`}>
-                                            {u.type}
-                                        </span>
-                                    </td>
-                                    <td className="p-6 text-gray-600">
-                                        <div className="text-sm font-medium">{u.mobile}</div>
-                                        {u.email && <div className="text-xs text-gray-500 mt-1">{u.email}</div>}
-                                    </td>
-                                    <td className="p-6">
-                                        <div className="text-sm text-gray-800">
-                                            {u.joinedAt ? new Date(u.joinedAt).toLocaleDateString() : 'N/A'}
-                                        </div>
-                                    </td>
-                                    <td className="p-6">
-                                        <div className="flex items-center justify-end gap-2">
-                                            {u.status === 'PENDING' && (
-                                                <>
-                                                    <button
-                                                        onClick={() => handleApprove(u.id)}
-                                                        className="px-3 py-1.5 bg-green-50 text-green-700 hover:bg-green-600 hover:text-white text-xs font-medium rounded-lg transition-colors flex items-center gap-1 border border-green-200 hover:border-green-600"
-                                                    >
-                                                        <Check className="w-3.5 h-3.5" /> Approve
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleReject(u.id)}
-                                                        className="px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-600 hover:text-white text-xs font-medium rounded-lg transition-colors flex items-center gap-1 border border-red-200 hover:border-red-600"
-                                                    >
-                                                        <X className="w-3.5 h-3.5" /> Reject
-                                                    </button>
-                                                </>
-                                            )}
-                                            {u.status === 'APPROVED' && (
-                                                <button
-                                                    onClick={() => handleReject(u.id)}
-                                                    className="px-3 py-1.5 text-red-600 hover:bg-red-50 text-xs font-medium rounded-lg transition-colors border border-transparent hover:border-red-200"
-                                                >
-                                                    Revoke
-                                                </button>
-                                            )}
-                                            {u.status === 'REJECTED' && (
-                                                <button
-                                                    onClick={() => handleApprove(u.id)}
-                                                    className="px-3 py-1.5 text-green-600 hover:bg-green-50 text-xs font-medium rounded-lg transition-colors border border-transparent hover:border-green-200"
-                                                >
-                                                    Re-Approve
-                                                </button>
-                                            )}
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <span style={{
+                padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem',
+                fontWeight: 600, background: c.bg, color: c.color, border: `1px solid ${c.border}`,
+                textTransform: 'uppercase', letterSpacing: '0.05em'
+            }}>
+                {status}
+            </span>
         );
     };
 
+    const aadharBadge = (verified) => (
+        <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.25rem',
+            fontSize: '0.75rem', fontWeight: 600,
+            color: verified ? '#065f46' : '#d97706'
+        }}>
+            {verified ? <ShieldCheck style={{ width: 14, height: 14 }} /> : <Shield style={{ width: 14, height: 14 }} />}
+            {verified ? 'Verified' : 'Unverified'}
+        </div>
+    );
+
+    if (isLoading) {
+        return (
+            <AdminLayout>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+                    <div style={{ width: 32, height: 32, border: '4px solid #065f46', borderTopColor: 'transparent', borderRadius: '50%' }}
+                        className="animate-spin" />
+                </div>
+            </AdminLayout>
+        );
+    }
+
     return (
         <AdminLayout>
-            <div className="max-w-7xl mx-auto space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-                        <p className="text-sm text-gray-500 mt-1">Review, approve, and manage Farmers and Buyers.</p>
-                    </div>
+            <div style={{ maxWidth: '80rem', margin: '0 auto' }} className="space-y-6">
+                {/* Header */}
+                <div>
+                    <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1c1917' }}>User Management</h1>
+                    <p style={{ fontSize: '0.875rem', color: '#78716c', marginTop: '0.25rem' }}>
+                        Approve users to verify their Aadhaar and grant checkout access.
+                    </p>
                 </div>
 
-                {/* Filters & Search */}
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col sm:flex-row gap-4 justify-between items-center">
-                    <div className="flex bg-gray-100 p-1 rounded-lg w-full sm:w-auto">
-                        {['pending', 'approved', 'rejected'].map(tab => (
-                            <button
-                                key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`px-4 py-2 rounded-md text-sm font-medium transition-all flex-1 sm:flex-none capitalize ${activeTab === tab
-                                    ? 'bg-white text-gray-900 shadow-sm border border-gray-200/60'
-                                    : 'text-gray-500 hover:text-gray-700'
-                                    }`}
-                            >
-                                {tab}
-                                <span className={`ml-2 text-xs py-0.5 px-2 rounded-full hidden sm:inline-block ${activeTab === tab ? 'bg-gray-100 text-gray-900' : 'bg-gray-200/50 text-gray-500'
-                                    }`}>
-                                    {tab === 'pending' ? pendingUsers.length : tab === 'approved' ? approvedUsers.length : rejectedUsers.length}
-                                </span>
+                {/* Tabs & Search */}
+                <div style={{
+                    background: 'white', padding: '1rem', borderRadius: '16px',
+                    border: '1px solid #e7e5e4', display: 'flex', flexWrap: 'wrap',
+                    gap: '1rem', justifyContent: 'space-between', alignItems: 'center'
+                }}>
+                    <div style={{ display: 'flex', background: '#f5f5f4', padding: '0.25rem', borderRadius: '12px' }}>
+                        {['all', 'pending', 'approved', 'rejected'].map(tab => (
+                            <button key={tab} onClick={() => setActiveTab(tab)}
+                                style={{
+                                    padding: '0.5rem 1rem', borderRadius: '10px', fontSize: '0.875rem',
+                                    fontWeight: 600, textTransform: 'capitalize', border: 'none', cursor: 'pointer',
+                                    background: activeTab === tab ? 'white' : 'transparent',
+                                    color: activeTab === tab ? '#1c1917' : '#78716c',
+                                    boxShadow: activeTab === tab ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                                    transition: 'all 0.2s'
+                                }}>
+                                {tab} <span style={{
+                                    marginLeft: '0.375rem', fontSize: '0.7rem', padding: '0.125rem 0.375rem',
+                                    borderRadius: '9999px',
+                                    background: activeTab === tab ? '#ecfdf5' : '#e7e5e4',
+                                    color: activeTab === tab ? '#065f46' : '#78716c'
+                                }}>{counts[tab]}</span>
                             </button>
                         ))}
                     </div>
-
-                    <div className="relative w-full sm:w-72">
-                        <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                        <input
-                            type="text"
-                            placeholder="Find user by name or mobile..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-shadow text-sm"
-                        />
+                    <div style={{ position: 'relative', width: '18rem' }}>
+                        <Search style={{ width: 18, height: 18, color: '#a8a29e', position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)' }} />
+                        <input type="text" placeholder="Search by name or mobile..."
+                            value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+                            style={{
+                                width: '100%', paddingLeft: '2.25rem', paddingRight: '0.75rem', paddingTop: '0.5rem', paddingBottom: '0.5rem',
+                                border: '1px solid #d6d3d1', borderRadius: '10px', outline: 'none', fontSize: '0.875rem'
+                            }} />
                     </div>
                 </div>
 
-                {/* Data Table */}
-                <div>
-                    {renderUserList(
-                        activeTab === 'pending' ? pendingUsers :
-                            activeTab === 'approved' ? approvedUsers :
-                                rejectedUsers
-                    )}
-                </div>
+                {/* Table */}
+                {filteredUsers.length === 0 ? (
+                    <div style={{
+                        textAlign: 'center', padding: '4rem 1rem', background: 'white',
+                        borderRadius: '16px', border: '2px dashed #d6d3d1'
+                    }}>
+                        <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>👥</div>
+                        <h3 style={{ fontWeight: 700, color: '#1c1917' }}>No users found</h3>
+                        <p style={{ color: '#78716c', fontSize: '0.875rem', marginTop: '0.25rem' }}>
+                            Try a different search or tab.
+                        </p>
+                    </div>
+                ) : (
+                    <div style={{
+                        background: 'white', borderRadius: '16px', border: '1px solid #e7e5e4',
+                        overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
+                    }}>
+                        <div style={{ overflowX: 'auto' }}>
+                            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '800px' }}>
+                                <thead>
+                                    <tr style={{ background: '#fafaf9', borderBottom: '1px solid #e7e5e4' }}>
+                                        {['User', 'Role', 'Aadhaar', 'Status', 'Joined', 'Actions'].map(h => (
+                                            <th key={h} style={{
+                                                padding: '0.875rem 1.25rem', fontSize: '0.75rem', fontWeight: 600,
+                                                color: '#78716c', textAlign: h === 'Actions' ? 'right' : 'left',
+                                                textTransform: 'uppercase', letterSpacing: '0.05em'
+                                            }}>{h}</th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredUsers.map((u) => (
+                                        <tr key={u.id} style={{ borderBottom: '1px solid #f5f5f4', transition: 'background 0.15s' }}
+                                            onMouseEnter={e => e.currentTarget.style.background = '#fafaf9'}
+                                            onMouseLeave={e => e.currentTarget.style.background = 'white'}>
+                                            <td style={{ padding: '1rem 1.25rem' }}>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                                    <div style={{
+                                                        width: 40, height: 40, borderRadius: '50%',
+                                                        background: u.type === 'farmer' ? '#ecfdf5' : '#dbeafe',
+                                                        color: u.type === 'farmer' ? '#065f46' : '#1d4ed8',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                        fontWeight: 700, fontSize: '0.875rem'
+                                                    }}>
+                                                        {(u.name?.[0] || 'U').toUpperCase()}
+                                                    </div>
+                                                    <div>
+                                                        <p style={{ fontWeight: 600, color: '#1c1917' }}>{u.name || 'Unknown'}</p>
+                                                        <p style={{ fontSize: '0.75rem', color: '#a8a29e' }}>{u.mobile}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style={{ padding: '1rem 1.25rem' }}>
+                                                <span style={{
+                                                    padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem',
+                                                    fontWeight: 600, textTransform: 'uppercase',
+                                                    background: u.type === 'farmer' ? '#ecfdf5' : '#dbeafe',
+                                                    color: u.type === 'farmer' ? '#065f46' : '#1d4ed8'
+                                                }}>{u.type}</span>
+                                            </td>
+                                            <td style={{ padding: '1rem 1.25rem' }}>
+                                                {aadharBadge(u.aadharVerified)}
+                                            </td>
+                                            <td style={{ padding: '1rem 1.25rem' }}>
+                                                {statusBadge(u.status)}
+                                            </td>
+                                            <td style={{ padding: '1rem 1.25rem', fontSize: '0.875rem', color: '#78716c' }}>
+                                                {u.joinedAt ? new Date(u.joinedAt).toLocaleDateString() : 'N/A'}
+                                            </td>
+                                            <td style={{ padding: '1rem 1.25rem' }}>
+                                                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
+                                                    {(u.status === 'PENDING' || u.status === 'REJECTED') && (
+                                                        <button onClick={() => handleApprove(u.id)}
+                                                            disabled={actionLoading === u.id}
+                                                            style={{
+                                                                padding: '0.375rem 0.75rem', borderRadius: '8px', fontSize: '0.75rem',
+                                                                fontWeight: 600, border: '1px solid #bbf7d0', cursor: 'pointer',
+                                                                background: '#ecfdf5', color: '#065f46',
+                                                                display: 'flex', alignItems: 'center', gap: '0.25rem',
+                                                                opacity: actionLoading === u.id ? 0.5 : 1,
+                                                                transition: 'all 0.2s'
+                                                            }}>
+                                                            <Check style={{ width: 14, height: 14 }} />
+                                                            Approve
+                                                        </button>
+                                                    )}
+                                                    {(u.status === 'PENDING' || u.status === 'APPROVED') && (
+                                                        <button onClick={() => handleReject(u.id)}
+                                                            disabled={actionLoading === u.id}
+                                                            style={{
+                                                                padding: '0.375rem 0.75rem', borderRadius: '8px', fontSize: '0.75rem',
+                                                                fontWeight: 600, border: '1px solid #fecaca', cursor: 'pointer',
+                                                                background: '#fef2f2', color: '#991b1b',
+                                                                display: 'flex', alignItems: 'center', gap: '0.25rem',
+                                                                opacity: actionLoading === u.id ? 0.5 : 1,
+                                                                transition: 'all 0.2s'
+                                                            }}>
+                                                            <X style={{ width: 14, height: 14 }} />
+                                                            {u.status === 'APPROVED' ? 'Revoke' : 'Reject'}
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
             </div>
         </AdminLayout>
     );

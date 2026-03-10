@@ -73,7 +73,7 @@ async function getMyOrders(userId, userType) {
     } else {
         // Farmer: find orders that contain their listings
         query = {
-            text: `SELECT DISTINCT o.*,
+            text: `SELECT o.*,
                     json_agg(json_build_object(
                         'id', oi.id,
                         'listingId', oi.listing_id,
@@ -81,7 +81,8 @@ async function getMyOrders(userId, userType) {
                         'price', oi.price,
                         'cropName', l.crop_name,
                         'image', l.image_url
-                    )) AS items
+                    )) AS items,
+                    (SELECT u2.name FROM users u2 WHERE u2.id = o.buyer_id) AS buyer_name
                    FROM orders o
                    JOIN order_items oi ON o.id = oi.order_id
                    JOIN listings l ON oi.listing_id = l.id
