@@ -56,9 +56,9 @@ export default function LoginPage() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
                 <div className="text-center mb-8">
-                    <div className="text-4xl mb-3">🌾</div>
-                    <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.login.welcome')}</h1>
-                    <p className="text-gray-500">{t('auth.login.loginToContinue')}</p>
+                    <h1 className="text-2xl font-bold text-gray-900 mb-2">Farmer Connect</h1>
+                    <h2 className="text-lg font-bold text-gray-800">Welcome Back</h2>
+                    <p className="text-gray-500">Login to continue</p>
                 </div>
 
                 {/* Role Tabs */}
@@ -68,21 +68,21 @@ export default function LoginPage() {
                             }`}
                         onClick={() => setUserType('farmer')}
                     >
-                        🧑‍🌾 {t('auth.login.farmer')}
+                        Farmer
                     </button>
                     <button
                         className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${userType === 'buyer' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
                         onClick={() => setUserType('buyer')}
                     >
-                        🛒 {t('auth.login.buyer')}
+                        Buyer
                     </button>
                     <button
                         className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${userType === 'admin' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
                         onClick={() => setUserType('admin')}
                     >
-                        {t('auth.login.admin')}
+                        Admin
                     </button>
                 </div>
 
