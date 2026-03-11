@@ -43,7 +43,7 @@ const Input = forwardRef(function Input({
 
             <div className={`${styles.inputWrapper} ${error ? styles.hasError : ''} ${disabled ? styles.disabled : ''}`}>
                 {prefix && (
-                    <span className={`${styles.prefix} notranslate`} aria-hidden="true">
+                    <span className={styles.prefix} aria-hidden="true">
                         {prefix}
                     </span>
                 )}

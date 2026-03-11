@@ -9,7 +9,7 @@ const poolConfig = {
     port: parseInt(process.env.DB_PORT, 10),
 };
 
-if (process.env.DB_SSL === 'true') {
+if (process.env.DB_SSL !== 'false') {
     poolConfig.ssl = {
         require: true,
         rejectUnauthorized: false,

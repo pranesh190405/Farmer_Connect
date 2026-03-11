@@ -481,22 +481,10 @@ export default function ProfileSettingsPage() {
                                         { value: 'pa', label: 'Punjabi (ਪੰਜਾਬੀ)' },
                                         { value: 'hr', label: 'Haryanvi (हरियाणवी)' },
                                     ]}
-                                    value={(() => {
-                                        const match = typeof document !== 'undefined' && document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
-                                        return match ? match[1] : 'en';
-                                    })()}
+                                    value={i18n.language || 'en'}
                                     onChange={(e) => {
-                                        const langCode = e.target.value;
-                                        const domain = window.location.hostname;
-                                        const cookieDomain = domain === 'localhost' ? '' : `; domain=${domain}`;
-                                        if (langCode === 'en') {
-                                            document.cookie = `googtrans=/en/en; path=/${cookieDomain}`;
-                                            document.cookie = `googtrans=/en/en; path=/`;
-                                        } else {
-                                            document.cookie = `googtrans=/en/${langCode}; path=/${cookieDomain}`;
-                                            document.cookie = `googtrans=/en/${langCode}; path=/`;
-                                        }
-                                        setTimeout(() => window.location.reload(), 100);
+                                        i18n.changeLanguage(e.target.value);
+                                        localStorage.setItem('i18nextLng', e.target.value);
                                     }}
                                 />
                             </div>

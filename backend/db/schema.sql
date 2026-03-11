@@ -28,7 +28,7 @@ CREATE TABLE users (
     aadhar_verified BOOLEAN DEFAULT FALSE,
     date_of_birth DATE,
     address       TEXT DEFAULT '',
-    pin_hash VARCHAR(255) DEFAULT '', -- For admin login (bcrypt)
+    password_hash VARCHAR(255) DEFAULT '', -- For admin login (bcrypt)
     
     -- Buyer-specific fields
     business_name VARCHAR(100) DEFAULT '',
@@ -181,7 +181,7 @@ CREATE TABLE order_items (
 -- Default Admin
 -- Password: admin123 (bcrypt hashed)
 INSERT INTO users (
-    mobile, email, name, type, status, pin_hash,
+    mobile, email, name, type, status, password_hash,
     aadhar_number, aadhar_verified, date_of_birth, address
 )
 VALUES (
