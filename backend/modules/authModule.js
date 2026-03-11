@@ -87,12 +87,8 @@ async function loginUser(mobile, pin, userType) {
         user.failed_login_attempts = 0;
     }
 
-    // Verify PIN — support both pin_hash (new schema) and password_hash (old schema)
-    const storedHash = user.pin_hash || user.password_hash;
-    if (!storedHash) {
-        return { error: 'Account setup incomplete. Please contact support.' };
-    }
-    const isMatch = await bcrypt.compare(pin, storedHash);
+    // Verify PIN
+    const isMatch = await bcrypt.compare(pin, user.pin_hash);
 
     if (!isMatch) {
         const newAttempts = (user.failed_login_attempts || 0) + 1;
@@ -178,7 +174,7 @@ async function adminLogin(email, password) {
 
     const admin = result.rows[0];
 
-    const isMatch = await bcrypt.compare(password, admin.pin_hash);
+    const isMatch = await bcrypt.compare(password, admin.password_hash);
     if (!isMatch) {
         return { error: 'Invalid credentials' };
     }

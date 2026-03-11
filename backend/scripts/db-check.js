@@ -2,13 +2,23 @@ require('dotenv').config();
 const { Client } = require('pg');
 
 const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
     ssl: {
-        rejectUnauthorized: false
+        require: true,
+        rejectUnauthorized: false,
     }
 });
 
-console.log('Testing database connection with connection string...');
+console.log('Testing database connection with following config:');
+console.log(`User: ${process.env.DB_USER}`);
+console.log(`Host: ${process.env.DB_HOST}`);
+console.log(`Database: ${process.env.DB_NAME}`);
+console.log(`Port: ${process.env.DB_PORT}`);
+// Intentionally not logging password
 
 client.connect()
     .then(() => {

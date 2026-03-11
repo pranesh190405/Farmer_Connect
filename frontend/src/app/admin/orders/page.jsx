@@ -5,8 +5,6 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { Search, ShoppingBag, MapPin, Truck, CheckCircle, Clock, XCircle, FileText } from 'lucide-react';
 import { showToast } from '@/components/ui/Toast/Toast';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
-
 export default function AdminOrdersPage() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +16,7 @@ export default function AdminOrdersPage() {
             try {
                 // Future admin API for all orders: /api/admin/orders
                 // For now, we simulate fetching all orders
-                const response = await fetch(`${BASE_URL}/api/orders/my`); // This is user-specific, but placeholder for now
+                const response = await fetch('/api/orders/my'); // This is user-specific, but placeholder for now
                 if (response.ok) {
                     const data = await response.json();
                     setOrders(data.orders || []);
@@ -69,8 +67,8 @@ export default function AdminOrdersPage() {
                                 key={status}
                                 onClick={() => setStatusFilter(status)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${statusFilter === status
-                                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                                        ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                                        : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
                                     }`}
                             >
                                 {status.charAt(0) + status.slice(1).toLowerCase()}

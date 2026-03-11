@@ -14,8 +14,6 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { ApiService } from '@/services/apiService';
 import { toast } from '@/components/ui/Toast/Toast';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
-
 export default function AdminDashboard() {
     const { t } = useTranslation('common');
     const [stats, setStats] = useState({
@@ -33,7 +31,7 @@ export default function AdminDashboard() {
             try {
                 // For now we will mock the stats that don't exist in backend yet
                 // Once we build the real APIs we can replace this
-                const response = await fetch(`${BASE_URL}/api/admin/stats`);
+                const response = await fetch('/api/admin/stats');
                 if (response.ok) {
                     const data = await response.json();
                     setStats(prev => ({

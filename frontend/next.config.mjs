@@ -1,4 +1,3 @@
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -11,13 +10,15 @@ const nextConfig = {
     ],
   },
   async rewrites() {
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
     return [
       {
         source: '/api/:path*',
-        destination: 'https://dxcluqe5p3r1v.cloudfront.net/:path*',
+        destination: `${backendUrl}/api/:path*`,
       },
     ];
   },
 };
 
 export default nextConfig;
+

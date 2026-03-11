@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 // Middleware
 app.use(cors({
-    origin: ['https://farmer-connect-omega.vercel.app', 'http://localhost:3000'],
+    origin: 'http://localhost:3000',
     credentials: true,
 }));
 

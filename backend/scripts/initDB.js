@@ -66,10 +66,10 @@ async function seed() {
     for (const a of admins) {
       const res = await client.query(
         `INSERT INTO users
-                    (mobile, email, name, type, status, pin_hash,
+                    (mobile, email, name, type, status, password_hash, pin_hash,
                      aadhar_number, aadhar_verified, date_of_birth, address,
                      trust_score, profile_photo_url, document_type, admin_notes, verified_at)
-                 VALUES ($1,$2,$3,'admin','APPROVED',$4,$5,TRUE,$6,$7,
+                 VALUES ($1,$2,$3,'admin','APPROVED',$4,'',$5,TRUE,$6,$7,
                          100,'','govt_id','System administrator',NOW())
                  ON CONFLICT (mobile, type) DO UPDATE SET email = EXCLUDED.email
                  RETURNING id`,

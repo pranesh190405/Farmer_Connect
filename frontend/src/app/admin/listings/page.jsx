@@ -5,8 +5,6 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { Search, MapPin, Package, Clock, Filter, AlertCircle } from 'lucide-react';
 import { showToast } from '@/components/ui/Toast/Toast';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
-
 export default function AdminListingsPage() {
     const [listings, setListings] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +15,7 @@ export default function AdminListingsPage() {
         const fetchListings = async () => {
             try {
                 // Fetch listings from backend
-                const response = await fetch(`${BASE_URL}/api/listings?limit=100`); // Fetch a good chunk for admin view
+                const response = await fetch('/api/listings?limit=100'); // Fetch a good chunk for admin view
                 if (response.ok) {
                     const data = await response.json();
                     setListings(data.listings);
@@ -65,8 +63,8 @@ export default function AdminListingsPage() {
                                 key={status}
                                 onClick={() => setStatusFilter(status)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${statusFilter === status
-                                    ? 'bg-green-50 text-green-700 border border-green-200'
-                                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                                        ? 'bg-green-50 text-green-700 border border-green-200'
+                                        : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
                                     }`}
                             >
                                 {status.charAt(0) + status.slice(1).toLowerCase()}
