@@ -44,21 +44,22 @@ i18n
         },
     });
 
-// Post-hydration language detection is DISABLED.
-// Google Translate now handles all language switching via the googtrans cookie.
-// Calling i18n.changeLanguage() triggers React re-renders that wipe Google Translate's DOM mutations.
-// if (typeof window !== 'undefined') {
-//     const detect = () => {
-//         const saved = localStorage.getItem('i18nextLng');
-//         if (saved && saved !== 'en' && resources[saved]) {
-//             i18n.changeLanguage(saved);
-//         }
-//     };
-//     if ('requestIdleCallback' in window) {
-//         window.requestIdleCallback(detect);
-//     } else {
-//         setTimeout(detect, 0);
-//     }
-// }
+// Post-hydration language detection (client only)
+if (typeof window !== 'undefined') {
+    // Use requestIdleCallback (or setTimeout fallback) so this runs
+    // after React has finished hydrating the page.
+    const detect = () => {
+        const saved = localStorage.getItem('i18nextLng');
+        if (saved && saved !== 'en' && resources[saved]) {
+            i18n.changeLanguage(saved);
+        }
+    };
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(detect);
+    } else {
+        setTimeout(detect, 0);
+    }
+}
 
 export default i18n;
