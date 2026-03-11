@@ -87,8 +87,9 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Name</label>
+                    <label htmlFor="product-name" className="block text-sm font-medium text-gray-700">Name</label>
                     <input
+                        id="product-name"
                         type="text"
                         name="name"
                         value={formData.name}
@@ -99,8 +100,9 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Category</label>
+                    <label htmlFor="product-category" className="block text-sm font-medium text-gray-700">Category</label>
                     <select
+                        id="product-category"
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
@@ -132,8 +134,9 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Description</label>
+                    <label htmlFor="product-description" className="block text-sm font-medium text-gray-700">Description</label>
                     <textarea
+                        id="product-description"
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
@@ -145,8 +148,9 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
 
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Price (₹)</label>
+                        <label htmlFor="product-price" className="block text-sm font-medium text-gray-700">Price (₹)</label>
                         <input
+                            id="product-price"
                             type="number"
                             name="price"
                             value={formData.price}
@@ -157,9 +161,10 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Quantity</label>
+                        <label htmlFor="product-quantity" className="block text-sm font-medium text-gray-700">Quantity</label>
                         <div className="flex">
                             <input
+                                id="product-quantity"
                                 type="number"
                                 name="quantity"
                                 value={formData.quantity}
