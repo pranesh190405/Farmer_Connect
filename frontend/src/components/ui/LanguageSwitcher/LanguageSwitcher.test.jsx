@@ -82,12 +82,11 @@ describe('LanguageSwitcher', () => {
 
   it('changes language when option is selected', async () => {
     const user = userEvent.setup();
-    // Mock window.location.reload to prevent jsdom error
-    const reloadMock = jest.fn();
-    Object.defineProperty(window, 'location', {
-      value: { ...window.location, reload: reloadMock, hostname: 'localhost' },
-      writable: true,
-    });
+    // Mock window.location.reload to prevent jsdom "not implemented" error
+    const originalLocation = window.location;
+    delete window.location;
+    window.location = { ...originalLocation, reload: jest.fn() };
+
     render(<LanguageSwitcher />);
     
     await waitFor(() => {
@@ -102,6 +101,9 @@ describe('LanguageSwitcher', () => {
 
     // Component now uses Google Translate cookies instead of i18n.changeLanguage
     expect(document.cookie).toContain('googtrans=/en/hi');
+
+    // Restore original location
+    window.location = originalLocation;
   });
 
   it('closes dropdown after language selection', async () => {
